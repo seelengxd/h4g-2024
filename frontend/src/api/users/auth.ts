@@ -2,7 +2,7 @@ import client from "../base";
 import type { LogInPostData, SignUpPostData } from "../../types/users/auth";
 import type { User } from "../../types/users/users";
 
-export default class AuthAPI {
+class AuthAPI {
   protected getAuthUrl(): string {
     return "/auth";
   }
@@ -25,3 +25,6 @@ export default class AuthAPI {
     return response.data.user;
   }
 }
+
+const authApi = new AuthAPI();
+export default authApi;

@@ -7,8 +7,12 @@ import Footer from "../../components/forms/Footer";
 import { useFormik } from "formik";
 import { object, string } from "yup";
 import FormControl from "../../components/forms/FormControl";
+import authApi from "../../api/users/auth";
+import { useAppDispatch } from "../../reducers/hooks";
+import { setUser } from "../../reducers/authSlice";
 
 const LogInForm: React.FC = () => {
+  const dispatch = useAppDispatch();
   const formik = useFormik({
     initialValues: { username: "", password: "" },
     validationSchema: object({
@@ -16,8 +20,7 @@ const LogInForm: React.FC = () => {
       password: string().trim().required("Password cannot be empty."),
     }),
     onSubmit: async (values) => {
-      //   const content = values.user;
-      //   handleLogin(content, files);
+      authApi.logIn(values).then((user) => dispatch(setUser(user)));
     },
   });
 

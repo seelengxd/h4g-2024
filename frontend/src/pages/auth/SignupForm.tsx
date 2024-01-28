@@ -7,6 +7,7 @@ import Footer from "../../components/forms/Footer";
 import { useFormik } from "formik";
 import { object, string } from "yup";
 import FormControl from "../../components/forms/FormControl";
+import authApi from "../../api/users/auth";
 
 const SignUpForm: React.FC = () => {
   const formik = useFormik({
@@ -35,8 +36,7 @@ const SignUpForm: React.FC = () => {
       }),
     }),
     onSubmit: async (values) => {
-      //   const content = values.user;
-      //   handleLogin(content, files);
+      authApi.signUp(values);
     },
   });
 

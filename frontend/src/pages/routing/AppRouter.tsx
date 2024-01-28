@@ -1,4 +1,4 @@
-import AuthAPI from "../../api/users/auth";
+import authApi from "../../api/users/auth";
 import Spinner from "../../components/loading/Spinner";
 import { selectIsLoggedIn, setUser } from "../../reducers/authSlice";
 import { useAppDispatch, useAppSelector } from "../../reducers/hooks";
@@ -9,7 +9,6 @@ import React, { useState } from "react";
 const AppRouter: React.FC = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const dispatch = useAppDispatch();
-  const authApi = new AuthAPI();
   const [loading, setLoading] = useState(true);
   if (!isLoggedIn) {
     authApi
@@ -18,8 +17,6 @@ const AppRouter: React.FC = () => {
         dispatch(setUser(user));
       })
       .catch((err: Error) => {
-        // Possibly due to no token (not logged in yet) / expired access token
-
         console.log(err);
       })
       .finally(() => setLoading(false));

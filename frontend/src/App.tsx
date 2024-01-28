@@ -1,8 +1,18 @@
 import React from "react";
 import "./App.css";
+import AppRouter from "./pages/routing/AppRouter";
+import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import { store } from "./reducers/store";
 
 function App() {
-  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+  return (
+    <Provider store={store}>
+      <BrowserRouter>
+        <AppRouter />
+      </BrowserRouter>
+    </Provider>
+  );
 }
 
 export default App;

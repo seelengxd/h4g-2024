@@ -83,7 +83,9 @@ const LogInForm: React.FC = () => {
             />
           </FormControl>
           <div>
-            <Button type="submit">Sign in</Button>
+            <Button type="submit" fullWidth>
+              Sign in
+            </Button>
           </div>
         </form>
         <Footer

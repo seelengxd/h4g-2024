@@ -59,7 +59,7 @@ const callsToAction = [
 const links = [
   { name: "Volunteers", href: "/" },
   { name: "Activities", href: "/" },
-  { name: "Organisations", href: "/" },
+  { name: "Organisations", href: "/organisations" },
   { name: "Forum", href: "/" },
 ];
 

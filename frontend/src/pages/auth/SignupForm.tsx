@@ -132,7 +132,9 @@ const SignUpForm: React.FC = () => {
             />
           </FormControl>
           <div>
-            <Button type="submit">Sign Up</Button>
+            <Button type="submit" fullWidth>
+              Sign Up
+            </Button>
           </div>
         </form>
         <Footer

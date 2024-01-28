@@ -2,7 +2,7 @@ interface Props {
   name: string;
   type?: string;
   autoComplete?: string;
-  required: boolean;
+  required?: boolean;
   value?: string | number;
   onChange: React.ChangeEventHandler;
 }
@@ -11,7 +11,7 @@ const Input: React.FC<Props> = ({
   name,
   type = "text",
   autoComplete,
-  required,
+  required = false,
   value,
   onChange,
 }) => {

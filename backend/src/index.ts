@@ -10,6 +10,7 @@ import { Strategy as LocalStrategy } from "passport-local";
 import prisma from "./lib/prisma";
 import bcrypt from "bcryptjs";
 import apiRouter from "./routes/base";
+import { User } from "@prisma/client";
 
 dotenv.config();
 
@@ -52,7 +53,21 @@ passport.use(
     return cb(null, user);
   })
 );
+
 app.use(passport.authenticate("session"));
+
+passport.serializeUser(function (user, cb) {
+  process.nextTick(function () {
+    cb(null, (user as User).id);
+  });
+});
+
+passport.deserializeUser(function (userId: number, cb) {
+  process.nextTick(async function () {
+    const user = await prisma.user.findFirstOrThrow({ where: { id: userId } });
+    return cb(null, user);
+  });
+});
 
 app.use("/api", apiRouter);
 

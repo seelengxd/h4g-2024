@@ -80,13 +80,12 @@ export const logout: RequestHandler[] = [
   },
 ];
 
-export const getUser: RequestHandler[] = [
-  (req, res) => {
-    if (req.user === undefined) {
-      res.sendStatus(401);
-    } else {
-      const { password, ...userWithoutPassword } = req.user as User;
-      res.json({ user: userWithoutPassword });
-    }
-  },
-];
+export const getCurrentUser: RequestHandler = (req, res) => {
+  console.log("called");
+  if (req.user === undefined) {
+    res.sendStatus(401);
+  } else {
+    const { password, ...userWithoutPassword } = req.user as User;
+    res.json({ user: userWithoutPassword });
+  }
+};

@@ -8,8 +8,10 @@ import { useFormik } from "formik";
 import { object, string } from "yup";
 import FormControl from "../../components/forms/FormControl";
 import authApi from "../../api/users/auth";
+import { useNavigate } from "react-router-dom";
 
 const SignUpForm: React.FC = () => {
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -36,12 +38,24 @@ const SignUpForm: React.FC = () => {
       }),
     }),
     onSubmit: async (values) => {
-      authApi.signUp(values);
+      authApi
+        .signUp(values)
+        .then(() => navigate("/"))
+        .catch((err) =>
+          setFieldError("username", "Username is already taken.")
+        );
     },
   });
 
-  const { touched, errors, values, handleChange, handleBlur, handleSubmit } =
-    formik;
+  const {
+    touched,
+    errors,
+    values,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    setFieldError,
+  } = formik;
   return (
     <Container>
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">

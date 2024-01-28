@@ -13,7 +13,7 @@ class AuthAPI {
   }
 
   public async logOut(): Promise<void> {
-    await client.get(this.getAuthUrl() + "/logout");
+    await client.post(this.getAuthUrl() + "/logout");
   }
 
   public async signUp(data: SignUpPostData): Promise<never> {

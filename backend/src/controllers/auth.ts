@@ -69,16 +69,14 @@ export const signup: RequestHandler[] = [
   },
 ];
 
-export const logout: RequestHandler[] = [
-  async (req, res, next) => {
-    req.logout(function (err) {
-      if (err) {
-        return next(err);
-      }
-      res.sendStatus(200);
-    });
-  },
-];
+export const logout: RequestHandler = async (req, res, next) => {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.sendStatus(200);
+  });
+};
 
 export const getCurrentUser: RequestHandler = (req, res) => {
   console.log("called");

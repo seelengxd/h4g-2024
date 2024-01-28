@@ -16,11 +16,12 @@ dotenv.config();
 
 const app: Express = express();
 const port = process.env.PORT || 3000;
+const FRONTEND_URL = process.env.FRONTEND_URL;
 
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({ origin: FRONTEND_URL, credentials: true }));
 app.use(logger("tiny"));
 
 // PassportJS setup
@@ -54,6 +55,7 @@ passport.use(
   })
 );
 
+app.use(passport.initialize());
 app.use(passport.authenticate("session"));
 
 passport.serializeUser(function (user, cb) {

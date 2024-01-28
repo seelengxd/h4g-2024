@@ -1,5 +1,6 @@
 import authApi from "../../api/users/auth";
 import Spinner from "../../components/loading/Spinner";
+import Navbar from "../../components/navigation/Navbar";
 import { selectIsLoggedIn, setUser } from "../../reducers/authSlice";
 import { useAppDispatch, useAppSelector } from "../../reducers/hooks";
 import AuthenticatedApp from "./AuthenticatedApp";
@@ -21,14 +22,19 @@ const AppRouter: React.FC = () => {
       })
       .finally(() => setLoading(false));
   }
-  return loading ? (
-    <div className="h-screen mx-auto">
-      <Spinner />
-    </div>
-  ) : isLoggedIn ? (
-    <AuthenticatedApp />
-  ) : (
-    <UnauthenticatedApp />
+  return (
+    <>
+      <Navbar />
+      {loading ? (
+        <div className="h-screen mx-auto">
+          <Spinner />
+        </div>
+      ) : isLoggedIn ? (
+        <AuthenticatedApp />
+      ) : (
+        <UnauthenticatedApp />
+      )}
+    </>
   );
 };
 

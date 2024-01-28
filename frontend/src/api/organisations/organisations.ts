@@ -16,7 +16,7 @@ class OrganisationsAPI {
   }
 
   public async getOrganisation(id: number): Promise<Organisation> {
-    const response = await client.get(`${this.getOrganisationsUrl}/${id}`);
+    const response = await client.get(`${this.getOrganisationsUrl()}/${id}`);
     return response.data.data;
   }
 
@@ -32,11 +32,11 @@ class OrganisationsAPI {
   }
 
   public async updateOrganisation(id: number, data: OrganisationsPostData) {
-    return await client.put(`${this.getOrganisationsUrl}/${id}`, data);
+    return await client.put(`${this.getOrganisationsUrl()}/${id}`, data);
   }
 
   public async deleteOrganisation(id: number) {
-    await client.delete(`${this.getOrganisationsUrl}/${id}`);
+    await client.delete(`${this.getOrganisationsUrl()}/${id}`);
   }
 }
 

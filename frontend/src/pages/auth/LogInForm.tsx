@@ -10,7 +10,6 @@ import FormControl from "../../components/forms/FormControl";
 import authApi from "../../api/users/auth";
 import { useAppDispatch } from "../../reducers/hooks";
 import { setUser } from "../../reducers/authSlice";
-import Toast from "../../components/feedback/Toast";
 
 const LogInForm: React.FC = () => {
   const dispatch = useAppDispatch();

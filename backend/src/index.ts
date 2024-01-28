@@ -11,6 +11,7 @@ import prisma from "./lib/prisma";
 import bcrypt from "bcryptjs";
 import apiRouter from "./routes/base";
 import { User } from "@prisma/client";
+import path from "path";
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors({ origin: FRONTEND_URL, credentials: true }));
 app.use(logger("tiny"));
+app.use("/api/uploads", express.static(path.join(__dirname, "..", "uploads")));
 
 // PassportJS setup
 const PostgresqlStore = genFunc(session);

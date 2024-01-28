@@ -1,12 +1,12 @@
 interface Props extends React.PropsWithChildren {
   onBlur?: (e: React.FocusEvent) => void;
-  isInvalid: boolean;
+  isInvalid?: boolean;
   errorMessage?: string;
 }
 
 const FormControl: React.FC<Props> = ({
   onBlur,
-  isInvalid,
+  isInvalid = false,
   children,
   errorMessage,
 }) => {

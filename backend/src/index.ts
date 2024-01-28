@@ -9,7 +9,7 @@ import genFunc from "connect-pg-simple";
 import { Strategy as LocalStrategy } from "passport-local";
 import prisma from "./lib/prisma";
 import bcrypt from "bcryptjs";
-import authRouter from "./routes/auth";
+import apiRouter from "./routes/base";
 
 dotenv.config();
 
@@ -54,11 +54,7 @@ passport.use(
 );
 app.use(passport.authenticate("session"));
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Express + TypeScript Server");
-});
-
-app.use("/auth", authRouter);
+app.use("/api", apiRouter);
 
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);

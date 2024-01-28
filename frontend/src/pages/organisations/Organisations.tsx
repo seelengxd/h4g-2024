@@ -19,18 +19,31 @@ const Organisations: React.FC = () => {
   return (
     <div className="mx-auto max-w-7xl items-center justify-between p-6 lg:px-8 h-screen">
       <div className="w-full">
-        <div className="w-full flex flex-initial justify-between items-center">
+        <div className="w-full sm:flex flex-initial justify-between items-center">
           <div className="flex items-center mt-4">
             <UserGroupIcon className="w-10 h-10 mr-4" />
             <h1 className="text-4xl font-semibold text-gray-800">
               Organisations
             </h1>
           </div>
-          <Link to="/organisations/new">
-            <Button>
-              <PlusIcon className="stroke-2 w-4 h-4 mr-2" /> Create
-            </Button>
-          </Link>
+          <div className="hidden sm:visible">
+            <Link to="/organisations/new">
+              <Button>
+                <PlusIcon className="stroke-2 w-4 h-4 mr-2" /> Create
+              </Button>
+            </Link>
+          </div>
+          <div className="visible sm:hidden">
+            <Link to="/organisations/new">
+              <button
+                type="button"
+                className="absolute right-4 bottom-8 text-white bg-indigo-600 hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2"
+              >
+                <PlusIcon className="stroke-2 w-8 h-8" />
+                <span className="sr-only">Icon description</span>
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
       {loading ? (

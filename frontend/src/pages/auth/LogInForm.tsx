@@ -4,8 +4,25 @@ import Input from "../../components/forms/Input";
 import Button from "../../components/buttons/Button";
 import Container from "../../components/containers/Container";
 import Footer from "../../components/forms/Footer";
+import { useFormik } from "formik";
+import { object, string } from "yup";
+import FormControl from "../../components/forms/FormControl";
 
 const LogInForm: React.FC = () => {
+  const formik = useFormik({
+    initialValues: { username: "", password: "" },
+    validationSchema: object({
+      username: string().trim().required("Username cannot be empty."),
+      password: string().trim().required("Password cannot be empty."),
+    }),
+    onSubmit: async (values) => {
+      //   const content = values.user;
+      //   handleLogin(content, files);
+    },
+  });
+
+  const { touched, errors, values, handleChange, handleBlur, handleSubmit } =
+    formik;
   return (
     <Container>
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -20,20 +37,36 @@ const LogInForm: React.FC = () => {
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6" action="#" method="POST">
-          <div>
+        <form className="space-y-6" onSubmit={handleSubmit}>
+          <FormControl
+            isInvalid={!!touched.username && errors.username !== undefined}
+            errorMessage={errors.username}
+            onBlur={handleBlur}
+          >
             <Label htmlFor="username">Username</Label>
-            <Input name="username" autoComplete="username" required />
-          </div>
-          <div>
+            <Input
+              name="username"
+              autoComplete="username"
+              value={values.username}
+              onChange={handleChange}
+              required
+            />
+          </FormControl>
+          <FormControl
+            isInvalid={!!touched.password && errors.password !== undefined}
+            errorMessage={errors.password}
+            onBlur={handleBlur}
+          >
             <Label htmlFor="password">Password</Label>
             <Input
               name="password"
               type="password"
               autoComplete="current-password"
+              value={values.password}
+              onChange={handleChange}
               required
             />
-          </div>
+          </FormControl>
           <div>
             <Button type="submit">Sign in</Button>
           </div>

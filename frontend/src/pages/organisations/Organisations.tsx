@@ -26,21 +26,21 @@ const Organisations: React.FC = () => {
               Organisations
             </h1>
           </div>
-          <div className="hidden sm:visible">
+          <div className="hidden sm:block">
             <Link to="/organisations/new">
               <Button>
                 <PlusIcon className="stroke-2 w-4 h-4 mr-2" /> Create
               </Button>
             </Link>
           </div>
-          <div className="visible sm:hidden">
+          <div className="sm:hidden">
             <Link to="/organisations/new">
               <button
                 type="button"
                 className="absolute right-4 bottom-8 text-white bg-indigo-600 hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2"
               >
                 <PlusIcon className="stroke-2 w-8 h-8" />
-                <span className="sr-only">Icon description</span>
+                <span className="sr-only">Create</span>
               </button>
             </Link>
           </div>

@@ -56,7 +56,12 @@ const callsToAction = [
   { name: "Contact sales", href: "#", icon: PhoneIcon },
 ];
 
-const links = [{ name: "Features", href: "/" }];
+const links = [
+  { name: "Volunteers", href: "/" },
+  { name: "Activities", href: "/" },
+  { name: "Organisations", href: "/" },
+  { name: "Forum", href: "/" },
+];
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");

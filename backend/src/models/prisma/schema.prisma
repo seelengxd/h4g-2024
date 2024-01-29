@@ -25,9 +25,35 @@ model User {
 }
 
 model Organisation {
-  id          Int     @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   name        String
   description String
   image_url   String?
   website_url String?
+  Activity    Activity[]
+}
+
+enum ActivityType {
+  VOLUNTEER
+  WORKSHOP
+  TRAINING
+}
+
+model Activity {
+  id   Int          @id @default(autoincrement())
+  name String
+  type ActivityType @default(VOLUNTEER)
+
+  organisation   Organisation   @relation(fields: [organisationId], references: [id])
+  organisationId Int
+  ActivityDate   ActivityDate[]
+}
+
+model ActivityDate {
+  id    Int      @id @default(autoincrement())
+  start DateTime
+  end   DateTime
+
+  activity   Activity @relation(fields: [activityId], references: [id])
+  activityId Int
 }

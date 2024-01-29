@@ -32,7 +32,14 @@ class OrganisationsAPI {
   }
 
   public async updateOrganisation(id: number, data: OrganisationsPostData) {
-    return await client.put(`${this.getOrganisationsUrl()}/${id}`, data);
+    const form = new FormData();
+    form.append("name", data.name);
+    form.append("description", data.description);
+    form.append("websiteUrl", data.websiteUrl || "");
+    if (data.image) {
+      form.append("image", data.image as Blob);
+    }
+    return await client.put(`${this.getOrganisationsUrl()}/${id}`, form);
   }
 
   public async deleteOrganisation(id: number) {

@@ -5,6 +5,9 @@ import ViewOrganisation from "../organisations/ViewOrganisation";
 import UpdateOrganisation from "../organisations/UpdateOrganisation";
 import Error from "../error/Error";
 import Activities from "../activities/Activities";
+import CreateActivity from "../activities/CreateActivity";
+import UpdateActivity from "../activities/UpdateActivity";
+import ViewActivity from "../activities/ViewActivity";
 
 const error404 = (
   <Error errorCode={404} desc="Oh no! Are you sure this page exists?" />
@@ -25,7 +28,11 @@ const AuthenticatedApp: React.FC = () => {
 
       {/* Activity Routes */}
       <Route path="/activities" element={<Activities />} />
+      <Route path="/activities/new" element={<CreateActivity />} />
+      <Route path="/activities/:id" element={<ViewActivity />} />
+      <Route path="/activities/:id/edit" element={<UpdateActivity />} />
 
+      {/* 404 */}
       <Route path="*" element={error404} />
     </Routes>
   );

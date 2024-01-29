@@ -52,7 +52,9 @@ export const ActivityTableColumns = (
       enableGlobalFilter: false,
       cell: (cell) => (
         <div className="flex space-x-2">
-          <IconButton icon={<EyeIcon className="w-4 h-4" />} />
+          <Link to={"/activities/" + cell.row.original.id}>
+            <IconButton icon={<EyeIcon className="w-4 h-4" />} />
+          </Link>
         </div>
       ),
     }),

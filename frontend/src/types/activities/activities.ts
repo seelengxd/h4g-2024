@@ -18,15 +18,16 @@ export interface Activity {
   id: number;
   name: string;
   type: ActivityType;
+  description: string;
   organisationId: number;
   organisation: Organisation;
   ActivityDate: ActivityDate[];
 }
 
 export interface ActivityPostData {
-  id: number;
   name: string;
   type: ActivityType;
   organisationId: number;
   activityDates: ActivityDatePostData[];
+  description: string;
 }

@@ -71,6 +71,7 @@ export const index: RequestHandler[] = [
 ];
 
 export const show: RequestHandler[] = [
+  ...validateActivityId,
   async (req, res) => {
     res.json({ data: req.activity! });
   },

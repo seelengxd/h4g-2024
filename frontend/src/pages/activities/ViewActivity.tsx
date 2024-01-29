@@ -32,6 +32,17 @@ const ViewActivity: React.FC = () => {
         <p>{activity.description}</p>
         <p>{activity.type}</p>
         <p>by {activity.organisation.name}</p>
+
+        {activity.ActivityDate.map((activityDate) => {
+          console.log(activityDate);
+          return (
+            <>
+              <p>start: {new Date(activityDate.start).toISOString()}</p>
+              <p>end: {new Date(activityDate.end).toISOString()}</p>{" "}
+            </>
+          );
+        })}
+
         <div>
           <Button
             onClick={() => {

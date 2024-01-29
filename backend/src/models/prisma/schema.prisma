@@ -40,9 +40,10 @@ enum ActivityType {
 }
 
 model Activity {
-  id   Int          @id @default(autoincrement())
-  name String
-  type ActivityType @default(VOLUNTEER)
+  id          Int          @id @default(autoincrement())
+  name        String
+  type        ActivityType @default(VOLUNTEER)
+  description String       @default("This is a fun activity!")
 
   organisation   Organisation   @relation(fields: [organisationId], references: [id])
   organisationId Int

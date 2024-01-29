@@ -91,12 +91,13 @@ export const create: RequestHandler[] = [
       res.status(400).send({ errors: result.array() });
       return;
     }
-    const { name, type, activityDates } = req.body;
+    const { name, type, activityDates, description } = req.body;
     const newActivity = await prisma.activity.create({
       data: {
         name,
         organisationId: req.organisation!.id,
         type,
+        description,
       },
     });
 
@@ -127,13 +128,14 @@ export const update: RequestHandler[] = [
     // 1. Update activity fields (except for activityDates)
     const activity = req.activity!;
 
-    const { name, type } = req.body;
+    const { name, type, description } = req.body;
     await prisma.activity.update({
       where: { id: activity.id },
       data: {
         name,
         organisationId: req.organisation!.id,
         type,
+        description,
       },
     });
 

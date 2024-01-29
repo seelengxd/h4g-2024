@@ -57,10 +57,10 @@ const callsToAction = [
 ];
 
 const links = [
-  { name: "Volunteers", href: "/" },
-  { name: "Activities", href: "/" },
+  { name: "Volunteers", href: "/volunteers" },
+  { name: "Activities", href: "/activities" },
   { name: "Organisations", href: "/organisations" },
-  { name: "Forum", href: "/" },
+  { name: "Forum", href: "/forum" },
 ];
 
 function classNames(...classes: string[]) {

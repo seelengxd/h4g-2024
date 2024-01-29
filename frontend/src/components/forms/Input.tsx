@@ -4,23 +4,31 @@ interface Props {
   autoComplete?: string;
   required?: boolean;
   value?: string | number;
-  onChange: React.ChangeEventHandler;
+  placeholder?: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input: React.FC<Props> = ({
-  name,
-  type = "text",
-  autoComplete,
-  required = false,
-  value,
-  onChange,
-}) => {
+const Input: React.FC<Props & React.HTMLAttributes<HTMLInputElement>> = (
+  props
+) => {
+  const {
+    name,
+    type = "text",
+    autoComplete,
+    required = false,
+    value,
+    onChange,
+    placeholder,
+    ...otherProps
+  } = props;
   return (
     <div className="mt-2">
       <input
+        {...otherProps}
         id={name}
         name={name}
         type={type}
+        placeholder={placeholder}
         {...(name === "image" ? { accept: "image/*" } : {})}
         {...(autoComplete ? { autoComplete } : {})}
         required={required}

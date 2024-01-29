@@ -15,7 +15,7 @@ const UpdateActivity: React.FC = () => {
       .then((activity) => setActivity(activity))
       .catch(() => navigate("/activities"));
   }, [id, navigate]);
-  console.log({ activity });
+
   return (
     activity && (
       <ActivityForm

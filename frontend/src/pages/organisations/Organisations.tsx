@@ -1,4 +1,8 @@
-import { PlusIcon, UserGroupIcon } from "@heroicons/react/24/outline";
+import {
+  BuildingOfficeIcon,
+  PlusIcon,
+  UserGroupIcon,
+} from "@heroicons/react/24/outline";
 import Button from "../../components/buttons/Button";
 import OrganisationCard from "./OrganisationCard";
 import Spinner from "../../components/loading/Spinner";
@@ -21,7 +25,7 @@ const Organisations: React.FC = () => {
       <div className="w-full">
         <div className="w-full sm:flex flex-initial justify-between items-center">
           <div className="flex items-center mt-4">
-            <UserGroupIcon className="w-10 h-10 mr-4" />
+            <BuildingOfficeIcon className="w-10 h-10 mr-4" />
             <h1 className="text-4xl font-semibold text-gray-800">
               Organisations
             </h1>

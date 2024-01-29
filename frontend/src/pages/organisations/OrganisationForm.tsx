@@ -1,4 +1,4 @@
-import { UserGroupIcon } from "@heroicons/react/24/outline";
+import { BuildingOfficeIcon, UserGroupIcon } from "@heroicons/react/24/outline";
 import Button from "../../components/buttons/Button";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
@@ -68,7 +68,7 @@ const OrganisationForm: React.FC<Props> = ({
       <div className="w-full">
         <div className="w-full flex flex-initial justify-between items-center">
           <div className="flex items-center mt-4">
-            <UserGroupIcon className="w-10 h-10 mr-4" />
+            <BuildingOfficeIcon className="w-10 h-10 mr-4" />
             <h1 className="text-4xl font-semibold text-gray-800">{label}</h1>
           </div>
         </div>

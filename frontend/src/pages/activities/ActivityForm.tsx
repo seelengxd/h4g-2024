@@ -6,11 +6,7 @@ import { array, number, object, string } from "yup";
 import FormControl from "../../components/forms/FormControl";
 import Label from "../../components/forms/Label";
 import Input from "../../components/forms/Input";
-import {
-  Activity,
-  ActivityDatePostData,
-  ActivityPostData,
-} from "../../types/activities/activities";
+import { Activity, ActivityPostData } from "../../types/activities/activities";
 import Select from "react-select";
 import { Organisation } from "../../types/organisations/organisations";
 import { useEffect, useState } from "react";
@@ -180,7 +176,7 @@ const ActivityForm: React.FC<Props> = ({
                       setFieldValue("activityDates", newDates);
                     }}
                     className="border border-gray-300 rounded px-3 py-2"
-                    dateFormat="yyyy-MM-dd"
+                    dateFormat="MMMM d, yyyy h:mm aa"
                   />
                   <DatePicker
                     showTimeSelect
@@ -191,7 +187,7 @@ const ActivityForm: React.FC<Props> = ({
                       setFieldValue("activityDates", newDates);
                     }}
                     className="border border-gray-300 rounded px-3 py-2"
-                    dateFormat="yyyy-MM-dd"
+                    dateFormat="MMMM d, yyyy h:mm aa"
                   />
                   {/* Button to remove date entry */}
                   <button

@@ -22,6 +22,30 @@ model User {
   password  String
   email     String
   role      Role     @default(USER)
+  profile   Profile?
+}
+
+model Profile {
+  id          Int        @id @default(autoincrement())
+  dob         DateTime
+  description String
+  interests   Interest[]
+  skills      Skill[]
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int  @unique
+}
+
+model Interest {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  profiles Profile[]
+}
+
+model Skill {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique
+  profiles Profile[]
 }
 
 model Organisation {

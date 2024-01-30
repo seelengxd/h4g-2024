@@ -79,7 +79,6 @@ export const logout: RequestHandler = async (req, res, next) => {
 };
 
 export const getCurrentUser: RequestHandler = (req, res) => {
-  console.log("called");
   if (req.user === undefined) {
     res.sendStatus(401);
   } else {

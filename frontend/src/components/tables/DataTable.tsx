@@ -62,7 +62,6 @@ const DataTable = <T extends object>({
 
   return (
     <>
-      {/* <Stack direction="row" alignItems="end" marginBottom={6}> */}
       <div className="flex items-end mb-6 mt-6">
         {isSortable && <DataTableSearch table={table} />}
         {table.getHeaderGroups().map((headerGroup) =>
@@ -97,8 +96,8 @@ const DataTable = <T extends object>({
             ))}
             {table.getPrePaginationRowModel().rows.length === 0 && (
               <tr className="odd:bg-white even:bg-gray-50 border-b">
-                <td className="text-center col-span-full py-8">
-                  <p color="text-gray-500">No questions found</p>
+                <td className="text-center py-8" colSpan={columns.length}>
+                  <p color="text-gray-500">No activities found</p>
                 </td>
               </tr>
             )}

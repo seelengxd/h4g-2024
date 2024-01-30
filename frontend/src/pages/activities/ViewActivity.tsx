@@ -64,7 +64,7 @@ const ViewActivity: React.FC = () => {
 
         {dialogOpen && (
           <ConfirmationDialog
-            message="Are you sure you want to delete this organisation? This action cannot be undone."
+            message="Are you sure you want to delete this activity? This action cannot be undone."
             onDelete={handleDelete}
             onCancel={() => setDialogOpen(false)}
           />

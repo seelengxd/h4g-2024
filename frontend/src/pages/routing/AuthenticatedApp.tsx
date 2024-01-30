@@ -8,6 +8,7 @@ import Activities from "../activities/Activities";
 import CreateActivity from "../activities/CreateActivity";
 import UpdateActivity from "../activities/UpdateActivity";
 import ViewActivity from "../activities/ViewActivity";
+import CreateEnrollmentForm from "../activities/CreateEnrollmentForm";
 
 const error404 = (
   <Error errorCode={404} desc="Oh no! Are you sure this page exists?" />
@@ -32,6 +33,11 @@ const AuthenticatedApp: React.FC = () => {
       <Route path="/activities/:id" element={<ViewActivity />} />
       <Route path="/activities/:id/edit" element={<UpdateActivity />} />
 
+      {/* Enrollment forms*/}
+      <Route
+        path="/activities/:id/enrollment-forms/new"
+        element={<CreateEnrollmentForm />}
+      />
       {/* 404 */}
       <Route path="*" element={error404} />
     </Routes>

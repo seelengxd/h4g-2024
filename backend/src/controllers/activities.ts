@@ -174,6 +174,11 @@ export const update: RequestHandler[] = [
 export const destroy: RequestHandler[] = [
   ...validateActivityId,
   async (req, res) => {
+    await prisma.activityDate.deleteMany({
+      where: {
+        activityId: req.activity!.id,
+      },
+    });
     await prisma.activity.delete({ where: { id: req.activity!.id } });
     res.sendStatus(200);
   },

@@ -46,7 +46,7 @@ async function main() {
             data: {
                 name: 'Organisation 1',
                 description: 'Organisation 1 description.',
-                imageUrl: 'https://www.wwf.sg/wp-content/uploads/2021/11/placeholder-wwf.jpg',
+                imageUrl: 'uploads/org_placeholder.jpeg',
                 websiteUrl: 'https://www.worldwildlife.org',
                 activities: {
                     create: [
@@ -100,7 +100,7 @@ async function main() {
             data: {
                 name: 'Organisation 2',
                 description: 'Organisation 2 description.',
-                imageUrl: 'https://www.wwf.sg/wp-content/uploads/2021/11/placeholder-wwf.jpg',
+                imageUrl: 'uploads/org_placeholder.jpeg',
                 websiteUrl: 'https://www.worldwildlife.org',
                 activities: {
                     create: [

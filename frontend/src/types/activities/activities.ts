@@ -21,7 +21,7 @@ export interface Activity {
   description: string;
   organisationId: number;
   organisation: Organisation;
-  ActivityDate: ActivityDate[];
+  activityDates: ActivityDate[];
 }
 
 export interface ActivityPostData {

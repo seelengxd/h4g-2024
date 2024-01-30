@@ -46,7 +46,7 @@ const validateActivityId: RequestHandler[] = [
       },
       include: {
         organisation: true,
-        ActivityDate: true,
+        activityDates: true,
       },
     });
     if (!activity) {
@@ -63,7 +63,7 @@ export const index: RequestHandler[] = [
     const activities = await prisma.activity.findMany({
       include: {
         organisation: true,
-        ActivityDate: true,
+        activityDates: true,
       },
     });
     res.json({ data: activities });

@@ -38,7 +38,7 @@ const ActivityForm: React.FC<Props> = ({
           type: initialData.type,
           description: initialData.description,
           organisationId: initialData.organisationId,
-          activityDates: initialData.ActivityDate.map((activityDate) => ({
+          activityDates: initialData.activityDates.map((activityDate) => ({
             start: new Date(activityDate.start),
             end: new Date(activityDate.end),
           })),

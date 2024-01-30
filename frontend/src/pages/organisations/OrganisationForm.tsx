@@ -25,7 +25,7 @@ const OrganisationForm: React.FC<Props> = ({
 }) => {
   const [imageDisplayUrl, setImageDisplayUrl] = useState(
     initialData
-      ? process.env.REACT_APP_BACKEND_URL! + "/" + initialData.image_url
+      ? process.env.REACT_APP_BACKEND_URL! + "/" + initialData.imageUrl
       : ""
   );
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ const OrganisationForm: React.FC<Props> = ({
       ? {
           name: initialData.name,
           description: initialData.description,
-          websiteUrl: initialData.website_url,
+          websiteUrl: initialData.websiteUrl,
           image: undefined,
         }
       : {

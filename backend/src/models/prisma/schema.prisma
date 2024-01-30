@@ -28,9 +28,9 @@ model Organisation {
   id          Int        @id @default(autoincrement())
   name        String
   description String
-  image_url   String?
-  website_url String?
-  Activity    Activity[]
+  imageUrl    String?
+  websiteUrl  String?
+  activities  Activity[]
 }
 
 enum ActivityType {
@@ -45,9 +45,10 @@ model Activity {
   type        ActivityType @default(VOLUNTEER)
   description String       @default("This is a fun activity!")
 
-  organisation   Organisation   @relation(fields: [organisationId], references: [id])
+  organisation   Organisation     @relation(fields: [organisationId], references: [id])
   organisationId Int
-  ActivityDate   ActivityDate[]
+  activityDates  ActivityDate[]
+  EnrollmentForm EnrollmentForm[]
 }
 
 model ActivityDate {
@@ -57,4 +58,12 @@ model ActivityDate {
 
   activity   Activity @relation(fields: [activityId], references: [id])
   activityId Int
+}
+
+model EnrollmentForm {
+  id         Int  @id @default(autoincrement())
+  formSchema Json
+
+  activityId Int
+  activity   Activity @relation(fields: [activityId], references: [id])
 }

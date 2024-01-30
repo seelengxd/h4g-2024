@@ -33,7 +33,7 @@ const ViewActivity: React.FC = () => {
         <p>{activity.type}</p>
         <p>by {activity.organisation.name}</p>
 
-        {activity.ActivityDate.map((activityDate) => {
+        {activity.activityDates.map((activityDate) => {
           console.log(activityDate);
           return (
             <>

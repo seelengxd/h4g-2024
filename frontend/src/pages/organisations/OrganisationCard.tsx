@@ -13,9 +13,7 @@ const OrganisationCard: React.FC<Props> = ({ organisation }) => {
       <div className="flex flex-col justify-between min-h-36">
         <img
           className="object-cover max-h-56 rounded-t-lg" // h-96" //md:max-w-50% md:h-auto md:rounded-none md:rounded-s-lg"
-          src={
-            process.env.REACT_APP_BACKEND_URL! + "/" + organisation.image_url
-          }
+          src={process.env.REACT_APP_BACKEND_URL! + "/" + organisation.imageUrl}
           alt=""
         />
       </div>

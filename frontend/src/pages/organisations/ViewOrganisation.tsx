@@ -28,9 +28,7 @@ const ViewOrganisation: React.FC = () => {
       <div className="flex flex-col justify-center min-h-36 mt-12">
         <img
           className="object-contain h-48 sm:h-96 w-auto rounded-t-lg" // h-96" //md:max-w-50% md:h-auto md:rounded-none md:rounded-s-lg"
-          src={
-            process.env.REACT_APP_BACKEND_URL! + "/" + organisation.image_url
-          }
+          src={process.env.REACT_APP_BACKEND_URL! + "/" + organisation.imageUrl}
           alt=""
         />
       </div>
@@ -40,8 +38,8 @@ const ViewOrganisation: React.FC = () => {
           {organisation.name}
         </h2>
         <p>{organisation.description}</p>
-        {organisation.website_url && (
-          <Link to={organisation.website_url}>
+        {organisation.websiteUrl && (
+          <Link to={organisation.websiteUrl}>
             <Button>
               <LinkIcon className="stroke-2 w-4 h-4 mr-2" />
               Link to website

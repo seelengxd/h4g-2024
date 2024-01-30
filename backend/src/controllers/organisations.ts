@@ -47,8 +47,8 @@ export const create: RequestHandler[] = [
       data: {
         name,
         description,
-        website_url: websiteUrl,
-        image_url: req.file?.path,
+        websiteUrl,
+        imageUrl: req.file?.path,
       },
     });
     res.sendStatus(200);
@@ -76,8 +76,8 @@ export const update: RequestHandler[] = [
       data: {
         name,
         description,
-        website_url: websiteUrl,
-        image_url: req.file?.path,
+        websiteUrl,
+        imageUrl: req.file?.path,
       },
     });
     res.sendStatus(200);

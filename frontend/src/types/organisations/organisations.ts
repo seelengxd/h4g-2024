@@ -2,8 +2,8 @@ export interface Organisation {
   id: number;
   name: string;
   description: string;
-  image_url?: string;
-  website_url?: string;
+  imageUrl?: string;
+  websiteUrl?: string;
 }
 
 export interface OrganisationsPostData {

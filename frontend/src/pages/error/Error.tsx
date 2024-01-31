@@ -8,9 +8,9 @@ interface errorDetails {
 
 const Error: React.FC<errorDetails> = ({ errorCode, desc }) => {
   return (
-    <div className="p-40 mt-2 flex flex-col items-center justify-center h-screen">
-      <h1 className="text-pink-500 text-4xl font-bold mb-2">{errorCode}</h1>
-      <h2 className="text-gray-500 text-lg mb-4">{desc}</h2>
+    <div className="flex flex-col items-center justify-center h-screen p-40 mt-2">
+      <h1 className="mb-2 text-4xl font-bold text-pink-500">{errorCode}</h1>
+      <h2 className="mb-4 text-lg text-gray-500">{desc}</h2>
       <Placeholder />
     </div>
   );

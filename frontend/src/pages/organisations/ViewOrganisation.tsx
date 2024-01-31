@@ -24,10 +24,10 @@ const ViewOrganisation: React.FC = () => {
       .then(() => navigate("/organisations"));
   };
   return organisation ? (
-    <div className="mx-auto max-w-7xl items-center justify-between p-6 lg:px-8">
-      <div className="flex flex-col justify-center min-h-36 mt-12">
+    <div className="items-center justify-between p-6 mx-auto max-w-7xl lg:px-8">
+      <div className="flex flex-col justify-center mt-12 min-h-36">
         <img
-          className="object-contain h-48 sm:h-96 w-auto rounded-t-lg" // h-96" //md:max-w-50% md:h-auto md:rounded-none md:rounded-s-lg"
+          className="object-contain w-auto h-48 rounded-t-lg sm:h-96" // h-96" //md:max-w-50% md:h-auto md:rounded-none md:rounded-s-lg"
           src={process.env.REACT_APP_BACKEND_URL! + "/" + organisation.imageUrl}
           alt=""
         />
@@ -41,7 +41,7 @@ const ViewOrganisation: React.FC = () => {
         {organisation.websiteUrl && (
           <Link to={organisation.websiteUrl}>
             <Button>
-              <LinkIcon className="stroke-2 w-4 h-4 mr-2" />
+              <LinkIcon className="w-4 h-4 mr-2 stroke-2" />
               Link to website
             </Button>
           </Link>
@@ -52,14 +52,14 @@ const ViewOrganisation: React.FC = () => {
               setDialogOpen(true);
             }}
           >
-            <TrashIcon className="stroke-2 w-4 h-4 mr-2" />
+            <TrashIcon className="w-4 h-4 mr-2 stroke-2" />
             Delete
           </Button>
         </div>
         <div>
           <Link to={`/organisations/${id}/edit`}>
             <Button>
-              <PencilIcon className="stroke-2 w-4 h-4 mr-2" />
+              <PencilIcon className="w-4 h-4 mr-2 stroke-2" />
               Edit
             </Button>
           </Link>

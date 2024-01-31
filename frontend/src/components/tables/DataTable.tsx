@@ -62,7 +62,7 @@ const DataTable = <T extends object>({
 
   return (
     <>
-      <div className="flex items-end mb-6 mt-6">
+      <div className="flex items-end mt-6 mb-6">
         {isSortable && <DataTableSearch table={table} />}
         {table.getHeaderGroups().map((headerGroup) =>
           headerGroup.headers.map((header) => {
@@ -76,7 +76,7 @@ const DataTable = <T extends object>({
       </div>
 
       <div className="p-6 bg-white border border-gray-200 rounded-lg shadow">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+        <table className="w-full text-sm text-left text-gray-500 rtl:text-right">
           <DataTableHeader
             headerGroups={table.getHeaderGroups()}
             isSortable={isSortable}
@@ -85,7 +85,7 @@ const DataTable = <T extends object>({
             {table.getRowModel().rows.map((row) => (
               <tr
                 key={row.id}
-                className="odd:bg-white even:bg-gray-50 border-b"
+                className="border-b odd:bg-white even:bg-gray-50"
               >
                 {row.getVisibleCells().map((cell) => (
                   <td key={cell.id} className="px-6 py-4">
@@ -95,8 +95,8 @@ const DataTable = <T extends object>({
               </tr>
             ))}
             {table.getPrePaginationRowModel().rows.length === 0 && (
-              <tr className="odd:bg-white even:bg-gray-50 border-b">
-                <td className="text-center py-8" colSpan={columns.length}>
+              <tr className="border-b odd:bg-white even:bg-gray-50">
+                <td className="py-8 text-center" colSpan={columns.length}>
                   <p color="text-gray-500">No activities found</p>
                 </td>
               </tr>

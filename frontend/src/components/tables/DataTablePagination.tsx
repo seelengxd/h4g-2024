@@ -29,7 +29,7 @@ const DataTablePagination = <T extends object>({
   } = table;
   const { pageIndex, pageSize } = getState().pagination;
   return (
-    <div className="flex justify-between items-center border-t p-4">
+    <div className="flex items-center justify-between p-4 border-t">
       <div className="flex">
         {/* Jump to first page icon button */}
         <Tooltip label="First Page" />
@@ -39,7 +39,7 @@ const DataTablePagination = <T extends object>({
             setPageIndex(0);
           }}
           isDisabled={!getCanPreviousPage()}
-          icon={<ChevronDoubleLeftIcon className="h-6 w-6 stroke-2" />}
+          icon={<ChevronDoubleLeftIcon className="w-6 h-6 stroke-2" />}
           mr={4}
         />
 
@@ -49,13 +49,13 @@ const DataTablePagination = <T extends object>({
           ariaLabel="Previous Page"
           onClick={previousPage}
           isDisabled={!getCanPreviousPage()}
-          icon={<ChevronLeftIcon className="h-3 w-3 stroke-2" />}
+          icon={<ChevronLeftIcon className="w-3 h-3 stroke-2" />}
         />
       </div>
 
       <div className="flex items-center">
         {/* Current page number display */}
-        <p className="text-sm flex-shrink-0 mr-8">
+        <p className="flex-shrink-0 mr-8 text-sm">
           {"Page "}
           <span className="text-sm font-bold">
             {`${pageIndex + 1} of ${Math.max(getPageCount(), 1)}`}
@@ -66,7 +66,7 @@ const DataTablePagination = <T extends object>({
         </p>
 
         {/* Page Navigation Field Input */}
-        <p className="text-sm flex-shrink-0">{"Go to page: "}</p>
+        <p className="flex-shrink-0 text-sm">{"Go to page: "}</p>
 
         {/* TODO: there should be a min/max but idk how to get it to work */}
         <input
@@ -104,7 +104,7 @@ const DataTablePagination = <T extends object>({
           ariaLabel="Next Page"
           onClick={nextPage}
           isDisabled={!getCanNextPage()}
-          icon={<ChevronRightIcon className="h-3 w-3 stroke-2" />}
+          icon={<ChevronRightIcon className="w-3 h-3 stroke-2" />}
           mr={4}
         />
 
@@ -115,7 +115,7 @@ const DataTablePagination = <T extends object>({
             setPageIndex(getPageCount() - 1);
           }}
           isDisabled={!getCanNextPage()}
-          icon={<ChevronDoubleRightIcon className="h-6 w-6 stroke-2" />}
+          icon={<ChevronDoubleRightIcon className="w-6 h-6 stroke-2" />}
           marginLeft={4}
         />
       </div>

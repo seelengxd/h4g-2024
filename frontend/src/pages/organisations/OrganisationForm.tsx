@@ -64,9 +64,9 @@ const OrganisationForm: React.FC<Props> = ({
   } = formik;
 
   return (
-    <div className="mx-auto max-w-7xl items-center justify-between p-6 lg:px-8">
+    <div className="items-center justify-between p-6 mx-auto max-w-7xl lg:px-8">
       <div className="w-full">
-        <div className="w-full flex flex-initial justify-between items-center">
+        <div className="flex items-center justify-between flex-initial w-full">
           <div className="flex items-center mt-4">
             <BuildingOfficeIcon className="w-10 h-10 mr-4" />
             <h1 className="text-4xl font-semibold text-gray-800">{label}</h1>
@@ -134,7 +134,7 @@ const OrganisationForm: React.FC<Props> = ({
             />
             {imageDisplayUrl && (
               <img
-                className="mt-4 w-full md:w-56"
+                className="w-full mt-4 md:w-56"
                 src={imageDisplayUrl}
                 alt="uploaded"
               />

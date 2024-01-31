@@ -10,30 +10,30 @@ const ConfirmationDialog: React.FC<Props> = ({
   onCancel,
 }) => {
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 backdrop-blur confirm-dialog">
-      <div className="relative px-4 min-h-screen md:flex md:items-center md:justify-center">
-        <div className="opacity-25 w-full h-full absolute z-10 inset-0"></div>
-        <div className="bg-white rounded-lg md:max-w-md md:mx-auto p-4 fixed inset-x-0 bottom-0 z-50 mb-4 mx-4 md:relative shadow-lg">
-          <div className="md:flex items-center">
-            <div className="rounded-full border border-gray-300 flex items-center justify-center w-16 h-16 flex-shrink-0 mx-auto">
-              <i className="bx bx-error text-3xl">&#9888;</i>
+    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur confirm-dialog">
+      <div className="relative min-h-screen px-4 md:flex md:items-center md:justify-center">
+        <div className="absolute inset-0 z-10 w-full h-full opacity-25"></div>
+        <div className="fixed inset-x-0 bottom-0 z-50 p-4 mx-4 mb-4 bg-white rounded-lg shadow-lg md:max-w-md md:mx-auto md:relative">
+          <div className="items-center md:flex">
+            <div className="flex items-center justify-center flex-shrink-0 w-16 h-16 mx-auto border border-gray-300 rounded-full">
+              <i className="text-3xl bx bx-error">&#9888;</i>
             </div>
-            <div className="mt-4 md:mt-0 md:ml-6 text-center md:text-left">
+            <div className="mt-4 text-center md:mt-0 md:ml-6 md:text-left">
               <p className="font-bold">Warning!</p>
-              <p className="text-sm text-gray-700 mt-1">{message}</p>
+              <p className="mt-1 text-sm text-gray-700">{message}</p>
             </div>
           </div>
-          <div className="text-center md:text-right mt-4 md:flex md:justify-end">
+          <div className="mt-4 text-center md:text-right md:flex md:justify-end">
             <button
               id="confirm-delete-btn"
-              className="block w-full md:inline-block md:w-auto px-4 py-3 md:py-2 bg-red-200 text-red-700 rounded-lg font-semibold text-sm md:ml-2 md:order-2"
+              className="block w-full px-4 py-3 text-sm font-semibold text-red-700 bg-red-200 rounded-lg md:inline-block md:w-auto md:py-2 md:ml-2 md:order-2"
               onClick={onDelete}
             >
               Delete
             </button>
             <button
               id="confirm-cancel-btn"
-              className="block w-full md:inline-block md:w-auto px-4 py-3 md:py-2 bg-gray-200 rounded-lg font-semibold text-sm mt-4 md:mt-0 md:order-1"
+              className="block w-full px-4 py-3 mt-4 text-sm font-semibold bg-gray-200 rounded-lg md:inline-block md:w-auto md:py-2 md:mt-0 md:order-1"
               onClick={onCancel}
             >
               Cancel

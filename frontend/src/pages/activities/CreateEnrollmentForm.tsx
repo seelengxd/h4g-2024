@@ -136,7 +136,7 @@ const CreateEnrollmentForm: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto max-w-4xl items-center justify-between p-6 lg:px-8 h-screen">
+    <div className="items-center justify-between h-screen max-w-4xl p-6 mx-auto lg:px-8">
       <div className="flex flex-col justify-center">
         <input
           value={formData.title}
@@ -147,7 +147,7 @@ const CreateEnrollmentForm: React.FC = () => {
         />
         <textarea
           value={formData.description}
-          className="mt-4 text-md ml-4 text-gray-400"
+          className="mt-4 ml-4 text-gray-400 text-md"
           onChange={(e) => handleFormDescriptionChange(e.target.value)}
           placeholder="Enter description here"
         >
@@ -179,7 +179,7 @@ const CreateEnrollmentForm: React.FC = () => {
           </Droppable>
         </DragDropContext>
 
-        <div className="ml-4 flex">
+        <div className="flex ml-4">
           <Button
             onClick={(e) =>
               setFormData({
@@ -198,7 +198,7 @@ const CreateEnrollmentForm: React.FC = () => {
           </Button>
         </div>
 
-        <div className="mt-4 mb-2 ml-4 flex justify-center">
+        <div className="flex justify-center mt-4 mb-2 ml-4">
           <Button>Create Form!</Button>
         </div>
       </div>

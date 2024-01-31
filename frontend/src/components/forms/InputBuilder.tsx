@@ -42,12 +42,12 @@ const InputBuilder: React.FC<Props> = ({
     <Draggable draggableId={component.id.toString()} index={index}>
       {(provided) => (
         <div
-          className="border-gray-100 border-2 border-l-8 border-l-indigo-600 w-full p-4 m-4 rounded-md shadow-sm bg-white"
+          className="w-full p-4 m-4 bg-white border-2 border-l-8 border-gray-100 border-l-indigo-600 rounded-md shadow-sm"
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <div className="flex gap-4 sm:gap-8 justify-center">
+          <div className="flex justify-center gap-4 sm:gap-8">
             <div className="mt-2 sm:w-8/12">
               {/* change 1: handle question title change */}
               <input
@@ -93,7 +93,7 @@ const InputBuilder: React.FC<Props> = ({
                         />
                       )}
                       {type === "select" && (
-                        <span className="mr-4 w-4">{index + 1}.</span>
+                        <span className="w-4 mr-4">{index + 1}.</span>
                       )}
                       {/* change 3: handle option value change */}
                       <input

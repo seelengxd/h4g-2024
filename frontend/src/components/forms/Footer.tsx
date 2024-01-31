@@ -8,11 +8,11 @@ interface Props {
 
 const Footer: React.FC<Props> = ({ question, linkText, href }) => {
   return (
-    <p className="mt-10 text-center text-sm text-gray-500">
+    <p className="mt-10 text-sm text-center text-gray-500">
       {question}
       <Link
         to={href}
-        className="ml-1 font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+        className="ml-1 font-semibold text-indigo-600 leading-6 hover:text-indigo-500"
       >
         {linkText}
       </Link>

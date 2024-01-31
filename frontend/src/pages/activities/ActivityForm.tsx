@@ -86,9 +86,9 @@ const ActivityForm: React.FC<Props> = ({
     label: organisation.name,
   }));
   return (
-    <div className="mx-auto max-w-7xl items-center justify-between p-6 lg:px-8">
+    <div className="items-center justify-between p-6 mx-auto max-w-7xl lg:px-8">
       <div className="w-full">
-        <div className="w-full flex flex-initial justify-between items-center">
+        <div className="flex items-center justify-between flex-initial w-full">
           <div className="flex items-center mt-4">
             <FireIcon className="w-10 h-10 mr-4" />
             <h1 className="text-4xl font-semibold text-gray-800">{label}</h1>
@@ -166,7 +166,7 @@ const ActivityForm: React.FC<Props> = ({
             <div>
               {/* Map through activityDates state to render datepicker for each date */}
               {values.activityDates.map((date, index) => (
-                <div key={index} className="mb-2 flex gap-2">
+                <div key={index} className="flex mb-2 gap-2">
                   <DatePicker
                     showTimeSelect
                     selected={date.start}
@@ -175,7 +175,7 @@ const ActivityForm: React.FC<Props> = ({
                       newDates[index] = { ...newDates[index], start: newDate! };
                       setFieldValue("activityDates", newDates);
                     }}
-                    className="border border-gray-300 rounded px-3 py-2"
+                    className="px-3 py-2 border border-gray-300 rounded"
                     dateFormat="MMMM d, yyyy h:mm aa"
                   />
                   <DatePicker
@@ -186,13 +186,13 @@ const ActivityForm: React.FC<Props> = ({
                       newDates[index] = { ...newDates[index], end: newDate! };
                       setFieldValue("activityDates", newDates);
                     }}
-                    className="border border-gray-300 rounded px-3 py-2"
+                    className="px-3 py-2 border border-gray-300 rounded"
                     dateFormat="MMMM d, yyyy h:mm aa"
                   />
                   {/* Button to remove date entry */}
                   <button
                     type="button"
-                    className="ml-2 px-3 py-2 bg-red-500 text-white rounded"
+                    className="px-3 py-2 ml-2 text-white bg-red-500 rounded"
                     onClick={() => {
                       const newDates = [...values.activityDates];
                       newDates.splice(index, 1);
@@ -206,7 +206,7 @@ const ActivityForm: React.FC<Props> = ({
               {/* Button to add new date entry */}
               <button
                 type="button"
-                className="px-3 py-2 bg-blue-500 text-white rounded"
+                className="px-3 py-2 text-white bg-blue-500 rounded"
                 onClick={() =>
                   setFieldValue("activityDates", [
                     ...values.activityDates,

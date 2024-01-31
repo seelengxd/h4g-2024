@@ -24,7 +24,7 @@ const ViewActivity: React.FC = () => {
       .then(() => navigate("/activities"));
   };
   return activity ? (
-    <div className="mx-auto max-w-7xl items-center justify-between p-6 lg:px-8">
+    <div className="items-center justify-between p-6 mx-auto max-w-7xl lg:px-8">
       <div className="flex flex-col justify-between p-4 leading-normal">
         <h2 className="mb-2 text-4xl font-semibold tracking-tight text-gray-900">
           {activity.name}
@@ -49,14 +49,14 @@ const ViewActivity: React.FC = () => {
               setDialogOpen(true);
             }}
           >
-            <TrashIcon className="stroke-2 w-4 h-4 mr-2" />
+            <TrashIcon className="w-4 h-4 mr-2 stroke-2" />
             Delete
           </Button>
         </div>
         <div>
           <Link to={`/activities/${id}/edit`}>
             <Button>
-              <PencilIcon className="stroke-2 w-4 h-4 mr-2" />
+              <PencilIcon className="w-4 h-4 mr-2 stroke-2" />
               Edit
             </Button>
           </Link>

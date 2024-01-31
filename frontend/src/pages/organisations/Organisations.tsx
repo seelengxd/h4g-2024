@@ -21,9 +21,9 @@ const Organisations: React.FC = () => {
       .finally(() => setLoading(false));
   }, []);
   return (
-    <div className="mx-auto max-w-7xl items-center justify-between p-6 lg:px-8 h-screen">
+    <div className="items-center justify-between h-screen p-6 mx-auto max-w-7xl lg:px-8">
       <div className="w-full">
-        <div className="w-full sm:flex flex-initial justify-between items-center">
+        <div className="items-center justify-between flex-initial w-full sm:flex">
           <div className="flex items-center mt-4">
             <BuildingOfficeIcon className="w-10 h-10 mr-4" />
             <h1 className="text-4xl font-semibold text-gray-800">
@@ -33,7 +33,7 @@ const Organisations: React.FC = () => {
           <div className="hidden sm:block">
             <Link to="/organisations/new">
               <Button>
-                <PlusIcon className="stroke-2 w-4 h-4 mr-2" /> Create
+                <PlusIcon className="w-4 h-4 mr-2 stroke-2" /> Create
               </Button>
             </Link>
           </div>
@@ -43,7 +43,7 @@ const Organisations: React.FC = () => {
                 type="button"
                 className="absolute right-4 bottom-8 text-white bg-indigo-600 hover:bg-indigo-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2"
               >
-                <PlusIcon className="stroke-2 w-8 h-8" />
+                <PlusIcon className="w-8 h-8 stroke-2" />
                 <span className="sr-only">Create</span>
               </button>
             </Link>
@@ -53,7 +53,7 @@ const Organisations: React.FC = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <div className="grid md:grid-cols-4 mt-12 gap-10">
+        <div className="mt-12 grid md:grid-cols-4 gap-10">
           {organisations.map((organisation) => (
             <OrganisationCard organisation={organisation} />
           ))}

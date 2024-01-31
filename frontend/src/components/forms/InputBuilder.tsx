@@ -80,36 +80,40 @@ const InputBuilder: React.FC<Props> = ({
               </p>
             ) : (
               <div>
-                {component.options.map((option, index) => (
-                  <div className="flex items-center mb-2" key={option.id}>
-                    {type === "multiselect" && (
+                {component.options
+                  .filter((option) => !option.deleted)
+                  .map((option, index) => (
+                    <div className="flex items-center mb-2" key={option.id}>
+                      {type === "multiselect" && (
+                        <input
+                          readOnly
+                          type="checkbox"
+                          checked={false}
+                          className="w-6 h-6 mr-4 border-gray-300 rounded focus:ring-blue-500 "
+                        />
+                      )}
+                      {type === "select" && (
+                        <span className="mr-4 w-4">{index + 1}.</span>
+                      )}
+                      {/* change 3: handle option value change */}
                       <input
-                        type="checkbox"
-                        checked={false}
-                        className="w-6 h-6 mr-4 border-gray-300 rounded focus:ring-blue-500 "
+                        type="text"
+                        value={option.value}
+                        placeholder={"Option " + (index + 1)}
+                        onChange={(e) => {
+                          onOptionValueChange(index, e.target.value);
+                        }}
+                        className="block mr-4 w-1/2 rounded-md border-0 border-dotted py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
-                    )}
-                    {type === "select" && (
-                      <span className="mr-4 w-4">{index + 1}.</span>
-                    )}
-                    {/* change 3: handle option value change */}
-                    <input
-                      type="text"
-                      value={option.value}
-                      placeholder={"Option " + (index + 1)}
-                      onChange={(e) => {
-                        onOptionValueChange(index, e.target.value);
-                      }}
-                      className="block mr-4 w-1/2 rounded-md border-0 border-dotted py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                    {/* change 4: handle delete option */}
-                    {!!index && (
-                      <Button onClick={() => onOptionDelete(index)}>
-                        Delete
-                      </Button>
-                    )}
-                  </div>
-                ))}
+                      {/* change 4: handle delete option */}
+                      {component.options.filter((option) => !option.deleted)
+                        .length > 1 && (
+                        <Button onClick={() => onOptionDelete(index)}>
+                          Delete
+                        </Button>
+                      )}
+                    </div>
+                  ))}
                 {/* change 5: handle add option */}
                 <Button onClick={onOptionAdd}>Add Option</Button>
               </div>

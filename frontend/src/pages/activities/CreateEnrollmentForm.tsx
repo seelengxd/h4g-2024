@@ -73,11 +73,7 @@ const CreateEnrollmentForm: React.FC = () => {
     const component = formDataCopy.components[index];
     if (["multiselect", "select"].includes(component.type)) {
       const componentWithOptions = component as InputWithOptionsBase;
-      const nextId = componentWithOptions.options.reduce(
-        (curr, prev) => Math.max(curr, prev.id + 1),
-        1
-      );
-      componentWithOptions.options.push(createOptionData(nextId));
+      componentWithOptions.options[optionIndex].deleted = true;
       setFormData(formDataCopy);
     }
   };

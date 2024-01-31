@@ -3,6 +3,10 @@ interface InputBase {
   title: string;
 }
 
+export interface InputWithOptionsBase extends InputBase {
+  options: OptionData[];
+}
+
 export interface OptionData {
   id: number;
   value: string;
@@ -17,32 +21,26 @@ export interface TextareaInputData extends InputBase {
   type: "multiline";
 }
 
-export interface SelectInputData extends InputBase {
+export interface SelectInputData extends InputWithOptionsBase {
   type: "select";
-  options: OptionData[];
 }
 
-export interface MultiselectInputData extends InputBase {
+export interface MultiselectInputData extends InputWithOptionsBase {
   type: "multiselect";
-  options: OptionData[];
 }
-export interface DateInputData extends InputBase {
-  type: "date";
-}
+// export interface DateInputData extends InputBase {
+//   type: "date";
+// }
 
-export type InputType =
-  | "text"
-  | "multiline"
-  | "select"
-  | "multiselect"
-  | "date";
+export type InputType = "text" | "multiline" | "select" | "multiselect";
+// | "date";
 
 export type InputData =
   | TextInputData
   | TextareaInputData
   | SelectInputData
-  | MultiselectInputData
-  | DateInputData;
+  | MultiselectInputData;
+// | DateInputData;
 
 export interface FormData {
   id?: number;

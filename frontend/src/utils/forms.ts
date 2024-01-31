@@ -1,5 +1,4 @@
 import {
-  DateInputData,
   MultiselectInputData,
   SelectInputData,
   TextInputData,
@@ -54,13 +53,13 @@ export const createMultiselectInputData = (
   };
 };
 
-export const createDateInputData = (nextId: number): DateInputData => {
-  return {
-    id: nextId,
-    type: "date",
-    title: "",
-  };
-};
+// export const createDateInputData = (nextId: number): DateInputData => {
+//   return {
+//     id: nextId,
+//     type: "date",
+//     title: "",
+//   };
+// };
 
 export const createOptionData = (nextId: number) => {
   return {

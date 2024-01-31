@@ -7,14 +7,28 @@ import { createOptionData } from "../../utils/forms";
 import { Draggable } from "react-beautiful-dnd";
 
 interface Props {
-  nextId?: number;
   component: InputData;
   index: number;
+  onQuestionTitleChange: (questionTitle: string) => void;
+  onTypeChange: (newType: InputType) => void;
+  onOptionValueChange: (optionIndex: number, newValue: string) => void;
+  onOptionDelete: (optionIndex: number) => void;
+  onOptionAdd: () => void;
+  onFieldDelete: () => void;
 }
 
-const InputBuilder: React.FC<Props> = ({ nextId = 1, component, index }) => {
-  const [type, setType] = useState<InputType>("text");
-  const [nextOptionId, setNextOptionId] = useState(nextId);
+const InputBuilder: React.FC<Props> = ({
+  component,
+  index,
+  onQuestionTitleChange,
+  onFieldDelete,
+  onTypeChange,
+  onOptionAdd,
+  onOptionDelete,
+  onOptionValueChange,
+}) => {
+  console.log("render input builder");
+  const type = component.type;
   const typeOptions: Array<{ label: string; value: InputType }> = [
     { label: "Short answer", value: "text" },
     { label: "Paragraph", value: "multiline" },
@@ -24,8 +38,6 @@ const InputBuilder: React.FC<Props> = ({ nextId = 1, component, index }) => {
     { label: "Dropdown", value: "select" },
   ];
 
-  // TODO: create the six change handlers at CreateEnrollmentForm
-  const [options, setOptions] = useState<OptionData[]>([]);
   return (
     <Draggable draggableId={component.id.toString()} index={index}>
       {(provided) => (
@@ -40,8 +52,9 @@ const InputBuilder: React.FC<Props> = ({ nextId = 1, component, index }) => {
               {/* change 1: handle question title change */}
               <input
                 placeholder={"Untitled Question"}
+                value={component.title}
                 required
-                //   onChange={onChange}
+                onChange={(e) => onQuestionTitleChange(e.target.value)}
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
@@ -51,7 +64,7 @@ const InputBuilder: React.FC<Props> = ({ nextId = 1, component, index }) => {
                 name="type"
                 options={typeOptions}
                 value={typeOptions?.find((option) => option.value === type)}
-                onChange={(option) => setType(option?.value!)}
+                onChange={(option) => onTypeChange(option!.value)}
                 required
               />
             </div>
@@ -67,7 +80,7 @@ const InputBuilder: React.FC<Props> = ({ nextId = 1, component, index }) => {
               </p>
             ) : (
               <div>
-                {options.map((option, index) => (
+                {component.options.map((option, index) => (
                   <div className="flex items-center mb-2" key={option.id}>
                     {type === "multiselect" && (
                       <input
@@ -85,38 +98,26 @@ const InputBuilder: React.FC<Props> = ({ nextId = 1, component, index }) => {
                       value={option.value}
                       placeholder={"Option " + (index + 1)}
                       onChange={(e) => {
-                        const newOptions = [...options];
-                        newOptions[index].value = e.target.value;
-                        setOptions(newOptions);
+                        onOptionValueChange(index, e.target.value);
                       }}
                       className="block mr-4 w-1/2 rounded-md border-0 border-dotted py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                     {/* change 4: handle delete option */}
-                    {!!index && <Button>Delete</Button>}
+                    {!!index && (
+                      <Button onClick={() => onOptionDelete(index)}>
+                        Delete
+                      </Button>
+                    )}
                   </div>
                 ))}
                 {/* change 5: handle add option */}
-                <Button
-                  onClick={() => {
-                    setOptions([...options, createOptionData(nextOptionId)]);
-                    setNextOptionId(nextOptionId + 1);
-                  }}
-                >
-                  Add Option
-                </Button>
-                <div className="mt-2">
-                  {/* change 6: handle delete field */}
-                  <Button
-                    onClick={() => {
-                      setOptions([...options, createOptionData(nextOptionId)]);
-                      setNextOptionId(nextOptionId + 1);
-                    }}
-                  >
-                    Delete Field
-                  </Button>
-                </div>
+                <Button onClick={onOptionAdd}>Add Option</Button>
               </div>
             )}
+            <div className="mt-2">
+              {/* change 6: handle delete field */}
+              <Button onClick={onFieldDelete}>Delete Field</Button>
+            </div>
           </div>
         </div>
       )}

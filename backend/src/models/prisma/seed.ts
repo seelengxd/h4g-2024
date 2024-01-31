@@ -1,12 +1,20 @@
 // TODO
-import { ActivityType, PrismaClient, Role } from "@prisma/client";
+import { ActivityType, PrismaClient, Role, Prisma } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
-
 async function main() {
     try {
+        await prisma.interest.deleteMany({});
+        await prisma.skill.deleteMany({});
+        await prisma.profile.deleteMany({});
+        await prisma.enrollmentForm.deleteMany({});
+        await prisma.activityDate.deleteMany({});
+        await prisma.activity.deleteMany({});
+        await prisma.user.deleteMany({});
+        await prisma.organisation.deleteMany({});
+
         //user 1
         const user1 = await prisma.user.upsert({
             where: { username: 'user1' },

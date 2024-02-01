@@ -1,14 +1,20 @@
 import authApi from "../../api/users/auth";
 import Spinner from "../../components/loading/Spinner";
 import Navbar from "../../components/navigation/Navbar";
-import { selectIsLoggedIn, setUser } from "../../reducers/authSlice";
+import SideBar from "../../components/navigation/Sidebar";
+import {
+  selectIsAdmin,
+  selectIsLoggedIn,
+  setUser,
+} from "../../reducers/authSlice";
 import { useAppDispatch, useAppSelector } from "../../reducers/hooks";
-import AuthenticatedApp from "./AuthenticatedApp";
+import AdminApp from "./AdminApp";
 import UnauthenticatedApp from "./UnauthenticatedApp";
 import React, { useState } from "react";
 
 const AppRouter: React.FC = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const isAdmin = useAppSelector(selectIsAdmin);
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
   if (!isLoggedIn) {
@@ -25,13 +31,21 @@ const AppRouter: React.FC = () => {
   }
   return (
     <div>
-      <Navbar />
       {loading ? (
         <div className="h-screen mx-auto">
           <Spinner />
         </div>
       ) : isLoggedIn ? (
-        <AuthenticatedApp />
+        isAdmin ? (
+          <>
+            <Navbar />
+            <AdminApp />
+          </>
+        ) : (
+          <>
+            <SideBar />
+          </>
+        )
       ) : (
         <UnauthenticatedApp />
       )}

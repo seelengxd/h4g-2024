@@ -24,9 +24,7 @@ const LogInForm: React.FC = () => {
       authApi
         .logIn(values)
         .then((user) => dispatch(setUser(user)))
-        .catch(() =>
-          setFieldError("password", "Invalid username or password.")
-        );
+        .catch(() => setFieldError("password", "Invalid email or password."));
     },
   });
 

@@ -100,7 +100,7 @@ export default function Navbar() {
         </div>
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
           {/* <Popover className="relative"> */}
-          {/* <Popover.Button className="flex items-center text-sm font-semibold text-gray-900 gap-x-1 leading-6">
+          {/* <Popover.Button className="flex items-center text-sm font-semibold leading-6 text-gray-900 gap-x-1">
               Product
               <ChevronDownIcon
                 className="flex-none w-5 h-5 text-gray-400"
@@ -122,7 +122,7 @@ export default function Navbar() {
                   {products.map((item) => (
                     <div
                       key={item.name}
-                      className="relative flex items-center p-4 text-sm rounded-lg group gap-x-6 leading-6 hover:bg-gray-50"
+                      className="relative flex items-center p-4 text-sm leading-6 rounded-lg group gap-x-6 hover:bg-gray-50"
                     >
                       <div className="flex items-center justify-center flex-none rounded-lg h-11 w-11 bg-gray-50 group-hover:bg-white">
                         <item.icon
@@ -165,7 +165,7 @@ export default function Navbar() {
           {links.map((link) => (
             <Link
               to={link.href}
-              className="text-sm font-semibold text-gray-900 leading-6"
+              className="text-sm font-semibold leading-6 text-gray-900"
             >
               {link.name}
             </Link>
@@ -174,7 +174,7 @@ export default function Navbar() {
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           {isLoggedIn ? (
             <p
-              className="text-sm font-semibold text-gray-900 cursor-pointer leading-6"
+              className="text-sm font-semibold leading-6 text-gray-900 cursor-pointer"
               onClick={handleLogout}
             >
               Log out <span aria-hidden="true">&rarr;</span>
@@ -182,7 +182,7 @@ export default function Navbar() {
           ) : (
             <Link
               to="/"
-              className="text-sm font-semibold text-gray-900 leading-6"
+              className="text-sm font-semibold leading-6 text-gray-900"
             >
               Log in <span aria-hidden="true">&rarr;</span>
             </Link>
@@ -215,7 +215,7 @@ export default function Navbar() {
               <XMarkIcon className="w-6 h-6" aria-hidden="true" />
             </button>
           </div>
-          <div className="mt-6 flow-root">
+          <div className="flow-root mt-6">
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="py-6 space-y-2">
                 {/* <Disclosure as="div" className="-mx-3">
@@ -237,7 +237,7 @@ export default function Navbar() {
                             key={item.name}
                             as="a"
                             href={item.href}
-                            className="block py-2 pl-6 pr-3 text-sm font-semibold text-gray-900 rounded-lg leading-7 hover:bg-gray-50"
+                            className="block py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 rounded-lg hover:bg-gray-50"
                           >
                             {item.name}
                           </Disclosure.Button>
@@ -249,7 +249,7 @@ export default function Navbar() {
                 {links.map((link) => (
                   <Link
                     to={link.href}
-                    className="block px-3 py-2 -mx-3 text-base font-semibold text-gray-900 rounded-lg leading-7 hover:bg-gray-50"
+                    className="block px-3 py-2 -mx-3 text-base font-semibold leading-7 text-gray-900 rounded-lg hover:bg-gray-50"
                   >
                     {link.name}
                   </Link>

@@ -21,7 +21,7 @@ const error403 = (
   <Error errorCode={403} desc="Ehem! You don't have permission!" />
 );
 
-const AuthenticatedApp: React.FC = () => {
+const VolunteerApp: React.FC = () => {
   return (
     <Routes>
       {/* Organisation Routes */}
@@ -53,4 +53,4 @@ const AuthenticatedApp: React.FC = () => {
   );
 };
 
-export default AuthenticatedApp;
+export default VolunteerApp;

@@ -21,7 +21,7 @@ const Organisations: React.FC = () => {
       .finally(() => setLoading(false));
   }, []);
   return (
-    <div className="items-center justify-between h-screen p-6 mx-auto max-w-7xl lg:px-8">
+    <div className="items-center justify-between w-full h-screen p-6 mx-auto max-w-7xl lg:px-8">
       <div className="w-full">
         <div className="items-center justify-between flex-initial w-full sm:flex">
           <div className="flex items-center mt-4">
@@ -53,7 +53,7 @@ const Organisations: React.FC = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <div className="mt-12 grid md:grid-cols-4 gap-10">
+        <div className="grid gap-10 mt-12 md:grid-cols-4">
           {organisations.map((organisation) => (
             <OrganisationCard organisation={organisation} />
           ))}

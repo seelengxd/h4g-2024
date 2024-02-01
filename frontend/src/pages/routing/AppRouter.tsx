@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "../../reducers/hooks";
 import AdminApp from "./AdminApp";
 import UnauthenticatedApp from "./UnauthenticatedApp";
 import React, { useState } from "react";
+import VolunteerApp from "./VolunteerApp";
 
 const AppRouter: React.FC = () => {
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
@@ -42,9 +43,13 @@ const AppRouter: React.FC = () => {
             <AdminApp />
           </>
         ) : (
-          <>
+          <div className="relative flex">
             <SideBar />
-          </>
+            {/* to not go into the sidebar */}
+            <div className="w-full ml-24">
+              <VolunteerApp />
+            </div>
+          </div>
         )
       ) : (
         <UnauthenticatedApp />

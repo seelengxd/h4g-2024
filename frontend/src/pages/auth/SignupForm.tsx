@@ -1,26 +1,27 @@
 import React from "react";
-import Label from "../../components/forms/Label";
 import Input from "../../components/forms/Input";
 import Button from "../../components/buttons/Button";
-import Container from "../../components/containers/Container";
-import Footer from "../../components/forms/Footer";
 import { useFormik } from "formik";
 import { object, string } from "yup";
 import FormControl from "../../components/forms/FormControl";
 import authApi from "../../api/users/auth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUpForm: React.FC = () => {
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
-      username: "",
+      fullName: "",
+      preferredName: "",
       password: "",
       confirmPassword: "",
       email: "",
     },
     validationSchema: object({
-      username: string().trim().required("Username cannot be empty."),
+      fullName: string().trim().required("Full name cannot be empty."),
+      preferredName: string()
+        .trim()
+        .required("Preferred name cannot be empty."),
       password: string()
         .trim()
         .required("Password cannot be empty.")
@@ -57,93 +58,114 @@ const SignUpForm: React.FC = () => {
     setFieldError,
   } = formik;
   return (
-    <Container>
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img
-          className="w-auto h-10 mx-auto"
-          src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-          alt="Your Company"
-        />
-        <h2 className="mt-10 text-2xl font-bold tracking-tight text-center text-gray-900 leading-9">
-          Create your new account
-        </h2>
-      </div>
+    <div className="grid h-screen grid-cols-2">
+      <img src="hearthand.png" alt="heart" className="object-cover h-full" />
+      <div className="px-32 my-auto sm:mx-16">
+        <h1 className="text-6xl font-semibold">Sign Up</h1>
+        <p className="mt-6">
+          Already have an account?{" "}
+          <Link to="/">
+            <span className="underline text-primary-800">Login.</span>
+          </Link>
+        </p>
+        <form className="mt-8 -mb-6" onSubmit={handleSubmit}>
+          <div className="mt-6">
+            <FormControl
+              isInvalid={!!touched.fullName && errors.fullName !== undefined}
+              errorMessage={errors.fullName}
+              onBlur={handleBlur}
+            >
+              <Input
+                label="Full name (as per NRIC)"
+                name="fullName"
+                autoComplete="fullName"
+                value={values.fullName}
+                onChange={handleChange}
+                required
+              />
+            </FormControl>
+          </div>
+          <div className="mt-6">
+            <FormControl
+              isInvalid={
+                !!touched.preferredName && errors.preferredName !== undefined
+              }
+              errorMessage={errors.preferredName}
+              onBlur={handleBlur}
+            >
+              <Input
+                label="Preferred Name"
+                name="preferredName"
+                autoComplete="preferredName"
+                value={values.preferredName}
+                onChange={handleChange}
+                required
+              />
+            </FormControl>
+          </div>
+          <div className="mt-6">
+            <FormControl
+              isInvalid={!!touched.email && errors.email !== undefined}
+              errorMessage={errors.email}
+              onBlur={handleBlur}
+            >
+              <Input
+                label="Email"
+                name="email"
+                autoComplete="email"
+                value={values.email}
+                onChange={handleChange}
+                required
+              />
+            </FormControl>
+          </div>
 
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6" onSubmit={handleSubmit}>
-          <FormControl
-            isInvalid={!!touched.username && errors.username !== undefined}
-            errorMessage={errors.username}
-            onBlur={handleBlur}
-          >
-            <Label htmlFor="username">Username</Label>
-            <Input
-              name="username"
-              autoComplete="username"
-              value={values.username}
-              onChange={handleChange}
-              required
-            />
-          </FormControl>
-          <FormControl
-            isInvalid={!!touched.email && errors.email !== undefined}
-            errorMessage={errors.email}
-            onBlur={handleBlur}
-          >
-            <Label htmlFor="email">Email</Label>
-            <Input
-              name="email"
-              autoComplete="email"
-              value={values.email}
-              onChange={handleChange}
-              required
-            />
-          </FormControl>
-          <FormControl
-            isInvalid={!!touched.password && errors.password !== undefined}
-            errorMessage={errors.password}
-            onBlur={handleBlur}
-          >
-            <Label htmlFor="password">Password</Label>
-            <Input
-              name="password"
-              type="password"
-              autoComplete="new-password"
-              value={values.password}
-              onChange={handleChange}
-              required
-            />
-          </FormControl>
-          <FormControl
-            isInvalid={
-              !!touched.confirmPassword && errors.confirmPassword !== undefined
-            }
-            errorMessage={errors.confirmPassword}
-            onBlur={handleBlur}
-          >
-            <Label htmlFor="new-password">Confirm Password</Label>
-            <Input
-              name="confirmPassword"
-              type="password"
-              autoComplete="current-password"
-              value={values.confirmPassword}
-              onChange={handleChange}
-              required
-            />
-          </FormControl>
-          <div>
+          <div className="mt-6">
+            <FormControl
+              isInvalid={!!touched.password && errors.password !== undefined}
+              errorMessage={errors.password}
+              onBlur={handleBlur}
+            >
+              <Input
+                label="Password"
+                name="password"
+                type="password"
+                autoComplete="new-password"
+                value={values.password}
+                onChange={handleChange}
+                required
+              />
+            </FormControl>
+          </div>
+          <div className="mt-6">
+            <FormControl
+              isInvalid={
+                !!touched.confirmPassword &&
+                errors.confirmPassword !== undefined
+              }
+              errorMessage={errors.confirmPassword}
+              onBlur={handleBlur}
+            >
+              <Input
+                label="Confirm Password"
+                name="confirmPassword"
+                type="password"
+                autoComplete="new-password"
+                value={values.confirmPassword}
+                onChange={handleChange}
+                required
+              />
+            </FormControl>
+          </div>
+
+          <div className="mt-12">
             <Button type="submit" fullWidth>
               Sign Up
             </Button>
           </div>
         </form>
-        <Footer
-          question={"Already have an account?"}
-          href="/"
-          linkText="Sign in."
-        />
       </div>
-    </Container>
+    </div>
   );
 };
 

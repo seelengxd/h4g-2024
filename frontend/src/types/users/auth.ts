@@ -1,9 +1,10 @@
 export interface LogInPostData {
-  username: string;
+  email: string;
   password: string;
 }
 
 export interface SignUpPostData extends LogInPostData {
-  email: string;
+  fullName: string;
+  preferredName: string;
   confirmPassword: string;
 }

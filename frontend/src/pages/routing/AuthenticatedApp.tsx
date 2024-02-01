@@ -10,6 +10,8 @@ import UpdateActivity from "../activities/UpdateActivity";
 import ViewActivity from "../activities/ViewActivity";
 import CreateEnrollmentForm from "../activities/CreateEnrollmentForm";
 import ViewEnrollmentForm from "../activities/ViewEnrollmentForm";
+import CardContainer from "../../components/dashboard/CardContainer";
+import VolunteerDashboard from "../dashboard/VolunteerDashboard";
 
 const error404 = (
   <Error errorCode={404} desc="Oh no! Are you sure this page exists?" />
@@ -43,6 +45,8 @@ const AuthenticatedApp: React.FC = () => {
         path="/activities/:id/enrollment-forms/:id"
         element={<ViewEnrollmentForm />}
       />
+
+      <Route path="/dashboard" element={<VolunteerDashboard />} />
       {/* 404 */}
       <Route path="*" element={error404} />
     </Routes>

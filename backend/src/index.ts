@@ -43,18 +43,23 @@ app.use(
 );
 
 passport.use(
-  new LocalStrategy(async function verify(username, password, cb) {
-    const user = await prisma.user.findFirst({ where: { username } });
-    if (!user) {
-      cb(null, false, { message: "Incorrect username or password." });
-      return;
+  new LocalStrategy(
+    {
+      usernameField: "email",
+    },
+    async function verify(email, password, cb) {
+      const user = await prisma.user.findFirst({ where: { email } });
+      if (!user) {
+        cb(null, false, { message: "Incorrect email or password." });
+        return;
+      }
+      if (!bcrypt.compareSync(password, user.password)) {
+        cb(null, false, { message: "Incorrect email or password." });
+        return;
+      }
+      return cb(null, user);
     }
-    if (!bcrypt.compareSync(password, user.password)) {
-      cb(null, false, { message: "Incorrect username or password." });
-      return;
-    }
-    return cb(null, user);
-  })
+  )
 );
 
 app.use(passport.initialize());

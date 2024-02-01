@@ -24,7 +24,7 @@ const AppRouter: React.FC = () => {
       .finally(() => setLoading(false));
   }
   return (
-    <>
+    <div>
       <Navbar />
       {loading ? (
         <div className="h-screen mx-auto">
@@ -35,7 +35,7 @@ const AppRouter: React.FC = () => {
       ) : (
         <UnauthenticatedApp />
       )}
-    </>
+    </div>
   );
 };
 

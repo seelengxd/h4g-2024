@@ -1,4 +1,9 @@
-import { FireIcon } from "@heroicons/react/24/outline";
+import {
+  CalendarIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  FireIcon,
+} from "@heroicons/react/24/outline";
 import Button from "../../components/buttons/Button";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
@@ -9,10 +14,11 @@ import Input from "../../components/forms/Input";
 import { Activity, ActivityPostData } from "../../types/activities/activities";
 import Select from "react-select";
 import { Organisation } from "../../types/organisations/organisations";
-import { useEffect, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import organisationsAPI from "../../api/organisations/organisations";
 import DatePicker from "react-datepicker"; // Import datepicker library
 import "react-datepicker/dist/react-datepicker.css"; // Import datepicker styles
+import { format } from "date-fns";
 
 interface Props {
   initialData?: Activity;
@@ -25,6 +31,10 @@ const ActivityForm: React.FC<Props> = ({
   handleValues,
   label,
 }) => {
+  const x = new Date();
+  x.setMonth(x.getMonth() + 1);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(x);
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -161,12 +171,68 @@ const ActivityForm: React.FC<Props> = ({
               required
             />
           </FormControl>
+          <DatePicker
+            selected={startDate}
+            onChange={(date) => setStartDate(date!)}
+            selectsStart
+            startDate={startDate}
+            endDate={endDate}
+            nextMonthButtonLabel=">"
+            previousMonthButtonLabel="<"
+            popperClassName="react-datepicker-left"
+            customInput={<ButtonInput />}
+            renderCustomHeader={({
+              date,
+              decreaseMonth,
+              increaseMonth,
+              prevMonthButtonDisabled,
+              nextMonthButtonDisabled,
+            }) => (
+              <div className="flex items-center justify-between px-2 py-2">
+                <span className="text-lg text-gray-700">
+                  {format(date, "MMMM yyyy")}
+                </span>
+
+                <div className="space-x-2">
+                  <button
+                    onClick={decreaseMonth}
+                    disabled={prevMonthButtonDisabled}
+                    type="button"
+                    className={`
+                                            ${
+                                              prevMonthButtonDisabled &&
+                                              "cursor-not-allowed opacity-50"
+                                            }
+                                            inline-flex p-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-500
+                                        `}
+                  >
+                    <ChevronLeftIcon className="w-5 h-5 text-gray-600" />
+                  </button>
+
+                  <button
+                    onClick={increaseMonth}
+                    disabled={nextMonthButtonDisabled}
+                    type="button"
+                    className={`
+                                            ${
+                                              nextMonthButtonDisabled &&
+                                              "cursor-not-allowed opacity-50"
+                                            }
+                                            inline-flex p-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-500
+                                        `}
+                  >
+                    <ChevronRightIcon className="w-5 h-5 text-gray-600" />
+                  </button>
+                </div>
+              </div>
+            )}
+          />
           <FormControl>
             <Label htmlFor="activityDates">Activity Dates</Label>
             <div>
               {/* Map through activityDates state to render datepicker for each date */}
               {values.activityDates.map((date, index) => (
-                <div key={index} className="flex mb-2 gap-2">
+                <div key={index} className="flex gap-2 mb-2">
                   <DatePicker
                     showTimeSelect
                     selected={date.start}
@@ -228,5 +294,20 @@ const ActivityForm: React.FC<Props> = ({
     </div>
   );
 };
+
+const ButtonInput = forwardRef<
+  HTMLButtonElement,
+  { value?: Date; onClick?: () => void }
+>(({ value, onClick }, ref) => (
+  <button
+    onClick={onClick}
+    ref={ref}
+    type="button"
+    className="inline-flex items-center justify-start w-full px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-500"
+  >
+    {format(new Date(value as any), "dd MMMM yyyy")}{" "}
+    <CalendarIcon className="w-5 h-5 ml-2" />
+  </button>
+));
 
 export default ActivityForm;

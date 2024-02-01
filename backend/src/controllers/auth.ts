@@ -22,7 +22,8 @@ export const login: RequestHandler = (req, res, next) => {
 };
 
 export const signup: RequestHandler[] = [
-  body("username").notEmpty(),
+  body("fullName").notEmpty(),
+  body("preferredName").notEmpty(),
   body("password")
     .notEmpty()
     .isLength({ min: 8 })
@@ -38,16 +39,17 @@ export const signup: RequestHandler[] = [
     .withMessage("Email should be a valid email."),
   async (req, res) => {
     const result = validationResult(req);
-    if (!validationResult(req).isEmpty()) {
-      res.send({ errors: validationResult(req).array() });
+    if (!result.isEmpty()) {
+      res.send({ errors: result.array() });
       return;
     }
-    const { username, password, email } = req.body;
+    const { fullName, preferredName, password, email } = req.body;
     const hashedPassword = bcrypt.hashSync(password, 8);
     try {
       const newUser = await prisma.user.create({
         data: {
-          username,
+          fullName,
+          preferredName,
           password: hashedPassword,
           email,
         },

@@ -33,12 +33,11 @@ const ViewActivity: React.FC = () => {
         <p>{activity.type}</p>
         <p>by {activity.organisation.name}</p>
 
-        {activity.activityDates.map((activityDate) => {
-          console.log(activityDate);
+        {activity.sessions.map((session) => {
           return (
             <>
-              <p>start: {new Date(activityDate.start).toISOString()}</p>
-              <p>end: {new Date(activityDate.end).toISOString()}</p>{" "}
+              <p>start: {new Date(session.start).toISOString()}</p>
+              <p>end: {new Date(session.end).toISOString()}</p>{" "}
             </>
           );
         })}

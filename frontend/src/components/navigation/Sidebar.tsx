@@ -38,7 +38,6 @@ const profile = {
 const SideBar: React.FC = () => {
   const location = useLocation();
   const pathName = location.pathname;
-  console.log({ pathName });
   return (
     <div className="absolute top-0 left-0 z-20">
       <div className="relative w-24 h-screen group bg-primary-600 hover:w-96">

@@ -11,7 +11,6 @@ class OrganisationsAPI {
 
   public async getAllOrganisations(): Promise<Organisation[]> {
     const response = await client.get(this.getOrganisationsUrl());
-    console.log(response.data.data);
     return response.data.data;
   }
 

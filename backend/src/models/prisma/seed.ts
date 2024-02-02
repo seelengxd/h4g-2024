@@ -64,6 +64,7 @@ async function main() {
             {
               name: "Volunteer Activity 1",
               type: ActivityType.VOLUNTEER,
+              location: "some location",
               description:
                 "Volunteer with us and make a positive impact in your community. Join our dedicated team and contribute to meaningful projects that inspire change.",
               sessions: {
@@ -74,17 +75,16 @@ async function main() {
                   },
                 ],
               },
-              EnrollmentForm: {
-                create: [
-                  {
-                    formSchema: {},
-                  },
-                ],
+              enrollmentForm: {
+                create: {
+                  formSchema: {},
+                },
               },
             },
             {
               name: "Training activity 1",
               type: ActivityType.TRAINING,
+              location: "some location",
               description:
                 "Explore our diverse training opportunity designed to enhance your skills and knowledge. ",
               sessions: {
@@ -95,12 +95,10 @@ async function main() {
                   },
                 ],
               },
-              EnrollmentForm: {
-                create: [
-                  {
-                    formSchema: {},
-                  },
-                ],
+              enrollmentForm: {
+                create: {
+                  formSchema: {},
+                },
               },
             },
           ],
@@ -120,6 +118,7 @@ async function main() {
             {
               name: "Volunteer Activity 2",
               type: ActivityType.VOLUNTEER,
+              location: "some location",
               description:
                 "Volunteer with us and make a positive impact in your community. Join our dedicated team and contribute to meaningful projects that inspire change.",
               sessions: {
@@ -130,17 +129,16 @@ async function main() {
                   },
                 ],
               },
-              EnrollmentForm: {
-                create: [
-                  {
-                    formSchema: {},
-                  },
-                ],
+              enrollmentForm: {
+                create: {
+                  formSchema: {},
+                },
               },
             },
             {
               name: "Workshop activity 1",
               type: ActivityType.WORKSHOP,
+              location: "some location",
               description:
                 "Explore our diverse workshop opportunity designed to enhance your skills and knowledge. ",
               sessions: {
@@ -151,12 +149,10 @@ async function main() {
                   },
                 ],
               },
-              EnrollmentForm: {
-                create: [
-                  {
-                    formSchema: {},
-                  },
-                ],
+              enrollmentForm: {
+                create: {
+                  formSchema: {},
+                },
               },
             },
           ],

@@ -16,31 +16,62 @@ enum Role {
 }
 
 model User {
-  id            Int      @id @default(autoincrement())
-  createdAt     DateTime @default(now())
+  id            Int            @id @default(autoincrement())
+  createdAt     DateTime       @default(now())
   password      String
-  email         String   @unique
-  role          Role     @default(USER)
+  email         String         @unique
+  role          Role           @default(USER)
   fullName      String
   preferredName String
   profile       Profile?
+  blogs         Blog[]
+  likes         Like[]
+  registrations Registration[]
+  Submission    Submission[]
+}
+
+enum Gender {
+  Male
+  Female
+  Other
+}
+
+enum Salutation {
+  Mr
+  Mrs
+  Ms
+  Miss
+  Madam
+  Dr
 }
 
 model Profile {
   id          Int        @id @default(autoincrement())
-  dob         DateTime
-  description String
+  dob         DateTime?
+  description String?
   interests   Interest[]
   skills      Skill[]
 
+  monday    Boolean @default(false)
+  tuesday   Boolean @default(false)
+  wednesday Boolean @default(false)
+  thursday  Boolean @default(false)
+  friday    Boolean @default(false)
+  saturday  Boolean @default(false)
+  sunday    Boolean @default(false)
+
   user   User @relation(fields: [userId], references: [id])
   userId Int  @unique
+
+  imageUrl String?
 }
 
 model Interest {
-  id       Int       @id @default(autoincrement())
-  name     String    @unique
-  profiles Profile[]
+  id           Int            @id @default(autoincrement())
+  name         String         @unique
+  profiles     Profile[]
+  blogs        Blog[]
+  organisation Organisation[]
 }
 
 model Skill {
@@ -56,6 +87,7 @@ model Organisation {
   imageUrl    String?
   websiteUrl  String?
   activities  Activity[]
+  categories  Interest[]
 }
 
 enum ActivityType {
@@ -64,31 +96,103 @@ enum ActivityType {
   TRAINING
 }
 
+model Image {
+  id         Int       @id @default(autoincrement())
+  imageUrl   String
+  Activity   Activity? @relation(fields: [activityId], references: [id])
+  activityId Int?
+}
+
 model Activity {
   id          Int          @id @default(autoincrement())
   name        String
   type        ActivityType @default(VOLUNTEER)
   description String       @default("This is a fun activity!")
+  capacity    Int?
+  location    String
+  images      Image[]
 
-  organisation   Organisation     @relation(fields: [organisationId], references: [id])
+  organisation   Organisation    @relation(fields: [organisationId], references: [id])
   organisationId Int
-  activityDates  ActivityDate[]
-  EnrollmentForm EnrollmentForm[]
+  sessions       Session[]
+  enrollmentForm EnrollmentForm?
 }
 
-model ActivityDate {
+model Session {
   id    Int      @id @default(autoincrement())
   start DateTime
   end   DateTime
 
-  activity   Activity @relation(fields: [activityId], references: [id])
-  activityId Int
+  activity      Activity       @relation(fields: [activityId], references: [id])
+  activityId    Int
+  registrations Registration[]
+}
+
+model Registration {
+  id         Int      @id @default(autoincrement())
+  attendance Boolean?
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int
+
+  session   Session @relation(fields: [sessionId], references: [id])
+  sessionId Int
+}
+
+enum FeedbackStatus {
+  Pending
+  Approved
+  Rejected
+}
+
+model Feedback {
+  id             Int            @id @default(autoincrement())
+  userReflection String
+  actualFeedback String
+  hoursServed    Int
+  status         FeedbackStatus @default(Pending)
 }
 
 model EnrollmentForm {
   id         Int  @id @default(autoincrement())
   formSchema Json
 
-  activityId Int
-  activity   Activity @relation(fields: [activityId], references: [id])
+  activityId  Int          @unique
+  activity    Activity     @relation(fields: [activityId], references: [id])
+  submissions Submission[]
+}
+
+model Submission {
+  id     Int  @id @default(autoincrement())
+  answer Json
+
+  user User @relation(fields: [userId], references: [id])
+
+  enrollmentForm   EnrollmentForm @relation(fields: [enrollmentFormId], references: [id])
+  enrollmentFormId Int
+  userId           Int
+
+  @@unique([enrollmentFormId, userId])
+}
+
+model Blog {
+  id          Int    @id @default(autoincrement())
+  title       String
+  description String
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  tags  Interest[]
+  likes Like[]
+}
+
+model Like {
+  id Int @id @default(autoincrement())
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  blogId Int
+  blog   Blog @relation(fields: [blogId], references: [id])
 }

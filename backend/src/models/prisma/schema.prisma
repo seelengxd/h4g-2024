@@ -67,11 +67,11 @@ model Profile {
 }
 
 model Interest {
-  id           Int            @id @default(autoincrement())
-  name         String         @unique
-  profiles     Profile[]
-  blogs        Blog[]
-  organisation Organisation[]
+  id            Int            @id @default(autoincrement())
+  name          String         @unique
+  profiles      Profile[]
+  blogs         Blog[]
+  organisations Organisation[]
 }
 
 model Skill {

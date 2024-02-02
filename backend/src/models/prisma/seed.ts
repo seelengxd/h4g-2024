@@ -10,7 +10,7 @@ async function main() {
     await prisma.skill.deleteMany({});
     await prisma.profile.deleteMany({});
     await prisma.enrollmentForm.deleteMany({});
-    await prisma.activityDate.deleteMany({});
+    await prisma.session.deleteMany({});
     await prisma.activity.deleteMany({});
     await prisma.user.deleteMany({});
     await prisma.organisation.deleteMany({});
@@ -64,9 +64,10 @@ async function main() {
             {
               name: "Volunteer Activity 1",
               type: ActivityType.VOLUNTEER,
+              location: "some location",
               description:
                 "Volunteer with us and make a positive impact in your community. Join our dedicated team and contribute to meaningful projects that inspire change.",
-              activityDates: {
+              sessions: {
                 create: [
                   {
                     start: new Date("2024-06-15T10:30:00"),
@@ -74,20 +75,19 @@ async function main() {
                   },
                 ],
               },
-              EnrollmentForm: {
-                create: [
-                  {
-                    formSchema: {},
-                  },
-                ],
+              enrollmentForm: {
+                create: {
+                  formSchema: {},
+                },
               },
             },
             {
               name: "Training activity 1",
               type: ActivityType.TRAINING,
+              location: "some location",
               description:
                 "Explore our diverse training opportunity designed to enhance your skills and knowledge. ",
-              activityDates: {
+              sessions: {
                 create: [
                   {
                     start: new Date("2024-05-15T10:30:00"),
@@ -95,12 +95,10 @@ async function main() {
                   },
                 ],
               },
-              EnrollmentForm: {
-                create: [
-                  {
-                    formSchema: {},
-                  },
-                ],
+              enrollmentForm: {
+                create: {
+                  formSchema: {},
+                },
               },
             },
           ],
@@ -120,9 +118,10 @@ async function main() {
             {
               name: "Volunteer Activity 2",
               type: ActivityType.VOLUNTEER,
+              location: "some location",
               description:
                 "Volunteer with us and make a positive impact in your community. Join our dedicated team and contribute to meaningful projects that inspire change.",
-              activityDates: {
+              sessions: {
                 create: [
                   {
                     start: new Date("2024-03-15T10:30:00"),
@@ -130,20 +129,19 @@ async function main() {
                   },
                 ],
               },
-              EnrollmentForm: {
-                create: [
-                  {
-                    formSchema: {},
-                  },
-                ],
+              enrollmentForm: {
+                create: {
+                  formSchema: {},
+                },
               },
             },
             {
               name: "Workshop activity 1",
               type: ActivityType.WORKSHOP,
+              location: "some location",
               description:
                 "Explore our diverse workshop opportunity designed to enhance your skills and knowledge. ",
-              activityDates: {
+              sessions: {
                 create: [
                   {
                     start: new Date("2024-05-10T10:30:00"),
@@ -151,12 +149,10 @@ async function main() {
                   },
                 ],
               },
-              EnrollmentForm: {
-                create: [
-                  {
-                    formSchema: {},
-                  },
-                ],
+              enrollmentForm: {
+                create: {
+                  formSchema: {},
+                },
               },
             },
           ],

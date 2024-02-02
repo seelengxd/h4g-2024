@@ -46,7 +46,7 @@ const validateActivityId: RequestHandler[] = [
       },
       include: {
         organisation: true,
-        activityDates: true,
+        sessions: true,
       },
     });
     if (!activity) {
@@ -63,7 +63,7 @@ export const index: RequestHandler[] = [
     const activities = await prisma.activity.findMany({
       include: {
         organisation: true,
-        activityDates: true,
+        sessions: true,
       },
     });
     res.json({ data: activities });
@@ -79,11 +79,12 @@ export const show: RequestHandler[] = [
 
 export const create: RequestHandler[] = [
   body("name").notEmpty().isString(),
+  body("location").notEmpty().isString(),
   body("organisationId").notEmpty().isInt(),
   body("type").isIn(["VOLUNTEER", "WORKSHOP", "TRAINING"]), // Adjust as per your defined types
-  body("activityDates").isArray(),
-  body("activityDates.*.start").optional().isISO8601().toDate(),
-  body("activityDates.*.end").optional().isISO8601().toDate(),
+  body("sessions").isArray(),
+  body("sessions.*.start").optional().isISO8601().toDate(),
+  body("sessions.*.end").optional().isISO8601().toDate(),
   ...validateOrganisationId,
   async (req, res) => {
     const result = validationResult(req);
@@ -91,18 +92,19 @@ export const create: RequestHandler[] = [
       res.status(400).send({ errors: result.array() });
       return;
     }
-    const { name, type, activityDates, description } = req.body;
+    const { name, type, sessions, description, location } = req.body;
     const newActivity = await prisma.activity.create({
       data: {
         name,
         organisationId: req.organisation!.id,
         type,
         description,
+        location,
       },
     });
 
-    const createdActivityDates = await prisma.activityDate.createMany({
-      data: activityDates.map((date: { start: string; end: string }) => ({
+    const createdSessions = await prisma.session.createMany({
+      data: sessions.map((date: { start: string; end: string }) => ({
         start: date.start,
         end: date.end,
         activityId: newActivity.id,
@@ -118,17 +120,18 @@ export const update: RequestHandler[] = [
   ...validateOrganisationId,
   ...validateActivityId,
   body("name").notEmpty().isString(),
+  body("location").notEmpty().isString(),
   body("organisationId").notEmpty().isInt(),
   body("type").isIn(["VOLUNTEER", "WORKSHOP", "TRAINING"]), // Adjust as per your defined types
-  body("activityDates").isArray(),
-  body("activityDates.*.start").isISO8601().toDate(),
-  body("activityDates.*.end").isISO8601().toDate(),
-  body("activityDates.*.id").optional().isInt(),
+  body("sessions").isArray(),
+  body("sessions.*.start").isISO8601().toDate(),
+  body("sessions.*.end").isISO8601().toDate(),
+  body("sessions.*.id").optional().isInt(),
   async (req, res) => {
-    // 1. Update activity fields (except for activityDates)
+    // 1. Update activity fields (except for sessions)
     const activity = req.activity!;
 
-    const { name, type, description } = req.body;
+    const { name, type, description, location } = req.body;
     await prisma.activity.update({
       where: { id: activity.id },
       data: {
@@ -136,18 +139,19 @@ export const update: RequestHandler[] = [
         organisationId: req.organisation!.id,
         type,
         description,
+        location,
       },
     });
 
     // 2. Update old dates based on ID, create new dates (those without id.)
-    const activityDates: Array<{ start: string; end: string; id?: number }> =
-      req.body.activityDates;
+    const sessions: Array<{ start: string; end: string; id?: number }> =
+      req.body.sessions;
 
     // Postgres shouldn't allow a id of 0, right?
-    const oldDates = activityDates.filter((activityDate) => !!activityDate.id);
-    const newDates = activityDates.filter((activityDate) => !activityDate.id);
+    const oldDates = sessions.filter((session) => !!session.id);
+    const newDates = sessions.filter((session) => !session.id);
 
-    const createdActivityDates = await prisma.activityDate.createMany({
+    const createdSessions = await prisma.session.createMany({
       data: newDates.map((date: { start: string; end: string }) => ({
         start: date.start,
         end: date.end,
@@ -155,12 +159,12 @@ export const update: RequestHandler[] = [
       })),
     });
 
-    const updatePromises = oldDates.map(async (activityDate) => {
-      return prisma.activityDate.update({
-        where: { id: activityDate.id },
+    const updatePromises = oldDates.map(async (session) => {
+      return prisma.session.update({
+        where: { id: session.id },
         data: {
-          start: activityDate.start,
-          end: activityDate.end,
+          start: session.start,
+          end: session.end,
         },
       });
     });
@@ -174,7 +178,7 @@ export const update: RequestHandler[] = [
 export const destroy: RequestHandler[] = [
   ...validateActivityId,
   async (req, res) => {
-    await prisma.activityDate.deleteMany({
+    await prisma.session.deleteMany({
       where: {
         activityId: req.activity!.id,
       },

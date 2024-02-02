@@ -24,6 +24,8 @@ const error403 = (
 const VolunteerApp: React.FC = () => {
   return (
     <Routes>
+      <Route path="/" element={<VolunteerDashboard />} />
+
       {/* Organisation Routes */}
       <Route path="/organisations" element={<Organisations />} />
       <Route path="/organisations/new" element={<CreateOrganisation />} />
@@ -46,7 +48,6 @@ const VolunteerApp: React.FC = () => {
         element={<ViewEnrollmentForm />}
       />
 
-      <Route path="/dashboard" element={<VolunteerDashboard />} />
       {/* 404 */}
       <Route path="*" element={error404} />
     </Routes>

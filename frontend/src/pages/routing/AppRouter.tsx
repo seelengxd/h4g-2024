@@ -22,7 +22,6 @@ const AppRouter: React.FC = () => {
     authApi
       .getCurrentUser()
       .then((user) => {
-        console.log({ user });
         dispatch(setUser(user));
       })
       .catch((err: Error) => {

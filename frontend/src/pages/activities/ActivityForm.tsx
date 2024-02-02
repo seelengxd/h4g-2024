@@ -44,23 +44,25 @@ const ActivityForm: React.FC<Props> = ({
           type: initialData.type,
           description: initialData.description,
           organisationId: initialData.organisationId,
-          activityDates: initialData.activityDates.map((activityDate) => ({
-            start: new Date(activityDate.start),
-            end: new Date(activityDate.end),
+          sessions: initialData.sessions.map((session) => ({
+            start: new Date(session.start),
+            end: new Date(session.end),
           })),
+          location: initialData.location,
         }
       : ({
           name: "",
           type: "VOLUNTEER",
           description: "",
           organisationId: 0,
-          activityDates: [],
+          sessions: [],
+          location: "",
         } as ActivityPostData),
     validationSchema: object({
       name: string().trim().required("Name cannot be empty."),
       description: string().trim().required("Description cannot be empty."),
       organisationId: number().positive("Organisation cannot be empty."),
-      activityDates: array(),
+      sessions: array(),
     }),
     onSubmit: async (values) => {
       handleValues(values).then(() => navigate("/activities"));
@@ -171,6 +173,19 @@ const ActivityForm: React.FC<Props> = ({
               required
             />
           </FormControl>
+          <FormControl
+            isInvalid={!!touched.location && errors.location !== undefined}
+            errorMessage={errors.location}
+            onBlur={handleBlur}
+          >
+            <Label htmlFor="location">Location</Label>
+            <Input
+              name="location"
+              value={values.location}
+              onChange={handleChange}
+              required
+            />
+          </FormControl>
           <DatePicker
             selected={startDate}
             onChange={(date) => setStartDate(date!)}
@@ -228,18 +243,18 @@ const ActivityForm: React.FC<Props> = ({
             )}
           />
           <FormControl>
-            <Label htmlFor="activityDates">Activity Dates</Label>
+            <Label htmlFor="sessions">Activity Dates</Label>
             <div>
-              {/* Map through activityDates state to render datepicker for each date */}
-              {values.activityDates.map((date, index) => (
+              {/* Map through sessions state to render datepicker for each date */}
+              {values.sessions.map((date, index) => (
                 <div key={index} className="flex gap-2 mb-2">
                   <DatePicker
                     showTimeSelect
                     selected={date.start}
                     onChange={(newDate) => {
-                      const newDates = [...values.activityDates];
+                      const newDates = [...values.sessions];
                       newDates[index] = { ...newDates[index], start: newDate! };
-                      setFieldValue("activityDates", newDates);
+                      setFieldValue("sessions", newDates);
                     }}
                     className="px-3 py-2 border border-gray-300 rounded"
                     dateFormat="MMMM d, yyyy h:mm aa"
@@ -248,9 +263,9 @@ const ActivityForm: React.FC<Props> = ({
                     showTimeSelect
                     selected={date.end}
                     onChange={(newDate) => {
-                      const newDates = [...values.activityDates];
+                      const newDates = [...values.sessions];
                       newDates[index] = { ...newDates[index], end: newDate! };
-                      setFieldValue("activityDates", newDates);
+                      setFieldValue("sessions", newDates);
                     }}
                     className="px-3 py-2 border border-gray-300 rounded"
                     dateFormat="MMMM d, yyyy h:mm aa"
@@ -260,9 +275,9 @@ const ActivityForm: React.FC<Props> = ({
                     type="button"
                     className="px-3 py-2 ml-2 text-white bg-red-500 rounded"
                     onClick={() => {
-                      const newDates = [...values.activityDates];
+                      const newDates = [...values.sessions];
                       newDates.splice(index, 1);
-                      setFieldValue("activityDates", newDates);
+                      setFieldValue("sessions", newDates);
                     }}
                   >
                     Remove
@@ -274,8 +289,8 @@ const ActivityForm: React.FC<Props> = ({
                 type="button"
                 className="px-3 py-2 text-white bg-blue-500 rounded"
                 onClick={() =>
-                  setFieldValue("activityDates", [
-                    ...values.activityDates,
+                  setFieldValue("sessions", [
+                    ...values.sessions,
                     { start: new Date(), end: new Date() },
                   ])
                 }

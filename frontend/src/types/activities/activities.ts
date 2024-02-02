@@ -1,12 +1,12 @@
 import { Organisation } from "../organisations/organisations";
 
-export interface ActivityDatePostData {
+export interface SessionPostData {
   start: Date;
   end: Date;
   id?: number;
 }
 
-export interface ActivityDate {
+export interface Session {
   start: Date;
   end: Date;
   id: number;
@@ -21,13 +21,15 @@ export interface Activity {
   description: string;
   organisationId: number;
   organisation: Organisation;
-  activityDates: ActivityDate[];
+  location: string;
+  sessions: Session[];
 }
 
 export interface ActivityPostData {
   name: string;
   type: ActivityType;
   organisationId: number;
-  activityDates: ActivityDatePostData[];
+  sessions: SessionPostData[];
   description: string;
+  location: string;
 }

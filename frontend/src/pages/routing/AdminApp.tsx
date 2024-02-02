@@ -10,7 +10,6 @@ import UpdateActivity from "../activities/UpdateActivity";
 import ViewActivity from "../activities/ViewActivity";
 import CreateEnrollmentForm from "../activities/CreateEnrollmentForm";
 import ViewEnrollmentForm from "../activities/ViewEnrollmentForm";
-import CardContainer from "../../components/dashboard/CardContainer";
 import VolunteerDashboard from "../dashboard/VolunteerDashboard";
 
 const error404 = (

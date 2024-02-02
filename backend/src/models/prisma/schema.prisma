@@ -99,7 +99,7 @@ enum ActivityType {
 model Image {
   id         Int       @id @default(autoincrement())
   imageUrl   String
-  Activity   Activity? @relation(fields: [activityId], references: [id])
+  activity   Activity? @relation(fields: [activityId], references: [id])
   activityId Int?
 }
 

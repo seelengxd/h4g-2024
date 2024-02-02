@@ -27,7 +27,7 @@ model User {
   blogs         Blog[]
   likes         Like[]
   registrations Registration[]
-  Submission    Submission[]
+  submissions   Submission[]
 }
 
 enum Gender {

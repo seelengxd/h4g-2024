@@ -63,7 +63,7 @@ const adminContent = [
   {
     label: "Organisations",
     icon: <UserGroupIcon className="w-8 h-8 fill-white" />,
-    linkTo: "/blog",
+    linkTo: "/organisations",
   },
   {
     label: "Log out",

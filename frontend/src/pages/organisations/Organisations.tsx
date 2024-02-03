@@ -50,7 +50,7 @@ const Organisations: React.FC = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <div className="grid gap-10 mt-12 md:grid-cols-4">
+        <div className="grid gap-10 mt-12 sm:grid-cols-2 xl:grid-cols-4">
           {organisations.map((organisation) => (
             <OrganisationCard organisation={organisation} />
           ))}

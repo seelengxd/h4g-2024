@@ -13,7 +13,7 @@ declare global {
 }
 
 const validateEnrollmentFormId: RequestHandler[] = [
-  body("enrollmentForm").isInt().notEmpty(),
+  body("enrollmentFormId").isInt().notEmpty(),
   async (req, res, next) => {
     const result = validationResult(req);
     if (!result.isEmpty()) {

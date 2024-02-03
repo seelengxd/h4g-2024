@@ -1,26 +1,56 @@
-import ReactSelect from "react-select";
 import Button from "../../components/buttons/Button";
-import Input from "../../components/forms/Input";
-import Label from "../../components/forms/Label";
+import { useNavigate, useParams } from "react-router-dom";
 import { FormData } from "../../types/forms/forms";
 import { useEffect, useState } from "react";
 import enrollmentFormsAPI from "../../api/enrollmentForms/enrollmentForms";
-import { useParams } from "react-router-dom";
 import Spinner from "../../components/loading/Spinner";
+import TextInput from "../../components/forms/custom/TextInput";
+import { Answer, AnswerValue } from "../../types/enrollmentForms/submissions";
+import { generateDefaultAnswer } from "../../utils/forms";
+import TextAreaInput from "../../components/forms/custom/TextAreaInput";
+import MultiSelectInput from "../../components/forms/custom/MultiSelectInput";
+import DropdownInput from "../../components/forms/custom/DropdownInput";
+import submissionsAPI from "../../api/enrollmentForms/submissions";
 
 const ViewEnrollmentForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [answers, setAnswers] = useState<Answer[]>([]);
+  const navigate = useNavigate();
 
-  const { id } = useParams();
+  const { activityId, id } = useParams();
   useEffect(() => {
     enrollmentFormsAPI
       .getEnrollmentForm(parseInt(id!))
-      .then((enrollmentForm) => setFormData(enrollmentForm.formSchema));
+      .then((enrollmentForm) => {
+        setFormData(enrollmentForm.formSchema);
+        setAnswers(
+          enrollmentForm.formSchema.components.map((component) =>
+            generateDefaultAnswer(component)
+          )
+        );
+      })
+      .finally(() => setIsLoading(false));
   }, [id]);
 
+  const handleChange = (questionIndex: number) => (answer: AnswerValue) => {
+    const newAnswers = [...answers];
+    newAnswers[questionIndex].value = answer;
+    setAnswers(newAnswers);
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    submissionsAPI
+      .createSubmission({ answer: answers, enrollmentFormId: parseInt(id!) })
+      .then(() => navigate("/activities/" + activityId));
+  };
+
   return (
-    <div className="items-center justify-between p-6 mx-auto max-w-7xl lg:px-8">
+    <form
+      className="items-center justify-between p-6 mx-auto max-w-7xl lg:px-8"
+      onSubmit={handleSubmit}
+    >
       {isLoading ? (
         <Spinner />
       ) : (
@@ -31,82 +61,47 @@ const ViewEnrollmentForm: React.FC = () => {
           <p className="mt-4">{formData?.description}</p>
           <hr className="my-8 mt-4" />
           <div className="flex flex-col space-y-8">
-            {formData?.components.map((component) => {
+            {formData?.components.map((component, index) => {
               switch (component.type) {
                 case "text":
                   return (
-                    <div>
-                      <Label htmlFor={component.id.toString()}>
-                        <p className="text-base">{component.title}</p>
-                      </Label>
-                      <Input
-                        name={component.id.toString()}
-                        onChange={() => {}}
-                      />
-                    </div>
+                    <TextInput
+                      component={component}
+                      value={answers[index].value as string}
+                      onChange={(newValue) => handleChange(index)(newValue)}
+                    />
                   );
                 case "multiline":
                   return (
-                    <div>
-                      <Label htmlFor={component.id.toString()}>
-                        <p className="text-base">{component.title}</p>
-                      </Label>
-                      <textarea
-                        name={component.id.toString()}
-                        onChange={() => {}}
-                        rows={4}
-                        className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-primary-200 rounded-2xl border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary-600 peer"
-                      />
-                    </div>
+                    <TextAreaInput
+                      component={component}
+                      value={answers[index].value as string}
+                      onChange={(newValue) => handleChange(index)(newValue)}
+                    />
                   );
                 case "multiselect":
                   return (
-                    <div>
-                      <Label htmlFor={component.id.toString()}>
-                        <p className="text-base">{component.title}</p>
-                      </Label>
-                      {component.options
-                        .filter((option) => !option.deleted)
-                        .map((option) => (
-                          <div className="flex items-center mb-4">
-                            <input
-                              id={option.value + option.id}
-                              type="checkbox"
-                              value=""
-                              className="w-6 h-6 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 focus:ring-2"
-                            />
-                            <label
-                              htmlFor={option.value + option.id}
-                              className="text-sm font-medium text-gray-900 ms-2"
-                            >
-                              {option.value}
-                            </label>
-                          </div>
-                        ))}
-                    </div>
+                    <MultiSelectInput
+                      component={component}
+                      value={answers[index].value as number[]}
+                      onChange={(newValue) => handleChange(index)(newValue)}
+                    />
                   );
                 case "select":
-                  const transformedOptions = component.options.map(
-                    (option) => ({
-                      label: option.value,
-                      value: option.id,
-                    })
-                  );
                   return (
-                    <div>
-                      <Label htmlFor={component.id.toString()}>
-                        <p className="text-base">{component.title}</p>
-                      </Label>
-                      <ReactSelect options={transformedOptions}></ReactSelect>
-                    </div>
+                    <DropdownInput
+                      component={component}
+                      value={answers[index].value as number}
+                      onChange={(newValue) => handleChange(index)(newValue)}
+                    />
                   );
               }
             })}
-            <Button>Submit</Button>
+            <Button type="submit">Submit</Button>
           </div>
         </>
       )}
-    </div>
+    </form>
   );
 };
 

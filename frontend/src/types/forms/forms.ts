@@ -53,3 +53,13 @@ export interface FormData {
 
   components: InputData[];
 }
+
+export interface AnswerData {
+  questionId: number;
+  value: string | number | number[];
+}
+
+export interface Submission {
+  id?: number;
+  answer: AnswerData[];
+}

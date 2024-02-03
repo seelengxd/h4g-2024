@@ -55,7 +55,7 @@ const VolunteerActivity: React.FC = () => {
               to={"/organisations" + activity.organisationId.toString()}
               className="hover:underline"
             >
-              {activity.organisation.name}
+              {activity.organisationName}
             </Link>
           </p>
           <p className="flex items-center mt-2 text-md">

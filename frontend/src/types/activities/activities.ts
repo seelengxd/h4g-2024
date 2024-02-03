@@ -1,5 +1,4 @@
 import { EnrollmentForm } from "../enrollmentForms/enrollmentForms";
-import { Organisation } from "../organisations/organisations";
 
 export interface SessionPostData {
   start: Date;
@@ -26,7 +25,7 @@ export interface ActivityMiniData {
   type: ActivityType;
   description: string;
   organisationId: number;
-  organisation: Organisation;
+  organisationName: string;
   location: string;
   sessions: Session[];
   images: Image[];

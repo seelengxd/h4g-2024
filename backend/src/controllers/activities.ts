@@ -68,12 +68,12 @@ export const index: RequestHandler[] = [
   async (req, res) => {
     const activities = await prisma.activity.findMany({
       include: {
-        organisation: true,
         sessions: true,
         images: true,
+        organisation: { select: { name: true } },
       },
     });
-    res.json({ data: activities });
+    res.json({ data: activities.map((activity) => ({...activity, organisationName: activity.organisation.name})) });
   },
 ];
 

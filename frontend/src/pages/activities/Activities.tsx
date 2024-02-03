@@ -13,8 +13,7 @@ const Activities: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const columnHelper = createColumnHelper<ActivityRowData>();
   const [activities, setActivities] = useState<ActivityRowData[]>([]);
-  const activityColumns: Array<ColumnDef<ActivityRowData>> =
-    ActivityTableColumns(columnHelper, setActivities);
+  const activityColumns: Array<ColumnDef<ActivityRowData>> = ActivityTableColumns(columnHelper);
   useEffect(() => {
     activitiesAPI
       .getAllActivities()

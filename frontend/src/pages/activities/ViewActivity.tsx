@@ -34,7 +34,7 @@ const ViewActivity: React.FC = () => {
         </h2>
         <p>{activity.description}</p>
         <p>{activity.type}</p>
-        <p>by {activity.organisation.name}</p>
+        <p>by {activity.organisationName}</p>
 
         {activity.sessions.map((session) => {
           return (

@@ -15,11 +15,11 @@ import VolunteerDashboard from "../dashboard/VolunteerDashboard";
 import VolunteeringOpportunities from "../activities/VolunteeringOpportunities";
 import VolunteerActivity from "../activities/VolunteerActivity";
 
-const error404 = (
+export const Error404 = (
   <Error errorCode={404} desc="Oh no! Are you sure this page exists?" />
 );
 
-const error403 = (
+const Error403 = (
   <Error errorCode={403} desc="Ehem! You don't have permission!" />
 );
 
@@ -49,7 +49,7 @@ const VolunteerApp: React.FC = () => {
       />
 
       {/* 404 */}
-      <Route path="*" element={error404} />
+      <Route path="*" element={Error404} />
     </Routes>
   );
 };

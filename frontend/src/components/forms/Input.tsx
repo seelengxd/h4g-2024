@@ -1,4 +1,4 @@
-interface Props {
+export interface InputProps {
   name: string;
   type?: string;
   autoComplete?: string;
@@ -8,9 +8,10 @@ interface Props {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   label?: string;
   multiple?: boolean;
+  hidden?: boolean;
 }
 
-const Input: React.FC<Props & React.HTMLAttributes<HTMLInputElement>> = (
+const Input: React.FC<InputProps & React.HTMLAttributes<HTMLInputElement>> = (
   props
 ) => {
   const {
@@ -23,8 +24,10 @@ const Input: React.FC<Props & React.HTMLAttributes<HTMLInputElement>> = (
     placeholder,
     label,
     multiple = false,
+    hidden = false,
     ...otherProps
   } = props;
+
   return (
     <div className="relative">
       <input
@@ -38,7 +41,7 @@ const Input: React.FC<Props & React.HTMLAttributes<HTMLInputElement>> = (
         {...(required ? { required: true } : {})}
         {...(value ? { value } : {})}
         onChange={onChange}
-        className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-primary-200 rounded-2xl border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary-600 peer"
+        className={"block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-primary-200 rounded-2xl border-1 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-primary-600 peer" + (hidden ? " hidden" : "")}
       />
       <label
         htmlFor={name}

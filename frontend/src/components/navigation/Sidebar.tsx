@@ -171,7 +171,7 @@ const SideBar: React.FC = () => {
             >
               {<Bars3Icon className="w-8 h-8" />}{" "}
               <img
-                src="bigatheart.png"
+                src="/bigatheart.png"
                 className="w-auto h-8"
                 alt="bigatheart"
               />

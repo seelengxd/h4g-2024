@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import organisationsAPI from "../../api/organisations/organisations";
 import { OrganisationsPostData } from "../../types/organisations/organisations";
 import OrganisationForm from "./OrganisationForm";
 
 const CreateOrganisation: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <OrganisationForm
       label="Create Organisation"
@@ -11,6 +13,7 @@ const CreateOrganisation: React.FC = () => {
           values as OrganisationsPostData
         )
       }
+      handleCancel={() => navigate('/organisations')}
     />
   );
 };

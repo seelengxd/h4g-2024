@@ -16,19 +16,23 @@ import { OptionData } from "../../types/forms/forms";
 import Spinner from "../../components/loading/Spinner";
 import InterestsAPI from "../../api/interests/interests";
 import { Interest } from "../../types/interests/interests";
+import ConfirmationDialog from "../../components/feedback/ConfirmationDialog";
 
 interface Props {
   initialData?: Organisation;
   handleValues: (values: OrganisationsPostData) => Promise<Number>;
+  handleCancel: () => void;
   label: string;
 }
 
 const OrganisationForm: React.FC<Props> = ({
   initialData,
   handleValues,
+  handleCancel,
   label,
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [allCategories, setAllCategories] = useState<Interest[]>();
   const [imageDisplayUrl, setImageDisplayUrl] = useState(
     initialData
@@ -185,10 +189,24 @@ const OrganisationForm: React.FC<Props> = ({
 
          </div>
         </div>
-        <div>
-          <Button type="submit" fullWidth>{label}</Button>
+        <div className="flex flex-row gap-8 justify-end">
+          <div/>
+          <Button type="submit" roundness="md">{label}</Button>
+          <Button onClick={() => setIsDialogOpen(true)} roundness="md" bgColor="white" textColor="text-primary-700" outlined outlineColor="border-primary-700">Cancel</Button>
         </div>
       </form>
+
+      <div className="flex flex-col justify-between p-4 leading-normal">
+        {isDialogOpen && (
+          <ConfirmationDialog
+            message="Are you sure you want to cancel this form submission? All current progress will be lost."
+            onDelete={handleCancel}
+            onCancel={() => setIsDialogOpen(false)}
+            confirmationLabel="Yes, cancel submission"
+            cancelLabel="No, continue editing form"
+            />
+        )}
+      </div>
     </div>
   );
 };

@@ -30,6 +30,7 @@ const UpdateOrganisation: React.FC = () => {
             values as OrganisationsPostData
           )
         }
+        handleCancel={() => navigate(`/organisations/${id}`)}
       />
     )
   );

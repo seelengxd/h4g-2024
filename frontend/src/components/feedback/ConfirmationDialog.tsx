@@ -2,12 +2,16 @@ interface Props {
   message: string;
   onDelete: React.MouseEventHandler<HTMLButtonElement>;
   onCancel: React.MouseEventHandler<HTMLButtonElement>;
+  confirmationLabel?: string;
+  cancelLabel?: string;
 }
 
 const ConfirmationDialog: React.FC<Props> = ({
   message,
   onDelete,
   onCancel,
+  confirmationLabel = "Delete",
+  cancelLabel="Cancel",
 }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur confirm-dialog">
@@ -29,14 +33,14 @@ const ConfirmationDialog: React.FC<Props> = ({
               className="block w-full px-4 py-3 text-sm font-semibold text-red-700 bg-red-200 rounded-lg md:inline-block md:w-auto md:py-2 md:ml-2 md:order-2"
               onClick={onDelete}
             >
-              Delete
+              {confirmationLabel}
             </button>
             <button
               id="confirm-cancel-btn"
               className="block w-full px-4 py-3 mt-4 text-sm font-semibold bg-gray-200 rounded-lg md:inline-block md:w-auto md:py-2 md:mt-0 md:order-1"
               onClick={onCancel}
             >
-              Cancel
+              {cancelLabel}
             </button>
           </div>
         </div>

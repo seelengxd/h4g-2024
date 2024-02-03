@@ -35,12 +35,14 @@ const OrganisationForm: React.FC<Props> = ({
           name: initialData.name,
           description: initialData.description,
           websiteUrl: initialData.websiteUrl,
+          categories: initialData.categories,
           image: undefined,
         }
       : {
           name: "",
           description: "",
           websiteUrl: "",
+          categories: [],
           image: undefined,
         },
     validationSchema: object({

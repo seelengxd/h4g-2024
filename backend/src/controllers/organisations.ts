@@ -7,7 +7,7 @@ const validateId = param("id").isInt().notEmpty();
 const upload = multer({ dest: "uploads/" });
 
 export const index: RequestHandler = async (req, res) => {
-  const organisations = await prisma.organisation.findMany();
+  const organisations = await prisma.organisation.findMany({ include: { categories: true } });
   res.json({ data: organisations });
 };
 

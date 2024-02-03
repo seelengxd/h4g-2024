@@ -8,6 +8,7 @@ import ViewOrganisationActionButtons from "./ViewOrganisationActionButtons";
 import Tabs, { Tab } from "../../components/dataDisplay/Tabs";
 import OrganisationActivityTab from "./OrganisationActivityTab";
 import { Error404 } from "../routing/VolunteerApp";
+import OrganisationVolunteerTab from "./OrganisationVolunteerTab";
 
 const ViewOrganisation: React.FC = () => {
   const { id } = useParams();
@@ -34,7 +35,7 @@ const ViewOrganisation: React.FC = () => {
   const VolunteersTab: Tab = {
     id: "Volunteers",
     tabTitle: "Volunteers",
-    page: <h1>VOLUNTEERS</h1>
+    page: <OrganisationVolunteerTab organisation={organisation} />
   };
 
   const tabs = [ActivitiesTab, VolunteersTab];

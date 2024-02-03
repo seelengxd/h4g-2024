@@ -42,13 +42,16 @@ export const create: RequestHandler[] = [
       res.status(400).send(result.array());
       return;
     }
-    const { name, description, websiteUrl } = req.body;
+    const { name, description, websiteUrl, categories } = req.body;
+    const categoryIds = categories.map((id: string) => ({ id: Number(id) }));
+
     const newOrganisation = await prisma.organisation.create({
       data: {
         name,
         description,
         websiteUrl,
         imageUrl: req.file?.path,
+        categories: { connect: categoryIds },
       },
     });
 
@@ -61,18 +64,24 @@ export const update: RequestHandler[] = [
   validateId,
   async (req, res) => {
     const result = validationResult(req);
+
     if (!result.isEmpty()) {
       res.sendStatus(400);
       return;
     }
+
     const organisation = await prisma.organisation.findFirst({
       where: { id: Number(req.params.id!) },
     });
-    const { name, description, websiteUrl } = req.body;
+
+    const { name, description, websiteUrl, categories } = req.body;
+    const categoryIds = categories.map((id: string) => ({ id: Number(id) }));
+
     if (!organisation) {
       res.sendStatus(404);
       return;
     }
+
     const newOrganisation = await prisma.organisation.update({
       where: { id: organisation.id },
       data: {
@@ -80,6 +89,7 @@ export const update: RequestHandler[] = [
         description,
         websiteUrl,
         imageUrl: req.file?.path,
+        categories: { connect: categoryIds },
       },
     });
 

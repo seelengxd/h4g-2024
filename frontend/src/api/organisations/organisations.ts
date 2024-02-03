@@ -24,6 +24,9 @@ class OrganisationsAPI {
     form.append("name", data.name);
     form.append("description", data.description);
     form.append("websiteUrl", data.websiteUrl || "");
+    
+    data.categories.forEach((category) => form.append('categories[]', category.id.toString()));
+
     if (data.image) {
       form.append("image", data.image as Blob);
     }
@@ -36,6 +39,9 @@ class OrganisationsAPI {
     form.append("name", data.name);
     form.append("description", data.description);
     form.append("websiteUrl", data.websiteUrl || "");
+
+    data.categories.forEach((category) => form.append('categories[]', category.id.toString()));
+
     if (data.image) {
       form.append("image", data.image as Blob);
     }

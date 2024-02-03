@@ -4,7 +4,7 @@ import Spinner from "../../components/loading/Spinner";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import activitiesAPI from "../../api/activities/activities";
-import { Activity } from "../../types/activities/activities";
+import { ActivityMiniData } from "../../types/activities/activities";
 import DataTable from "../../components/tables/DataTable";
 import { Column, ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import { ActivityRowData, ActivityTableColumns } from "../../utils/activities";
@@ -57,7 +57,7 @@ const Activities: React.FC = () => {
           <DataTable
             columns={activityColumns}
             tableData={activities}
-            getColumnCanGlobalFilter={(column: Column<Activity>) =>
+            getColumnCanGlobalFilter={(column: Column<ActivityMiniData>) =>
               column.getCanSort()
             }
           />

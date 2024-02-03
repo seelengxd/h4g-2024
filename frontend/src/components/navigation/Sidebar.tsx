@@ -123,7 +123,7 @@ const SideBar: React.FC = () => {
             }
           >
             <div
-              className={"p-4 rounded-xl cursor-pointer"}
+              className={"p-4 rounded-xl cursor-pointer hover:bg-primary-500"}
               onClick={() => setActive(true)}
             >
               {<Bars3Icon className="w-8 h-8 fill-white" />}
@@ -134,7 +134,7 @@ const SideBar: React.FC = () => {
                   return (
                     <div
                       className={
-                        "p-4 rounded-xl flex items-center gap-8 hover:cursor-pointer"
+                        "p-4 rounded-xl flex items-center gap-8 hover:cursor-pointer hover:bg-primary-500"
                       }
                       onClick={handleLogout}
                     >
@@ -146,7 +146,7 @@ const SideBar: React.FC = () => {
                   <Link
                     to={linkTo}
                     className={
-                      "p-4 rounded-xl" +
+                      "p-4 rounded-xl hover:bg-primary-500" +
                       (pathName === linkTo ? " bg-primary-500" : "")
                     }
                   >
@@ -164,7 +164,7 @@ const SideBar: React.FC = () => {
           >
             <div
               className={
-                "flex items-center w-full gap-8 p-4 text-white rounded-3xl cursor-pointer"
+                "flex items-center w-full gap-8 p-4 text-white rounded-3xl cursor-pointer hover:bg-primary-500"
               }
               ref={buttonRef}
               onClick={() => setActive(false)}
@@ -185,7 +185,7 @@ const SideBar: React.FC = () => {
                   return (
                     <div
                       className={
-                        "p-4 rounded-xl flex items-center gap-8 hover:cursor-pointer"
+                        "p-4 rounded-xl flex items-center gap-8 hover:cursor-pointer hover:bg-primary-500"
                       }
                       onClick={handleLogout}
                     >
@@ -197,7 +197,7 @@ const SideBar: React.FC = () => {
                   <Link
                     to={linkTo}
                     className={
-                      "p-4 rounded-xl flex items-center gap-8" +
+                      "p-4 rounded-xl flex items-center gap-8 hover:bg-primary-500" +
                       (isPage ? " bg-primary-500" : "")
                     }
                   >

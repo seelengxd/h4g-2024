@@ -4,13 +4,14 @@ import activitiesAPI from "../../api/activities/activities";
 import Button from "../../components/buttons/Button";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import ConfirmationDialog from "../../components/feedback/ConfirmationDialog";
-import { Activity } from "../../types/activities/activities";
+import { ActivityData } from "../../types/activities/activities";
 import Spinner from "../../components/loading/Spinner";
+import { EyeIcon, PlusIcon } from "@heroicons/react/20/solid";
 
 const ViewActivity: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [activity, setActivity] = useState<Activity | null>(null);
+  const [activity, setActivity] = useState<ActivityData | null>(null);
   useEffect(() => {
     activitiesAPI
       .getActivity(parseInt(id!))
@@ -60,6 +61,30 @@ const ViewActivity: React.FC = () => {
             </Button>
           </Link>
         </div>
+
+        {activity.enrollmentForm && (
+          <div>
+            <Link
+              to={`/activities/${id}/enrollment-forms/${activity.enrollmentForm.id}`}
+            >
+              <Button>
+                <EyeIcon className="w-4 h-4 mr-2 stroke-2" />
+                View Enrollment Form
+              </Button>
+            </Link>
+          </div>
+        )}
+
+        {!activity.enrollmentForm && (
+          <div>
+            <Link to={`/activities/${id}/enrollment-forms/new`}>
+              <Button>
+                <PlusIcon className="w-4 h-4 mr-2 stroke-2" />
+                Create Enrollment Form
+              </Button>
+            </Link>
+          </div>
+        )}
 
         {dialogOpen && (
           <ConfirmationDialog

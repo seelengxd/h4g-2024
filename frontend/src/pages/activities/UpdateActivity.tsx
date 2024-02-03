@@ -1,12 +1,15 @@
 import { useNavigate, useParams } from "react-router-dom";
 import activitiesAPI from "../../api/activities/activities";
-import { Activity, ActivityPostData } from "../../types/activities/activities";
+import {
+  ActivityMiniData,
+  ActivityPostData,
+} from "../../types/activities/activities";
 
 import ActivityForm from "../activities/ActivityForm";
 import { useEffect, useState } from "react";
 
 const UpdateActivity: React.FC = () => {
-  const [activity, setActivity] = useState<Activity | null>(null);
+  const [activity, setActivity] = useState<ActivityMiniData | null>(null);
   const navigate = useNavigate();
   const { id } = useParams();
   useEffect(() => {

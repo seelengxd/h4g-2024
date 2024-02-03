@@ -1,17 +1,21 @@
 import client from "../base";
-import { Activity, ActivityPostData } from "../../types/activities/activities";
+import {
+  ActivityData,
+  ActivityMiniData,
+  ActivityPostData,
+} from "../../types/activities/activities";
 
 class ActivitiesAPI {
   protected getActivitiesUrl(): string {
     return "/activities";
   }
 
-  public async getAllActivities(): Promise<Activity[]> {
+  public async getAllActivities(): Promise<ActivityMiniData[]> {
     const response = await client.get(this.getActivitiesUrl());
     return response.data.data;
   }
 
-  public async getActivity(id: number): Promise<Activity> {
+  public async getActivity(id: number): Promise<ActivityData> {
     const response = await client.get(`${this.getActivitiesUrl()}/${id}`);
     return response.data.data;
   }

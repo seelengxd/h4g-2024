@@ -11,7 +11,10 @@ import { array, number, object, string } from "yup";
 import FormControl from "../../components/forms/FormControl";
 import Label from "../../components/forms/Label";
 import Input from "../../components/forms/Input";
-import { Activity, ActivityPostData } from "../../types/activities/activities";
+import {
+  ActivityMiniData,
+  ActivityPostData,
+} from "../../types/activities/activities";
 import Select from "react-select";
 import { Organisation } from "../../types/organisations/organisations";
 import { forwardRef, useEffect, useState } from "react";
@@ -21,7 +24,7 @@ import "react-datepicker/dist/react-datepicker.css"; // Import datepicker styles
 import { format } from "date-fns";
 
 interface Props {
-  initialData?: Activity;
+  initialData?: ActivityMiniData;
   handleValues: (values: ActivityPostData) => Promise<void>;
   label: string;
 }

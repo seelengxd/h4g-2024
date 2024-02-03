@@ -7,6 +7,7 @@ import ConfirmationDialog from "../../components/feedback/ConfirmationDialog";
 import { ActivityData } from "../../types/activities/activities";
 import Spinner from "../../components/loading/Spinner";
 import { EyeIcon, PlusIcon } from "@heroicons/react/20/solid";
+import EnrollmentFormTable from "./EnrollmentFormTable";
 
 const ViewActivity: React.FC = () => {
   const { id } = useParams();
@@ -24,6 +25,7 @@ const ViewActivity: React.FC = () => {
       .deleteActivity(parseInt(id!))
       .then(() => navigate("/activities"));
   };
+
   return activity ? (
     <div className="items-center justify-between p-6 mx-auto max-w-7xl lg:px-8">
       <div className="flex flex-col justify-between p-4 leading-normal">
@@ -93,6 +95,8 @@ const ViewActivity: React.FC = () => {
             onCancel={() => setDialogOpen(false)}
           />
         )}
+
+        <EnrollmentFormTable activity={activity} />
       </div>
     </div>
   ) : (

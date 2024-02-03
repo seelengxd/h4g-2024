@@ -47,7 +47,9 @@ const validateActivityId: RequestHandler[] = [
       include: {
         organisation: true,
         sessions: true,
-        enrollmentForm: true,
+        enrollmentForm: {
+          include: { submissions: { include: { user: true } } },
+        },
       },
     });
     if (!activity) {

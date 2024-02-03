@@ -37,10 +37,13 @@ const AppRouter: React.FC = () => {
         </div>
       ) : isLoggedIn ? (
         isAdmin ? (
-          <>
-            <Navbar />
-            <AdminApp />
-          </>
+          <div className="relative flex">
+            <SideBar />
+            {/* to not go into the sidebar */}
+            <div className="w-full ml-24">
+              <AdminApp />
+            </div>
+          </div>
         ) : (
           <div className="relative flex">
             <SideBar />

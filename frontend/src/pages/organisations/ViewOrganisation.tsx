@@ -46,7 +46,7 @@ const ViewOrganisation: React.FC = () => {
             </Link>
           </div>
           <div>
-            <Button onClick={() => { setDialogOpen(true) }} roundness="md" py={2} bgColor="white" textColor="text-primary-700" outlined outlineColor="border-primary-700">
+            <Button onClick={() => { setDialogOpen(true) }} roundness="md" py={1.5} bgColor="white" textColor="text-primary-700" outlined outlineColor="border-primary-700">
               <TrashIcon className="w-4 h-4 mr-2 stroke-2" />
               Delete
             </Button>

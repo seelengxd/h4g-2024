@@ -1,23 +1,20 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import activitiesAPI from "../../api/activities/activities";
-import Button from "../../components/buttons/Button";
-import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
-import ConfirmationDialog from "../../components/feedback/ConfirmationDialog";
 import { ActivityData } from "../../types/activities/activities";
 import Spinner from "../../components/loading/Spinner";
 import {
+  ArrowLeftIcon,
   ClockIcon,
-  EyeIcon,
   MapPinIcon,
-  PlusIcon,
 } from "@heroicons/react/20/solid";
-import EnrollmentFormTable from "./EnrollmentFormTable";
+
 import { format } from "date-fns";
 
 const VolunteerActivity: React.FC = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
+  const location = useLocation();
+
   const [activity, setActivity] = useState<ActivityData | null>(null);
   useEffect(() => {
     activitiesAPI
@@ -25,11 +22,31 @@ const VolunteerActivity: React.FC = () => {
       .then((activity) => setActivity(activity));
   }, [id]);
 
+  console.log(location);
+
   return activity ? (
     <div className="items-center justify-between max-h-screen p-6 mx-auto mt-8 max-w-7xl lg:px-8">
       <div className="grid grid-cols-2 gap-16">
         <div className="flex flex-col p-4 leading-normal">
-          <h2 className="mb-2 text-6xl font-semibold tracking-tight text-gray-900">
+          {location.state?.prevRoute === "/events" && (
+            <Link
+              to="/events"
+              className="flex items-center mb-12 text-xl font-bold text-primary-800"
+            >
+              <ArrowLeftIcon className="w-6 h-6 mr-1 stroke-2" />
+              Back to Events
+            </Link>
+          )}
+          {location.state?.prevRoute === "/activities" && (
+            <Link
+              to="/events"
+              className="flex items-center mb-12 text-xl font-bold text-primary-800"
+            >
+              <ArrowLeftIcon className="w-6 h-6 mr-1 stroke-2" />
+              Back to Your Activity
+            </Link>
+          )}
+          <h2 className="mb-4 text-6xl font-semibold tracking-tight text-gray-900 ">
             {activity.name}
           </h2>
           <p>

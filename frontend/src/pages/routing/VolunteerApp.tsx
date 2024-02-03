@@ -35,10 +35,8 @@ const VolunteerApp: React.FC = () => {
       <Route path="/organisations/:id/edit" element={<UpdateOrganisation />} />
 
       {/* Activity Routes */}
-      <Route path="/activities" element={<VolunteeringOpportunities />} />
-      <Route path="/activities/new" element={<CreateActivity />} />
+      <Route path="/events" element={<VolunteeringOpportunities />} />
       <Route path="/activities/:id" element={<VolunteerActivity />} />
-      <Route path="/activities/:id/edit" element={<UpdateActivity />} />
 
       {/* Enrollment forms*/}
       <Route

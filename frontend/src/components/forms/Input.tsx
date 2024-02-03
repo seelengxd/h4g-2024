@@ -1,5 +1,3 @@
-import Navbar from "../navigation/Navbar";
-
 interface Props {
   name: string;
   type?: string;

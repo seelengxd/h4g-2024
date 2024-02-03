@@ -13,6 +13,11 @@ export interface Session {
   id: number;
 }
 
+export interface Image {
+  id: number;
+  imageUrl: string;
+}
+
 export type ActivityType = "VOLUNTEER" | "WORKSHOP" | "TRAINING";
 
 export interface ActivityMiniData {
@@ -24,6 +29,7 @@ export interface ActivityMiniData {
   organisation: Organisation;
   location: string;
   sessions: Session[];
+  images: Image[];
 }
 
 export interface ActivityData extends ActivityMiniData {
@@ -37,4 +43,5 @@ export interface ActivityPostData {
   sessions: SessionPostData[];
   description: string;
   location: string;
+  images: File[];
 }

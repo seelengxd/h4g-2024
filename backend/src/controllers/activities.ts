@@ -2,6 +2,7 @@ import { RequestHandler } from "express";
 import prisma from "../lib/prisma";
 import { body, param, validationResult } from "express-validator";
 import { Activity, Organisation } from "@prisma/client";
+import multer from "multer";
 
 declare global {
   namespace Express {
@@ -12,8 +13,9 @@ declare global {
   }
 }
 
+const upload = multer({ dest: "uploads/" });
+
 const validateOrganisationId: RequestHandler[] = [
-  body("organisationId").isInt().notEmpty(),
   async (req, res, next) => {
     const result = validationResult(req);
     if (!result.isEmpty()) {
@@ -47,6 +49,7 @@ const validateActivityId: RequestHandler[] = [
       include: {
         organisation: true,
         sessions: true,
+        images: true,
         enrollmentForm: {
           include: { submissions: { include: { user: true } } },
         },
@@ -67,6 +70,7 @@ export const index: RequestHandler[] = [
       include: {
         organisation: true,
         sessions: true,
+        images: true,
       },
     });
     res.json({ data: activities });
@@ -81,18 +85,21 @@ export const show: RequestHandler[] = [
 ];
 
 export const create: RequestHandler[] = [
+  upload.array("images"),
   body("name").notEmpty().isString(),
   body("location").notEmpty().isString(),
   body("organisationId").notEmpty().isInt(),
   body("type").isIn(["VOLUNTEER", "WORKSHOP", "TRAINING"]), // Adjust as per your defined types
-  body("sessions").isArray(),
-  body("sessions.*.start").optional().isISO8601().toDate(),
-  body("sessions.*.end").optional().isISO8601().toDate(),
+  body("sessions").notEmpty(),
   ...validateOrganisationId,
   async (req, res) => {
     const result = validationResult(req);
     if (!result.isEmpty()) {
       res.status(400).send({ errors: result.array() });
+      return;
+    }
+    if (!req.files) {
+      res.status(400).send({ errors: [{ msg: "missing images" }] });
       return;
     }
     const { name, type, sessions, description, location } = req.body;
@@ -106,12 +113,21 @@ export const create: RequestHandler[] = [
       },
     });
 
-    const createdSessions = await prisma.session.createMany({
-      data: sessions.map((date: { start: string; end: string }) => ({
-        start: date.start,
-        end: date.end,
+    await prisma.image.createMany({
+      data: (req.files as Express.Multer.File[]).map((file) => ({
+        imageUrl: file.path,
         activityId: newActivity.id,
       })),
+    });
+
+    const createdSessions = await prisma.session.createMany({
+      data: JSON.parse(sessions).map(
+        (date: { start: string; end: string }) => ({
+          start: date.start,
+          end: date.end,
+          activityId: newActivity.id,
+        })
+      ),
     });
     res.sendStatus(200);
   },
@@ -120,16 +136,13 @@ export const create: RequestHandler[] = [
 // Note: this method is bug-prone for activity dates + update,
 // especially once we add later relations. Be careful.
 export const update: RequestHandler[] = [
+  upload.array("images"),
   ...validateOrganisationId,
   ...validateActivityId,
   body("name").notEmpty().isString(),
   body("location").notEmpty().isString(),
-  body("organisationId").notEmpty().isInt(),
   body("type").isIn(["VOLUNTEER", "WORKSHOP", "TRAINING"]), // Adjust as per your defined types
-  body("sessions").isArray(),
-  body("sessions.*.start").isISO8601().toDate(),
-  body("sessions.*.end").isISO8601().toDate(),
-  body("sessions.*.id").optional().isInt(),
+  body("sessions").notEmpty(),
   async (req, res) => {
     // 1. Update activity fields (except for sessions)
     const activity = req.activity!;
@@ -146,9 +159,24 @@ export const update: RequestHandler[] = [
       },
     });
 
+    if (!req.files) {
+      res.status(400).send({ errors: [{ msg: "missing images" }] });
+      return;
+    }
+
+    // just delete and re-add everything
+    await prisma.image.deleteMany({ where: { activityId: activity.id } });
+
+    await prisma.image.createMany({
+      data: (req.files as Express.Multer.File[]).map((file) => ({
+        imageUrl: file.path,
+        activityId: activity.id,
+      })),
+    });
+
     // 2. Update old dates based on ID, create new dates (those without id.)
     const sessions: Array<{ start: string; end: string; id?: number }> =
-      req.body.sessions;
+      JSON.parse(req.body.sessions);
 
     // Postgres shouldn't allow a id of 0, right?
     const oldDates = sessions.filter((session) => !!session.id);

@@ -41,7 +41,6 @@ export const create: RequestHandler[] = [
       res.status(400).send(result.array());
       return;
     }
-    console.log(req.file);
     const { name, description, websiteUrl } = req.body;
     const newOrganisation = await prisma.organisation.create({
       data: {

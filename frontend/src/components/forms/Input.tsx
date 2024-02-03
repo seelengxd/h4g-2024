@@ -9,6 +9,7 @@ interface Props {
   placeholder?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   label?: string;
+  multiple?: boolean;
 }
 
 const Input: React.FC<Props & React.HTMLAttributes<HTMLInputElement>> = (
@@ -23,33 +24,18 @@ const Input: React.FC<Props & React.HTMLAttributes<HTMLInputElement>> = (
     onChange,
     placeholder,
     label,
+    multiple = false,
     ...otherProps
   } = props;
   return (
-    // <div className="mt-2">
-
-    //   <input
-    //     {...otherProps}
-    //     id={name}
-    //     name={name}
-    //     type={type}
-    //     placeholder={placeholder}
-    //     {...(name === "image" ? { accept: "image/*" } : {})}
-    //     {...(autoComplete ? { autoComplete } : {})}
-    //     required={required}
-    //     {...(value ? { value } : {})}
-    //     onChange={onChange}
-    //     className="block w-full rounded-xl border-0 py-1.5 bg-primary-200 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-    //   />
-    // </div>
-
     <div className="relative">
       <input
+        {...otherProps}
         id={name}
         name={name}
         type={type}
         placeholder={placeholder || " "}
-        {...(name === "image" ? { accept: "image/*" } : {})}
+        {...(name.includes("image") ? { accept: "image/*", multiple } : {})}
         {...(autoComplete ? { autoComplete } : {})}
         {...(required ? { required: true } : {})}
         {...(value ? { value } : {})}

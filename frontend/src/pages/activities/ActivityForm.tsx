@@ -52,6 +52,7 @@ const ActivityForm: React.FC<Props> = ({
             end: new Date(session.end),
           })),
           location: initialData.location,
+          images: [],
         }
       : ({
           name: "",
@@ -60,6 +61,7 @@ const ActivityForm: React.FC<Props> = ({
           organisationId: 0,
           sessions: [],
           location: "",
+          images: [],
         } as ActivityPostData),
     validationSchema: object({
       name: string().trim().required("Name cannot be empty."),
@@ -100,6 +102,8 @@ const ActivityForm: React.FC<Props> = ({
     value: organisation.id,
     label: organisation.name,
   }));
+
+  console.log({ errors });
   return (
     <div className="items-center justify-between max-h-screen p-6 mx-auto mt-8 max-w-7xl lg:px-8">
       <div className="w-full">
@@ -187,6 +191,18 @@ const ActivityForm: React.FC<Props> = ({
               value={values.location}
               onChange={handleChange}
               required
+            />
+          </FormControl>
+          <FormControl onBlur={handleBlur}>
+            <Label htmlFor="images">Images</Label>
+            <Input
+              name="images"
+              type="file"
+              multiple
+              aria-required
+              onChange={(event) => {
+                setFieldValue("images", event.currentTarget.files);
+              }}
             />
           </FormControl>
           <DatePicker

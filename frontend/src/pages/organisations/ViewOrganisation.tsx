@@ -28,7 +28,7 @@ const ViewOrganisation: React.FC = () => {
   const ActivitiesTab: Tab = {
     id: "Activities",
     tabTitle: "Activities",
-    page: <OrganisationActivityTab organisation={organisation} />
+    page: <OrganisationActivityTab activities={organisation.activities} />
   };
 
   const VolunteersTab: Tab = {

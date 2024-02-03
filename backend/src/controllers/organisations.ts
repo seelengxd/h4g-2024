@@ -21,7 +21,7 @@ export const show: RequestHandler[] = [
     }
     const organisation = await prisma.organisation.findFirst({
       where: { id: Number(req.params.id!) },
-      include: { categories: true, activities: true },
+      include: { categories: true, activities: { include: { sessions: true  } } },
     });
     if (!organisation) {
       res.sendStatus(404);

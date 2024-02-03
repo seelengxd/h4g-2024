@@ -6,7 +6,6 @@ import {
 } from "@tanstack/react-table";
 
 import React, { ReactNode } from "react";
-
 import { ActivityMiniData } from "../types/activities/activities";
 import { Link } from "react-router-dom";
 import IconButton from "../components/buttons/IconButton";
@@ -35,11 +34,11 @@ export const ActivityTableColumns = (
       },
       header: "type",
     }),
-    columnHelper.accessor("organisation", {
-      cell: (organisation): ReactNode => (
-        <Link to={"/organisations/" + organisation.getValue().id}>
+    columnHelper.accessor("organisationId", {
+      cell: (cell): ReactNode => (
+        <Link to={"/organisations/" + cell.row.original.organisationId}>
           <p className="hover:underline hover:text-gray-800">
-            {organisation.getValue().name}
+            {cell.row.original.organisationName}
           </p>
         </Link>
       ),

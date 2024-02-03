@@ -60,6 +60,7 @@ const validateActivityId: RequestHandler[] = [
       return;
     }
     req.activity = activity;
+    req.organisation = activity.organisation;
     next();
   },
 ];
@@ -80,7 +81,7 @@ export const index: RequestHandler[] = [
 export const show: RequestHandler[] = [
   ...validateActivityId,
   async (req, res) => {
-    res.json({ data: req.activity! });
+    res.json({ data: {...req.activity!, organisationName: req.organisation!.name}});
   },
 ];
 

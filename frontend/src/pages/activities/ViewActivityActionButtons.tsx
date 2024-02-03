@@ -18,7 +18,7 @@ const ViewActivityActionButtons: React.FC = () => {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex justify-between items-center mb-4">
         <div>
           <Link to={`/activities`}>
             <Button px={4}>

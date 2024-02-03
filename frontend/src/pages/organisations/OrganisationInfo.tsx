@@ -11,6 +11,7 @@ const OrganisationInfo: React.FC<OrganisationInfoProps> = ({ organisation }: Org
 
   return (
     <div className="grid grid-cols-3 bg-white p-8 rounded-md shadow">
+      {/* Organisation Image */}
       <div className="flex flex-col justify-center min-h-36 col-span-1 pr-8">
         <img
           className="object-contain w-auto h-48"
@@ -19,6 +20,7 @@ const OrganisationInfo: React.FC<OrganisationInfoProps> = ({ organisation }: Org
         />
       </div>
 
+      {/* Organisation Details */}
       <div className="flex flex-col justify-center col-span-2">
         <h2 className="mb-2 text-4xl font-semibold tracking-tight text-gray-900 mb-4">
           {organisation.name}

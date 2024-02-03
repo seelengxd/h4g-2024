@@ -16,12 +16,25 @@ import {
 } from "../../types/forms/forms";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import _ from "lodash";
+import enrollmentFormsAPI from "../../api/enrollmentForms/enrollmentForms";
+import { useNavigate, useParams } from "react-router-dom";
 
 const CreateEnrollmentForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData>(createFormData());
 
-  // I don't think this works... remove once I give up.
-  // which at this rate, is going to be incredibly soon.
+  // activityId
+  const { id } = useParams();
+  const activityId = parseInt(id!);
+  const navigate = useNavigate();
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    enrollmentFormsAPI
+      .createEnrollmentForm({
+        formSchema: formData,
+        activityId,
+      })
+      .then(() => navigate("/activities/" + activityId));
+  };
 
   // Input change handlers
   const handleQuestionTitleChange =
@@ -136,7 +149,10 @@ const CreateEnrollmentForm: React.FC = () => {
   };
 
   return (
-    <div className="items-center justify-between h-screen max-w-4xl p-6 mx-auto lg:px-8">
+    <form
+      className="items-center justify-between h-screen max-w-4xl p-6 mx-auto lg:px-8"
+      onSubmit={handleSubmit}
+    >
       <div className="flex flex-col justify-center">
         <input
           value={formData.title}
@@ -199,10 +215,10 @@ const CreateEnrollmentForm: React.FC = () => {
         </div>
 
         <div className="flex justify-center mt-4 mb-2 ml-4">
-          <Button>Create Form!</Button>
+          <Button type="submit">Create Form!</Button>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 

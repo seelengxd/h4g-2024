@@ -25,6 +25,7 @@ const EnrollmentFormTable: React.FC<Props> = ({ activity }) => {
       getColumnCanGlobalFilter={(column: Column<Submission>) =>
         column.getCanSort()
       }
+      searchText="Search submissions..."
     />
   );
 };

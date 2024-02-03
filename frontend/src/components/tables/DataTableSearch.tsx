@@ -5,10 +5,12 @@ const SEARCH_DEBOUNCE_DELAY = 200;
 
 interface DataTableSearchProps<T> {
   table: Table<T>;
+  searchText: string;
 }
 
 const DataTableSearch = <T extends object>({
   table,
+  searchText,
 }: DataTableSearchProps<T>): JSX.Element => {
   const globalFilter = table.getState().globalFilter as string | undefined;
   const [searchValue, setSearchValue] = useState(globalFilter);
@@ -24,9 +26,18 @@ const DataTableSearch = <T extends object>({
 
   return (
     <div className="relative">
-      <div className="absolute inset-y-0 flex items-center pointer-events-none start-0 ps-3">
+      <input
+        type="search"
+        id="default-search"
+        className="block p-2 text-sm rounded-xl w-72 bg-primary-300 border-primary-300 ps-4 focus:ring-primary-500 focus:border-primary-500 "
+        placeholder={searchText}
+        onChange={(e) => {
+          setSearchValue(e.currentTarget.value);
+        }}
+      />
+      <div className="absolute inset-y-0 flex items-center pointer-events-none end-0 pe-4 opacity-80">
         <svg
-          className="w-4 h-4 text-gray-500 dark:text-gray-400"
+          className="w-4 h-4"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -41,15 +52,6 @@ const DataTableSearch = <T extends object>({
           />
         </svg>
       </div>
-      <input
-        type="search"
-        id="default-search"
-        className="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg ps-10 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
-        placeholder="Search activity list..."
-        onChange={(e) => {
-          setSearchValue(e.currentTarget.value);
-        }}
-      />
     </div>
   );
 };

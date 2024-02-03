@@ -13,7 +13,7 @@ const DataTableHeader = <T extends object>({
   isSortable,
 }: DataTableHeaderProps<T>): JSX.Element => {
   return (
-    <thead className="text-xs text-white uppercase bg-gray-5 bg-primary-600">
+    <thead className="text-white capitalize text-md bg-gray-5 bg-primary-600">
       {headerGroups.map((headerGroup) => (
         <tr key={headerGroup.id}>
           {headerGroup.headers.map((header) => {

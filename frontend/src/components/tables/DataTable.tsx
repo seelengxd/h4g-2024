@@ -32,6 +32,8 @@ interface DataTableProps<T extends object> {
   getColumnCanGlobalFilter?: (column: Column<T>) => boolean;
   /* Whether the DataTable should be paginated or not, enabled by default */
   isPaginated?: boolean;
+  searchText?: string;
+  title?: string;
 }
 
 const DataTable = <T extends object>({
@@ -41,6 +43,8 @@ const DataTable = <T extends object>({
   isSearchable = true,
   getColumnCanGlobalFilter,
   isPaginated = true,
+  searchText = "Search activity list...",
+  title = "",
 }: DataTableProps<T>): JSX.Element => {
   const [sortBy, setSortBy] = useState<SortingState>([]);
   const table = useReactTable<T>({
@@ -62,17 +66,24 @@ const DataTable = <T extends object>({
 
   return (
     <>
-      <div className="flex items-end mt-6 mb-6">
-        {isSortable && <DataTableSearch table={table} />}
-        {table.getHeaderGroups().map((headerGroup) =>
-          headerGroup.headers.map((header) => {
-            const column = header.column;
-            if (column.columnDef.meta === undefined) return null;
-            if ("selectFilterOptions" in column.columnDef.meta) {
-              return <DataTableSelectFilter key={column.id} column={column} />;
-            } else return null;
-          })
-        )}
+      <div className="flex items-center justify-between mt-6 mb-6">
+        {title && <p className="p-0 m-0 text-2xl font-bold">{title}</p>}
+        <div className="flex items-end">
+          {isSortable && (
+            <DataTableSearch table={table} searchText={searchText} />
+          )}
+          {table.getHeaderGroups().map((headerGroup) =>
+            headerGroup.headers.map((header) => {
+              const column = header.column;
+              if (column.columnDef.meta === undefined) return null;
+              if ("selectFilterOptions" in column.columnDef.meta) {
+                return (
+                  <DataTableSelectFilter key={column.id} column={column} />
+                );
+              } else return null;
+            })
+          )}
+        </div>
       </div>
 
       <div className="bg-white border shadow border-primary-700 border-opacity-60 rounded-2xl overflow-clip">

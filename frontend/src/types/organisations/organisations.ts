@@ -1,11 +1,11 @@
 import { ActivityMiniData } from "../activities/activities";
-import { Category } from "../categories/categories";
+import { Interest } from "../interests/interests";
 
 export interface Organisation {
   id: number;
   name: string;
   description: string;
-  categories: Category[];
+  categories: Interest[];
   activities: ActivityMiniData[];
   imageUrl?: string;
   websiteUrl?: string;
@@ -14,7 +14,7 @@ export interface Organisation {
 export interface OrganisationsPostData {
   name: string;
   description: string;
-  categories: Category[];
+  categories: Interest[];
   websiteUrl?: string;
   image?: File;
 }

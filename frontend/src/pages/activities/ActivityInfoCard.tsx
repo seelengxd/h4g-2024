@@ -1,5 +1,5 @@
 import { ArrowTopRightOnSquareIcon, EyeIcon, MapPinIcon } from "@heroicons/react/24/solid";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ImageGallery from "../../components/dataDisplay/ImageGallery";
 import { ActivityData } from "../../types/activities/activities";
 import Tag from "../../components/dataDisplay/Tag";
@@ -11,7 +11,6 @@ interface ActivityInfoCardProps {
 }
 
 const ActivityInfoCard: React.FC<ActivityInfoCardProps> = ({ activity }: ActivityInfoCardProps) => {
-  const { id } = useParams();
   const sessionCount = activity.sessions.length;
   const hasEnrollmentForm = activity.enrollmentForm !== undefined;
 
@@ -51,7 +50,7 @@ const ActivityInfoCard: React.FC<ActivityInfoCardProps> = ({ activity }: Activit
           </div>
 
           <div>
-            <Link to={`/activities/${id}/enrollment-forms/${activity.enrollmentForm?.id ?? "new"}`}>
+            <Link to={`/activities/${activity.id}/enrollment-forms/${activity.enrollmentForm?.id ?? "new"}`}>
               <Button>
                 {hasEnrollmentForm && <EyeIcon className="w-4 h-4 mr-2 stroke-2" />}
                 {!hasEnrollmentForm && <PlusIcon className="w-4 h-4 mr-2 stroke-2" />}

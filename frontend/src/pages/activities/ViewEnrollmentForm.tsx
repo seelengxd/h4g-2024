@@ -17,7 +17,7 @@ const ViewEnrollmentForm: React.FC = () => {
     enrollmentFormsAPI
       .getEnrollmentForm(parseInt(id!))
       .then((enrollmentForm) => setFormData(enrollmentForm.formSchema));
-  }, []);
+  }, [id]);
 
   return (
     <div className="items-center justify-between p-6 mx-auto max-w-7xl lg:px-8">

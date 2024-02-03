@@ -23,7 +23,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ imageUrls }: ImageGalleryPr
       {/* Controls */}
       <div className="grid grid-cols-12" data-carousel="slide">
         <div className="flex col-span-1">
-          <ArrowLeftCircleIcon className="fill-gray-500 opacity-50" onClick={() => setIndex((index - 1) % numberImages)}/>
+          <ArrowLeftCircleIcon className="fill-gray-500 opacity-50 max-h-8" onClick={() => setIndex((index - 1) % numberImages)}/>
         </div>
 
         <div className="flex flex-row col-span-10 w-full gap-2 items-center justify-center">
@@ -31,7 +31,7 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ imageUrls }: ImageGalleryPr
         </div>
 
       <div className="flex col-span-1">
-        <ArrowRightCircleIcon className="fill-gray-500 opacity-50" onClick={() => setIndex((index + 1) % numberImages)}/>
+        <ArrowRightCircleIcon className="fill-gray-500 opacity-50 max-h-8" onClick={() => setIndex((index + 1) % numberImages)}/>
       </div>
     </div>
   </div>

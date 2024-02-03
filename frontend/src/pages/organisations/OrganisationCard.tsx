@@ -1,4 +1,4 @@
-import Tag from "../../components/dataDissplay/Tag";
+import Tag from "../../components/dataDisplay/Tag";
 import { Organisation } from "../../types/organisations/organisations";
 
 interface Props {

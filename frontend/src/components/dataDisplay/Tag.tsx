@@ -5,8 +5,8 @@ interface TagProps {
   textSize?: string;
   textCasing?: string;
   fontWeight?: string;
-  px?: number;
-  py?: number;
+  px?: string;
+  py?: string;
 
 }
 
@@ -17,12 +17,12 @@ const Tag: React.FC<TagProps> = ({
   textSize = 'text-xs',
   textCasing = 'uppercase',
   fontWeight = 'font-semibold',
-  px = 1.5,
-  py = 1.5,
+  px = 'px-1.5',
+  py = 'py-1.5',
 }: TagProps ) => {
   return (
     <div className="flex flex-col">
-      <span className={`px-${px} py-${py} ${textSize} rounded-md inline-block whitespace-nowrap text-center ${bgColor} ${textColor} align-baseline ${fontWeight} ${textCasing} leading-none`}>
+      <span className={`${px} ${py} ${textSize} rounded-md inline-block whitespace-nowrap text-center ${bgColor} ${textColor} align-baseline ${fontWeight} ${textCasing} leading-none`}>
         {text}
       </span>
     </div>

@@ -7,6 +7,7 @@ import Button from "../../components/buttons/Button";
 import { ArrowLeftIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import ConfirmationDialog from "../../components/feedback/ConfirmationDialog";
 import OrganisationInfo from "./OrganisationInfo";
+import ViewOrganisationActionButtons from "./ViewOrganisationActionButtons";
 
 const ViewOrganisation: React.FC = () => {
   const { id } = useParams();
@@ -27,32 +28,7 @@ const ViewOrganisation: React.FC = () => {
 
   return organisation ? (
     <div className="items-center justify-between p-6 mx-auto max-w-7xl lg:px-8 mt-4">
-      <div className="flex justify-between mb-8">
-        <div>
-          <Link to={`/organisations`}>
-            <Button px={4}>
-              <ArrowLeftIcon className="w-4 h-4 mr-2 stroke-2" />
-              Back
-            </Button>
-          </Link>
-        </div>
-        <div className="flex gap-6">
-          <div>
-            <Link to={`/organisations/${id}/edit`}>
-              <Button roundness="md" py={2}>
-                <PencilIcon className="w-4 h-4 mr-2 stroke-2" />
-                Edit
-              </Button>
-            </Link>
-          </div>
-          <div>
-            <Button onClick={() => { setDialogOpen(true) }} roundness="md" py={1.5} bgColor="white" textColor="text-primary-700" outlined outlineColor="border-primary-700">
-              <TrashIcon className="w-4 h-4 mr-2 stroke-2" />
-              Delete
-            </Button>
-          </div>
-        </div>
-      </div>
+      <ViewOrganisationActionButtons />
       <OrganisationInfo organisation={organisation} />
 
       <div className="flex flex-col justify-between p-4 leading-normal">

@@ -49,7 +49,7 @@ const DataTablePagination = <T extends object>({
           ariaLabel="Previous Page"
           onClick={previousPage}
           isDisabled={!getCanPreviousPage()}
-          icon={<ChevronLeftIcon className="w-3 h-3 stroke-2" />}
+          icon={<ChevronLeftIcon className="w-6 h-6 stroke-2" />}
         />
       </div>
 
@@ -72,7 +72,7 @@ const DataTablePagination = <T extends object>({
         <input
           type="number"
           name="number-input"
-          className="ml-2 mr-4 w-20 block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          className="ml-2 mr-4 w-20 block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6"
           //   min={1}
           //   max={Math.max(getPageCount(), 1)}
           onChange={(e) => {
@@ -104,7 +104,7 @@ const DataTablePagination = <T extends object>({
           ariaLabel="Next Page"
           onClick={nextPage}
           isDisabled={!getCanNextPage()}
-          icon={<ChevronRightIcon className="w-3 h-3 stroke-2" />}
+          icon={<ChevronRightIcon className="w-6 h-6 stroke-2" />}
           mr={4}
         />
 

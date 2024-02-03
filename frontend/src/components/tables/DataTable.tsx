@@ -75,7 +75,7 @@ const DataTable = <T extends object>({
         )}
       </div>
 
-      <div className="p-6 bg-white border border-gray-200 rounded-lg shadow">
+      <div className="bg-white border shadow border-primary-700 border-opacity-60 rounded-2xl overflow-clip">
         <table className="w-full text-sm text-left text-gray-500 rtl:text-right">
           <DataTableHeader
             headerGroups={table.getHeaderGroups()}
@@ -85,10 +85,10 @@ const DataTable = <T extends object>({
             {table.getRowModel().rows.map((row) => (
               <tr
                 key={row.id}
-                className="border-b odd:bg-white even:bg-gray-50"
+                className="border-b odd:bg-primary-50 even:bg-primary-100"
               >
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className="px-6 py-4">
+                  <td key={cell.id} className="px-6 py-2">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}

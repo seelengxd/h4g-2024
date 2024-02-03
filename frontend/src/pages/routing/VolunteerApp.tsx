@@ -12,6 +12,8 @@ import CreateEnrollmentForm from "../activities/CreateEnrollmentForm";
 import ViewEnrollmentForm from "../activities/ViewEnrollmentForm";
 import CardContainer from "../../components/dashboard/CardContainer";
 import VolunteerDashboard from "../dashboard/VolunteerDashboard";
+import VolunteeringOpportunities from "../activities/VolunteeringOpportunities";
+import VolunteerActivity from "../activities/VolunteerActivity";
 
 const error404 = (
   <Error errorCode={404} desc="Oh no! Are you sure this page exists?" />
@@ -33,9 +35,9 @@ const VolunteerApp: React.FC = () => {
       <Route path="/organisations/:id/edit" element={<UpdateOrganisation />} />
 
       {/* Activity Routes */}
-      <Route path="/activities" element={<Activities />} />
+      <Route path="/activities" element={<VolunteeringOpportunities />} />
       <Route path="/activities/new" element={<CreateActivity />} />
-      <Route path="/activities/:id" element={<ViewActivity />} />
+      <Route path="/activities/:id" element={<VolunteerActivity />} />
       <Route path="/activities/:id/edit" element={<UpdateActivity />} />
 
       {/* Enrollment forms*/}

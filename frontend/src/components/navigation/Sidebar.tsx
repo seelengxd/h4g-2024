@@ -118,7 +118,7 @@ const SideBar: React.FC = () => {
         <div className="flex flex-col justify-center h-screen">
           <div
             className={
-              "flex-col items-center space-y-24" +
+              "flex-col items-center space-y-12" +
               (active ? " hidden" : " flex")
             }
           >

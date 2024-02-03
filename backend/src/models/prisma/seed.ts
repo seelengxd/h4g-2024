@@ -79,10 +79,19 @@ async function main() {
             dob: '2022-01-15T12:30:00.000Z',
             description: 'user 1 description',
             interests: {
-              connect: [{name:'Elderly Care'}]
+              connect: [
+                { name: 'Elderly Care' },
+                { name: 'Environmental Cleanup' },
+                { name: 'Community Gardening' },
+              ]
             },
             skills: {
-              connect: [{name: 'Story Telling'}]
+              connect: [
+                { name: 'Story Telling' },
+                { name: 'Dance' },
+                { name: 'Sports' },
+                { name: 'Math' }
+              ]
             },
             saturday: true,
             sunday: true,
@@ -95,7 +104,7 @@ async function main() {
               title: 'user 1 blog 1',
               description: placeholder_text,
               tags: {
-                connect: [{name:'Elderly Care'}]
+                connect: [{ name: 'Elderly Care' }]
               },
             }
           ]
@@ -114,10 +123,20 @@ async function main() {
             dob: '2022-01-15T12:30:00.000Z',
             description: 'user 2 description',
             interests: {
-              connect: [{name:'Elderly Care'}]
+              connect: [
+                { name: 'Meals on Wheels' },
+                { name: 'Animal Shelter Volunteer' },
+                { name: 'Homeless Shelter Support' }
+              ]
             },
             skills: {
-              connect: [{name: 'Sewing'}]
+              connect: [
+                { name: 'Art and Craft' },
+                { name: 'Story Telling' },
+                { name: 'Painting' },
+                { name: 'Pottery' },
+                { name: 'Knitting' }
+              ]
             },
             monday: true,
             friday: true,
@@ -130,14 +149,14 @@ async function main() {
               title: 'user 2 blog 1',
               description: placeholder_text,
               tags: {
-                connect: [{name:'Meals on Wheels'}]
+                connect: [{ name: 'Meals on Wheels' }]
               }
             },
             {
               title: 'user 2 blog 2',
               description: placeholder_text,
               tags: {
-                connect: [{name:'Meals on Wheels'}]
+                connect: [{ name: 'Meals on Wheels' }]
               }
             }
           ]
@@ -170,7 +189,7 @@ async function main() {
         imageUrl: "uploads/org_placeholder.jpeg",
         websiteUrl: "https://www.worldwildlife.org",
         categories: {
-          connect: [{name:'Meals on Wheels'}]
+          connect: [{ name: 'Meals on Wheels' }]
         },
         activities: {
           create: [
@@ -241,7 +260,10 @@ async function main() {
         imageUrl: "uploads/org_placeholder.jpeg",
         websiteUrl: "https://www.worldwildlife.org",
         categories: {
-          connect: [{name:'Meals on Wheels'}]
+          connect: [
+            { name: 'Environmental Cleanup' },
+            { name: 'Community Gardening' }
+          ]
         },
         activities: {
           create: [

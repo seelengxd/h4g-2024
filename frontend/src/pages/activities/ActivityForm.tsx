@@ -11,7 +11,10 @@ import { array, number, object, string } from "yup";
 import FormControl from "../../components/forms/FormControl";
 import Label from "../../components/forms/Label";
 import Input from "../../components/forms/Input";
-import { Activity, ActivityPostData } from "../../types/activities/activities";
+import {
+  ActivityMiniData,
+  ActivityPostData,
+} from "../../types/activities/activities";
 import Select from "react-select";
 import { Organisation } from "../../types/organisations/organisations";
 import { forwardRef, useEffect, useState } from "react";
@@ -21,7 +24,7 @@ import "react-datepicker/dist/react-datepicker.css"; // Import datepicker styles
 import { format } from "date-fns";
 
 interface Props {
-  initialData?: Activity;
+  initialData?: ActivityMiniData;
   handleValues: (values: ActivityPostData) => Promise<void>;
   label: string;
 }
@@ -98,7 +101,7 @@ const ActivityForm: React.FC<Props> = ({
     label: organisation.name,
   }));
   return (
-    <div className="items-center justify-between p-6 mx-auto max-w-7xl lg:px-8">
+    <div className="items-center justify-between max-h-screen p-6 mx-auto mt-8 max-w-7xl lg:px-8">
       <div className="w-full">
         <div className="flex items-center justify-between flex-initial w-full">
           <div className="flex items-center mt-4">

@@ -7,12 +7,12 @@ import {
 
 import React, { ReactNode } from "react";
 
-import { Activity } from "../types/activities/activities";
+import { ActivityMiniData } from "../types/activities/activities";
 import { Link } from "react-router-dom";
 import IconButton from "../components/buttons/IconButton";
 import { EyeIcon } from "@heroicons/react/24/outline";
 
-export interface ActivityRowData extends Activity {
+export interface ActivityRowData extends ActivityMiniData {
   action?: undefined;
 }
 
@@ -58,5 +58,5 @@ export const ActivityTableColumns = (
         </div>
       ),
     }),
-  ] as Array<ColumnDef<Activity>>;
+  ] as Array<ColumnDef<ActivityMiniData>>;
 };

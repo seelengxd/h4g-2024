@@ -37,18 +37,18 @@ const AppRouter: React.FC = () => {
         </div>
       ) : isLoggedIn ? (
         isAdmin ? (
-          <div className="relative flex">
+          <div className="relative flex h-screen">
             <SideBar />
             {/* to not go into the sidebar */}
-            <div className="w-full ml-24">
+            <div className="w-full max-h-screen ml-24 overflow-y-auto">
               <AdminApp />
             </div>
           </div>
         ) : (
-          <div className="relative flex">
+          <div className="relative flex h-screen">
             <SideBar />
             {/* to not go into the sidebar */}
-            <div className="w-full ml-24">
+            <div className="w-full max-h-screen ml-24 overflow-y-auto">
               <VolunteerApp />
             </div>
           </div>

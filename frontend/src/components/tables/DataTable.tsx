@@ -32,6 +32,8 @@ interface DataTableProps<T extends object> {
   getColumnCanGlobalFilter?: (column: Column<T>) => boolean;
   /* Whether the DataTable should be paginated or not, enabled by default */
   isPaginated?: boolean;
+  searchText?: string;
+  title?: string;
 }
 
 const DataTable = <T extends object>({
@@ -41,6 +43,8 @@ const DataTable = <T extends object>({
   isSearchable = true,
   getColumnCanGlobalFilter,
   isPaginated = true,
+  searchText = "Search activity list...",
+  title = "",
 }: DataTableProps<T>): JSX.Element => {
   const [sortBy, setSortBy] = useState<SortingState>([]);
   const table = useReactTable<T>({
@@ -62,20 +66,27 @@ const DataTable = <T extends object>({
 
   return (
     <>
-      <div className="flex items-end mt-6 mb-6">
-        {isSortable && <DataTableSearch table={table} />}
-        {table.getHeaderGroups().map((headerGroup) =>
-          headerGroup.headers.map((header) => {
-            const column = header.column;
-            if (column.columnDef.meta === undefined) return null;
-            if ("selectFilterOptions" in column.columnDef.meta) {
-              return <DataTableSelectFilter key={column.id} column={column} />;
-            } else return null;
-          })
-        )}
+      <div className="flex items-center justify-between mt-6 mb-6">
+        {title && <p className="p-0 m-0 text-2xl font-bold">{title}</p>}
+        <div className="flex items-end">
+          {isSortable && (
+            <DataTableSearch table={table} searchText={searchText} />
+          )}
+          {table.getHeaderGroups().map((headerGroup) =>
+            headerGroup.headers.map((header) => {
+              const column = header.column;
+              if (column.columnDef.meta === undefined) return null;
+              if ("selectFilterOptions" in column.columnDef.meta) {
+                return (
+                  <DataTableSelectFilter key={column.id} column={column} />
+                );
+              } else return null;
+            })
+          )}
+        </div>
       </div>
 
-      <div className="p-6 bg-white border border-gray-200 rounded-lg shadow">
+      <div className="bg-white border shadow border-primary-700 border-opacity-60 rounded-2xl overflow-clip">
         <table className="w-full text-sm text-left text-gray-500 rtl:text-right">
           <DataTableHeader
             headerGroups={table.getHeaderGroups()}
@@ -85,10 +96,10 @@ const DataTable = <T extends object>({
             {table.getRowModel().rows.map((row) => (
               <tr
                 key={row.id}
-                className="border-b odd:bg-white even:bg-gray-50"
+                className="border-b odd:bg-primary-50 even:bg-primary-100"
               >
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className="px-6 py-4">
+                  <td key={cell.id} className="px-6 py-2">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}

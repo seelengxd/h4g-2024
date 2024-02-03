@@ -41,7 +41,7 @@ const AdminApp: React.FC = () => {
         element={<CreateEnrollmentForm />}
       />
       <Route
-        path="/activities/:id/enrollment-forms/:id"
+        path="/activities/:activityId/enrollment-forms/:id"
         element={<ViewEnrollmentForm />}
       />
 

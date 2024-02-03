@@ -1,3 +1,4 @@
+import { EnrollmentForm } from "../enrollmentForms/enrollmentForms";
 import { Organisation } from "../organisations/organisations";
 
 export interface SessionPostData {
@@ -14,7 +15,7 @@ export interface Session {
 
 export type ActivityType = "VOLUNTEER" | "WORKSHOP" | "TRAINING";
 
-export interface Activity {
+export interface ActivityMiniData {
   id: number;
   name: string;
   type: ActivityType;
@@ -23,6 +24,10 @@ export interface Activity {
   organisation: Organisation;
   location: string;
   sessions: Session[];
+}
+
+export interface ActivityData extends ActivityMiniData {
+  enrollmentForm: EnrollmentForm;
 }
 
 export interface ActivityPostData {

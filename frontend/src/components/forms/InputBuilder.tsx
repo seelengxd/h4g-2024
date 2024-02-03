@@ -42,7 +42,7 @@ const InputBuilder: React.FC<Props> = ({
     <Draggable draggableId={component.id.toString()} index={index}>
       {(provided) => (
         <div
-          className="w-full p-4 m-4 bg-white border-2 border-l-8 border-gray-100 border-l-indigo-600 rounded-md shadow-sm"
+          className="w-full p-4 m-4 bg-white border-2 border-l-8 border-gray-100 rounded-md shadow-sm border-l-indigo-600"
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}

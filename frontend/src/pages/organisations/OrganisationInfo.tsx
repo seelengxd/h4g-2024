@@ -7,8 +7,9 @@ interface OrganisationInfoProps {
 }
 
 const OrganisationInfo: React.FC<OrganisationInfoProps> = ({ organisation }: OrganisationInfoProps) => {
+
   return (
-    <div className="grid grid-rows-1 grid-cols-3 bg-white p-8 rounded-md shadow">
+    <div className="grid grid-cols-3 bg-white p-8 rounded-md shadow">
       <div className="flex flex-col justify-center min-h-36 col-span-1">
         <img
           className="object-contain w-auto h-48 rounded-full" // h-96" //md:max-w-50% md:h-auto md:rounded-none md:rounded-s-lg"

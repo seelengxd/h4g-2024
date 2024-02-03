@@ -56,6 +56,7 @@ export const create: RequestHandler[] = [
 ];
 
 export const update: RequestHandler[] = [
+  upload.single("image"),
   validateId,
   async (req, res) => {
     const result = validationResult(req);

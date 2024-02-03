@@ -23,7 +23,7 @@ const Activities: React.FC = () => {
   }, []);
 
   return (
-    <div className="items-center justify-between h-screen p-6 mx-auto max-w-7xl lg:px-8">
+    <div className="items-center justify-between h-screen p-6 mx-auto mt-8 max-w-7xl lg:px-8">
       <div className="w-full">
         <div className="items-center justify-between flex-initial w-full sm:flex">
           <div className="flex items-center mt-4">

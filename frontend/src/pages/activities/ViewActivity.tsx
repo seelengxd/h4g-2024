@@ -27,7 +27,7 @@ const ViewActivity: React.FC = () => {
   };
 
   return activity ? (
-    <div className="items-center justify-between p-6 mx-auto max-w-7xl lg:px-8">
+    <div className="items-center justify-between p-6 mx-auto mt-8 max-w-7xl lg:px-8">
       <div className="flex flex-col justify-between p-4 leading-normal">
         <h2 className="mb-2 text-4xl font-semibold tracking-tight text-gray-900">
           {activity.name}

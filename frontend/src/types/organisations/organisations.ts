@@ -1,3 +1,4 @@
+import { ActivityMiniData } from "../activities/activities";
 import { Category } from "../categories/categories";
 
 export interface Organisation {
@@ -5,6 +6,7 @@ export interface Organisation {
   name: string;
   description: string;
   categories: Category[];
+  activities: ActivityMiniData[];
   imageUrl?: string;
   websiteUrl?: string;
 }

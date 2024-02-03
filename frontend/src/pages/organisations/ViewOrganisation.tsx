@@ -1,48 +1,50 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Organisation } from "../../types/organisations/organisations";
 import { useEffect, useState } from "react";
 import organisationsAPI from "../../api/organisations/organisations";
 import Spinner from "../../components/loading/Spinner";
-import Button from "../../components/buttons/Button";
-import { ArrowLeftIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
-import ConfirmationDialog from "../../components/feedback/ConfirmationDialog";
 import OrganisationInfo from "./OrganisationInfo";
 import ViewOrganisationActionButtons from "./ViewOrganisationActionButtons";
+import Tabs, { Tab } from "../../components/dataDisplay/Tabs";
+import OrganisationActivityTab from "./OrganisationActivityTab";
+import { Error404 } from "../routing/VolunteerApp";
 
 const ViewOrganisation: React.FC = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [organisation, setOrganisation] = useState<Organisation | null>(null);
+
   useEffect(() => {
+    setIsLoading(true);
     organisationsAPI
       .getOrganisation(Number(id))
-      .then((organisation) => setOrganisation(organisation));
+      .then((organisation) => setOrganisation(organisation))
+      .finally(() => setIsLoading(false));
   }, [id]);
-  const [dialogOpen, setDialogOpen] = useState(false);
 
-  const handleDelete = () => {
-    organisationsAPI
-      .deleteOrganisation(Number(id))
-      .then(() => navigate("/organisations"));
+  if(isLoading) return <Spinner />;
+  if (!organisation) return Error404;
+
+  const ActivitiesTab: Tab = {
+    id: "Activities",
+    tabTitle: "Activities",
+    page: <OrganisationActivityTab organisation={organisation} />
   };
 
-  return organisation ? (
+  const VolunteersTab: Tab = {
+    id: "Volunteers",
+    tabTitle: "Volunteers",
+    page: <h1>VOLUNTEERS</h1>
+  };
+
+  const tabs = [ActivitiesTab, VolunteersTab];
+
+  return (
     <div className="items-center justify-between p-6 mx-auto max-w-7xl lg:px-8 mt-4">
       <ViewOrganisationActionButtons />
       <OrganisationInfo organisation={organisation} />
-
-      <div className="flex flex-col justify-between p-4 leading-normal">
-        {dialogOpen && (
-          <ConfirmationDialog
-            message="Are you sure you want to delete this organisation? This action cannot be undone."
-            onDelete={handleDelete}
-            onCancel={() => setDialogOpen(false)}
-          />
-        )}
-      </div>
+      <Tabs tabs={tabs} defaultTabId="Activities" mt={8} />
     </div>
-  ) : (
-    <Spinner />
   );
 };
 

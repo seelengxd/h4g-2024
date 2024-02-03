@@ -1,7 +1,7 @@
 import { LinkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { Organisation } from "../../types/organisations/organisations"
-import Tag from "../../components/dataDissplay/Tag";
+import Tag from "../../components/dataDisplay/Tag";
 
 interface OrganisationInfoProps {
   organisation: Organisation;

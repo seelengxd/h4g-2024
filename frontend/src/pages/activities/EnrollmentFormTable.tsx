@@ -26,6 +26,7 @@ const EnrollmentFormTable: React.FC<Props> = ({ activity }) => {
         column.getCanSort()
       }
       searchText="Search submissions..."
+      emptyTableText="No Submissions Found"
     />
   );
 };

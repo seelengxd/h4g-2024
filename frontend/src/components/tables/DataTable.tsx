@@ -34,6 +34,7 @@ interface DataTableProps<T extends object> {
   isPaginated?: boolean;
   searchText?: string;
   title?: string;
+  emptyTableText?: string;
 }
 
 const DataTable = <T extends object>({
@@ -45,6 +46,7 @@ const DataTable = <T extends object>({
   isPaginated = true,
   searchText = "Search activity list...",
   title = "",
+  emptyTableText = "",
 }: DataTableProps<T>): JSX.Element => {
   const [sortBy, setSortBy] = useState<SortingState>([]);
   const table = useReactTable<T>({
@@ -108,7 +110,7 @@ const DataTable = <T extends object>({
             {table.getPrePaginationRowModel().rows.length === 0 && (
               <tr className="border-b odd:bg-white even:bg-gray-50">
                 <td className="py-8 text-center" colSpan={columns.length}>
-                  <p color="text-gray-500">No activities found</p>
+                  <p color="text-gray-500">{emptyTableText}</p>
                 </td>
               </tr>
             )}

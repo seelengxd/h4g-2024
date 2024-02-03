@@ -1,12 +1,12 @@
 import { ArrowLeftIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
-import { id } from "date-fns/locale";
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import organisationsAPI from "../../api/organisations/organisations";
 import Button from "../../components/buttons/Button";
 import ConfirmationDialog from "../../components/feedback/ConfirmationDialog";
 
 const ViewOrganisationActionButtons: React.FC = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const [dialogOpen, setDialogOpen] = useState(false);
 

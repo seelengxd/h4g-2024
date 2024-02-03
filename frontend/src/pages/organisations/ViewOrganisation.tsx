@@ -6,6 +6,7 @@ import Spinner from "../../components/loading/Spinner";
 import Button from "../../components/buttons/Button";
 import { LinkIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import ConfirmationDialog from "../../components/feedback/ConfirmationDialog";
+import OrganisationInfo from "./OrganisationInfo";
 
 const ViewOrganisation: React.FC = () => {
   const { id } = useParams();
@@ -24,28 +25,10 @@ const ViewOrganisation: React.FC = () => {
       .then(() => navigate("/organisations"));
   };
   return organisation ? (
-    <div className="items-center justify-between p-6 mx-auto max-w-7xl lg:px-8">
-      <div className="flex flex-col justify-center mt-12 min-h-36">
-        <img
-          className="object-contain w-auto h-48 rounded-t-lg sm:h-96" // h-96" //md:max-w-50% md:h-auto md:rounded-none md:rounded-s-lg"
-          src={process.env.REACT_APP_BACKEND_URL! + "/" + organisation.imageUrl}
-          alt=""
-        />
-      </div>
+    <div className="items-center justify-between p-6 mx-auto max-w-7xl lg:px-8 mt-12">
+      <OrganisationInfo organisation={organisation} />
 
       <div className="flex flex-col justify-between p-4 leading-normal">
-        <h2 className="mb-2 text-4xl font-semibold tracking-tight text-gray-900">
-          {organisation.name}
-        </h2>
-        <p>{organisation.description}</p>
-        {organisation.websiteUrl && (
-          <Link to={organisation.websiteUrl}>
-            <Button>
-              <LinkIcon className="w-4 h-4 mr-2 stroke-2" />
-              Link to website
-            </Button>
-          </Link>
-        )}
         <div>
           <Button
             onClick={() => {

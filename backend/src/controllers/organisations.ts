@@ -51,7 +51,8 @@ export const create: RequestHandler[] = [
         imageUrl: req.file?.path,
       },
     });
-    res.sendStatus(200);
+
+    res.json({ id: newOrganisation.id });
   },
 ];
 
@@ -81,7 +82,8 @@ export const update: RequestHandler[] = [
         imageUrl: req.file?.path,
       },
     });
-    res.sendStatus(200);
+
+    res.json({ id: newOrganisation.id });
   },
 ];
 

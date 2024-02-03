@@ -1,4 +1,4 @@
-import { PlusIcon} from "@heroicons/react/24/outline";
+import { PlusIcon } from "@heroicons/react/24/outline";
 import Button from "../../components/buttons/Button";
 import OrganisationCard from "./OrganisationCard";
 import Spinner from "../../components/loading/Spinner";

@@ -19,7 +19,7 @@ class OrganisationsAPI {
     return response.data.data;
   }
 
-  public async createOrganisation(data: OrganisationsPostData) {
+  public async createOrganisation(data: OrganisationsPostData): Promise<Number> {
     const form = new FormData();
     form.append("name", data.name);
     form.append("description", data.description);
@@ -27,10 +27,11 @@ class OrganisationsAPI {
     if (data.image) {
       form.append("image", data.image as Blob);
     }
-    return await client.post(this.getOrganisationsUrl(), form);
+    const response = await client.post(this.getOrganisationsUrl(), form);
+    return response.data.id;
   }
 
-  public async updateOrganisation(id: number, data: OrganisationsPostData) {
+  public async updateOrganisation(id: number, data: OrganisationsPostData): Promise<Number> {
     const form = new FormData();
     form.append("name", data.name);
     form.append("description", data.description);
@@ -38,7 +39,9 @@ class OrganisationsAPI {
     if (data.image) {
       form.append("image", data.image as Blob);
     }
-    return await client.put(`${this.getOrganisationsUrl()}/${id}`, form);
+    const response = await client.put(`${this.getOrganisationsUrl()}/${id}`, form);
+    console.log(response);
+    return response.data.id;
   }
 
   public async deleteOrganisation(id: number) {

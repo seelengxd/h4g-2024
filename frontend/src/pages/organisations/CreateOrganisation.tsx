@@ -9,7 +9,7 @@ const CreateOrganisation: React.FC = () => {
       handleValues={(values) =>
         organisationsAPI.createOrganisation(
           values as OrganisationsPostData
-        ) as unknown as Promise<void>
+        )
       }
     />
   );

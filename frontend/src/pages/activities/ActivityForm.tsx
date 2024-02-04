@@ -126,7 +126,10 @@ const ActivityForm: React.FC<Props> = ({
 
           {/* Image Preview */}
           <div className="w-full h-full col-span-7">
-            <ImageGallery imageUrls={imageDisplayUrls} height="h-64"/>
+            <ImageGallery imageUrls={imageDisplayUrls} height="h-64" deletable onDelete={(updatedImageUrls) => {
+              setImageDisplayUrls(updatedImageUrls);
+              setFieldValue("image", updatedImageUrls);
+            }} />
           </div>
 
           {/* Image Upload */}
@@ -138,7 +141,6 @@ const ActivityForm: React.FC<Props> = ({
                   type="file"
                   fileConstraintLabel="Add one or more image files"
                   multiple
-                  hx="h-42"
                   onChange={async (event) => {
                     const files = (event.currentTarget as unknown as { files: File[] }).files;
                     const numFiles = files.length;
@@ -161,8 +163,9 @@ const ActivityForm: React.FC<Props> = ({
                     await Promise
                       .all(promises)
                       .then((dataUrls) => {
-                        setImageDisplayUrls(dataUrls.concat(imageDisplayUrls));
-                        setFieldValue("image", dataUrls);
+                        const updatedImageUrls = dataUrls.concat(imageDisplayUrls);
+                        setImageDisplayUrls(updatedImageUrls);
+                        setFieldValue("image", updatedImageUrls);
                       });
                 }}/>
               </FormControl>

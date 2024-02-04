@@ -17,6 +17,14 @@ import { array, object } from "yup";
 import { RegistrationPostData } from "../../types/registrations/registrations";
 import registrationsAPI from "../../api/registrations/registrations";
 import FormControl from "../../components/forms/FormControl";
+import TextInput from "../../components/forms/custom/TextInput";
+import TextAreaInput from "../../components/forms/custom/TextAreaInput";
+import MultiSelectInput from "../../components/forms/custom/MultiSelectInput";
+import DropdownInput from "../../components/forms/custom/DropdownInput";
+import submissionsAPI from "../../api/enrollmentForms/submissions";
+import { Answer, AnswerValue } from "../../types/enrollmentForms/submissions";
+import { generateDefaultAnswer } from "../../utils/forms";
+import enrollmentFormsAPI from "../../api/enrollmentForms/enrollmentForms";
 
 const VolunteerEnroll: React.FC = () => {
   const { id } = useParams();
@@ -24,10 +32,20 @@ const VolunteerEnroll: React.FC = () => {
   const navigate = useNavigate();
 
   const [activity, setActivity] = useState<ActivityData | null>(null);
+  const hasEnrollmentForm = !!activity?.enrollmentForm;
+  const [secondState, setSecondState] = useState(false);
+
   useEffect(() => {
-    activitiesAPI
-      .getActivity(parseInt(id!))
-      .then((activity) => setActivity(activity));
+    activitiesAPI.getActivity(parseInt(id!)).then((activity) => {
+      setActivity(activity);
+      if (activity.enrollmentForm) {
+        setAnswers(
+          activity.enrollmentForm.formSchema.components.map((component) =>
+            generateDefaultAnswer(component)
+          )
+        );
+      }
+    });
   }, [id]);
 
   const formik = useFormik({
@@ -40,9 +58,17 @@ const VolunteerEnroll: React.FC = () => {
         .min(1, "You must pick at least one session."),
     }),
     onSubmit: async (values) => {
-      registrationsAPI
-        .createRegistration(values)
-        .finally(() => navigate("/activities/" + activity?.id.toString()));
+      Promise.all([
+        registrationsAPI.createRegistration(values),
+        ...(secondState
+          ? [
+              submissionsAPI.createSubmission({
+                answer: answers,
+                enrollmentFormId: activity!.enrollmentForm.id!,
+              }),
+            ]
+          : []),
+      ]).finally(() => navigate("/activities/" + activity?.id.toString()));
     },
   });
 
@@ -57,6 +83,26 @@ const VolunteerEnroll: React.FC = () => {
   } = formik;
 
   console.log({ errors, ids: values.sessionIds });
+
+  // Enrollment form logic
+
+  const [answers, setAnswers] = useState<Answer[]>([]);
+
+  const handleChange = (questionIndex: number) => (answer: AnswerValue) => {
+    const newAnswers = [...answers];
+    newAnswers[questionIndex].value = answer;
+    setAnswers(newAnswers);
+  };
+
+  const handleEnrollmentSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    submissionsAPI
+      .createSubmission({
+        answer: answers,
+        enrollmentFormId: activity?.enrollmentForm.id!,
+      })
+      .then(() => navigate("/activities/" + parseInt(id!)));
+  };
 
   return activity ? (
     <div className="items-center justify-between max-h-screen p-6 mx-auto mt-8 max-w-7xl lg:px-8">
@@ -119,46 +165,132 @@ const VolunteerEnroll: React.FC = () => {
           )}
         </div>
         <div className="flex flex-col h-[calc(100vh-80px)] max-h-full gap-8 overflow-y-scroll col-span-2 pl-2">
-          <p className="text-4xl">Indicate Availability</p>
-          <p>Select the session that you would like to attend.</p>
+          {secondState ? (
+            <>
+              <p className="text-4xl">Additional Information</p>
+              <p>
+                The organiser has requested more information. Please answer the
+                following questions.
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="text-4xl">Indicate Availability</p>
+              <p>Select the session that you would like to attend.</p>
+            </>
+          )}
           <form
             className="flex flex-col justify-between h-[calc(100vh-450px)]"
             onSubmit={handleSubmit}
           >
-            <FormControl
-              isInvalid={
-                !!touched.sessionIds && errors.sessionIds !== undefined
-              }
-              errorMessage={errors.sessionIds as string}
-              onBlur={handleBlur}
-            >
-              <FormMultiSelectInput
-                name="sessionIds"
-                value={values.sessionIds}
-                options={activity.sessions.map((session) => ({
-                  id: session.id,
-                  value:
-                    format(
-                      new Date(activity.sessions[0]!.start),
-                      "EEEE d MMMM, hh:mma-"
-                    ) +
-                    (new Date(activity.sessions[0]!.start).getDay() ===
-                    new Date(activity.sessions[0]!.end).getDay()
-                      ? format(new Date(activity.sessions[0]!.end), "hh:mma")
-                      : format(
-                          new Date(activity.sessions[0]!.end),
-                          "EEEE d MMM, hh:mma"
-                        )),
-                }))}
-                onChange={(values) => {
-                  setFieldValue("sessionIds", values);
-                }}
-              />
-            </FormControl>
+            {secondState ? (
+              <div className="flex flex-col space-y-8">
+                {activity.enrollmentForm.formSchema?.components.map(
+                  (component, index) => {
+                    switch (component.type) {
+                      case "text":
+                        return (
+                          <TextInput
+                            component={component}
+                            value={answers[index].value as string}
+                            onChange={(newValue) =>
+                              handleChange(index)(newValue)
+                            }
+                          />
+                        );
+                      case "multiline":
+                        return (
+                          <TextAreaInput
+                            component={component}
+                            value={answers[index].value as string}
+                            onChange={(newValue) =>
+                              handleChange(index)(newValue)
+                            }
+                          />
+                        );
+                      case "multiselect":
+                        return (
+                          <MultiSelectInput
+                            component={component}
+                            value={answers[index].value as number[]}
+                            onChange={(newValue) =>
+                              handleChange(index)(newValue)
+                            }
+                          />
+                        );
+                      case "select":
+                        return (
+                          <DropdownInput
+                            component={component}
+                            value={answers[index].value as number}
+                            onChange={(newValue) =>
+                              handleChange(index)(newValue)
+                            }
+                          />
+                        );
+                    }
+                  }
+                )}
+                <Button type="submit">Submit</Button>
+              </div>
+            ) : (
+              <>
+                <FormControl
+                  isInvalid={
+                    !!touched.sessionIds && errors.sessionIds !== undefined
+                  }
+                  errorMessage={errors.sessionIds as string}
+                  onBlur={handleBlur}
+                >
+                  <FormMultiSelectInput
+                    name="sessionIds"
+                    value={values.sessionIds}
+                    options={activity.sessions.map((session) => ({
+                      id: session.id,
+                      value:
+                        format(
+                          new Date(activity.sessions[0]!.start),
+                          "EEEE d MMMM, hh:mma-"
+                        ) +
+                        (new Date(activity.sessions[0]!.start).getDay() ===
+                        new Date(activity.sessions[0]!.end).getDay()
+                          ? format(
+                              new Date(activity.sessions[0]!.end),
+                              "hh:mma"
+                            )
+                          : format(
+                              new Date(activity.sessions[0]!.end),
+                              "EEEE d MMM, hh:mma"
+                            )),
+                    }))}
+                    onChange={(values) => {
+                      setFieldValue("sessionIds", values);
+                    }}
+                  />
+                </FormControl>
 
-            <Button type="submit" disabled={!!errors.sessionIds}>
-              Enroll in Event
-            </Button>
+                {!hasEnrollmentForm && (
+                  <Button
+                    type="submit"
+                    disabled={
+                      values.sessionIds.length === 0 || !!errors.sessionIds
+                    }
+                  >
+                    Enroll in Event
+                  </Button>
+                )}
+                {hasEnrollmentForm && (
+                  <Button
+                    disabled={
+                      values.sessionIds.length === 0 || !!errors.sessionIds
+                    }
+                    onClick={() => setSecondState(true)}
+                  >
+                    Next
+                  </Button>
+                )}
+              </>
+            )}
           </form>
         </div>
       </div>

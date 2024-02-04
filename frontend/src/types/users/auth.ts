@@ -8,3 +8,11 @@ export interface SignUpPostData extends LogInPostData {
   preferredName: string;
   confirmPassword: string;
 }
+
+export interface SendResetEmailPostData {
+  email: string;
+}
+
+export interface ResetPasswordPostData {
+  password: string;
+}

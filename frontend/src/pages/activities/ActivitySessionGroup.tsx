@@ -15,14 +15,17 @@ const ActivitySessionGroup: React.FC<ActivitySessionGroupProps> = ({ sessionGrou
 
   return (
     <div className="mt-8">
-      <h4 className="font-semibold text-md mb-2 text-gray-600">{sessionCount} {sessionGroupTitle}{sessionCount !== 1 ? "s" : ""}</h4>
+      <h4 className="mb-2 font-semibold text-gray-600 text-md">
+        {sessionCount} {sessionGroupTitle}
+        {sessionCount !== 1 ? "s" : ""}
+      </h4>
       <div className="flex flex-col gap-2">
-        {sessionGroup.map((session) =>
+        {sessionGroup.map((session) => (
           <ActivitySessionsCardSessionRow
             session={session}
             capacity={capacity}
             statusTag={statusTag}
-          />)}
+          />))}
       </div>
     </div>
   );

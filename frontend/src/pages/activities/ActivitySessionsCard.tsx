@@ -12,7 +12,10 @@ interface ActivitySessionsCardProps {
   capacity: number;
 }
 
-const ActivitySessionsCard: React.FC<ActivitySessionsCardProps> = ({ sessions, capacity }: ActivitySessionsCardProps) => {
+const ActivitySessionsCard: React.FC<ActivitySessionsCardProps> = ({
+  sessions,
+  capacity,
+}: ActivitySessionsCardProps) => {
   const pastSessions = sessions.filter((session) => isPast(session.end));
   const futureSessions = sessions.filter((session) => isFuture(session.start));
   const ongoingSessions = sessions.filter((session) =>
@@ -20,13 +23,18 @@ const ActivitySessionsCard: React.FC<ActivitySessionsCardProps> = ({ sessions, c
   );
 
   return (
-    <div className="flex flex-col bg-white p-8 rounded-md shadow">
-      <div className="flex gap-6 items-center">
+    <div className="flex flex-col p-8 bg-white rounded-md shadow">
+      <div className="flex items-center gap-6">
         <h1 className="text-2xl font-semibold">Activity Sessions</h1>
-        <Tag text={`Session Capacity: ${capacity}`} textSize="text-sm" textCasing="" px="px-4" />
+        <Tag
+          text={`Session Capacity: ${capacity}`}
+          textSize="text-sm"
+          textCasing=""
+          px="px-4"
+        />
       </div>
 
-      { sessions.length === 0 && "No sessions found" }
+      {sessions.length === 0 && "No sessions found"}
 
       <ActivitySessionGroup sessionGroupTitle="Ongoing Session" sessionGroup={ongoingSessions} statusTag={<OngoingSessionTag />} capacity={capacity} />
       <ActivitySessionGroup sessionGroupTitle="Upcoming Session" sessionGroup={futureSessions} statusTag={<UpcomingSessionTag />} capacity={capacity}/>

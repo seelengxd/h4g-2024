@@ -18,7 +18,7 @@ const ActivitySessionsCardSessionRow: React.FC<ActivitySessionsCardSessionRowPro
     : `${format(new Date(session.start), "d MMM yyyy (hh:mm:aa)")} - ${format(new Date(session.end), "d MMM yyyy (hh:mm:aa)")}`;
 
   return (
-    <div className="grid grid-cols-12 bg-white p-4 rounded-md shadow">
+    <div className="grid grid-cols-12 p-4 bg-white rounded-md shadow">
       <div className="col-span-5">{dateDisplay}</div>
       <div className="flex col-span-2 items-center">{statusTag}</div>
       <div className="flex col-span-3 items-center">{<Tag text={`0 / ${capacity} registrations`} />}</div>

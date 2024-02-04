@@ -1,8 +1,8 @@
 import { Column, ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import { ActivityData } from "../../types/activities/activities";
-import { Submission } from "../../types/forms/forms";
 import { FormColumns } from "../../utils/form";
 import DataTable from "../../components/tables/DataTable";
+import { SubmissionData } from "../../types/enrollmentForms/submissions";
 
 interface Props {
   activity: ActivityData;
@@ -11,13 +11,13 @@ interface Props {
 const EnrollmentFormTable: React.FC<Props> = ({ activity }) => {
   if (!activity.enrollmentForm) {
     return (
-    <div className="flex justify-center text-2xl text-gray-500 mt-10">
-      No Enrollment Form
-    </div>
+      <div className="flex justify-center mt-10 text-2xl text-gray-500">
+        No Enrollment Form
+      </div>
     );
   }
-  const columnHelper = createColumnHelper<Submission>();
-  const submissionColumns: Array<ColumnDef<Submission>> = FormColumns(
+  const columnHelper = createColumnHelper<SubmissionData>();
+  const submissionColumns: Array<ColumnDef<SubmissionData>> = FormColumns(
     columnHelper,
     activity?.enrollmentForm.formSchema
   );
@@ -26,7 +26,7 @@ const EnrollmentFormTable: React.FC<Props> = ({ activity }) => {
     <DataTable
       columns={submissionColumns}
       tableData={activity.enrollmentForm.submissions}
-      getColumnCanGlobalFilter={(column: Column<Submission>) =>
+      getColumnCanGlobalFilter={(column: Column<SubmissionData>) =>
         column.getCanSort()
       }
       searchText="Search submissions..."

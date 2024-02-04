@@ -1,5 +1,10 @@
 import client from "../base";
-import type { LogInPostData, SignUpPostData } from "../../types/users/auth";
+import type {
+  LogInPostData,
+  ResetPasswordPostData,
+  SendResetEmailPostData,
+  SignUpPostData,
+} from "../../types/users/auth";
 import type { User } from "../../types/users/users";
 
 class AuthAPI {
@@ -23,6 +28,17 @@ class AuthAPI {
   public async getCurrentUser(): Promise<User> {
     const response = await client.get(this.getAuthUrl() + "/current-user");
     return response.data.user;
+  }
+
+  public async sendResetEmail(data: SendResetEmailPostData) {
+    await client.post(this.getAuthUrl() + "/send-reset-email", data);
+  }
+
+  public async resetPassword(data: ResetPasswordPostData, token: string) {
+    await client.post(
+      this.getAuthUrl() + "/reset-password" + "?token=" + token,
+      data
+    );
   }
 }
 

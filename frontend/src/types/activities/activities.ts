@@ -2,6 +2,10 @@ import { EnrollmentForm } from "../enrollmentForms/enrollmentForms";
 import { Organisation } from "../organisations/organisations";
 import { SessionMiniData, SessionPostData } from "../sessions/sessions";
 
+export interface SessionData extends SessionMiniData {
+  activity: ActivityData;
+}
+
 export interface Image {
   id: number;
   imageUrl: string;

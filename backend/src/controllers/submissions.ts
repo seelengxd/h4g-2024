@@ -81,6 +81,9 @@ export const create: RequestHandler[] = [
           userId: (req.user! as unknown as User).id,
         },
       },
+      include: {
+        user: true,
+      },
     });
     if (enrollmentForm !== null) {
       res.sendStatus(409);

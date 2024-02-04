@@ -1,4 +1,4 @@
-import { SessionData } from "../activities/activities";
+import { SessionData } from "../sessions/sessions";
 
 export interface Registration {
   id: number;

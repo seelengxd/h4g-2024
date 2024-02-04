@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { SessionMiniData } from "../../types/activities/activities"
+import { SessionMiniData } from "../../types/sessions/sessions"
 import ActivitySessionsCardSessionRow from "./ActivitySessionsCardSessionRow";
 
 interface ActivitySessionGroupProps {

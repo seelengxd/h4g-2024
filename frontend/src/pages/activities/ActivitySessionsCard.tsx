@@ -2,7 +2,7 @@ import isWithinInterval from "date-fns/isWithinInterval";
 import { isFuture, isPast } from "date-fns";
 import ActivitySessionGroup from "./ActivitySessionGroup";
 import Tag from "../../components/dataDisplay/Tag";
-import { SessionMiniData } from "../../types/activities/activities";
+import { SessionMiniData } from "../../types/sessions/sessions";
 
 interface ActivitySessionsCardProps {
   sessions: SessionMiniData[];

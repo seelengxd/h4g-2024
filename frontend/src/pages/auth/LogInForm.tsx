@@ -84,7 +84,7 @@ const LogInForm: React.FC = () => {
             </FormControl>
           </div>
           <div className="flex justify-end mt-2">
-            <Link to="#">
+            <Link to="/forgot-password">
               <span className="text-sm text-primary-800">Forgot password?</span>
             </Link>
           </div>

@@ -9,9 +9,14 @@ import VolunteerDashboard from "../dashboard/VolunteerDashboard";
 import VolunteeringOpportunities from "../activities/VolunteeringOpportunities";
 import VolunteerActivity from "../activities/VolunteerActivity";
 import VolunteerEnroll from "../activities/VolunteerEnroll";
+import VolunteerActivities from "../activities/VolunteerActivities";
 
 export const Error404 = (
-  <Error errorCode={404} desc="Oh no! Are you sure this page exists?" />
+  <Error
+    errorCode={404}
+    desc="Oops! Page not found."
+    subDesc="Sorry, the page you're looking for doesn't exist. If you think something is broken, report a problem."
+  />
 );
 
 const Error403 = (
@@ -30,10 +35,11 @@ const VolunteerApp: React.FC = () => {
       <Route path="/organisations/:id/edit" element={<UpdateOrganisation />} />
 
       {/* Activity Routes */}
-      <Route path="/events" element={<VolunteeringOpportunities />} />
+      <Route path="/activities" element={<VolunteeringOpportunities />} />
       <Route path="/activities/:id" element={<VolunteerActivity />} />
       <Route path="/activities/:id/enroll" element={<VolunteerEnroll />} />
 
+      <Route path="/your-activities" element={<VolunteerActivities />} />
       {/* Enrollment forms*/}
       <Route
         path="/activities/:id/enrollment-forms/:id"

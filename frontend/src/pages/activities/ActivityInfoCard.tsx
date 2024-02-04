@@ -5,6 +5,7 @@ import { ActivityData } from "../../types/activities/activities";
 import Tag from "../../components/dataDisplay/Tag";
 import Button from "../../components/buttons/Button";
 import { PlusIcon } from "@heroicons/react/20/solid";
+import _ from "lodash";
 
 interface ActivityInfoCardProps {
   activity: ActivityData;
@@ -13,16 +14,19 @@ interface ActivityInfoCardProps {
 const ActivityInfoCard: React.FC<ActivityInfoCardProps> = ({ activity }: ActivityInfoCardProps) => {
   const sessionCount = activity.sessions.length;
   const hasEnrollmentForm = activity.enrollmentForm !== undefined;
+  const hasImage = !_.isEmpty(activity.images);
 
   return (
     <div className="grid grid-cols-3 bg-white p-8 rounded-md shadow">
       {/* Activity Images */}
-      <div className="flex flex-col justify-center min-h-36 col-span-1 pr-8">
-        <ImageGallery imageUrls={activity.images.map((image) => `${process.env.REACT_APP_BACKEND_URL}/${image.imageUrl}`)}/>
-      </div>
+      {hasImage && (
+        <div className="flex flex-col justify-center min-h-36 col-span-1 pr-8">
+          <ImageGallery imageUrls={activity.images.map((image) => `${process.env.REACT_APP_BACKEND_URL}/${image.imageUrl}`)}/>
+        </div>
+      )}
 
       {/* Activity Info */}
-      <div className="flex flex-col justify-center col-span-2 gap-2">
+      <div className={`flex flex-col justify-center col-span-${hasImage ? 2 : 3} gap-2`}>
         <h2 className="mb-2 text-4xl font-semibold tracking-tight text-gray-900">
           {activity.name}
         </h2>
@@ -43,7 +47,7 @@ const ActivityInfoCard: React.FC<ActivityInfoCardProps> = ({ activity }: Activit
         
         <div className="flex text-gray-500">{activity.description}</div>
 
-        <div className="flex justify-between items-center mt-4">
+        <div className="flex justify-between items-center mt-8">
           <div className="flex gap-4">
             <Tag text={activity.type} textSize="text-sm" />
             <Tag text={`${sessionCount} session${sessionCount !== 1 ? "s" : ""}`} textSize="text-sm" />

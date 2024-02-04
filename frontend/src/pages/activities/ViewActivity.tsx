@@ -25,7 +25,7 @@ const ViewActivity: React.FC = () => {
       <ViewActivityActionButtons />
       <div className="flex flex-col gap-8">
         <ActivityInfoCard activity={activity} />
-        <ActivitySessionsCard sessions={activity.sessions} />
+        <ActivitySessionsCard sessions={activity.sessions} capacity={activity.capacity} />
       </div>
       <EnrollmentFormTable activity={activity} />
     </div>

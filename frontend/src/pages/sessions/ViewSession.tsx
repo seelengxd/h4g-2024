@@ -4,7 +4,9 @@ import sessionApi from "../../api/sessions/sessions";
 import { SessionData } from "../../types/sessions/sessions";
 import { Error404 } from "../routing/VolunteerApp";
 import Spinner from "../../components/loading/Spinner";
-import { isSameDay, format } from "date-fns";
+import ActivityMiniViewCard from "../activities/ActivityMiniViewCard";
+import ViewSessionActionButton from "./ViewSessionActionButtons";
+import SessionMiniViewCard from "./SessionMiniViewCard";
 
 const ViewSession: React.FC = () => {
   const { id } = useParams();
@@ -24,16 +26,18 @@ const ViewSession: React.FC = () => {
   if (!id) return Error404;
   if (isLoading) return <Spinner />;
   if (!session) return Error404;
-
-  const isOneDaySession = isSameDay(session.start, session.end);
-  const dateDisplay = isOneDaySession
-    ? `${format(new Date(session.start), "d MMM yyyy")} (${format(new Date(session.start), "hh:mm:aa")} - ${format(new Date(session.start), "hh:mm:aa")})`
-    : `${format(new Date(session.start), "d MMM yyyy (hh:mm:aa)")} - ${format(new Date(session.end), "d MMM yyyy (hh:mm:aa)")}`;
   
   return (
-    <div>
-      <h1>{session.id}</h1>
-      <h1>{dateDisplay}</h1>
+    <div className="items-center justify-between p-6 mx-auto mt-8 max-w-7xl lg:px-8">
+      <ViewSessionActionButton activityId={session.activity.id} />
+      <div className="grid grid-cols-2 gap-8">
+        <div className="col-span-1">
+          <ActivityMiniViewCard activity={session.activity} />
+        </div>
+        <div className="col-span-1">
+          <SessionMiniViewCard session={session} />
+        </div>
+      </div>
     </div>
   );
 }

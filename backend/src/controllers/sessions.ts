@@ -15,7 +15,16 @@ export const show: RequestHandler[] = [
         id: parseInt(req.params.id!),
       },
       include: {
-        activity: true,
+        activity: {
+          include: {
+            organisation:{
+              select: {
+                name: true,
+              }
+            }
+          }
+        },
+        registrations: true,
       },
     });
 
@@ -23,6 +32,15 @@ export const show: RequestHandler[] = [
       res.sendStatus(404);
       return;
     }
-    return res.json({ data: session })
+
+    const sessionEntity = {
+      ...session,
+      activity: {
+        ...session.activity,
+        organisationName: session.activity.organisation.name
+      }
+    };
+  
+    return res.json({ data: sessionEntity });
   },
 ];

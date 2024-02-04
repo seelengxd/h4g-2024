@@ -5,12 +5,11 @@ import ActivitySessionsCardSessionRow from "./ActivitySessionsCardSessionRow";
 interface ActivitySessionGroupProps {
   sessionGroupTitle: string;
   sessionGroup: SessionMiniData[];
-  tagBgColor: string;
-  tagTextColor: string;
+  statusTag: JSX.Element;
   capacity: number;
 }
 
-const ActivitySessionGroup: React.FC<ActivitySessionGroupProps> = ({ sessionGroupTitle, sessionGroup, tagBgColor, tagTextColor, capacity }: ActivitySessionGroupProps) => {
+const ActivitySessionGroup: React.FC<ActivitySessionGroupProps> = ({ sessionGroupTitle, sessionGroup, statusTag, capacity }: ActivitySessionGroupProps) => {
   if (_.isEmpty(sessionGroup)) return <></>;
   const sessionCount = sessionGroup.length;
 
@@ -21,10 +20,8 @@ const ActivitySessionGroup: React.FC<ActivitySessionGroupProps> = ({ sessionGrou
         {sessionGroup.map((session) =>
           <ActivitySessionsCardSessionRow
             session={session}
-            status={sessionGroupTitle.split(" ")[0]}
-            tagBgColor={tagBgColor}
-            tagTextColor={tagTextColor}
             capacity={capacity}
+            statusTag={statusTag}
           />)}
       </div>
     </div>

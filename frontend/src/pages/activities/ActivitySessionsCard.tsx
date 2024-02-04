@@ -3,6 +3,9 @@ import { isFuture, isPast } from "date-fns";
 import ActivitySessionGroup from "./ActivitySessionGroup";
 import Tag from "../../components/dataDisplay/Tag";
 import { SessionMiniData } from "../../types/sessions/sessions";
+import OngoingSessionTag from "../sessions/tags/OngoingSessionTag";
+import UpcomingSessionTag from "../sessions/tags/UpcomingSessionTag";
+import PastSessionTag from "../sessions/tags/PastSessionTag";
 
 interface ActivitySessionsCardProps {
   sessions: SessionMiniData[];
@@ -25,9 +28,9 @@ const ActivitySessionsCard: React.FC<ActivitySessionsCardProps> = ({ sessions, c
 
       { sessions.length === 0 && "No sessions found" }
 
-      <ActivitySessionGroup sessionGroupTitle="Ongoing Session" sessionGroup={ongoingSessions} tagBgColor="bg-green-100" tagTextColor="text-green-700" capacity={capacity} />
-      <ActivitySessionGroup sessionGroupTitle="Upcoming Session" sessionGroup={futureSessions} tagBgColor="bg-blue-100" tagTextColor="text-blue-700" capacity={capacity}/>
-      <ActivitySessionGroup sessionGroupTitle="Past Session" sessionGroup={pastSessions} tagBgColor="bg-gray-100" tagTextColor="text-gray-600" capacity={capacity} />
+      <ActivitySessionGroup sessionGroupTitle="Ongoing Session" sessionGroup={ongoingSessions} statusTag={<OngoingSessionTag />} capacity={capacity} />
+      <ActivitySessionGroup sessionGroupTitle="Upcoming Session" sessionGroup={futureSessions} statusTag={<UpcomingSessionTag />} capacity={capacity}/>
+      <ActivitySessionGroup sessionGroupTitle="Past Session" sessionGroup={pastSessions} statusTag={<PastSessionTag />} capacity={capacity} />
     </div>
   );
 };

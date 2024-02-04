@@ -1,4 +1,5 @@
 import { ActivityData } from "../activities/activities";
+import { RegistrationMiniData } from "../registrations/registrations";
 
 export interface SessionPostData {
   start: Date;
@@ -14,4 +15,5 @@ export interface SessionMiniData {
 
 export interface SessionData extends SessionMiniData {
   activity: ActivityData;
+  registrations: RegistrationMiniData[];
 }

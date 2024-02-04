@@ -1,7 +1,10 @@
 import { SessionData } from "../sessions/sessions";
 
-export interface Registration {
+export interface RegistrationMiniData {
   id: number;
+}
+
+export interface Registration extends RegistrationMiniData {
   session: SessionData;
 }
 

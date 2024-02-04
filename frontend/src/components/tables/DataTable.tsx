@@ -67,7 +67,7 @@ const DataTable = <T extends object>({
   });
 
   return (
-    <>
+    <div>
       <div className="flex items-center justify-between mt-6 mb-6">
         {title && <p className="p-0 m-0 text-2xl font-bold">{title}</p>}
         <div className="flex items-end">
@@ -118,7 +118,7 @@ const DataTable = <T extends object>({
         </table>
         {isPaginated && <DataTablePagination table={table} />}
       </div>
-    </>
+    </div>
   );
 };
 

@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { create, update } from "../controllers/registrations";
+import { create, index, update } from "../controllers/registrations";
 
 const registrationsRouter = Router({ mergeParams: true });
 
+registrationsRouter.get("/", index);
 registrationsRouter.post("/", create);
 registrationsRouter.put("/:id", update);
 

@@ -26,18 +26,18 @@ const VolunteerActivity: React.FC = () => {
     <div className="items-center justify-between max-h-screen p-6 mx-auto mt-8 max-w-7xl lg:px-8">
       <div className="grid grid-cols-2 gap-16">
         <div className="flex flex-col p-4 leading-normal">
-          {location.state?.prevRoute === "/activities" && (
+          {location.state?.prevRoute === "/your-activities" && (
             <Link
-              to="/events"
+              to="/your-activities"
               className="flex items-center mb-12 text-xl font-bold"
             >
               <ArrowLeftIcon className="w-6 h-6 mr-1 stroke-2" />
               Back to Your Activity
             </Link>
           )}
-          {location.state?.prevRoute !== "/activities" && (
+          {location.state?.prevRoute !== "/your-activities" && (
             <Link
-              to="/events"
+              to="/activities"
               className="flex items-center mb-12 text-xl font-bold"
             >
               <ArrowLeftIcon className="w-6 h-6 mr-1 stroke-2" />

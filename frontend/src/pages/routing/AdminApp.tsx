@@ -12,11 +12,15 @@ import CreateEnrollmentForm from "../activities/CreateEnrollmentForm";
 import ViewEnrollmentForm from "../activities/ViewEnrollmentForm";
 import VolunteerDashboard from "../dashboard/VolunteerDashboard";
 
-const error404 = (
-  <Error errorCode={404} desc="Oh no! Are you sure this page exists?" />
+const Error404 = (
+  <Error
+    errorCode={404}
+    desc="Oh no! Are you sure this page exists?"
+    subDesc="Sorry, the page you're looking for doesn't exist. If you think something is broken, report a problem."
+  />
 );
 
-const error403 = (
+const Error403 = (
   <Error errorCode={403} desc="Ehem! You don't have permission!" />
 );
 
@@ -47,7 +51,7 @@ const AdminApp: React.FC = () => {
 
       <Route path="/dashboard" element={<VolunteerDashboard />} />
       {/* 404 */}
-      <Route path="*" element={error404} />
+      <Route path="*" element={Error404} />
     </Routes>
   );
 };

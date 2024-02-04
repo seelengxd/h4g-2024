@@ -80,7 +80,6 @@ const ActivityForm: React.FC<Props> = ({
     }
   }, [initialData]);
 
-  // .then((images) => setFieldValue());
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -91,6 +90,7 @@ const ActivityForm: React.FC<Props> = ({
           description: initialData.description,
           organisationId: initialData.organisationId,
           sessions: initialData.sessions.map((session) => ({
+            id: session.id,
             start: new Date(session.start),
             end: new Date(session.end),
           })),
@@ -146,7 +146,6 @@ const ActivityForm: React.FC<Props> = ({
     label: organisation.name,
   }));
 
-  console.log({ errors });
   return (
     <div className="items-center justify-between max-h-screen p-6 mx-auto mt-8 max-w-7xl lg:px-8">
       <div className="w-full">

@@ -1,8 +1,5 @@
 import {
   CalendarIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  FireIcon,
 } from "@heroicons/react/24/outline";
 import Button from "../../components/buttons/Button";
 import { useNavigate } from "react-router-dom";
@@ -23,9 +20,9 @@ import organisationsAPI from "../../api/organisations/organisations";
 import DatePicker from "react-datepicker"; // Import datepicker library
 import "react-datepicker/dist/react-datepicker.css"; // Import datepicker styles
 import { format } from "date-fns";
-import ImageUploader from "../../components/forms/ImageUploader";
 import FileUploader from "../../components/forms/FileUploader";
 import ImageGallery from "../../components/dataDisplay/ImageGallery";
+import FormTextAreaInput from "../../components/forms/FormTextAreaInput";
 
 interface Props {
   initialData?: ActivityMiniData;
@@ -157,11 +154,10 @@ const ActivityForm: React.FC<Props> = ({
       </div>
 
       <form className="space-y-6" onSubmit={handleSubmit}>
-        <div className="grid grid-cols-12 gap-8 p-8 mt-4 bg-white rounded-md shadow">
+        {/* Activity Images */}
+        <div className="grid grid-cols-12 bg-white p-8 rounded-md shadow mt-4 gap-8">
           <div className="w-full col-span-12">
-            <Label htmlFor="images" textSize="text-md">
-              Activity Images
-            </Label>
+            <Label htmlFor="images" textSize="text-lg">Activity Images</Label>
           </div>
 
           {/* Image Preview */}
@@ -219,144 +215,118 @@ const ActivityForm: React.FC<Props> = ({
             </div>
           </div>
         </div>
+
+        {/* Actvitiy Information */}
+        <div className="grid grid-cols-3 bg-white p-8 rounded-md shadow mt-4 gap-8">
+          <div className="w-full col-span-3">
+            <h3 className="text-lg font-medium">Activity Information</h3>
+          </div>
+          
+          {/* Activity Name */}
+          <div className="w-full col-span-2">
+            <FormControl
+              isInvalid={!!touched.name && errors.name !== undefined}
+              errorMessage={errors.name}
+              onBlur={handleBlur}
+            >
+              <Label htmlFor="Name">Activity Name</Label>
+              <Input
+                name="name"
+                value={values.name}
+                onChange={handleChange}
+                required
+              />
+            </FormControl>
+          </div>
+
+          {/* Activity Type */}
+          <div className="w-full col-span-1">
+            <FormControl
+              isInvalid={!!touched.type && errors.type !== undefined}
+              errorMessage={errors.type}
+              onBlur={handleBlur}
+            >
+              <Label htmlFor="type">Type</Label>
+              <Select
+                name="type"
+                options={typeOptions}
+                value={typeOptions?.find(
+                  (option) => option.value === values.type
+                )}
+                onChange={(option) => setFieldValue("type", option?.value)}
+                styles={{ valueContainer: (base) => ({ ...base, fontSize: "0.875rem" }) }}
+                required
+              />
+            </FormControl>
+          </div>
+
+          {/* Activity Organisation */}
+          <div className="w-full col-span-3">
+            <FormControl
+              isInvalid={
+                !!touched.organisationId && errors.organisationId !== undefined
+              }
+              errorMessage={errors.organisationId}
+              onBlur={handleBlur}
+            >
+              <Label htmlFor="organisationId">Organisation</Label>
+              <Select
+                name="organisationId"
+                options={organisationOptions}
+                value={organisationOptions?.find(
+                  (option) => option.value === values.organisationId
+                )}
+                onChange={(option) =>
+                  setFieldValue("organisationId", option?.value)
+                }
+                styles={{ valueContainer: (base) => ({ ...base, fontSize: "0.875rem" }) }}
+                required
+              />
+            </FormControl>
+          </div>
+          
+          {/* Activity Location */}
+          <div className="w-full col-span-3">
+            <FormControl
+              isInvalid={!!touched.location && errors.location !== undefined}
+              errorMessage={errors.location}
+              onBlur={handleBlur}
+            >
+              <Label htmlFor="location">Location</Label>
+              <Input
+                name="location"
+                value={values.location}
+                onChange={handleChange}
+                required
+              />
+            </FormControl>
+          </div>
+
+          {/* Activity Description */}
+          <div className="w-full col-span-3">
+            <FormControl
+              isInvalid={!!touched.description && errors.description !== undefined}
+              errorMessage={errors.description}
+              onBlur={handleBlur}
+            >
+              <Label htmlFor="description">Description</Label>
+              <FormTextAreaInput
+                name="description"
+                value={values.description}
+                onChange={handleChange}
+                required
+              />
+            </FormControl>
+          </div>
+        </div>
       </form>
 
       <div className="mt-12 sm:mx-auto sm:w-full md:max-w-2xl">
         <form className="space-y-6" onSubmit={handleSubmit}>
-          <FormControl
-            isInvalid={!!touched.name && errors.name !== undefined}
-            errorMessage={errors.name}
-            onBlur={handleBlur}
-          >
-            <Label htmlFor="Name">Name</Label>
-            <Input
-              name="name"
-              value={values.name}
-              onChange={handleChange}
-              required
-            />
-          </FormControl>
-          <FormControl
-            isInvalid={
-              !!touched.description && errors.description !== undefined
-            }
-            errorMessage={errors.description}
-            onBlur={handleBlur}
-          >
-            <Label htmlFor="description">Description</Label>
-            <Input
-              name="description"
-              value={values.description}
-              onChange={handleChange}
-              required
-            />
-          </FormControl>
-          <FormControl
-            isInvalid={!!touched.type && errors.type !== undefined}
-            errorMessage={errors.type}
-            onBlur={handleBlur}
-          >
-            <Label htmlFor="type">Type</Label>
-            <Select
-              name="type"
-              options={typeOptions}
-              value={typeOptions?.find(
-                (option) => option.value === values.type
-              )}
-              onChange={(option) => setFieldValue("type", option?.value)}
-              required
-            />
-          </FormControl>
-          <FormControl
-            isInvalid={
-              !!touched.organisationId && errors.organisationId !== undefined
-            }
-            errorMessage={errors.organisationId}
-            onBlur={handleBlur}
-          >
-            <Label htmlFor="organisationId">Organisation</Label>
-            <Select
-              name="organisationId"
-              options={organisationOptions}
-              value={organisationOptions?.find(
-                (option) => option.value === values.organisationId
-              )}
-              onChange={(option) =>
-                setFieldValue("organisationId", option?.value)
-              }
-              required
-            />
-          </FormControl>
-          <FormControl
-            isInvalid={!!touched.location && errors.location !== undefined}
-            errorMessage={errors.location}
-            onBlur={handleBlur}
-          >
-            <Label htmlFor="location">Location</Label>
-            <Input
-              name="location"
-              value={values.location}
-              onChange={handleChange}
-              required
-            />
-          </FormControl>
+          
+          
+          
 
-          <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date!)}
-            selectsStart
-            startDate={startDate}
-            endDate={endDate}
-            nextMonthButtonLabel=">"
-            previousMonthButtonLabel="<"
-            popperClassName="react-datepicker-left"
-            customInput={<ButtonInput />}
-            renderCustomHeader={({
-              date,
-              decreaseMonth,
-              increaseMonth,
-              prevMonthButtonDisabled,
-              nextMonthButtonDisabled,
-            }) => (
-              <div className="flex items-center justify-between px-2 py-2">
-                <span className="text-lg text-gray-700">
-                  {format(date, "MMMM yyyy")}
-                </span>
-
-                <div className="space-x-2">
-                  <button
-                    onClick={decreaseMonth}
-                    disabled={prevMonthButtonDisabled}
-                    type="button"
-                    className={`
-                                            ${
-                                              prevMonthButtonDisabled &&
-                                              "cursor-not-allowed opacity-50"
-                                            }
-                                            inline-flex p-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-500
-                                        `}
-                  >
-                    <ChevronLeftIcon className="w-5 h-5 text-gray-600" />
-                  </button>
-
-                  <button
-                    onClick={increaseMonth}
-                    disabled={nextMonthButtonDisabled}
-                    type="button"
-                    className={`
-                                            ${
-                                              nextMonthButtonDisabled &&
-                                              "cursor-not-allowed opacity-50"
-                                            }
-                                            inline-flex p-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-500
-                                        `}
-                  >
-                    <ChevronRightIcon className="w-5 h-5 text-gray-600" />
-                  </button>
-                </div>
-              </div>
-            )}
-          />
           <FormControl>
             <Label htmlFor="sessions">Activity Dates</Label>
             <div>

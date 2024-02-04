@@ -7,10 +7,14 @@ export interface SessionPostData {
   id?: number;
 }
 
-export interface Session {
+export interface SessionMiniData {
   start: Date;
   end: Date;
   id: number;
+}
+
+export interface SessionData extends SessionMiniData {
+  activity: ActivityData;
 }
 
 export interface Image {
@@ -28,7 +32,7 @@ export interface ActivityMiniData {
   organisationId: number;
   organisationName: string;
   location: string;
-  sessions: Session[];
+  sessions: SessionMiniData[];
   images: Image[];
 }
 

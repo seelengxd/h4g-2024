@@ -10,11 +10,11 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ imageUrls }: ImageGalleryPr
   const numberImages = imageUrls.length;
   const [index, setIndex] = useState(0);
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 min-w-48">
       {/* Images */}
       <div className="relative w-full h-56 overflow-hidden rounded-lg">
         {imageUrls.map((imageUrl, imgIndex) => (
-            <div className={imgIndex === index ? " hidden" : ""}>
+            <div className={imgIndex !== index ? " hidden" : ""}>
               <img src={imageUrl} className="object-contain absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="" />
             </div>
           ))}

@@ -7,6 +7,7 @@ import EnrollmentFormTable from "./EnrollmentFormTable";
 import ViewActivityActionButtons from "./ViewActivityActionButtons";
 import ActivityInfoCard from "./ActivityInfoCard";
 import ActivitySessionsCard from "./ActivitySessionsCard";
+import Tabs, { Tab } from "../../components/dataDisplay/Tabs";
 
 const ViewActivity: React.FC = () => {
   const { id } = useParams();
@@ -20,14 +21,23 @@ const ViewActivity: React.FC = () => {
 
   if (!activity) return <Spinner />
 
+  const sessionTab: Tab = {
+    id: "sessions",
+    tabTitle: "Activity Sessions",
+    page: <ActivitySessionsCard sessions={activity.sessions} capacity={activity.capacity} />,
+  }
+
+  const enrollmentFormTab: Tab = {
+    id: "enrollments",
+    tabTitle: "Enrollment Submissions",
+    page: <EnrollmentFormTable activity={activity} />,
+  }
+
   return (
     <div className="items-center justify-between p-6 mx-auto mt-8 max-w-7xl lg:px-8">
       <ViewActivityActionButtons />
-      <div className="flex flex-col gap-8">
-        <ActivityInfoCard activity={activity} />
-        <ActivitySessionsCard sessions={activity.sessions} capacity={activity.capacity} />
-      </div>
-      <EnrollmentFormTable activity={activity} />
+      <ActivityInfoCard activity={activity} />
+      <Tabs mt={8} tabs={[sessionTab, enrollmentFormTab]} defaultTabId="sessions"/>
     </div>
   );
 };

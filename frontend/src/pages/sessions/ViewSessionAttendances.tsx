@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import sessionApi from "../../api/sessions/sessions";
 import Spinner from "../../components/loading/Spinner";
 import { SessionData } from "../../types/sessions/sessions";
@@ -17,6 +17,7 @@ import { ArrowRightIcon } from "@heroicons/react/24/solid";
 
 const ViewSessionAttendances: React.FC = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [session, setSession] = useState<SessionData | null>(null);
   const [registrations, setRegistrations] = useState<UserRegistration[] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -146,11 +147,14 @@ const ViewSessionAttendances: React.FC = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-12 bg-white p-4 rounded-md shadow gap-4 h-full col-span-1 my-4 cursor-pointer hover:bg-gray-50">
-        <div className="col-span-11 font-medium">Attendance Drop-in View</div>
-        <div className="col-span-1">
-          <ArrowRightIcon className="w-6 h-6" />
-        </div>
+      <div
+        className="grid grid-cols-12 bg-white p-4 rounded-md shadow gap-4 h-full col-span-1 my-4 cursor-pointer hover:bg-gray-50"
+        onClick={() => navigate("./drop_in")}
+        >
+          <div className="col-span-11 font-medium">Attendance Drop-in View</div>
+          <div className="col-span-1">
+            <ArrowRightIcon className="w-6 h-6" />
+          </div>
       </div>
 
       <div className="flex flex-col bg-white p-8 rounded-md shadow gap-4 h-full col-span-1">

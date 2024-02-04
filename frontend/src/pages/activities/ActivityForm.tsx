@@ -27,28 +27,6 @@ interface Props {
   label: string;
 }
 
-async function downloadAndConvertToBlob(images: Image[]) {
-  let imageFiles: File[] = [];
-
-  for (const image of images) {
-    const imageUrl = image.imageUrl;
-    // Fetch the image data
-    const response = await fetch(imageUrl);
-
-    // Read the image data as blob
-    const blob = await response.blob();
-
-    // Create a File object from the blob
-    const file = new File([blob], imageUrl, {
-      type: response.headers.get("content-type")!,
-    });
-
-    imageFiles.push(file);
-  }
-
-  return imageFiles;
-}
-
 const ActivityForm: React.FC<Props> = ({
   initialData,
   handleValues,
@@ -61,16 +39,6 @@ const ActivityForm: React.FC<Props> = ({
       (image) => `${process.env.REACT_APP_BACKEND_URL}/${image.imageUrl}`
     ) ?? []
   );
-
-  const [initialImages, setInitialImages] = useState<File[]>([]);
-
-  useEffect(() => {
-    if (initialData) {
-      downloadAndConvertToBlob(initialData.images).then((images) =>
-        setInitialImages(images)
-      );
-    }
-  }, [initialData]);
 
   const navigate = useNavigate();
 
@@ -87,7 +55,7 @@ const ActivityForm: React.FC<Props> = ({
             end: new Date(session.end),
           })),
           location: initialData.location,
-          images: initialImages,
+          images: initialData.loadedImages!,
         }
       : ({
           name: "",
@@ -150,11 +118,11 @@ const ActivityForm: React.FC<Props> = ({
 
       <form className="space-y-6" onSubmit={handleSubmit}>
         {/* Actvitiy Information */}
-        <div className="grid grid-cols-3 bg-white p-8 rounded-md shadow mt-4 gap-8">
+        <div className="grid grid-cols-3 gap-8 p-8 mt-4 bg-white rounded-md shadow">
           <div className="w-full col-span-3">
             <h3 className="text-lg font-medium">Activity Information</h3>
           </div>
-          
+
           {/* Activity Name */}
           <div className="w-full col-span-2">
             <FormControl
@@ -187,7 +155,9 @@ const ActivityForm: React.FC<Props> = ({
                   (option) => option.value === values.type
                 )}
                 onChange={(option) => setFieldValue("type", option?.value)}
-                styles={{ valueContainer: (base) => ({ ...base, fontSize: "0.875rem" }) }}
+                styles={{
+                  valueContainer: (base) => ({ ...base, fontSize: "0.875rem" }),
+                }}
                 required
               />
             </FormControl>
@@ -212,7 +182,9 @@ const ActivityForm: React.FC<Props> = ({
                 onChange={(option) =>
                   setFieldValue("organisationId", option?.value)
                 }
-                styles={{ valueContainer: (base) => ({ ...base, fontSize: "0.875rem" }) }}
+                styles={{
+                  valueContainer: (base) => ({ ...base, fontSize: "0.875rem" }),
+                }}
                 required
               />
             </FormControl>
@@ -238,7 +210,9 @@ const ActivityForm: React.FC<Props> = ({
           {/* Activity Description */}
           <div className="w-full col-span-3">
             <FormControl
-              isInvalid={!!touched.description && errors.description !== undefined}
+              isInvalid={
+                !!touched.description && errors.description !== undefined
+              }
               errorMessage={errors.description}
               onBlur={handleBlur}
             >
@@ -254,9 +228,11 @@ const ActivityForm: React.FC<Props> = ({
         </div>
 
         {/* Activity Images */}
-        <div className="grid grid-cols-12 bg-white p-8 rounded-md shadow mt-4 gap-8">
+        <div className="grid grid-cols-12 gap-8 p-8 mt-4 bg-white rounded-md shadow">
           <div className="w-full col-span-12">
-            <Label htmlFor="images" textSize="text-lg">Activity Images</Label>
+            <Label htmlFor="images" textSize="text-lg">
+              Activity Images
+            </Label>
           </div>
 
           {/* Image Preview */}
@@ -275,7 +251,11 @@ const ActivityForm: React.FC<Props> = ({
           )}
 
           {/* Image Upload */}
-          <div className={`flex items-start justify-center w-full h-full col-span-${_.isEmpty(imageDisplayUrls) ? 12 : 5}`}>
+          <div
+            className={`flex items-start justify-center w-full h-full col-span-${
+              _.isEmpty(imageDisplayUrls) ? 12 : 5
+            }`}
+          >
             <div className="flex flex-col w-full gap-8">
               <FormControl onBlur={handleBlur}>
                 <FileUploader
@@ -318,7 +298,7 @@ const ActivityForm: React.FC<Props> = ({
         </div>
 
         {/* Activity Sessions */}
-        <div className="flex flex-col bg-white p-8 rounded-md shadow mt-4 gap-8">
+        <div className="flex flex-col gap-8 p-8 mt-4 bg-white rounded-md shadow">
           <h3 className="text-lg font-medium">Activity Sessions</h3>
           <FormControl>
             <Label htmlFor="sessions">Activity Dates</Label>
@@ -379,7 +359,9 @@ const ActivityForm: React.FC<Props> = ({
           </FormControl>
         </div>
         <div>
-          <Button type="submit" fullWidth>{label}</Button>
+          <Button type="submit" fullWidth>
+            {label}
+          </Button>
         </div>
       </form>
     </div>

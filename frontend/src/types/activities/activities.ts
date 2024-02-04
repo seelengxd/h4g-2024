@@ -1,4 +1,5 @@
 import { EnrollmentForm } from "../enrollmentForms/enrollmentForms";
+import { Organisation } from "../organisations/organisations";
 
 export interface SessionPostData {
   start: Date;
@@ -6,10 +7,14 @@ export interface SessionPostData {
   id?: number;
 }
 
-export interface Session {
+export interface SessionMiniData {
   start: Date;
   end: Date;
   id: number;
+}
+
+export interface SessionData extends SessionMiniData {
+  activity: ActivityData;
 }
 
 export interface Image {
@@ -27,12 +32,13 @@ export interface ActivityMiniData {
   organisationId: number;
   organisationName: string;
   location: string;
-  sessions: Session[];
+  sessions: SessionMiniData[];
   images: Image[];
 }
 
 export interface ActivityData extends ActivityMiniData {
   enrollmentForm: EnrollmentForm;
+  organisation: Organisation;
 }
 
 export interface ActivityPostData {

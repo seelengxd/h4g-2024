@@ -11,7 +11,7 @@ export const FormColumns = (
   columnHelper: ColumnHelper<Submission>,
   formData: FormData
 ): Array<ColumnDef<Submission>> => {
-  const questionAccessors = formData.components.map((component, index) =>
+  const accessors = formData.components.map((component, index) =>
     columnHelper.accessor(
       (submission: Submission) => {
         console.log({ index, component });
@@ -61,39 +61,6 @@ export const FormColumns = (
       cell: (id): number => id.getValue()!,
       header: "ID",
     }),
-    ...questionAccessors,
-    // columnHelper.accessor("name", {
-    //   cell: (name): string => name.getValue(),
-    //   header: "Name",
-    // }),
-    // columnHelper.accessor("type", {
-    //   cell: (type): ReactNode => {
-    //     // TODO: replace with tag
-    //     return <div>{type.getValue()}</div>;
-    //   },
-    //   header: "type",
-    // }),
-    // columnHelper.accessor("organisation", {
-    //   cell: (organisation): ReactNode => (
-    //     <Link to={"/organisations/" + organisation.getValue().id}>
-    //       <p className="hover:underline hover:text-gray-800">
-    //         {organisation.getValue().name}
-    //       </p>
-    //     </Link>
-    //   ),
-    //   header: "Organisation",
-    // }),
-    // columnHelper.accessor("action", {
-    //   header: "",
-    //   enableSorting: false,
-    //   enableGlobalFilter: false,
-    //   cell: (cell) => (
-    //     <div className="flex space-x-2">
-    //       <Link to={"/activities/" + cell.row.original.id}>
-    //         <IconButton icon={<EyeIcon className="w-4 h-4" />} />
-    //       </Link>
-    //     </div>
-    //   ),
-    // }),
+    ...accessors,
   ] as Array<ColumnDef<Submission>>;
 };

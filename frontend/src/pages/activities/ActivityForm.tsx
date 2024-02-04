@@ -121,14 +121,14 @@ const ActivityForm: React.FC<Props> = ({
       <form className="space-y-6" onSubmit={handleSubmit}>
         <div className="grid grid-cols-12 bg-white p-8 rounded-md shadow mt-4 gap-8">
           <div className="w-full col-span-12">
-            <Label htmlFor="image" textSize="text-md">Activity Images</Label>
+            <Label htmlFor="images" textSize="text-md">Activity Images</Label>
           </div>
 
           {/* Image Preview */}
           <div className="w-full h-full col-span-7">
             <ImageGallery imageUrls={imageDisplayUrls} height="h-64" deletable onDelete={(updatedImageUrls) => {
               setImageDisplayUrls(updatedImageUrls);
-              setFieldValue("image", updatedImageUrls);
+              setFieldValue("images", updatedImageUrls);
             }} />
           </div>
 
@@ -165,7 +165,7 @@ const ActivityForm: React.FC<Props> = ({
                       .then((dataUrls) => {
                         const updatedImageUrls = dataUrls.concat(imageDisplayUrls);
                         setImageDisplayUrls(updatedImageUrls);
-                        setFieldValue("image", updatedImageUrls);
+                        setFieldValue("images", updatedImageUrls);
                       });
                 }}/>
               </FormControl>

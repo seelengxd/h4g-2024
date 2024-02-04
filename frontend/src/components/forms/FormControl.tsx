@@ -10,6 +10,7 @@ const FormControl: React.FC<Props> = ({
   children,
   errorMessage,
 }) => {
+  console.log({ isInvalid, errorMessage });
   return (
     <div onBlur={onBlur}>
       {children}

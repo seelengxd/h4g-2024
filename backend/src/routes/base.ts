@@ -5,6 +5,7 @@ import activitiesRouter from "./activities";
 import enrollmentFormsRouter from "./enrollmentForms";
 import submissionsRouter from "./submissions";
 import interestsRouter from "./interests";
+import registrationsRouter from "./registrations";
 
 const apiRouter = Router();
 
@@ -14,5 +15,6 @@ apiRouter.use("/activities", activitiesRouter);
 apiRouter.use("/enrollment-forms", enrollmentFormsRouter);
 apiRouter.use("/submissions", submissionsRouter);
 apiRouter.use("/interests", interestsRouter);
+apiRouter.use("/registrations", registrationsRouter);
 
 export default apiRouter;

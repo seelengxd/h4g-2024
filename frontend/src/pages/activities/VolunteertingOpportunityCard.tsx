@@ -1,4 +1,8 @@
-import { MapPinIcon, ClockIcon, ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
+import {
+  MapPinIcon,
+  ClockIcon,
+  ArrowTopRightOnSquareIcon,
+} from "@heroicons/react/24/outline";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import { ActivityMiniData } from "../../types/activities/activities";
@@ -7,7 +11,9 @@ interface VolunteeringOpportunityCardProps {
   activity: ActivityMiniData;
 }
 
-const VolunteeringOpportunityCard: React.FC<VolunteeringOpportunityCardProps> = ( { activity }: VolunteeringOpportunityCardProps ) => {
+const VolunteeringOpportunityCard: React.FC<
+  VolunteeringOpportunityCardProps
+> = ({ activity }: VolunteeringOpportunityCardProps) => {
   return (
     <div className="relative flex flex-col bg-primary-200 rounded-2xl overflow-clip">
       <img
@@ -49,7 +55,7 @@ const VolunteeringOpportunityCard: React.FC<VolunteeringOpportunityCardProps> = 
       </div>
       <div className="p-4 justify-self-end">
         <Link
-          to={"/activities/" + activity.id.toString()}
+          to={"/activities/" + activity.id.toString() + "/enroll"}
           className={
             "flex justify-center items-center rounded-full bg-primary-600 px-3 py-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
           }
@@ -66,6 +72,6 @@ const VolunteeringOpportunityCard: React.FC<VolunteeringOpportunityCardProps> = 
       </Link>
     </div>
   );
-}
+};
 
 export default VolunteeringOpportunityCard;

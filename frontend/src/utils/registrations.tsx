@@ -124,7 +124,7 @@ export const AdminRegistrationTableColumns = (
         {
           cell: (cell) => {
             const attendance = cell.row.original.attendance;
-            const buttonClassName = "border-2 border-orange-700 text-orange-700 px-4 bg-orange-200 rounded-md hover:bg-orange-300";
+            const buttonClassName = "border-2 border-orange-600 text-orange-600 px-4 bg-orange-200 rounded-md hover:bg-orange-300";
             return (
               <div className="flex gap-4 justify-center">
                 {attendance !== true && (

@@ -10,10 +10,10 @@ import { Column, ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import Button from "../../components/buttons/Button";
 import DataTable from "../../components/tables/DataTable";
 import { UserRegistration } from "../../types/registrations/registrations";
-import { pluraliseWord } from "../../utils/miscellaneous";
 import { AdminRegistrationRowData, AdminRegistrationTableColumns } from "../../utils/registrations";
 import Tabs from "../../components/dataDisplay/Tabs";
 import registrationsAPI from "../../api/registrations/registrations";
+import { ArrowRightIcon } from "@heroicons/react/24/solid";
 
 const ViewSessionAttendances: React.FC = () => {
   const { id } = useParams();
@@ -50,13 +50,17 @@ const ViewSessionAttendances: React.FC = () => {
   const registrationColumns: Array<ColumnDef<AdminRegistrationRowData>> =
     AdminRegistrationTableColumns(columnHelper, true, handleMarkAttended, handleMarkAbsent, handleUnmark);
 
+  const pendingRegistrations = registrations.filter((registration) => registration.attendance === null);
+  const attendedRegistrations = registrations.filter((registration) => registration.attendance === true);
+  const absentRegistrations = registrations.filter((registration) => registration.attendance === false);
+
   const pendingRegistrationsTab = {
     id: 'pending',
     tabTitle: 'Unmarked Attendance',
     page: (
       <DataTable
         columns={registrationColumns}
-        tableData={registrations.filter((registration) => registration.attendance === null)}
+        tableData={pendingRegistrations}
         getColumnCanGlobalFilter={(column: Column<UserRegistration>) => column.getCanSort()}
         emptyTableText="No Registrations Found"
         searchText="Search Registration List"
@@ -70,7 +74,7 @@ const ViewSessionAttendances: React.FC = () => {
     page: (
       <DataTable
         columns={registrationColumns}
-        tableData={registrations.filter((registration) => registration.attendance === true)}
+        tableData={attendedRegistrations}
         getColumnCanGlobalFilter={(column: Column<UserRegistration>) => column.getCanSort()}
         emptyTableText="No Registrations Found"
         searchText="Search Registration List"
@@ -84,7 +88,7 @@ const ViewSessionAttendances: React.FC = () => {
     page: (
       <DataTable
         columns={registrationColumns}
-        tableData={registrations.filter((registration) => registration.attendance === false)}
+        tableData={absentRegistrations}
         getColumnCanGlobalFilter={(column: Column<UserRegistration>) => column.getCanSort()}
         emptyTableText="No Registrations Found"
         searchText="Search Registration List"
@@ -109,8 +113,8 @@ const ViewSessionAttendances: React.FC = () => {
   return (
     <div className="items-center justify-between p-6 mx-auto mt-8 max-w-7xl lg:px-8">
       <ViewSessionAttendanceHeader session={session} />
-      <div className="flex flex-row justify-between items-center mt-8">
-        <h1 className="text-xl font-semibold">{numRegistrations} {pluraliseWord("Registration", numRegistrations)}</h1>
+      <div className="flex flex-row justify-between items-center mt-4">
+        <h1 className="text-xl font-semibold text-gray-700">Manage Attendance</h1>
         <div className="flex flex-row gap-3">
           <Button roundness="md" py={2} bgColor="white" textColor="text-primary-700" outlined outlineColor="border-primary-700">
             <ListBulletIcon className="w-4 h-4 mr-2 stroke-2"/>
@@ -123,9 +127,29 @@ const ViewSessionAttendances: React.FC = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 mt-2 gap-4">
-        <div className="flex flex-col bg-white p-8 rounded-md shadow gap-4 h-full col-span-1">
-          <h1 className="text-xl font-semibold text-gray-700">Manage Attendance</h1>
+      <div className="grid grid-cols-4 bg-white px-4 py-6 rounded-md shadow gap-4 h-full col-span-1 my-4">
+        <div className="col-span-1 justify-center flex flex-col items-center">
+          <h4 className="text-sm font-semibold text-gray-600">Number of Registrations</h4>
+          <h4 className="text-md font-medium text-black-600">{numRegistrations}</h4>
+        </div>
+        <div className="col-span-1 justify-center flex flex-col items-center">
+          <h4 className="text-sm font-semibold text-gray-600">Number Attended</h4>
+          <h4 className="text-md font-medium text-black-600">{attendedRegistrations.length}</h4>
+        </div>
+        <div className="col-span-1 justify-center flex flex-col items-center">
+          <h4 className="text-sm font-semibold text-gray-600">Number Absent</h4>
+          <h4 className="text-md font-medium text-black-600">{absentRegistrations.length}</h4>
+        </div>
+        <div className="col-span-1 justify-center flex flex-col items-center">
+          <h4 className="text-sm font-semibold text-gray-600">Number Unmarked</h4>
+          <h4 className="text-md font-medium text-black-600">{pendingRegistrations.length}</h4>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-12 bg-white p-4 rounded-md shadow gap-4 h-full col-span-1 my-4 cursor-pointer hover:bg-gray-50">
+        <div className="col-span-11 font-medium">Attendance Drop-in View</div>
+        <div className="col-span-1">
+          <ArrowRightIcon className="w-6 h-6" />
         </div>
       </div>
 

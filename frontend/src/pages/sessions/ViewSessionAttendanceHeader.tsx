@@ -14,8 +14,9 @@ const ViewSessionAttendanceHeader: React.FC<ViewSessionAttendanceHeaderProps> = 
   const dateDisplay = isOneDaySession
     ? `${format(new Date(session.start), "d MMM yyyy")} (${format(new Date(session.start), "hh:mm:aa")} - ${format(new Date(session.start), "hh:mm:aa")})`
     : `${format(new Date(session.start), "d MMM yyyy (hh:mm:aa)")} - ${format(new Date(session.end), "d MMM yyyy (hh:mm:aa)")}`;
-  return (
-    <div className="flex flex-col bg-white p-8 rounded-md shadow gap-4">
+  
+    return (
+    <div className="flex flex-col bg-white p-4 rounded-md shadow gap-4">
       <div className="grid grid-cols-12 items-center">
         <div className="flex col-span-3 max-h-12">
           <Button>
@@ -28,12 +29,14 @@ const ViewSessionAttendanceHeader: React.FC<ViewSessionAttendanceHeaderProps> = 
           </Button>
         </div>
         <div className="flex flex-col col-span-9">
-          <span className="text-sm text-gray-600 font-semibold mb-2">Viewing attendance data for</span>
+          <span className="text-sm text-gray-600 mb-2">
+            <span className="font-semibold">Viewing attendance data for   </span>
+            {session.activity.organisationName}
+          </span>
           <div className="flex gap-2 mb-2">
             <Tag text={session.activity.name} />
             <Tag text={dateDisplay} />
           </div>
-          <h3 className="text-sm text-gray-600">{session.activity.organisationName}</h3>
         </div>
       </div>
     </div>

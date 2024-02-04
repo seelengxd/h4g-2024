@@ -13,7 +13,7 @@ declare global {
   }
 }
 
-const upload = multer({ dest: "uploads/" });
+const upload = multer({ dest: "./uploads/" });
 
 const validateOrganisationId: RequestHandler[] = [
   async (req, res, next) => {
@@ -60,6 +60,7 @@ const validateActivityId: RequestHandler[] = [
       return;
     }
     req.activity = activity;
+    req.organisation = activity.organisation;
     next();
   },
 ];
@@ -73,14 +74,21 @@ export const index: RequestHandler[] = [
         organisation: { select: { name: true } },
       },
     });
-    res.json({ data: activities.map((activity) => ({...activity, organisationName: activity.organisation.name})) });
+    res.json({
+      data: activities.map((activity) => ({
+        ...activity,
+        organisationName: activity.organisation.name,
+      })),
+    });
   },
 ];
 
 export const show: RequestHandler[] = [
   ...validateActivityId,
   async (req, res) => {
-    res.json({ data: req.activity! });
+    res.json({
+      data: { ...req.activity!, organisationName: req.organisation!.name },
+    });
   },
 ];
 

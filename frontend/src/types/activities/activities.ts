@@ -34,6 +34,8 @@ export interface ActivityMiniData {
   location: string;
   sessions: SessionMiniData[];
   images: Image[];
+  capacity: number;
+  loadedImages?: File[];
 }
 
 export interface ActivityData extends ActivityMiniData {

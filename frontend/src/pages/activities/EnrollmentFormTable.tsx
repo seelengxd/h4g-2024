@@ -10,7 +10,11 @@ interface Props {
 
 const EnrollmentFormTable: React.FC<Props> = ({ activity }) => {
   if (!activity.enrollmentForm) {
-    return <></>;
+    return (
+    <div className="flex justify-center text-2xl text-gray-500 mt-10">
+      No Enrollment Form
+    </div>
+    );
   }
   const columnHelper = createColumnHelper<Submission>();
   const submissionColumns: Array<ColumnDef<Submission>> = FormColumns(
@@ -26,6 +30,7 @@ const EnrollmentFormTable: React.FC<Props> = ({ activity }) => {
         column.getCanSort()
       }
       searchText="Search submissions..."
+      emptyTableText="No Submissions Found"
     />
   );
 };

@@ -1,9 +1,3 @@
-import {
-  CalendarIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  FireIcon,
-} from "@heroicons/react/24/outline";
 import Button from "../../components/buttons/Button";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
@@ -14,14 +8,18 @@ import Input from "../../components/forms/Input";
 import {
   ActivityMiniData,
   ActivityPostData,
+  Image,
 } from "../../types/activities/activities";
 import Select from "react-select";
 import { Organisation } from "../../types/organisations/organisations";
-import { forwardRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import organisationsAPI from "../../api/organisations/organisations";
 import DatePicker from "react-datepicker"; // Import datepicker library
 import "react-datepicker/dist/react-datepicker.css"; // Import datepicker styles
-import { format } from "date-fns";
+import FileUploader from "../../components/forms/FileUploader";
+import ImageGallery from "../../components/dataDisplay/ImageGallery";
+import FormTextAreaInput from "../../components/forms/FormTextAreaInput";
+import _ from "lodash";
 
 interface Props {
   initialData?: ActivityMiniData;
@@ -36,8 +34,12 @@ const ActivityForm: React.FC<Props> = ({
 }) => {
   const x = new Date();
   x.setMonth(x.getMonth() + 1);
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(x);
+  const [imageDisplayUrls, setImageDisplayUrls] = useState(
+    initialData?.images.map(
+      (image) => `${process.env.REACT_APP_BACKEND_URL}/${image.imageUrl}`
+    ) ?? []
+  );
+
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -48,11 +50,12 @@ const ActivityForm: React.FC<Props> = ({
           description: initialData.description,
           organisationId: initialData.organisationId,
           sessions: initialData.sessions.map((session) => ({
+            id: session.id,
             start: new Date(session.start),
             end: new Date(session.end),
           })),
           location: initialData.location,
-          images: [],
+          images: initialData.loadedImages!,
         }
       : ({
           name: "",
@@ -103,164 +106,200 @@ const ActivityForm: React.FC<Props> = ({
     label: organisation.name,
   }));
 
-  console.log({ errors });
   return (
     <div className="items-center justify-between max-h-screen p-6 mx-auto mt-8 max-w-7xl lg:px-8">
       <div className="w-full">
         <div className="flex items-center justify-between flex-initial w-full">
           <div className="flex items-center mt-4">
-            <FireIcon className="w-10 h-10 mr-4" />
-            <h1 className="text-4xl font-semibold text-gray-800">{label}</h1>
+            <h1 className="text-3xl text-gray-800">{label}</h1>
           </div>
         </div>
       </div>
-      <div className="mt-12 sm:mx-auto sm:w-full md:max-w-2xl">
-        <form className="space-y-6" onSubmit={handleSubmit}>
-          <FormControl
-            isInvalid={!!touched.name && errors.name !== undefined}
-            errorMessage={errors.name}
-            onBlur={handleBlur}
-          >
-            <Label htmlFor="Name">Name</Label>
-            <Input
-              name="name"
-              value={values.name}
-              onChange={handleChange}
-              required
-            />
-          </FormControl>
-          <FormControl
-            isInvalid={
-              !!touched.description && errors.description !== undefined
-            }
-            errorMessage={errors.description}
-            onBlur={handleBlur}
-          >
-            <Label htmlFor="description">Description</Label>
-            <Input
-              name="description"
-              value={values.description}
-              onChange={handleChange}
-              required
-            />
-          </FormControl>
-          <FormControl
-            isInvalid={!!touched.type && errors.type !== undefined}
-            errorMessage={errors.type}
-            onBlur={handleBlur}
-          >
-            <Label htmlFor="type">Type</Label>
-            <Select
-              name="type"
-              options={typeOptions}
-              value={typeOptions?.find(
-                (option) => option.value === values.type
-              )}
-              onChange={(option) => setFieldValue("type", option?.value)}
-              required
-            />
-          </FormControl>
-          <FormControl
-            isInvalid={
-              !!touched.organisationId && errors.organisationId !== undefined
-            }
-            errorMessage={errors.organisationId}
-            onBlur={handleBlur}
-          >
-            <Label htmlFor="organisationId">Organisation</Label>
-            <Select
-              name="organisationId"
-              options={organisationOptions}
-              value={organisationOptions?.find(
-                (option) => option.value === values.organisationId
-              )}
-              onChange={(option) =>
-                setFieldValue("organisationId", option?.value)
+
+      <form className="space-y-6" onSubmit={handleSubmit}>
+        {/* Actvitiy Information */}
+        <div className="grid grid-cols-3 gap-8 p-8 mt-4 bg-white rounded-md shadow">
+          <div className="w-full col-span-3">
+            <h3 className="text-lg font-medium">Activity Information</h3>
+          </div>
+
+          {/* Activity Name */}
+          <div className="w-full col-span-2">
+            <FormControl
+              isInvalid={!!touched.name && errors.name !== undefined}
+              errorMessage={errors.name}
+              onBlur={handleBlur}
+            >
+              <Label htmlFor="Name">Activity Name</Label>
+              <Input
+                name="name"
+                value={values.name}
+                onChange={handleChange}
+                required
+              />
+            </FormControl>
+          </div>
+
+          {/* Activity Type */}
+          <div className="w-full col-span-1">
+            <FormControl
+              isInvalid={!!touched.type && errors.type !== undefined}
+              errorMessage={errors.type}
+              onBlur={handleBlur}
+            >
+              <Label htmlFor="type">Type</Label>
+              <Select
+                name="type"
+                options={typeOptions}
+                value={typeOptions?.find(
+                  (option) => option.value === values.type
+                )}
+                onChange={(option) => setFieldValue("type", option?.value)}
+                styles={{
+                  valueContainer: (base) => ({ ...base, fontSize: "0.875rem" }),
+                }}
+                required
+              />
+            </FormControl>
+          </div>
+
+          {/* Activity Organisation */}
+          <div className="w-full col-span-3">
+            <FormControl
+              isInvalid={
+                !!touched.organisationId && errors.organisationId !== undefined
               }
-              required
-            />
-          </FormControl>
-          <FormControl
-            isInvalid={!!touched.location && errors.location !== undefined}
-            errorMessage={errors.location}
-            onBlur={handleBlur}
+              errorMessage={errors.organisationId}
+              onBlur={handleBlur}
+            >
+              <Label htmlFor="organisationId">Organisation</Label>
+              <Select
+                name="organisationId"
+                options={organisationOptions}
+                value={organisationOptions?.find(
+                  (option) => option.value === values.organisationId
+                )}
+                onChange={(option) =>
+                  setFieldValue("organisationId", option?.value)
+                }
+                styles={{
+                  valueContainer: (base) => ({ ...base, fontSize: "0.875rem" }),
+                }}
+                required
+              />
+            </FormControl>
+          </div>
+
+          {/* Activity Location */}
+          <div className="w-full col-span-3">
+            <FormControl
+              isInvalid={!!touched.location && errors.location !== undefined}
+              errorMessage={errors.location}
+              onBlur={handleBlur}
+            >
+              <Label htmlFor="location">Location</Label>
+              <Input
+                name="location"
+                value={values.location}
+                onChange={handleChange}
+                required
+              />
+            </FormControl>
+          </div>
+
+          {/* Activity Description */}
+          <div className="w-full col-span-3">
+            <FormControl
+              isInvalid={
+                !!touched.description && errors.description !== undefined
+              }
+              errorMessage={errors.description}
+              onBlur={handleBlur}
+            >
+              <Label htmlFor="description">Description</Label>
+              <FormTextAreaInput
+                name="description"
+                value={values.description}
+                onChange={handleChange}
+                required
+              />
+            </FormControl>
+          </div>
+        </div>
+
+        {/* Activity Images */}
+        <div className="grid grid-cols-12 gap-8 p-8 mt-4 bg-white rounded-md shadow">
+          <div className="w-full col-span-12">
+            <Label htmlFor="images" textSize="text-lg">
+              Activity Images
+            </Label>
+          </div>
+
+          {/* Image Preview */}
+          {!_.isEmpty(imageDisplayUrls) && (
+            <div className="w-full h-full col-span-7">
+              <ImageGallery
+                imageUrls={imageDisplayUrls}
+                height="h-64"
+                deletable
+                onDelete={(updatedImageUrls) => {
+                  setImageDisplayUrls(updatedImageUrls);
+                  setFieldValue("images", updatedImageUrls);
+                }}
+              />
+            </div>
+          )}
+
+          {/* Image Upload */}
+          <div
+            className={`flex items-start justify-center w-full h-full col-span-${
+              _.isEmpty(imageDisplayUrls) ? 12 : 5
+            }`}
           >
-            <Label htmlFor="location">Location</Label>
-            <Input
-              name="location"
-              value={values.location}
-              onChange={handleChange}
-              required
-            />
-          </FormControl>
-          <FormControl onBlur={handleBlur}>
-            <Label htmlFor="images">Images</Label>
-            <Input
-              name="images"
-              type="file"
-              multiple
-              aria-required
-              onChange={(event) => {
-                setFieldValue("images", event.currentTarget.files);
-              }}
-            />
-          </FormControl>
-          <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date!)}
-            selectsStart
-            startDate={startDate}
-            endDate={endDate}
-            nextMonthButtonLabel=">"
-            previousMonthButtonLabel="<"
-            popperClassName="react-datepicker-left"
-            customInput={<ButtonInput />}
-            renderCustomHeader={({
-              date,
-              decreaseMonth,
-              increaseMonth,
-              prevMonthButtonDisabled,
-              nextMonthButtonDisabled,
-            }) => (
-              <div className="flex items-center justify-between px-2 py-2">
-                <span className="text-lg text-gray-700">
-                  {format(date, "MMMM yyyy")}
-                </span>
+            <div className="flex flex-col w-full gap-8">
+              <FormControl onBlur={handleBlur}>
+                <FileUploader
+                  name="images"
+                  type="file"
+                  fileConstraintLabel="Add one or more image files"
+                  multiple
+                  onChange={async (event) => {
+                    const files = (
+                      event.currentTarget as unknown as { files: File[] }
+                    ).files;
+                    const numFiles = files.length;
 
-                <div className="space-x-2">
-                  <button
-                    onClick={decreaseMonth}
-                    disabled={prevMonthButtonDisabled}
-                    type="button"
-                    className={`
-                                            ${
-                                              prevMonthButtonDisabled &&
-                                              "cursor-not-allowed opacity-50"
-                                            }
-                                            inline-flex p-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-500
-                                        `}
-                  >
-                    <ChevronLeftIcon className="w-5 h-5 text-gray-600" />
-                  </button>
+                    const processFile = (file: File) => {
+                      const reader = new FileReader();
+                      return new Promise<string>((resolve) => {
+                        reader.onloadend = () => {
+                          resolve(reader.result as string);
+                        };
+                        reader.readAsDataURL(file);
+                      });
+                    };
 
-                  <button
-                    onClick={increaseMonth}
-                    disabled={nextMonthButtonDisabled}
-                    type="button"
-                    className={`
-                                            ${
-                                              nextMonthButtonDisabled &&
-                                              "cursor-not-allowed opacity-50"
-                                            }
-                                            inline-flex p-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-500
-                                        `}
-                  >
-                    <ChevronRightIcon className="w-5 h-5 text-gray-600" />
-                  </button>
-                </div>
-              </div>
-            )}
-          />
+                    const promises: Promise<string>[] = [];
+                    for (let i = 0; i < numFiles; i++) {
+                      promises.push(processFile(files[i]));
+                    }
+
+                    await Promise.all(promises).then((dataUrls) => {
+                      const updatedImageUrls =
+                        dataUrls.concat(imageDisplayUrls);
+                      setImageDisplayUrls(updatedImageUrls);
+                      setFieldValue("images", [...values.images, ...files]);
+                    });
+                  }}
+                />
+              </FormControl>
+            </div>
+          </div>
+        </div>
+
+        {/* Activity Sessions */}
+        <div className="flex flex-col gap-8 p-8 mt-4 bg-white rounded-md shadow">
+          <h3 className="text-lg font-medium">Activity Sessions</h3>
           <FormControl>
             <Label htmlFor="sessions">Activity Dates</Label>
             <div>
@@ -318,30 +357,15 @@ const ActivityForm: React.FC<Props> = ({
               </button>
             </div>
           </FormControl>
-          <div>
-            <Button type="submit" fullWidth>
-              {label}
-            </Button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div>
+          <Button type="submit" fullWidth>
+            {label}
+          </Button>
+        </div>
+      </form>
     </div>
   );
 };
-
-const ButtonInput = forwardRef<
-  HTMLButtonElement,
-  { value?: Date; onClick?: () => void }
->(({ value, onClick }, ref) => (
-  <button
-    onClick={onClick}
-    ref={ref}
-    type="button"
-    className="inline-flex items-center justify-start w-full px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-500"
-  >
-    {format(new Date(value as any), "dd MMMM yyyy")}{" "}
-    <CalendarIcon className="w-5 h-5 ml-2" />
-  </button>
-));
 
 export default ActivityForm;

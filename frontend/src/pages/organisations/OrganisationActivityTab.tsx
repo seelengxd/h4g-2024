@@ -31,6 +31,7 @@ const OrganisationActivityTab: React.FC<OrganisationActivityTabProps> = ({ activ
         columns={activityColumns}
         tableData={activities}
         getColumnCanGlobalFilter={(column: Column<ActivityMiniData>) => column.getCanSort()}
+        emptyTableText="No Activities Found"
       />
     </div>
 

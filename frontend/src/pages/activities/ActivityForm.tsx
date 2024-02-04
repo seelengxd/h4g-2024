@@ -1,6 +1,3 @@
-import {
-  CalendarIcon,
-} from "@heroicons/react/24/outline";
 import Button from "../../components/buttons/Button";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
@@ -15,14 +12,14 @@ import {
 } from "../../types/activities/activities";
 import Select from "react-select";
 import { Organisation } from "../../types/organisations/organisations";
-import { forwardRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import organisationsAPI from "../../api/organisations/organisations";
 import DatePicker from "react-datepicker"; // Import datepicker library
 import "react-datepicker/dist/react-datepicker.css"; // Import datepicker styles
-import { format } from "date-fns";
 import FileUploader from "../../components/forms/FileUploader";
 import ImageGallery from "../../components/dataDisplay/ImageGallery";
 import FormTextAreaInput from "../../components/forms/FormTextAreaInput";
+import _ from "lodash";
 
 interface Props {
   initialData?: ActivityMiniData;
@@ -59,8 +56,6 @@ const ActivityForm: React.FC<Props> = ({
 }) => {
   const x = new Date();
   x.setMonth(x.getMonth() + 1);
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(x);
   const [imageDisplayUrls, setImageDisplayUrls] = useState(
     initialData?.images.map(
       (image) => `${process.env.REACT_APP_BACKEND_URL}/${image.imageUrl}`
@@ -154,68 +149,6 @@ const ActivityForm: React.FC<Props> = ({
       </div>
 
       <form className="space-y-6" onSubmit={handleSubmit}>
-        {/* Activity Images */}
-        <div className="grid grid-cols-12 bg-white p-8 rounded-md shadow mt-4 gap-8">
-          <div className="w-full col-span-12">
-            <Label htmlFor="images" textSize="text-lg">Activity Images</Label>
-          </div>
-
-          {/* Image Preview */}
-          <div className="w-full h-full col-span-7">
-            <ImageGallery
-              imageUrls={imageDisplayUrls}
-              height="h-64"
-              deletable
-              onDelete={(updatedImageUrls) => {
-                setImageDisplayUrls(updatedImageUrls);
-                setFieldValue("images", updatedImageUrls);
-              }}
-            />
-          </div>
-
-          {/* Image Upload */}
-          <div className="flex items-start justify-center w-full h-full col-span-5">
-            <div className="flex flex-col w-full gap-8">
-              <FormControl onBlur={handleBlur}>
-                <FileUploader
-                  name="images"
-                  type="file"
-                  fileConstraintLabel="Add one or more image files"
-                  multiple
-                  onChange={async (event) => {
-                    const files = (
-                      event.currentTarget as unknown as { files: File[] }
-                    ).files;
-                    const numFiles = files.length;
-
-                    const processFile = (file: File) => {
-                      const reader = new FileReader();
-                      return new Promise<string>((resolve) => {
-                        reader.onloadend = () => {
-                          resolve(reader.result as string);
-                        };
-                        reader.readAsDataURL(file);
-                      });
-                    };
-
-                    const promises: Promise<string>[] = [];
-                    for (let i = 0; i < numFiles; i++) {
-                      promises.push(processFile(files[i]));
-                    }
-
-                    await Promise.all(promises).then((dataUrls) => {
-                      const updatedImageUrls =
-                        dataUrls.concat(imageDisplayUrls);
-                      setImageDisplayUrls(updatedImageUrls);
-                      setFieldValue("images", [...values.images, ...files]);
-                    });
-                  }}
-                />
-              </FormControl>
-            </div>
-          </div>
-        </div>
-
         {/* Actvitiy Information */}
         <div className="grid grid-cols-3 bg-white p-8 rounded-md shadow mt-4 gap-8">
           <div className="w-full col-span-3">
@@ -284,7 +217,7 @@ const ActivityForm: React.FC<Props> = ({
               />
             </FormControl>
           </div>
-          
+
           {/* Activity Location */}
           <div className="w-full col-span-3">
             <FormControl
@@ -319,14 +252,74 @@ const ActivityForm: React.FC<Props> = ({
             </FormControl>
           </div>
         </div>
-      </form>
 
-      <div className="mt-12 sm:mx-auto sm:w-full md:max-w-2xl">
-        <form className="space-y-6" onSubmit={handleSubmit}>
-          
-          
-          
+        {/* Activity Images */}
+        <div className="grid grid-cols-12 bg-white p-8 rounded-md shadow mt-4 gap-8">
+          <div className="w-full col-span-12">
+            <Label htmlFor="images" textSize="text-lg">Activity Images</Label>
+          </div>
 
+          {/* Image Preview */}
+          {!_.isEmpty(imageDisplayUrls) && (
+            <div className="w-full h-full col-span-7">
+              <ImageGallery
+                imageUrls={imageDisplayUrls}
+                height="h-64"
+                deletable
+                onDelete={(updatedImageUrls) => {
+                  setImageDisplayUrls(updatedImageUrls);
+                  setFieldValue("images", updatedImageUrls);
+                }}
+              />
+            </div>
+          )}
+
+          {/* Image Upload */}
+          <div className={`flex items-start justify-center w-full h-full col-span-${_.isEmpty(imageDisplayUrls) ? 12 : 5}`}>
+            <div className="flex flex-col w-full gap-8">
+              <FormControl onBlur={handleBlur}>
+                <FileUploader
+                  name="images"
+                  type="file"
+                  fileConstraintLabel="Add one or more image files"
+                  multiple
+                  onChange={async (event) => {
+                    const files = (
+                      event.currentTarget as unknown as { files: File[] }
+                    ).files;
+                    const numFiles = files.length;
+
+                    const processFile = (file: File) => {
+                      const reader = new FileReader();
+                      return new Promise<string>((resolve) => {
+                        reader.onloadend = () => {
+                          resolve(reader.result as string);
+                        };
+                        reader.readAsDataURL(file);
+                      });
+                    };
+
+                    const promises: Promise<string>[] = [];
+                    for (let i = 0; i < numFiles; i++) {
+                      promises.push(processFile(files[i]));
+                    }
+
+                    await Promise.all(promises).then((dataUrls) => {
+                      const updatedImageUrls =
+                        dataUrls.concat(imageDisplayUrls);
+                      setImageDisplayUrls(updatedImageUrls);
+                      setFieldValue("images", [...values.images, ...files]);
+                    });
+                  }}
+                />
+              </FormControl>
+            </div>
+          </div>
+        </div>
+
+        {/* Activity Sessions */}
+        <div className="flex flex-col bg-white p-8 rounded-md shadow mt-4 gap-8">
+          <h3 className="text-lg font-medium">Activity Sessions</h3>
           <FormControl>
             <Label htmlFor="sessions">Activity Dates</Label>
             <div>
@@ -384,30 +377,13 @@ const ActivityForm: React.FC<Props> = ({
               </button>
             </div>
           </FormControl>
-          <div>
-            <Button type="submit" fullWidth>
-              {label}
-            </Button>
-          </div>
-        </form>
-      </div>
+        </div>
+        <div>
+          <Button type="submit" fullWidth>{label}</Button>
+        </div>
+      </form>
     </div>
   );
 };
-
-const ButtonInput = forwardRef<
-  HTMLButtonElement,
-  { value?: Date; onClick?: () => void }
->(({ value, onClick }, ref) => (
-  <button
-    onClick={onClick}
-    ref={ref}
-    type="button"
-    className="inline-flex items-center justify-start w-full px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-blue-500"
-  >
-    {format(new Date(value as any), "dd MMMM yyyy")}{" "}
-    <CalendarIcon className="w-5 h-5 ml-2" />
-  </button>
-));
 
 export default ActivityForm;

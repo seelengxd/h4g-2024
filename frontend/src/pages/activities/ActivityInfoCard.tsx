@@ -21,7 +21,7 @@ const ActivityInfoCard: React.FC<ActivityInfoCardProps> = ({ activity }: Activit
       {/* Activity Images */}
       {hasImage && (
         <div className="flex flex-col justify-center min-h-36 col-span-1 pr-8">
-          <ImageGallery imageUrls={activity.images.map((image) => `${process.env.REACT_APP_BACKEND_URL}/${image.imageUrl}`)}/>
+          <ImageGallery imageUrls={activity.images.map((image) => `${process.env.REACT_APP_BACKEND_URL}/${image.imageUrl}`)} />
         </div>
       )}
 

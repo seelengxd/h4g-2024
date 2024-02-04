@@ -22,6 +22,9 @@ import organisationsAPI from "../../api/organisations/organisations";
 import DatePicker from "react-datepicker"; // Import datepicker library
 import "react-datepicker/dist/react-datepicker.css"; // Import datepicker styles
 import { format } from "date-fns";
+import ImageUploader from "../../components/forms/ImageUploader";
+import FileUploader from "../../components/forms/FileUploader";
+import ImageGallery from "../../components/dataDisplay/ImageGallery";
 
 interface Props {
   initialData?: ActivityMiniData;
@@ -38,6 +41,7 @@ const ActivityForm: React.FC<Props> = ({
   x.setMonth(x.getMonth() + 1);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(x);
+  const [imageDisplayUrls, setImageDisplayUrls] = useState(initialData?.images.map((image) => `${process.env.REACT_APP_BACKEND_URL}/${image.imageUrl}`) ?? []);
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -109,11 +113,64 @@ const ActivityForm: React.FC<Props> = ({
       <div className="w-full">
         <div className="flex items-center justify-between flex-initial w-full">
           <div className="flex items-center mt-4">
-            <FireIcon className="w-10 h-10 mr-4" />
-            <h1 className="text-4xl font-semibold text-gray-800">{label}</h1>
+            <h1 className="text-3xl text-gray-800">{label}</h1>
           </div>
         </div>
       </div>
+
+      <form className="space-y-6" onSubmit={handleSubmit}>
+        <div className="grid grid-cols-12 bg-white p-8 rounded-md shadow mt-4 gap-8">
+          <div className="w-full col-span-12">
+            <Label htmlFor="image" textSize="text-md">Activity Images</Label>
+          </div>
+
+          {/* Image Preview */}
+          <div className="w-full h-full col-span-7">
+            <ImageGallery imageUrls={imageDisplayUrls} height="h-64"/>
+          </div>
+
+          {/* Image Upload */}
+          <div className="flex items-start justify-center w-full h-full col-span-5">
+            <div className="flex flex-col gap-8 w-full">
+              <FormControl onBlur={handleBlur}>
+                <FileUploader
+                  name="images"
+                  type="file"
+                  fileConstraintLabel="Add one or more image files"
+                  multiple
+                  hx="h-42"
+                  onChange={async (event) => {
+                    const files = (event.currentTarget as unknown as { files: File[] }).files;
+                    const numFiles = files.length;
+
+                    const processFile = (file: File) => {
+                      const reader = new FileReader();
+                      return new Promise<string>((resolve) => {
+                        reader.onloadend = () => {
+                          resolve(reader.result as string);
+                        };
+                        reader.readAsDataURL(file);
+                      })
+                    };
+
+                    const promises: Promise<string>[] = [];
+                    for (let i = 0; i < numFiles; i++) {
+                      promises.push(processFile(files[i]));
+                    }
+
+                    await Promise
+                      .all(promises)
+                      .then((dataUrls) => {
+                        setImageDisplayUrls(dataUrls.concat(imageDisplayUrls));
+                        setFieldValue("image", dataUrls);
+                      });
+                }}/>
+              </FormControl>
+            </div>
+          </div>
+        </div>
+      </form>
+
       <div className="mt-12 sm:mx-auto sm:w-full md:max-w-2xl">
         <form className="space-y-6" onSubmit={handleSubmit}>
           <FormControl
@@ -193,18 +250,7 @@ const ActivityForm: React.FC<Props> = ({
               required
             />
           </FormControl>
-          <FormControl onBlur={handleBlur}>
-            <Label htmlFor="images">Images</Label>
-            <Input
-              name="images"
-              type="file"
-              multiple
-              aria-required
-              onChange={(event) => {
-                setFieldValue("images", event.currentTarget.files);
-              }}
-            />
-          </FormControl>
+
           <DatePicker
             selected={startDate}
             onChange={(date) => setStartDate(date!)}

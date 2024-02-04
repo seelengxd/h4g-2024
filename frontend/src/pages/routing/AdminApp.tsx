@@ -11,6 +11,9 @@ import ViewActivity from "../activities/ViewActivity";
 import CreateEnrollmentForm from "../activities/CreateEnrollmentForm";
 import ViewEnrollmentForm from "../activities/ViewEnrollmentForm";
 import VolunteerDashboard from "../dashboard/VolunteerDashboard";
+import ViewSession from "../sessions/ViewSession";
+import ViewSessionAttendances from "../sessions/ViewSessionAttendances";
+import DropInAttendance from "../sessions/DropInAttendance";
 
 const Error404 = (
   <Error
@@ -38,6 +41,11 @@ const AdminApp: React.FC = () => {
       <Route path="/activities/new" element={<CreateActivity />} />
       <Route path="/activities/:id" element={<ViewActivity />} />
       <Route path="/activities/:id/edit" element={<UpdateActivity />} />
+
+      {/* Activity Session Routes */}
+      <Route path="/sessions/:id" element={<ViewSession />} />
+      <Route path="/sessions/:id/attendances" element={<ViewSessionAttendances />} />
+      <Route path="/sessions/:id/attendances/drop_in" element={<DropInAttendance />} />
 
       {/* Enrollment forms*/}
       <Route

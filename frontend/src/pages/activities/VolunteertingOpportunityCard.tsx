@@ -6,6 +6,7 @@ import {
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import { ActivityMiniData } from "../../types/activities/activities";
+import _ from "lodash";
 
 interface VolunteeringOpportunityCardProps {
   activity: ActivityMiniData;
@@ -19,7 +20,7 @@ const VolunteeringOpportunityCard: React.FC<
     <div className="relative flex flex-col bg-primary-200 rounded-2xl overflow-clip">
       <img
         src={
-          activity.images
+          activity.images && !_.isEmpty(activity.images)
             ? process.env.REACT_APP_BACKEND_URL! +
               "/" +
               activity.images[0].imageUrl

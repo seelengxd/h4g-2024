@@ -10,7 +10,7 @@ import { ActivityMiniData } from "../types/activities/activities";
 import { Link } from "react-router-dom";
 import IconButton from "../components/buttons/IconButton";
 import { EyeIcon } from "@heroicons/react/24/outline";
-import { Registration } from "../types/registrations/registrations";
+import { Registration, UserRegistration } from "../types/registrations/registrations";
 import { format } from "date-fns";
 import { PencilSquareIcon } from "@heroicons/react/20/solid";
 
@@ -70,4 +70,92 @@ export const RegistrationTableColumns = (
       ),
     }),
   ] as Array<ColumnDef<RegistrationRowData>>;
+};
+
+export interface AdminRegistrationRowData extends UserRegistration {
+  action?: undefined;
+}
+
+export const AdminRegistrationTableColumns = (
+  columnHelper: ColumnHelper<AdminRegistrationRowData>,
+  showActions?: boolean,
+  handleMarkAttended?: (registration: UserRegistration) => void,
+  handleMarkAbsent?: (registration: UserRegistration) => void,
+  handleUnmark?: (registration: UserRegistration) => void,
+): Array<ColumnDef<AdminRegistrationRowData>> => {
+  const baseCols = [
+    columnHelper.accessor(
+      (registration) => registration.user.fullName,
+      {
+        cell: (locationCellContext) => locationCellContext.getValue(),
+        header: "Full Name",
+      }
+    ),
+    columnHelper.accessor(
+      (registration) => registration.user.preferredName,
+      {
+        cell: (locationCellContext) => locationCellContext.getValue(),
+        header: "Preferred Name",
+      }
+    ),
+    columnHelper.accessor(
+      (registration) => registration.user.email,
+      {
+        cell: (locationCellContext) => locationCellContext.getValue(),
+        header: "Email",
+      }
+    ),
+    columnHelper.accessor(
+      (registration) => registration.attendance,
+      {
+        cell: (locationCellContext) => {
+          const attendance = locationCellContext.getValue();
+          return attendance === null ? 'Not Marked' : attendance ? "Attendend" : "Absent";
+        },
+        header: "Attendance",
+      }
+    ),
+  ] as Array<ColumnDef<AdminRegistrationRowData>>;
+
+  if (showActions && handleMarkAttended && handleMarkAbsent && handleUnmark) {
+    baseCols.push(
+      columnHelper.accessor(
+        "action",
+        {
+          cell: (cell) => {
+            const attendance = cell.row.original.attendance;
+            const buttonClassName = "border-2 border-orange-600 text-orange-600 px-4 bg-orange-200 rounded-md hover:bg-orange-300";
+            return (
+              <div className="flex gap-4 justify-center">
+                {attendance !== true && (
+                  <button
+                    className={buttonClassName}
+                    onClick={() => handleMarkAttended(cell.row.original)}>
+                    Mark as Attended
+                  </button>
+                )}
+                {attendance !== false && (
+                  <button
+                    className={buttonClassName}
+                    onClick={() => handleMarkAbsent(cell.row.original)}>
+                    Mark as Absent
+                  </button>
+                )}
+                {attendance !== null && (
+                  <button
+                    className={buttonClassName}
+                    onClick={() => handleUnmark(cell.row.original)}>
+                    Unmark
+                  </button>
+                )}
+              </div>
+            )
+          },
+          header: "",
+        }
+      ) as ColumnDef<AdminRegistrationRowData>
+    );
+  }
+  
+  return baseCols;
 };

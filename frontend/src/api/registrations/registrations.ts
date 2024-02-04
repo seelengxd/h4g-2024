@@ -1,6 +1,7 @@
 import {
   Registration,
   RegistrationPostData,
+  UserRegistration,
 } from "../../types/registrations/registrations";
 import client from "../base";
 
@@ -16,6 +17,21 @@ class RegistrationsAPI {
 
   public async createRegistration(data: RegistrationPostData) {
     return await client.post(`${this.getSubmissionsUrl()}`, data);
+  }
+
+  public async markAttended(data: UserRegistration): Promise<UserRegistration[]> {
+    const response = await client.put(`${this.getSubmissionsUrl()}/${data.id}/markAttended`, data);
+    return response.data.data;
+  }
+
+  public async markAbsent(data: UserRegistration): Promise<UserRegistration[]> {
+    const response = await client.put(`${this.getSubmissionsUrl()}/${data.id}/markAbsent`, data);
+    return response.data.data;
+  }
+
+  public async unmark(data: UserRegistration): Promise<UserRegistration[]> {
+    const response = await client.put(`${this.getSubmissionsUrl()}/${data.id}/unmark`, data);
+    return response.data.data;
   }
 }
 

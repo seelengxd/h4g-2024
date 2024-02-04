@@ -1,4 +1,4 @@
-interface TagProps {
+export interface TagProps {
   text: string;
   bgColor?: string;
   textColor?: string;

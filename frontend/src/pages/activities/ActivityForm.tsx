@@ -220,7 +220,9 @@ const ActivityForm: React.FC<Props> = ({
               <FormTextAreaInput
                 name="description"
                 value={values.description}
-                onChange={handleChange}
+                onChange={(newDescription) =>
+                  setFieldValue("description", newDescription)
+                }
                 required
               />
             </FormControl>

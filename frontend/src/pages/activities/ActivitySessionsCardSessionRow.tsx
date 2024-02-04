@@ -1,10 +1,10 @@
 import { format, isSameDay } from "date-fns";
-import { Session } from "../../types/activities/activities"
+import { SessionMiniData } from "../../types/activities/activities"
 import Tag from "../../components/dataDisplay/Tag";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 
 interface ActivitySessionsCardSessionRowProps {
-  session: Session;
+  session: SessionMiniData;
   status: string;
   tagBgColor: string;
   tagTextColor: string;

@@ -1,10 +1,10 @@
 import _ from "lodash";
-import { Session } from "../../types/activities/activities"
+import { SessionMiniData } from "../../types/activities/activities"
 import ActivitySessionsCardSessionRow from "./ActivitySessionsCardSessionRow";
 
 interface ActivitySessionGroupProps {
   sessionGroupTitle: string;
-  sessionGroup: Session[];
+  sessionGroup: SessionMiniData[];
   tagBgColor: string;
   tagTextColor: string;
   capacity: number;

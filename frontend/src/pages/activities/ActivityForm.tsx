@@ -14,6 +14,7 @@ import Input from "../../components/forms/Input";
 import {
   ActivityMiniData,
   ActivityPostData,
+  Image,
 } from "../../types/activities/activities";
 import Select from "react-select";
 import { Organisation } from "../../types/organisations/organisations";
@@ -32,6 +33,28 @@ interface Props {
   label: string;
 }
 
+async function downloadAndConvertToBlob(images: Image[]) {
+  let imageFiles: File[] = [];
+
+  for (const image of images) {
+    const imageUrl = image.imageUrl;
+    // Fetch the image data
+    const response = await fetch(imageUrl);
+
+    // Read the image data as blob
+    const blob = await response.blob();
+
+    // Create a File object from the blob
+    const file = new File([blob], imageUrl, {
+      type: response.headers.get("content-type")!,
+    });
+
+    imageFiles.push(file);
+  }
+
+  return imageFiles;
+}
+
 const ActivityForm: React.FC<Props> = ({
   initialData,
   handleValues,
@@ -41,7 +64,23 @@ const ActivityForm: React.FC<Props> = ({
   x.setMonth(x.getMonth() + 1);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(x);
-  const [imageDisplayUrls, setImageDisplayUrls] = useState(initialData?.images.map((image) => `${process.env.REACT_APP_BACKEND_URL}/${image.imageUrl}`) ?? []);
+  const [imageDisplayUrls, setImageDisplayUrls] = useState(
+    initialData?.images.map(
+      (image) => `${process.env.REACT_APP_BACKEND_URL}/${image.imageUrl}`
+    ) ?? []
+  );
+
+  const [initialImages, setInitialImages] = useState<File[]>([]);
+
+  useEffect(() => {
+    if (initialData) {
+      downloadAndConvertToBlob(initialData.images).then((images) =>
+        setInitialImages(images)
+      );
+    }
+  }, [initialData]);
+
+  // .then((images) => setFieldValue());
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -56,7 +95,7 @@ const ActivityForm: React.FC<Props> = ({
             end: new Date(session.end),
           })),
           location: initialData.location,
-          images: [],
+          images: initialImages,
         }
       : ({
           name: "",
@@ -119,22 +158,29 @@ const ActivityForm: React.FC<Props> = ({
       </div>
 
       <form className="space-y-6" onSubmit={handleSubmit}>
-        <div className="grid grid-cols-12 bg-white p-8 rounded-md shadow mt-4 gap-8">
+        <div className="grid grid-cols-12 gap-8 p-8 mt-4 bg-white rounded-md shadow">
           <div className="w-full col-span-12">
-            <Label htmlFor="images" textSize="text-md">Activity Images</Label>
+            <Label htmlFor="images" textSize="text-md">
+              Activity Images
+            </Label>
           </div>
 
           {/* Image Preview */}
           <div className="w-full h-full col-span-7">
-            <ImageGallery imageUrls={imageDisplayUrls} height="h-64" deletable onDelete={(updatedImageUrls) => {
-              setImageDisplayUrls(updatedImageUrls);
-              setFieldValue("images", updatedImageUrls);
-            }} />
+            <ImageGallery
+              imageUrls={imageDisplayUrls}
+              height="h-64"
+              deletable
+              onDelete={(updatedImageUrls) => {
+                setImageDisplayUrls(updatedImageUrls);
+                setFieldValue("images", updatedImageUrls);
+              }}
+            />
           </div>
 
           {/* Image Upload */}
           <div className="flex items-start justify-center w-full h-full col-span-5">
-            <div className="flex flex-col gap-8 w-full">
+            <div className="flex flex-col w-full gap-8">
               <FormControl onBlur={handleBlur}>
                 <FileUploader
                   name="images"
@@ -142,7 +188,9 @@ const ActivityForm: React.FC<Props> = ({
                   fileConstraintLabel="Add one or more image files"
                   multiple
                   onChange={async (event) => {
-                    const files = (event.currentTarget as unknown as { files: File[] }).files;
+                    const files = (
+                      event.currentTarget as unknown as { files: File[] }
+                    ).files;
                     const numFiles = files.length;
 
                     const processFile = (file: File) => {
@@ -152,7 +200,7 @@ const ActivityForm: React.FC<Props> = ({
                           resolve(reader.result as string);
                         };
                         reader.readAsDataURL(file);
-                      })
+                      });
                     };
 
                     const promises: Promise<string>[] = [];
@@ -160,14 +208,14 @@ const ActivityForm: React.FC<Props> = ({
                       promises.push(processFile(files[i]));
                     }
 
-                    await Promise
-                      .all(promises)
-                      .then((dataUrls) => {
-                        const updatedImageUrls = dataUrls.concat(imageDisplayUrls);
-                        setImageDisplayUrls(updatedImageUrls);
-                        setFieldValue("images", updatedImageUrls);
-                      });
-                }}/>
+                    await Promise.all(promises).then((dataUrls) => {
+                      const updatedImageUrls =
+                        dataUrls.concat(imageDisplayUrls);
+                      setImageDisplayUrls(updatedImageUrls);
+                      setFieldValue("images", [...values.images, ...files]);
+                    });
+                  }}
+                />
               </FormControl>
             </div>
           </div>

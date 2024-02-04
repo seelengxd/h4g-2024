@@ -30,12 +30,12 @@ const volunteerContent = [
   {
     label: "Events",
     icon: <CalendarDaysIcon className="w-8 h-8 fill-white" />,
-    linkTo: "/events",
+    linkTo: "/activities",
   },
   {
     label: "Your Activity",
     icon: <HeartIcon className="w-8 h-8 fill-white" />,
-    linkTo: "/activities",
+    linkTo: "/your-activities",
   },
   {
     label: "Blog",
@@ -147,7 +147,13 @@ const SideBar: React.FC = () => {
                     to={linkTo}
                     className={
                       "p-4 rounded-xl hover:bg-primary-500" +
-                      (pathName === linkTo ? " bg-primary-500" : "")
+                      ((
+                        linkTo !== "/"
+                          ? pathName.startsWith(linkTo)
+                          : linkTo === pathName
+                      )
+                        ? " bg-primary-500"
+                        : "")
                     }
                   >
                     {icon}
@@ -158,7 +164,7 @@ const SideBar: React.FC = () => {
           </div>
           <div
             className={
-              "flex-col px-8 space-y-24 text-white transition " +
+              "flex-col px-8 space-y-12 text-white transition " +
               (active ? "flex" : "hidden")
             }
           >
@@ -180,7 +186,10 @@ const SideBar: React.FC = () => {
 
             <div className="flex flex-col space-y-6">
               {content.map(({ label, icon, linkTo }) => {
-                const isPage = pathName === linkTo;
+                const isPage =
+                  linkTo !== "/"
+                    ? pathName.startsWith(linkTo)
+                    : linkTo === pathName;
                 if (label === "Log out") {
                   return (
                     <div

@@ -1,5 +1,5 @@
-import Tag from "../../components/dataDisplay/Tag";
-import { RegistrationMiniData } from "../../types/registrations/registrations";
+import Tag from "../../../components/dataDisplay/Tag";
+import { RegistrationMiniData } from "../../../types/registrations/registrations";
 
 interface SessionMiniCardRegistrationDisplayProps {
   registrations: RegistrationMiniData[];

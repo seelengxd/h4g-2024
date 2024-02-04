@@ -1,6 +1,8 @@
 export interface User {
   id: number;
-  username: string;
+  // username: string;
   email: string;
   role: "USER" | "ADMIN";
+  fullName: string;
+  preferredName: string;
 }

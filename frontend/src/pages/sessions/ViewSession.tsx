@@ -6,7 +6,9 @@ import { Error404 } from "../routing/VolunteerApp";
 import Spinner from "../../components/loading/Spinner";
 import ActivityMiniViewCard from "../activities/ActivityMiniViewCard";
 import ViewSessionActionButton from "./ViewSessionActionButtons";
-import SessionMiniViewCard from "./SessionMiniViewCard";
+import SessionMiniViewCard from "./minicard/SessionMiniViewCard";
+import Tabs from "../../components/dataDisplay/Tabs";
+import SessionRegistrations from "./SessionRegistrations";
 
 const ViewSession: React.FC = () => {
   const { id } = useParams();
@@ -26,6 +28,12 @@ const ViewSession: React.FC = () => {
   if (!id) return Error404;
   if (isLoading) return <Spinner />;
   if (!session) return Error404;
+
+  const registrationPage = {
+    id: "registrations",
+    tabTitle: "Manage Registrations and Attendance",
+    page: <SessionRegistrations registrations={session.registrations} />,
+  }
   
   return (
     <div className="items-center justify-between p-6 mx-auto mt-8 max-w-7xl lg:px-8">
@@ -38,6 +46,7 @@ const ViewSession: React.FC = () => {
           <SessionMiniViewCard session={session} />
         </div>
       </div>
+      <Tabs tabs={[registrationPage]} defaultTabId="registrations" mt={8} />
     </div>
   );
 }

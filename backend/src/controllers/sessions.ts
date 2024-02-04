@@ -24,7 +24,11 @@ export const show: RequestHandler[] = [
             }
           }
         },
-        registrations: true,
+        registrations: {
+          include: {
+            user: true,
+          }
+        },
       },
     });
 

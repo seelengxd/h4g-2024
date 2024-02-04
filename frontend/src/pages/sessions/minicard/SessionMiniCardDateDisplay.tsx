@@ -17,7 +17,7 @@ const SessionMiniCardDateDisplay: React.FC<SessionMiniCardDateDisplayProps> = ({
       <div className="flex flex-col gap-4">
         {/* Start date */}
         <div className="flex flex-col gap-2">
-          <h5 className="text-gray-500 font-medium text-md">Session Date</h5>
+          <h5 className="text-gray-00 font-medium text-md">Session Date</h5>
           <h2 className="mb-2 text-2xl font-semibold tracking-tight text-gray-800">
             {format(new Date(sessionStart), "d MMM yyyy, iiii")}
           </h2>

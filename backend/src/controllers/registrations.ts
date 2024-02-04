@@ -51,3 +51,90 @@ export const update: RequestHandler[] = [
     // TODO
   },
 ];
+
+export const markAttended: RequestHandler[] = [
+  body("id").isInt(),
+  body("sessionId").isInt(),
+  async (req, res) => {
+    const { id, sessionId } = req.body;
+    await prisma.registration.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        attendance: true,
+      }
+    });
+
+    const registrations = await prisma.registration.findMany({
+      where: {
+        sessionId: Number(sessionId),
+      },
+      include: {
+        user: true,
+      }
+    });
+    
+    console.log(registrations);
+
+    res.json({data: registrations});
+  },
+];
+
+export const markAbsent: RequestHandler[] = [
+  body("id").isInt(),
+  body("sessionId").isInt(),
+  async (req, res) => {
+    const { id, sessionId } = req.body;
+    const registration = await prisma.registration.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        attendance: false,
+      }
+    });
+
+    const registrations = await prisma.registration.findMany({
+      where: {
+        sessionId: Number(sessionId),
+      },
+      include: {
+        user: true,
+      }
+    });
+
+    console.log(registrations);
+
+    res.json({data: registrations});
+  },
+];
+
+export const unmark: RequestHandler[] = [
+  body("id").isInt(),
+  body("sessionId").isInt(),
+  async (req, res) => {
+    const { id, sessionId } = req.body;
+    const registration = await prisma.registration.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        attendance: null,
+      }
+    });
+
+    const registrations = await prisma.registration.findMany({
+      where: {
+        sessionId: Number(sessionId),
+      },
+      include: {
+        user: true,
+      }
+    });
+
+    console.log(registrations);
+
+    res.json({data: registrations});
+  },
+];

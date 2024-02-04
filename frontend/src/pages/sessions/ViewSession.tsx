@@ -34,6 +34,18 @@ const ViewSession: React.FC = () => {
     tabTitle: "Manage Registrations and Attendance",
     page: <SessionRegistrations registrations={session.registrations} />,
   }
+
+  const enrollmentFormPage = {
+    id: "enrollment",
+    tabTitle: "Enrollment Form Submissions",
+    page: <SessionRegistrations registrations={session.registrations} />,
+  }
+
+  const feedbackPage = {
+    id: "feedback",
+    tabTitle: "Session Feedback and Reflections",
+    page: <SessionRegistrations registrations={session.registrations} />,
+  }
   
   return (
     <div className="items-center justify-between p-6 mx-auto mt-8 max-w-7xl lg:px-8">
@@ -46,7 +58,7 @@ const ViewSession: React.FC = () => {
           <SessionMiniViewCard session={session} />
         </div>
       </div>
-      <Tabs tabs={[registrationPage]} defaultTabId="registrations" mt={8} />
+      <Tabs tabs={[registrationPage, enrollmentFormPage, feedbackPage]} defaultTabId="registrations" mt={8} />
     </div>
   );
 }

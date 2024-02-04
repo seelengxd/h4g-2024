@@ -77,9 +77,13 @@ export interface AdminRegistrationRowData extends UserRegistration {
 }
 
 export const AdminRegistrationTableColumns = (
-  columnHelper: ColumnHelper<AdminRegistrationRowData>
+  columnHelper: ColumnHelper<AdminRegistrationRowData>,
+  showActions?: boolean,
+  handleMarkAttended?: (registration: UserRegistration) => void,
+  handleMarkAbsent?: (registration: UserRegistration) => void,
+  handleUnmark?: (registration: UserRegistration) => void,
 ): Array<ColumnDef<AdminRegistrationRowData>> => {
-  return [
+  const baseCols = [
     columnHelper.accessor(
       (registration) => registration.user.fullName,
       {
@@ -106,10 +110,52 @@ export const AdminRegistrationTableColumns = (
       {
         cell: (locationCellContext) => {
           const attendance = locationCellContext.getValue();
-          return attendance === null ? 'Pending' : attendance ? "Absent" : "Attendend";
+          return attendance === null ? 'Not Marked' : attendance ? "Attendend" : "Absent";
         },
         header: "Attendance",
       }
     ),
   ] as Array<ColumnDef<AdminRegistrationRowData>>;
+
+  if (showActions && handleMarkAttended && handleMarkAbsent && handleUnmark) {
+    baseCols.push(
+      columnHelper.accessor(
+        "action",
+        {
+          cell: (cell) => {
+            const attendance = cell.row.original.attendance;
+            const buttonClassName = "border-2 border-orange-700 text-orange-700 px-4 bg-orange-200 rounded-md hover:bg-orange-300";
+            return (
+              <div className="flex gap-4 justify-center">
+                {attendance !== true && (
+                  <button
+                    className={buttonClassName}
+                    onClick={() => handleMarkAttended(cell.row.original)}>
+                    Mark as Attended
+                  </button>
+                )}
+                {attendance !== false && (
+                  <button
+                    className={buttonClassName}
+                    onClick={() => handleMarkAbsent(cell.row.original)}>
+                    Mark as Absent
+                  </button>
+                )}
+                {attendance !== null && (
+                  <button
+                    className={buttonClassName}
+                    onClick={() => handleUnmark(cell.row.original)}>
+                    Unmark
+                  </button>
+                )}
+              </div>
+            )
+          },
+          header: "",
+        }
+      ) as ColumnDef<AdminRegistrationRowData>
+    );
+  }
+  
+  return baseCols;
 };

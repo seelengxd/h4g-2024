@@ -6,14 +6,15 @@ import {
   SelectInputData,
   Submission,
 } from "../types/forms/forms";
+import { SubmissionData } from "../types/enrollmentForms/submissions";
 
 export const FormColumns = (
-  columnHelper: ColumnHelper<Submission>,
+  columnHelper: ColumnHelper<SubmissionData>,
   formData: FormData
-): Array<ColumnDef<Submission>> => {
+): Array<ColumnDef<SubmissionData>> => {
   const accessors = formData.components.map((component, index) =>
     columnHelper.accessor(
-      (submission: Submission) => {
+      (submission: SubmissionData) => {
         console.log({ index, component });
         const answer = submission.answer.filter(
           (ans) => ans.questionId === component.id
@@ -61,6 +62,11 @@ export const FormColumns = (
       cell: (id): number => id.getValue()!,
       header: "ID",
     }),
+    // Todo: if there is a admin page to volunteers, link it here.
+    columnHelper.accessor((submission) => submission.user.fullName, {
+      cell: (name) => name.getValue()!,
+      header: "Volunteer",
+    }),
     ...accessors,
-  ] as Array<ColumnDef<Submission>>;
+  ] as Array<ColumnDef<SubmissionData>>;
 };

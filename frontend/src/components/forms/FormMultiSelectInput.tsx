@@ -14,7 +14,7 @@ const FormMultiSelectInput: React.FC<FormMultiSelectInputProps> = ({
   label,
   value,
   options,
-  onChange
+  onChange,
 }: FormMultiSelectInputProps) => {
   return (
     <div>
@@ -23,7 +23,7 @@ const FormMultiSelectInput: React.FC<FormMultiSelectInputProps> = ({
           <p className="text-base">{label}</p>
         </Label>
       )}
-      
+
       {options.map((option) => (
         <div className="flex items-center mb-4">
           <input
@@ -39,7 +39,7 @@ const FormMultiSelectInput: React.FC<FormMultiSelectInputProps> = ({
               }
             }}
           />
-          
+
           <label
             htmlFor={option.value + option.id}
             className="text-sm font-medium text-gray-900 ms-2"

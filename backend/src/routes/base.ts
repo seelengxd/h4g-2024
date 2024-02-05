@@ -5,14 +5,18 @@ import activitiesRouter from "./activities";
 import enrollmentFormsRouter from "./enrollmentForms";
 import submissionsRouter from "./submissions";
 import interestsRouter from "./interests";
+import profileRouter from "./profile";
+import skillsRouter from "./skills";
 
 const apiRouter = Router();
 
 apiRouter.use("/auth", authRouter);
+apiRouter.use("/profile", profileRouter);
 apiRouter.use("/organisations", organisationsRouter);
 apiRouter.use("/activities", activitiesRouter);
 apiRouter.use("/enrollment-forms", enrollmentFormsRouter);
 apiRouter.use("/submissions", submissionsRouter);
 apiRouter.use("/interests", interestsRouter);
+apiRouter.use("/skills", skillsRouter)
 
 export default apiRouter;

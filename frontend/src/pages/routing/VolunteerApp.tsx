@@ -14,6 +14,9 @@ import CardContainer from "../../components/dashboard/CardContainer";
 import VolunteerDashboard from "../dashboard/VolunteerDashboard";
 import VolunteeringOpportunities from "../activities/VolunteeringOpportunities";
 import VolunteerActivity from "../activities/VolunteerActivity";
+import Profile from "../profile/ViewProfile";
+import ViewProfile from "../profile/ViewProfile";
+
 
 export const Error404 = (
   <Error errorCode={404} desc="Oh no! Are you sure this page exists?" />
@@ -27,6 +30,8 @@ const VolunteerApp: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<VolunteerDashboard />} />
+
+      <Route path="/profile" element={<ViewProfile />} />
 
       {/* Organisation Routes */}
       <Route path="/organisations" element={<Organisations />} />

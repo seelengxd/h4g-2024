@@ -60,9 +60,9 @@ const ViewProfile: React.FC = () => {
   //set initial values
   const initialValues = {
     fullName: user?.fullName || "",
-    prefName: user?.preferredName || "",
+    prefName: user?.preferredName || "", 
     email: user?.email || "",
-    dob: profile?.dob || null,
+    dob: profile?.dob ? new Date(profile?.dob): null,
     description: profile?.description || "",
     interests: selectedInterests || [],
     skills: selectedSkills || [],

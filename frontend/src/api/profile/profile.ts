@@ -15,6 +15,11 @@ class ProfilesAPI {
     public async updateProfile(data: PostData): Promise<Number> {
         const form = new FormData();
 
+        console.log("dob"+ data.dob);
+        console.log("dob" + typeof data.dob)
+        form.append("fullName", data.fullName);
+        form.append("preferredName", data.prefName);
+        form.append("email", data.email);
         form.append("dob", data.dob?.toISOString() || "");
         form.append("description", data.description || "");
         form.append("imageUrl", data.imageUrl || "");

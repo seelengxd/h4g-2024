@@ -58,17 +58,14 @@ const VolunteerEnroll: React.FC = () => {
         .min(1, "You must pick at least one session."),
     }),
     onSubmit: async (values) => {
-      Promise.all([
-        registrationsAPI.createRegistration(values),
-        ...(secondState
-          ? [
-              submissionsAPI.createSubmission({
-                answer: answers,
-                enrollmentFormId: activity!.enrollmentForm.id!,
-              }),
-            ]
-          : []),
-      ]).finally(() => navigate("/activities/" + activity?.id.toString()));
+      const registrations = await registrationsAPI.createRegistration(values);
+      if (secondState) {
+        const submissions = await submissionsAPI.createSubmission({
+          answer: answers,
+          enrollmentFormId: activity!.enrollmentForm.id!,
+        });
+      }
+      navigate("/activities/" + activity?.id.toString());
     },
   });
 
@@ -249,17 +246,14 @@ const VolunteerEnroll: React.FC = () => {
                       id: session.id,
                       value:
                         format(
-                          new Date(activity.sessions[0]!.start),
+                          new Date(session!.start),
                           "EEEE d MMMM, hh:mma-"
                         ) +
-                        (new Date(activity.sessions[0]!.start).getDay() ===
-                        new Date(activity.sessions[0]!.end).getDay()
-                          ? format(
-                              new Date(activity.sessions[0]!.end),
-                              "hh:mma"
-                            )
+                        (new Date(session!.start).getDay() ===
+                        new Date(session!.end).getDay()
+                          ? format(new Date(session!.end), "hh:mma")
                           : format(
-                              new Date(activity.sessions[0]!.end),
+                              new Date(session!.end),
                               "EEEE d MMM, hh:mma"
                             )),
                     }))}

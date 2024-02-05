@@ -15,17 +15,20 @@ class ProfilesAPI {
     public async updateProfile(data: PostData): Promise<Number> {
         const form = new FormData();
 
-        console.log("dob"+ data.dob);
-        console.log("dob" + typeof data.dob)
+        //console.log("dob"+ data.dob);
+        //console.log("dob" + typeof data.dob)
         form.append("fullName", data.fullName);
         form.append("preferredName", data.prefName);
         form.append("email", data.email);
         form.append("dob", data.dob?.toISOString() || "");
         form.append("description", data.description || "");
         form.append("imageUrl", data.imageUrl || "");
+        if (data.image) {
+            form.append("image", data.image as Blob);
+        }
 
-        console.log("interests in api ==== ", data.interests)
-        console.log("skills in api ==== ", data.skills)
+        //console.log("interests in api ==== ", data.interests)
+        //console.log("skills in api ==== ", data.skills)
 
         data.interests.forEach((interest) => form.append('interests[]', interest.toString()));
         data.skills.forEach((skill) => form.append('skills[]', skill.toString()));
@@ -39,14 +42,13 @@ class ProfilesAPI {
         // form.append("sunday", data.sunday.toString());
 
         const response = await client.put(`${this.getProfilesUrl()}`, form);
-        console.log(response)
+        //console.log(response)
 
         return response.data.id;
     }
 
-    //does not delete user, only clears profile info
+    //future
     public async deleteProfile() {
-        //await client.delete();
     }
 
 }

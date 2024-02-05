@@ -8,12 +8,13 @@ import { useNavigate } from "react-router-dom";
 import { object, string } from "yup";
 import Button from "../../components/buttons/Button";
 import InputStatic from "../../components/forms/InputStatic";
-import SearchBar from "../../components/searchBar/searchBar";
 import ReactSelect from "react-select";
 import { Skill } from "../../types/skills/skills";
 import { Interest } from "../../types/interests/interests";
 import skillsApi from "../../api/skills/skills";
 import interestApi from "../../api/interests/interests";
+import ImageUploader from "../../components/forms/ImageUploader";
+import FormControl from "../../components/forms/FormControl";
 
 //todo add gender and salutation in profile, current db does not have
 
@@ -22,9 +23,10 @@ const ViewProfile: React.FC = () => {
   const [profile, setProfile] = useState<Profile>();
   const [skills, setSkills] = useState<Skill[]>([]);
   const [interests, setInterests] = useState<Interest[]>([]);
+  const [imageDisplayUrl, setImageDisplayUrl] = useState("");
 
-  // setFieldValue("skills", [1, 2, 3] <-- your array of ids)
-  //  (options: [{label: "skill": value: id}])
+
+  //skills
   useEffect(() => {
     skillsApi.getAllSkills().then((skill) => setSkills(skill));
   }, []);
@@ -43,8 +45,6 @@ const ViewProfile: React.FC = () => {
     value: interest.id,
   }));
 
-  //console.log({allInterests})
-
   const selectedInterests = profile?.interests.map((interest: Interest) => interest.id);
   const selectedSkills = profile?.skills.map((skill: Skill) => skill.id);
 
@@ -60,21 +60,26 @@ const ViewProfile: React.FC = () => {
   //set initial values
   const initialValues = {
     fullName: user?.fullName || "",
-    prefName: user?.preferredName || "", 
+    prefName: user?.preferredName || "",
     email: user?.email || "",
-    dob: profile?.dob ? new Date(profile?.dob): null,
+    dob: profile?.dob ? new Date(profile?.dob) : null,
     description: profile?.description || "",
     interests: selectedInterests || [],
     skills: selectedSkills || [],
     imageUrl: profile?.imageUrl || "",
+    image: undefined,
     //ui has no section for availability yet, not dealing with mon-sun
   };
 
-  //console.log("here is interest ", initialValues.interests);
+  //profile image
+  useEffect(() => {
+    const fullUrl =
+      process.env.REACT_APP_BACKEND_URL + "/" + initialValues.imageUrl;
+    setImageDisplayUrl(fullUrl);
+  }, [initialValues.imageUrl]);
 
   const handleValues = async (values: PostData) => {
     await profilesAPI.updateProfile(values);
-    //todo: handle updating user values
   };
 
   const navigate = useNavigate();
@@ -82,7 +87,8 @@ const ViewProfile: React.FC = () => {
     initialValues: initialValues,
     validationSchema: object({
       fullName: string().trim().required("Name cannot be empty."),
-      //todo add more
+      prefName: string().trim().required("Preferred name cannot be empty."),
+      email: string().trim().required("Email cannot be empty."),
     }),
     onSubmit: async (values) => {
       handleValues(values).then(() => navigate(`/profile`));
@@ -98,31 +104,36 @@ const ViewProfile: React.FC = () => {
     handleBlur,
     handleSubmit,
     setFieldValue,
-    // skills: []
-    // setFieldValue("skills", [])
   } = formik;
-
-  //console.log({ values });
 
   return (
     <div className="bg-primary-100">
       <div className="flex h-screen m1 pl-20 py-20">
-        <div className="flex-1 pr-20">
+        <div className="flex-1 flex flex-col pr-20">
           <h1 className="text-2xl font-bold pb-2">My Profile</h1>
-          {initialValues.imageUrl ? (
-            <img
-              className="w-20 h-20 rounded-full p-2 bg-primary-200"
-              src={`${process.env.REACT_APP_BACKEND_URL!}/${
-                initialValues.imageUrl
-              }`}
-            />
-          ) : (
-            <img
-              className="w-20 h-20 rounded-full p-2"
-              src={`${process.env
-                .REACT_APP_BACKEND_URL!}/uploads/user_icons/icon_4.png`}
-            />
-          )}
+          <div className="w-24 h-24 rounded-full overflow-hidden flex justify-center items-center">
+            <FormControl onBlur={handleBlur}>
+              <div className="scale-150 w-40 flex justify-center items-center hover:scale-50">
+              <ImageUploader
+                name="image"
+                type="file"
+                fileConstraintLabel="Upload an image file"
+                imgDisplayUrl={imageDisplayUrl}
+                onChange={(event) => {
+                  const reader = new FileReader();
+                  let file = (
+                    event.currentTarget as unknown as { files: File[] }
+                  ).files[0];
+                  reader.onloadend = () => {
+                    setImageDisplayUrl(reader.result as string);
+                  };
+                  reader.readAsDataURL(file);
+                  setFieldValue("image", file);
+                }}
+              />
+              </div>
+            </FormControl>
+          </div>
 
           <form
             className="flex flex-col space-y-5 pt-4"
@@ -175,7 +186,10 @@ const ViewProfile: React.FC = () => {
         <div className="flex-1 pr-20">
           <h2 className="pt-10 text-lg font-bold pb-2">Skills</h2>
 
-          <p className="text-sm text-gray-600 pb-3"> Search for your skill sets (e.g. Guitar playing, emceeing, etc.) </p>
+          <p className="text-sm text-gray-600 pb-3">
+            {" "}
+            Search for your skill sets (e.g. Guitar playing, emceeing, etc.){" "}
+          </p>
           <ReactSelect
             options={allSkills}
             value={allSkills?.filter((option) =>
@@ -191,19 +205,22 @@ const ViewProfile: React.FC = () => {
           ></ReactSelect>
 
           <h2 className="pt-10 text-lg font-bold pb-2">Interests</h2>
-          <p className="text-sm text-gray-600 pb-3"
-          >Keywords to describe the kind of event you are interested in, from the type of beneficiaries to the nature/theme of the event.</p>
+          <p className="text-sm text-gray-600 pb-3">
+            Keywords to describe the kind of event you are interested in, from
+            the type of beneficiaries to the nature/theme of the event.
+          </p>
           <ReactSelect
             options={allInterests}
             value={allInterests?.filter((option) =>
               values.interests?.includes(option.value)
             )}
             isMulti
-            onChange={(option) =>
-              {setFieldValue(
+            onChange={(option) => {
+              setFieldValue(
                 "interests",
-                option.map((option) => option.value))}
-            }
+                option.map((option) => option.value)
+              );
+            }}
           ></ReactSelect>
         </div>
       </div>

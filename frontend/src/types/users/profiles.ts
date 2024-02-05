@@ -27,6 +27,7 @@ export interface PostData {
     description?: string | null;
     interests: number[];
     skills: number[];
-    imageUrl?: string | null;
+    imageUrl?: string | null;//todo remove if not needed
+    image?: File;
     //todo: did not include availability yet
   }

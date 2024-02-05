@@ -6,11 +6,6 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Skill } from "../../types/skills/skills";
 
-//todo: display present tags
-//todo: track tags that are selected
-//todo: handle when tag is selected -> add
-
-
 const SearchBar: React.FC<{s:string}> = ({s}) => {
   
   const [interests, setInterests] = useState<Interest[]>([]);

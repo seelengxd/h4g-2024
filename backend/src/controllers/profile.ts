@@ -34,7 +34,7 @@ export const show: RequestHandler[] = [
 const upload = multer({ dest: "./uploads/" });
 
 export const update: RequestHandler[] = [
-    upload.none(),
+    upload.single("image"),
     async (req, res) => {
 
         const result = validationResult(req);
@@ -58,7 +58,6 @@ export const update: RequestHandler[] = [
             return;
         }
 
-
         const {
             //user fields 
             fullName = currUser.fullName,
@@ -68,15 +67,9 @@ export const update: RequestHandler[] = [
             //profile fields
             dob = profile.dob, 
             description=profile.description, 
-            interests = null,//profile.interests.map((interest: Interest) => interest.id), 
+            interests = profile.interests.map((interest: Interest) => interest.id), 
             skills = profile.skills.map((skill: Skill) => skill.id), 
-            imageUrl = profile.imageUrl,
         } = req.body;
-
-        console.log("old interest ", profile.interests.map((interest: Interest) => interest.id))
-        console.log("interest ==>", typeof interests, interests);
-        console.log("skills ==>", typeof skills, skills);
-        console.log("req body", req.body)
 
         //monday, tuesday, wednesday, thursday, friday, saturday, sunday
 
@@ -87,7 +80,7 @@ export const update: RequestHandler[] = [
                 ...(description ? {description} : {}),
                 interests: { set: [], connect: interests.map((interestId: string) => ({ id: Number(interestId)})) },
                 skills: { set: [], connect: skills.map((skillId: string) => ({ id: Number(skillId) })) },
-                imageUrl,
+                imageUrl: req.file?.path,
                 //monday, tuesday, wednesday, thursday, friday, saturday, sunday
             },
             include: {
@@ -104,6 +97,7 @@ export const update: RequestHandler[] = [
                 email: email,
             }
         })
+
         res.json({ id: newProfile.id });
     },
 ];

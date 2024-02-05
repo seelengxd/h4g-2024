@@ -1,9 +1,11 @@
 import { SessionData } from "../sessions/sessions";
 import { User } from "../users/users";
 
+export type Attendance = boolean | null;
+
 export interface RegistrationMiniData {
   id: number;
-  attendance: boolean | null;
+  attendance: Attendance;
 }
 
 export interface Registration extends RegistrationMiniData {

@@ -2,13 +2,13 @@ import isWithinInterval from "date-fns/isWithinInterval";
 import { isFuture, isPast } from "date-fns";
 import ActivitySessionGroup from "./ActivitySessionGroup";
 import Tag from "../../components/dataDisplay/Tag";
-import { SessionMiniData } from "../../types/sessions/sessions";
+import { SessionData, SessionMiniData } from "../../types/sessions/sessions";
 import OngoingSessionTag from "../sessions/tags/OngoingSessionTag";
 import UpcomingSessionTag from "../sessions/tags/UpcomingSessionTag";
 import PastSessionTag from "../sessions/tags/PastSessionTag";
 
 interface ActivitySessionsCardProps {
-  sessions: SessionMiniData[];
+  sessions: SessionData[];
   capacity: number;
 }
 
@@ -36,9 +36,24 @@ const ActivitySessionsCard: React.FC<ActivitySessionsCardProps> = ({
 
       {sessions.length === 0 && "No sessions found"}
 
-      <ActivitySessionGroup sessionGroupTitle="Ongoing Session" sessionGroup={ongoingSessions} statusTag={<OngoingSessionTag />} capacity={capacity} />
-      <ActivitySessionGroup sessionGroupTitle="Upcoming Session" sessionGroup={futureSessions} statusTag={<UpcomingSessionTag />} capacity={capacity}/>
-      <ActivitySessionGroup sessionGroupTitle="Past Session" sessionGroup={pastSessions} statusTag={<PastSessionTag />} capacity={capacity} />
+      <ActivitySessionGroup
+        sessionGroupTitle="Ongoing Session"
+        sessionGroup={ongoingSessions}
+        statusTag={<OngoingSessionTag />}
+        capacity={capacity}
+      />
+      <ActivitySessionGroup
+        sessionGroupTitle="Upcoming Session"
+        sessionGroup={futureSessions}
+        statusTag={<UpcomingSessionTag />}
+        capacity={capacity}
+      />
+      <ActivitySessionGroup
+        sessionGroupTitle="Past Session"
+        sessionGroup={pastSessions}
+        statusTag={<PastSessionTag />}
+        capacity={capacity}
+      />
     </div>
   );
 };

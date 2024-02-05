@@ -25,6 +25,7 @@ import submissionsAPI from "../../api/enrollmentForms/submissions";
 import { Answer, AnswerValue } from "../../types/enrollmentForms/submissions";
 import { generateDefaultAnswer } from "../../utils/forms";
 import enrollmentFormsAPI from "../../api/enrollmentForms/enrollmentForms";
+import { Submission } from "../../types/forms/forms";
 
 const VolunteerEnroll: React.FC = () => {
   const { id } = useParams();
@@ -38,7 +39,8 @@ const VolunteerEnroll: React.FC = () => {
   useEffect(() => {
     activitiesAPI.getActivity(parseInt(id!)).then((activity) => {
       setActivity(activity);
-      if (activity.enrollmentForm) {
+      console.log({ activity });
+      if (activity.enrollmentForm?.formSchema.components) {
         setAnswers(
           activity.enrollmentForm.formSchema.components.map((component) =>
             generateDefaultAnswer(component)
@@ -58,17 +60,20 @@ const VolunteerEnroll: React.FC = () => {
         .min(1, "You must pick at least one session."),
     }),
     onSubmit: async (values) => {
-      Promise.all([
-        registrationsAPI.createRegistration(values),
-        ...(secondState
-          ? [
-              submissionsAPI.createSubmission({
-                answer: answers,
-                enrollmentFormId: activity!.enrollmentForm.id!,
-              }),
-            ]
-          : []),
-      ]).finally(() => navigate("/activities/" + activity?.id.toString()));
+      if (secondState) {
+        const submission = await submissionsAPI.createSubmission({
+          answer: answers,
+          enrollmentFormId: activity!.enrollmentForm!.id!,
+        });
+        await registrationsAPI.createRegistration({
+          ...values,
+          submissionId: submission!.id,
+        });
+      } else {
+        await registrationsAPI.createRegistration(values);
+      }
+
+      navigate("/activities/" + activity?.id.toString());
     },
   });
 
@@ -83,6 +88,7 @@ const VolunteerEnroll: React.FC = () => {
   } = formik;
 
   console.log({ errors, ids: values.sessionIds });
+  console.log({ activity });
 
   // Enrollment form logic
 
@@ -94,15 +100,15 @@ const VolunteerEnroll: React.FC = () => {
     setAnswers(newAnswers);
   };
 
-  const handleEnrollmentSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    submissionsAPI
-      .createSubmission({
-        answer: answers,
-        enrollmentFormId: activity?.enrollmentForm.id!,
-      })
-      .then(() => navigate("/activities/" + parseInt(id!)));
-  };
+  //   const handleEnrollmentSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //     e.preventDefault();
+  //     submissionsAPI
+  //       .createSubmission({
+  //         answer: answers,
+  //         enrollmentFormId: activity?.enrollmentForm.id!,
+  //       })
+  //       .then(() => navigate("/activities/" + parseInt(id!)));
+  //   };
 
   return activity ? (
     <div className="items-center justify-between max-h-screen p-6 mx-auto mt-8 max-w-7xl lg:px-8">
@@ -185,7 +191,7 @@ const VolunteerEnroll: React.FC = () => {
           >
             {secondState ? (
               <div className="flex flex-col space-y-8">
-                {activity.enrollmentForm.formSchema?.components.map(
+                {activity.enrollmentForm!.formSchema.components.map(
                   (component, index) => {
                     switch (component.type) {
                       case "text":
@@ -249,17 +255,14 @@ const VolunteerEnroll: React.FC = () => {
                       id: session.id,
                       value:
                         format(
-                          new Date(activity.sessions[0]!.start),
+                          new Date(session!.start),
                           "EEEE d MMMM, hh:mma-"
                         ) +
-                        (new Date(activity.sessions[0]!.start).getDay() ===
-                        new Date(activity.sessions[0]!.end).getDay()
-                          ? format(
-                              new Date(activity.sessions[0]!.end),
-                              "hh:mma"
-                            )
+                        (new Date(session!.start).getDay() ===
+                        new Date(session!.end).getDay()
+                          ? format(new Date(session!.end), "hh:mma")
                           : format(
-                              new Date(activity.sessions[0]!.end),
+                              new Date(session!.end),
                               "EEEE d MMM, hh:mma"
                             )),
                     }))}

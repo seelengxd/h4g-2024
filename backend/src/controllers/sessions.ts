@@ -17,17 +17,22 @@ export const show: RequestHandler[] = [
       include: {
         activity: {
           include: {
-            organisation:{
+            enrollmentForm: true,
+            organisation: {
               select: {
                 name: true,
-              }
-            }
-          }
+              },
+            },
+          },
         },
         registrations: {
           include: {
             user: true,
-          }
+            submission: { include: { user: true } },
+            feedback: {
+              include: { registration: { include: { session: true } } },
+            },
+          },
         },
       },
     });
@@ -41,10 +46,10 @@ export const show: RequestHandler[] = [
       ...session,
       activity: {
         ...session.activity,
-        organisationName: session.activity.organisation.name
-      }
+        organisationName: session.activity.organisation.name,
+      },
     };
-  
+
     return res.json({ data: sessionEntity });
   },
 ];

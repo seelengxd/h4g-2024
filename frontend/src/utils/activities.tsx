@@ -16,7 +16,7 @@ export interface ActivityRowData extends ActivityMiniData {
 }
 
 export const ActivityTableColumns = (
-  columnHelper: ColumnHelper<ActivityRowData>,
+  columnHelper: ColumnHelper<ActivityRowData>
 ): Array<ColumnDef<ActivityRowData>> => {
   return [
     columnHelper.accessor("id", {

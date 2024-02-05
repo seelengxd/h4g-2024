@@ -1,40 +1,46 @@
-import { ActivityType, PrismaClient, Role, Prisma, FeedbackStatus } from "@prisma/client";
+import {
+  ActivityType,
+  PrismaClient,
+  Role,
+  Prisma,
+  FeedbackStatus,
+} from "@prisma/client";
 import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 const skillsToAdd = [
-  { name: 'Art and Craft' },
-  { name: 'Story Telling' },
-  { name: 'Painting' },
-  { name: 'Pottery' },
-  { name: 'Knitting' },
-  { name: 'Calligraphy' },
-  { name: 'Cooking' },
-  { name: 'Cleaning' },
-  { name: 'Dance' },
-  { name: 'Sports' },
-  { name: 'Math' },
-  { name: 'Creative Writing' },
-  { name: 'Drawing' },
-  { name: 'Sculpture' },
-  { name: 'Musician' },
-  { name: 'Performing Arts' },
-  { name: 'Reading Comprehension' },
-  { name: 'Language Teaching' },
-  { name: 'Sewing' },
-  { name: 'Photography' },
+  { name: "Art and Craft" },
+  { name: "Story Telling" },
+  { name: "Painting" },
+  { name: "Pottery" },
+  { name: "Knitting" },
+  { name: "Calligraphy" },
+  { name: "Cooking" },
+  { name: "Cleaning" },
+  { name: "Dance" },
+  { name: "Sports" },
+  { name: "Math" },
+  { name: "Creative Writing" },
+  { name: "Drawing" },
+  { name: "Sculpture" },
+  { name: "Musician" },
+  { name: "Performing Arts" },
+  { name: "Reading Comprehension" },
+  { name: "Language Teaching" },
+  { name: "Sewing" },
+  { name: "Photography" },
 ];
 const interestsToAdd = [
-  { name: 'Elderly Care' },
-  { name: 'Childcare' },
-  { name: 'Environmental Cleanup' },
-  { name: 'Community Gardening' },
-  { name: 'Meals on Wheels' },
-  { name: 'Animal Shelter Volunteer' },
-  { name: 'Homeless Shelter Support' },
+  { name: "Elderly Care" },
+  { name: "Childcare" },
+  { name: "Environmental Cleanup" },
+  { name: "Community Gardening" },
+  { name: "Meals on Wheels" },
+  { name: "Animal Shelter Volunteer" },
+  { name: "Homeless Shelter Support" },
 ];
-const placeholder_text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In at sapien arcu. Vivamus eget placerat dui, a luctus elit. Maecenas bibendum erat vel laoreet ultricies. Sed sed turpis sed lacus luctus iaculis. Fusce tellus dolor, tempor ac est quis, condimentum porta tortor. Quisque in pellentesque ipsum, dignissim accumsan dolor.'
-
+const placeholder_text =
+  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In at sapien arcu. Vivamus eget placerat dui, a luctus elit. Maecenas bibendum erat vel laoreet ultricies. Sed sed turpis sed lacus luctus iaculis. Fusce tellus dolor, tempor ac est quis, condimentum porta tortor. Quisque in pellentesque ipsum, dignissim accumsan dolor.";
 
 async function main() {
   try {
@@ -54,18 +60,17 @@ async function main() {
     await prisma.blog.deleteMany({});
     await prisma.user.deleteMany({});
 
-    // add skills 
+    // add skills
     const skills = await prisma.skill.createMany({
       data: skillsToAdd,
-      skipDuplicates: true
+      skipDuplicates: true,
     });
 
     // add interests
     const interest = await prisma.interest.createMany({
       data: interestsToAdd,
-      skipDuplicates: true
+      skipDuplicates: true,
     });
-
 
     // user 1
     const user1 = await prisma.user.create({
@@ -76,40 +81,40 @@ async function main() {
         preferredName: "user1",
         profile: {
           create: {
-            dob: '2022-01-15T12:30:00.000Z',
-            description: 'user 1 description',
+            dob: "2022-01-15T12:30:00.000Z",
+            description: "user 1 description",
             interests: {
               connect: [
-                { name: 'Elderly Care' },
-                { name: 'Environmental Cleanup' },
-                { name: 'Community Gardening' },
-              ]
+                { name: "Elderly Care" },
+                { name: "Environmental Cleanup" },
+                { name: "Community Gardening" },
+              ],
             },
             skills: {
               connect: [
-                { name: 'Story Telling' },
-                { name: 'Dance' },
-                { name: 'Sports' },
-                { name: 'Math' }
-              ]
+                { name: "Story Telling" },
+                { name: "Dance" },
+                { name: "Sports" },
+                { name: "Math" },
+              ],
             },
             saturday: true,
             sunday: true,
-            imageUrl: 'uploads/user_icons/icon_1.png'
-          }
+            imageUrl: "uploads/user_icons/icon_1.png",
+          },
         },
         blogs: {
           create: [
             {
-              title: 'user 1 blog 1',
+              title: "user 1 blog 1",
               description: placeholder_text,
               tags: {
-                connect: [{ name: 'Elderly Care' }]
+                connect: [{ name: "Elderly Care" }],
               },
-            }
-          ]
-        }
-      }
+            },
+          ],
+        },
+      },
     });
     // user 2
     const user2 = await prisma.user.create({
@@ -120,48 +125,48 @@ async function main() {
         preferredName: "user2",
         profile: {
           create: {
-            dob: '2022-01-15T12:30:00.000Z',
-            description: 'user 2 description',
+            dob: "2022-01-15T12:30:00.000Z",
+            description: "user 2 description",
             interests: {
               connect: [
-                { name: 'Meals on Wheels' },
-                { name: 'Animal Shelter Volunteer' },
-                { name: 'Homeless Shelter Support' }
-              ]
+                { name: "Meals on Wheels" },
+                { name: "Animal Shelter Volunteer" },
+                { name: "Homeless Shelter Support" },
+              ],
             },
             skills: {
               connect: [
-                { name: 'Art and Craft' },
-                { name: 'Story Telling' },
-                { name: 'Painting' },
-                { name: 'Pottery' },
-                { name: 'Knitting' }
-              ]
+                { name: "Art and Craft" },
+                { name: "Story Telling" },
+                { name: "Painting" },
+                { name: "Pottery" },
+                { name: "Knitting" },
+              ],
             },
             monday: true,
             friday: true,
-            imageUrl: 'uploads/user_icons/icon_4.png'
-          }
+            imageUrl: "uploads/user_icons/icon_4.png",
+          },
         },
         blogs: {
           create: [
             {
-              title: 'user 2 blog 1',
+              title: "user 2 blog 1",
               description: placeholder_text,
               tags: {
-                connect: [{ name: 'Meals on Wheels' }]
-              }
+                connect: [{ name: "Meals on Wheels" }],
+              },
             },
             {
-              title: 'user 2 blog 2',
+              title: "user 2 blog 2",
               description: placeholder_text,
               tags: {
-                connect: [{ name: 'Meals on Wheels' }]
-              }
-            }
-          ]
-        }
-      }
+                connect: [{ name: "Meals on Wheels" }],
+              },
+            },
+          ],
+        },
+      },
     });
     // admin
     const admin = await prisma.user.create({
@@ -173,13 +178,12 @@ async function main() {
         preferredName: "admin",
         profile: {
           create: {
-            description: 'admin description',
-            imageUrl: 'uploads/user_icons/icon_3.png'
-          }
-        }
-      }
+            description: "admin description",
+            imageUrl: "uploads/user_icons/icon_3.png",
+          },
+        },
+      },
     });
-
 
     // organisations
     const org1 = await prisma.organisation.create({
@@ -189,7 +193,7 @@ async function main() {
         imageUrl: "uploads/org_placeholder.jpeg",
         websiteUrl: "https://www.worldwildlife.org",
         categories: {
-          connect: [{ name: 'Meals on Wheels' }]
+          connect: [{ name: "Meals on Wheels" }],
         },
         activities: {
           create: [
@@ -209,15 +213,15 @@ async function main() {
                   {
                     start: new Date("2025-06-15T10:30:00"),
                     end: new Date("2025-06-15T14:30:00"),
-                  }
+                  },
                 ],
               },
               images: {
                 create: [
-                  { imageUrl: 'uploads/placeholder-image.png' },
-                  { imageUrl: 'uploads/org_placeholder.jpeg' }
-                ]
-              }
+                  { imageUrl: "uploads/placeholder-image.png" },
+                  { imageUrl: "uploads/org_placeholder.jpeg" },
+                ],
+              },
             },
             {
               name: "Training activity 1",
@@ -231,26 +235,26 @@ async function main() {
                   {
                     start: new Date("2024-06-15T10:30:00"),
                     end: new Date("2025-06-15T14:30:00"),
-                  }
+                  },
                 ],
               },
               images: {
                 create: [
-                  { imageUrl: 'uploads/placeholder-image.png' },
-                  { imageUrl: 'uploads/org_placeholder.jpeg' }
-                ]
-              }
+                  { imageUrl: "uploads/placeholder-image.png" },
+                  { imageUrl: "uploads/org_placeholder.jpeg" },
+                ],
+              },
             },
-          ]
-        }
+          ],
+        },
       },
       include: {
         activities: {
           include: {
             sessions: true,
-          }
-        }
-      }
+          },
+        },
+      },
     });
 
     const org2 = await prisma.organisation.create({
@@ -261,9 +265,9 @@ async function main() {
         websiteUrl: "https://www.worldwildlife.org",
         categories: {
           connect: [
-            { name: 'Environmental Cleanup' },
-            { name: 'Community Gardening' }
-          ]
+            { name: "Environmental Cleanup" },
+            { name: "Community Gardening" },
+          ],
         },
         activities: {
           create: [
@@ -284,10 +288,10 @@ async function main() {
               },
               images: {
                 create: [
-                  { imageUrl: 'uploads/placeholder-image.png' },
-                  { imageUrl: 'uploads/org_placeholder.jpeg' }
-                ]
-              }
+                  { imageUrl: "uploads/placeholder-image.png" },
+                  { imageUrl: "uploads/org_placeholder.jpeg" },
+                ],
+              },
             },
             {
               name: "Workshop activity 1",
@@ -306,21 +310,83 @@ async function main() {
               },
               images: {
                 create: [
-                  { imageUrl: 'uploads/placeholder-image.png' },
-                  { imageUrl: 'uploads/org_placeholder.jpeg' }
-                ]
-              }
-            }
-          ]
-        }
+                  { imageUrl: "uploads/placeholder-image.png" },
+                  { imageUrl: "uploads/org_placeholder.jpeg" },
+                ],
+              },
+            },
+          ],
+        },
       },
       include: {
         activities: {
           include: {
             sessions: true,
-          }
-        }
-      }
+          },
+        },
+      },
+    });
+
+    const sampleForm = {
+      title: "",
+      description: "",
+      components: [
+        {
+          id: 2,
+          type: "text",
+          title: "short",
+        },
+        {
+          id: 1,
+          type: "multiselect",
+          title: "checkboxes",
+          options: [
+            {
+              id: 1,
+              value: "test",
+            },
+            {
+              id: 2,
+              value: "test",
+            },
+          ],
+        },
+        {
+          id: 3,
+          type: "multiline",
+          title: "paragraph",
+        },
+        {
+          id: 4,
+          type: "select",
+          title: "dropdown",
+          options: [
+            {
+              id: 1,
+              value: "test",
+            },
+            {
+              id: 2,
+              value: "test",
+            },
+          ],
+        },
+      ],
+      meta: {
+        nextId: 5,
+      },
+    };
+
+    const enrollmentForm1 = await prisma.enrollmentForm.create({
+      data: { formSchema: sampleForm, activityId: org1.activities[0].id },
+    });
+
+    const enrollmentForm2 = await prisma.enrollmentForm.create({
+      data: { formSchema: sampleForm, activityId: org1.activities[1].id },
+    });
+
+    const enrollmentForm3 = await prisma.enrollmentForm.create({
+      data: { formSchema: sampleForm, activityId: org1.activities[2].id },
     });
 
     // registrations
@@ -334,11 +400,11 @@ async function main() {
           create: {
             userReflection: placeholder_text,
             actualFeedback: placeholder_text,
-            hoursServed: 2,
-            status: FeedbackStatus.Approved
-          }
-        }
-      }
+            minutesServed: 2,
+            status: FeedbackStatus.Approved,
+          },
+        },
+      },
     });
 
     // not yet attended, no feedback
@@ -346,7 +412,7 @@ async function main() {
       data: {
         userId: user1.id,
         sessionId: org2.activities[1].sessions[0].id,
-      }
+      },
     });
 
     // attended and feedback pending approval?
@@ -359,10 +425,10 @@ async function main() {
           create: {
             userReflection: placeholder_text,
             actualFeedback: placeholder_text,
-            hoursServed: 3
-          }
-        }
-      }
+            minutesServed: 3,
+          },
+        },
+      },
     });
 
     console.log("Database seeded successfully.");

@@ -9,6 +9,8 @@ import ViewSessionActionButton from "./ViewSessionActionButtons";
 import SessionMiniViewCard from "./minicard/SessionMiniViewCard";
 import Tabs from "../../components/dataDisplay/Tabs";
 import SessionRegistrations from "./SessionRegistrations";
+import EnrollmentFormTable from "../activities/EnrollmentFormTable";
+import FeedbackTable from "../activities/FeedbackTable";
 
 const ViewSession: React.FC = () => {
   const { id } = useParams();
@@ -33,20 +35,29 @@ const ViewSession: React.FC = () => {
     id: "registrations",
     tabTitle: "Manage Registrations and Attendance",
     page: <SessionRegistrations registrations={session.registrations} />,
-  }
+  };
 
   const enrollmentFormPage = {
     id: "enrollment",
     tabTitle: "Enrollment Form Submissions",
-    page: <SessionRegistrations registrations={session.registrations} />,
-  }
+    page: (
+      <EnrollmentFormTable
+        activity={session.activity}
+        submissions={session.registrations
+          .map((registration) => registration.submission)
+          .filter((submission) => submission !== undefined)
+          // this nonsense is to fix the type
+          .map((submission) => submission!)}
+      />
+    ),
+  };
 
   const feedbackPage = {
     id: "feedback",
     tabTitle: "Session Feedback and Reflections",
-    page: <SessionRegistrations registrations={session.registrations} />,
-  }
-  
+    page: <FeedbackTable registrations={session.registrations} />,
+  };
+
   return (
     <div className="items-center justify-between p-6 mx-auto mt-8 max-w-7xl lg:px-8">
       <ViewSessionActionButton activityId={session.activity.id} />
@@ -58,9 +69,13 @@ const ViewSession: React.FC = () => {
           <SessionMiniViewCard session={session} />
         </div>
       </div>
-      <Tabs tabs={[registrationPage, enrollmentFormPage, feedbackPage]} defaultTabId="registrations" mt={8} />
+      <Tabs
+        tabs={[registrationPage, enrollmentFormPage, feedbackPage]}
+        defaultTabId="registrations"
+        mt={8}
+      />
     </div>
   );
-}
+};
 
 export default ViewSession;

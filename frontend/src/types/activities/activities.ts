@@ -1,6 +1,10 @@
 import { EnrollmentForm } from "../enrollmentForms/enrollmentForms";
 import { Organisation } from "../organisations/organisations";
-import { SessionMiniData, SessionPostData } from "../sessions/sessions";
+import {
+  SessionData,
+  SessionMiniData,
+  SessionPostData,
+} from "../sessions/sessions";
 
 export interface Image {
   id: number;
@@ -17,14 +21,14 @@ export interface ActivityMiniData {
   organisationId: number;
   organisationName: string;
   location: string;
-  sessions: SessionMiniData[];
+  sessions: SessionData[];
   images: Image[];
   capacity: number;
   loadedImages?: File[];
 }
 
 export interface ActivityData extends ActivityMiniData {
-  enrollmentForm: EnrollmentForm;
+  enrollmentForm?: EnrollmentForm;
   organisation: Organisation;
 }
 

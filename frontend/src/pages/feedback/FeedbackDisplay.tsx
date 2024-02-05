@@ -212,6 +212,8 @@ const FeedbackDisplay: React.FC<Props> = ({ feedback, isAdmin = false }) => {
             {feedback.actualFeedback}
             <p className="mt-2">Time Served</p>
             {hours} h {minutes} minutes
+            <p className="mt-2">Status</p>
+            {feedback.status}
           </>
         )}
       </Modal>

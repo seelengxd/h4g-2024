@@ -40,7 +40,7 @@ const VolunteerEnroll: React.FC = () => {
     activitiesAPI.getActivity(parseInt(id!)).then((activity) => {
       setActivity(activity);
       console.log({ activity });
-      if (activity.enrollmentForm.formSchema.components) {
+      if (activity.enrollmentForm?.formSchema.components) {
         setAnswers(
           activity.enrollmentForm.formSchema.components.map((component) =>
             generateDefaultAnswer(component)
@@ -63,7 +63,7 @@ const VolunteerEnroll: React.FC = () => {
       if (secondState) {
         const submission = await submissionsAPI.createSubmission({
           answer: answers,
-          enrollmentFormId: activity!.enrollmentForm.id!,
+          enrollmentFormId: activity!.enrollmentForm!.id!,
         });
         await registrationsAPI.createRegistration({
           ...values,
@@ -90,6 +90,7 @@ const VolunteerEnroll: React.FC = () => {
   } = formik;
 
   console.log({ errors, ids: values.sessionIds });
+  console.log({ activity });
 
   // Enrollment form logic
 
@@ -192,7 +193,7 @@ const VolunteerEnroll: React.FC = () => {
           >
             {secondState ? (
               <div className="flex flex-col space-y-8">
-                {activity.enrollmentForm.formSchema.components.map(
+                {activity.enrollmentForm!.formSchema.components.map(
                   (component, index) => {
                     switch (component.type) {
                       case "text":

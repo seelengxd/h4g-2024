@@ -13,7 +13,7 @@ import Spinner from "../../components/loading/Spinner";
 const VolunteerActivities: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [registrations, setRegistrations] = useState<Registration[]>([]);
-
+  console.log({ registrations });
   const columnHelper = createColumnHelper<RegistrationRowData>();
   const activityColumns: Array<ColumnDef<RegistrationRowData>> =
     RegistrationTableColumns(columnHelper);

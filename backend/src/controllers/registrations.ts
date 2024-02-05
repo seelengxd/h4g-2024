@@ -8,6 +8,7 @@ export const index: RequestHandler = async (req, res) => {
   const registrations = await prisma.registration.findMany({
     where: { userId: (req.user! as User).id },
     include: {
+      feedback: true,
       session: {
         include: {
           activity: {

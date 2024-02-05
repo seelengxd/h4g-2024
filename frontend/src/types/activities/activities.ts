@@ -24,7 +24,7 @@ export interface ActivityMiniData {
 }
 
 export interface ActivityData extends ActivityMiniData {
-  enrollmentForm: EnrollmentForm;
+  enrollmentForm?: EnrollmentForm;
   organisation: Organisation;
 }
 

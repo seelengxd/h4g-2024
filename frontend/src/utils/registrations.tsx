@@ -2,7 +2,6 @@ import { type ColumnDef, type ColumnHelper } from "@tanstack/react-table";
 import { Link } from "react-router-dom";
 
 import IconButton from "../components/buttons/IconButton";
-import { EyeIcon } from "@heroicons/react/24/outline";
 
 import {
   Attendance,
@@ -11,6 +10,9 @@ import {
 } from "../types/registrations/registrations";
 import { format } from "date-fns";
 import { PencilSquareIcon } from "@heroicons/react/20/solid";
+import { EyeIcon } from "@heroicons/react/24/solid";
+import Modal from "../components/containers/Dialog";
+import FeedbackDisplay from "../pages/feedback/FeedbackDisplay";
 
 export const displayAttendance = (attendance: Attendance) => {
   return attendance === null
@@ -67,13 +69,16 @@ export const RegistrationTableColumns = (
       header: "feedback",
       enableSorting: false,
       enableGlobalFilter: false,
-      cell: (cell) => (
-        <div className="flex justify-center space-x-2">
-          <Link to={"/sessions/" + cell.row.original.id + "/feedback/new"}>
-            <PencilSquareIcon className="w-6 h-6 fill-black" />
-          </Link>
-        </div>
-      ),
+      cell: (cell) =>
+        cell.row.original.feedback ? (
+          <FeedbackDisplay feedback={cell.row.original.feedback} />
+        ) : (
+          <div className="flex justify-center space-x-2">
+            <Link to={"/sessions/" + cell.row.original.id + "/feedback/new"}>
+              <PencilSquareIcon className="w-6 h-6 fill-black" />
+            </Link>
+          </div>
+        ),
     }),
   ] as Array<ColumnDef<RegistrationRowData>>;
 };

@@ -25,8 +25,8 @@ export interface PostData {
     email: string;
     dob?: Date | null;
     description?: string | null;
-    interests: Interest[];
-    skills: Skill[];
+    interests: number[];
+    skills: number[];
     imageUrl?: string | null;
     //todo: did not include availability yet
   }

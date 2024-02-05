@@ -19,8 +19,8 @@ class ProfilesAPI {
         form.append("description", data.description || "");
         form.append("imageUrl", data.imageUrl || "");
 
-        data.interests.forEach((interest) => form.append('interest[]', interest.id.toString()));
-        data.skills.forEach((skill) => form.append('interest[]', skill.id.toString()));
+        data.interests.forEach((interest) => form.append('interest[]', interest.toString()));
+        data.skills.forEach((skill) => form.append('interest[]', skill.toString()));
 
         // form.append("monday", data.monday.toString());
         // form.append("tuesday", data.tuesday.toString());

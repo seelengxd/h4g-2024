@@ -152,8 +152,8 @@ enum FeedbackStatus {
 model Feedback {
   id             Int            @id @default(autoincrement())
   userReflection String
-  actualFeedback String
-  hoursServed    Int
+  actualFeedback String?
+  minutesServed  Int?
   status         FeedbackStatus @default(Pending)
 
   registration   Registration? @relation(fields: [registrationId], references: [id])

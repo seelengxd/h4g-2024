@@ -328,54 +328,52 @@ async function main() {
     });
 
     const sampleForm = {
-      formData: {
-        title: "",
-        description: "",
-        components: [
-          {
-            id: 2,
-            type: "text",
-            title: "short",
-          },
-          {
-            id: 1,
-            type: "multiselect",
-            title: "checkboxes",
-            options: [
-              {
-                id: 1,
-                value: "test",
-              },
-              {
-                id: 2,
-                value: "test",
-              },
-            ],
-          },
-          {
-            id: 3,
-            type: "multiline",
-            title: "paragraph",
-          },
-          {
-            id: 4,
-            type: "select",
-            title: "dropdown",
-            options: [
-              {
-                id: 1,
-                value: "test",
-              },
-              {
-                id: 2,
-                value: "test",
-              },
-            ],
-          },
-        ],
-        meta: {
-          nextId: 5,
+      title: "",
+      description: "",
+      components: [
+        {
+          id: 2,
+          type: "text",
+          title: "short",
         },
+        {
+          id: 1,
+          type: "multiselect",
+          title: "checkboxes",
+          options: [
+            {
+              id: 1,
+              value: "test",
+            },
+            {
+              id: 2,
+              value: "test",
+            },
+          ],
+        },
+        {
+          id: 3,
+          type: "multiline",
+          title: "paragraph",
+        },
+        {
+          id: 4,
+          type: "select",
+          title: "dropdown",
+          options: [
+            {
+              id: 1,
+              value: "test",
+            },
+            {
+              id: 2,
+              value: "test",
+            },
+          ],
+        },
+      ],
+      meta: {
+        nextId: 5,
       },
     };
 
@@ -402,11 +400,10 @@ async function main() {
           create: {
             userReflection: placeholder_text,
             actualFeedback: placeholder_text,
-            hoursServed: 2,
+            minutesServed: 2,
             status: FeedbackStatus.Approved,
           },
         },
-        enrollmentFormId: enrollmentForm1.id,
       },
     });
 
@@ -415,7 +412,6 @@ async function main() {
       data: {
         userId: user1.id,
         sessionId: org2.activities[1].sessions[0].id,
-        enrollmentFormId: enrollmentForm2.id,
       },
     });
 
@@ -429,10 +425,9 @@ async function main() {
           create: {
             userReflection: placeholder_text,
             actualFeedback: placeholder_text,
-            hoursServed: 3,
+            minutesServed: 3,
           },
         },
-        enrollmentFormId: enrollmentForm3.id,
       },
     });
 

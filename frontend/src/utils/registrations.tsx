@@ -1,5 +1,8 @@
 import { type ColumnDef, type ColumnHelper } from "@tanstack/react-table";
 import { Link } from "react-router-dom";
+
+import IconButton from "../components/buttons/IconButton";
+
 import {
   Attendance,
   Registration,
@@ -7,6 +10,9 @@ import {
 } from "../types/registrations/registrations";
 import { format } from "date-fns";
 import { PencilSquareIcon } from "@heroicons/react/20/solid";
+import { EyeIcon } from "@heroicons/react/24/solid";
+import Modal from "../components/containers/Dialog";
+import FeedbackDisplay from "../pages/feedback/FeedbackDisplay";
 
 export const displayAttendance = (attendance: Attendance) => {
   return attendance === null
@@ -63,13 +69,16 @@ export const RegistrationTableColumns = (
       header: "feedback",
       enableSorting: false,
       enableGlobalFilter: false,
-      cell: (cell) => (
-        <div className="flex justify-center space-x-2">
-          <Link to={"/activities/" + cell.row.original.id + "/feedback/new"}>
-            <PencilSquareIcon className="w-6 h-6 fill-black" />
-          </Link>
-        </div>
-      ),
+      cell: (cell) =>
+        cell.row.original.feedback ? (
+          <FeedbackDisplay feedback={cell.row.original.feedback} />
+        ) : (
+          <div className="flex justify-center space-x-2">
+            <Link to={"/sessions/" + cell.row.original.id + "/feedback/new"}>
+              <PencilSquareIcon className="w-6 h-6 fill-black" />
+            </Link>
+          </div>
+        ),
     }),
   ] as Array<ColumnDef<RegistrationRowData>>;
 };
@@ -115,7 +124,7 @@ export const AdminRegistrationTableColumns = (
           const buttonClassName =
             "border-2 border-orange-600 text-orange-600 px-4 bg-orange-200 rounded-md hover:bg-orange-300";
           return (
-            <div className="flex gap-4 justify-center">
+            <div className="flex justify-center gap-4">
               {attendance !== true && (
                 <button
                   className={buttonClassName}

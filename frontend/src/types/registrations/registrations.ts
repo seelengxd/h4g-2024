@@ -1,4 +1,5 @@
 import { SubmissionData } from "../enrollmentForms/submissions";
+import { Feedback } from "../feedback/feedback";
 import { SessionData } from "../sessions/sessions";
 import { User } from "../users/users";
 
@@ -11,11 +12,16 @@ export interface RegistrationMiniData {
 
 export interface Registration extends RegistrationMiniData {
   session: SessionData;
+  feedback: Feedback;
 }
 
 export interface UserRegistration extends RegistrationMiniData {
   user: User;
   submission?: SubmissionData;
+}
+
+export interface RegistrationData extends UserRegistration {
+  feedback: Feedback;
 }
 
 export interface RegistrationPostData {

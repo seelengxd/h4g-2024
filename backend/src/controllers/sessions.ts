@@ -29,6 +29,9 @@ export const show: RequestHandler[] = [
           include: {
             user: true,
             submission: { include: { user: true } },
+            feedback: {
+              include: { registration: { include: { session: true } } },
+            },
           },
         },
       },

@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import { body } from "express-validator";
+import { body, param, validationResult } from "express-validator";
 import prisma from "../lib/prisma";
 import { User } from "@prisma/client";
 
@@ -8,6 +8,7 @@ export const index: RequestHandler = async (req, res) => {
   const registrations = await prisma.registration.findMany({
     where: { userId: (req.user! as User).id },
     include: {
+      feedback: true,
       session: {
         include: {
           activity: {
@@ -26,6 +27,52 @@ export const index: RequestHandler = async (req, res) => {
   });
   return res.json({ data: registrations });
 };
+
+export const show: RequestHandler[] = [
+  param("id").isInt().notEmpty(),
+  async (req, res) => {
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+      res.status(400).send({ errors: result.array() });
+      return;
+    }
+    const registration = await prisma.registration.findUnique({
+      where: {
+        id: parseInt(req.params.id!),
+      },
+      include: {
+        feedback: {
+          include: {
+            registration: {
+              include: { session: true },
+            },
+          },
+        },
+        session: {
+          include: {
+            activity: {
+              include: {
+                organisation: {
+                  select: {
+                    id: true,
+                    name: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!registration) {
+      res.sendStatus(404);
+      return;
+    }
+
+    return res.json({ data: registration });
+  },
+];
 
 // Assumptions: User cannot register multiple times.
 // I assume they have not registered for this event at all.

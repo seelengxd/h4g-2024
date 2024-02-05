@@ -10,12 +10,12 @@ import SessionMiniViewCard from "./minicard/SessionMiniViewCard";
 import Tabs from "../../components/dataDisplay/Tabs";
 import SessionRegistrations from "./SessionRegistrations";
 import EnrollmentFormTable from "../activities/EnrollmentFormTable";
+import FeedbackTable from "../activities/FeedbackTable";
 
 const ViewSession: React.FC = () => {
   const { id } = useParams();
   const [session, setSession] = useState<SessionData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  console.log(session);
 
   useEffect(() => {
     if (id) {
@@ -55,7 +55,7 @@ const ViewSession: React.FC = () => {
   const feedbackPage = {
     id: "feedback",
     tabTitle: "Session Feedback and Reflections",
-    page: <SessionRegistrations registrations={session.registrations} />,
+    page: <FeedbackTable registrations={session.registrations} />,
   };
 
   return (

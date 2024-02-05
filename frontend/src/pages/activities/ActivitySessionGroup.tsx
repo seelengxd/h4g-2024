@@ -1,15 +1,20 @@
 import _ from "lodash";
-import { SessionMiniData } from "../../types/sessions/sessions"
+import { SessionData } from "../../types/sessions/sessions";
 import ActivitySessionsCardSessionRow from "./ActivitySessionsCardSessionRow";
 
 interface ActivitySessionGroupProps {
   sessionGroupTitle: string;
-  sessionGroup: SessionMiniData[];
+  sessionGroup: SessionData[];
   statusTag: JSX.Element;
   capacity: number;
 }
 
-const ActivitySessionGroup: React.FC<ActivitySessionGroupProps> = ({ sessionGroupTitle, sessionGroup, statusTag, capacity }: ActivitySessionGroupProps) => {
+const ActivitySessionGroup: React.FC<ActivitySessionGroupProps> = ({
+  sessionGroupTitle,
+  sessionGroup,
+  statusTag,
+  capacity,
+}: ActivitySessionGroupProps) => {
   if (_.isEmpty(sessionGroup)) return <></>;
   const sessionCount = sessionGroup.length;
 
@@ -25,7 +30,8 @@ const ActivitySessionGroup: React.FC<ActivitySessionGroupProps> = ({ sessionGrou
             session={session}
             capacity={capacity}
             statusTag={statusTag}
-          />))}
+          />
+        ))}
       </div>
     </div>
   );

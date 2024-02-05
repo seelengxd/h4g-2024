@@ -15,7 +15,7 @@ interface TabsProps {
 const Tabs: React.FC<TabsProps> = ({ tabs, defaultTabId, mt = 0 }: TabsProps) => {
   const [activeTabId, setActiveTab] = useState(defaultTabId);
   const activeTabClass = "inline-block p-4 text-primary-600 bg-primary-200 rounded-t-lg active";
-  const inactiveTabClass = "inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-100";
+  const inactiveTabClass = "inline-block p-4 rounded-t-lg bg-gray-50 hover:text-gray-600 hover:bg-gray-200";
 
   return (
     <div className={`mt-${mt}`}>

@@ -1,7 +1,7 @@
 export interface User {
   id: number;
   fullName: string;
+  preferredName: string;
   email: string;
-  preferredName: string; //todo double check if this is ok
   role: "USER" | "ADMIN";
 }

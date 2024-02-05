@@ -54,6 +54,7 @@ class ActivitiesAPI {
     if (data.images && data.images.length > 0) {
       Array.from(data.images).forEach((image, index) => {
         form.append(`images`, image as Blob);
+        console.log(image);
       });
     }
 

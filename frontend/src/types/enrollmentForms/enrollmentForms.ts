@@ -1,11 +1,11 @@
 import { FormData } from "../forms/forms";
-import { Submission } from "./submissions";
+import { SubmissionData } from "./submissions";
 
 export interface EnrollmentForm {
   id?: number;
   formSchema: FormData;
   activityId: number;
-  submissions: Submission[];
+  submissions: SubmissionData[];
 }
 
 export interface EnrollmentFormPostData {

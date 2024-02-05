@@ -59,6 +59,7 @@ const Activities: React.FC = () => {
             getColumnCanGlobalFilter={(column: Column<ActivityMiniData>) =>
               column.getCanSort()
             }
+            emptyTableText="No Activities Found"
           />
         </div>
       )}

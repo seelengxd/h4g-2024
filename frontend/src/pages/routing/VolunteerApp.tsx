@@ -4,22 +4,21 @@ import CreateOrganisation from "../organisations/CreateOrganisation";
 import ViewOrganisation from "../organisations/ViewOrganisation";
 import UpdateOrganisation from "../organisations/UpdateOrganisation";
 import Error from "../error/Error";
-import Activities from "../activities/Activities";
-import CreateActivity from "../activities/CreateActivity";
-import UpdateActivity from "../activities/UpdateActivity";
-import ViewActivity from "../activities/ViewActivity";
-import CreateEnrollmentForm from "../activities/CreateEnrollmentForm";
 import ViewEnrollmentForm from "../activities/ViewEnrollmentForm";
-import CardContainer from "../../components/dashboard/CardContainer";
 import VolunteerDashboard from "../dashboard/VolunteerDashboard";
 import VolunteeringOpportunities from "../activities/VolunteeringOpportunities";
 import VolunteerActivity from "../activities/VolunteerActivity";
-import Profile from "../profile/ViewProfile";
+import VolunteerEnroll from "../activities/VolunteerEnroll";
+import VolunteerActivities from "../activities/VolunteerActivities";
 import ViewProfile from "../profile/ViewProfile";
 
 
 export const Error404 = (
-  <Error errorCode={404} desc="Oh no! Are you sure this page exists?" />
+  <Error
+    errorCode={404}
+    desc="Oops! Page not found."
+    subDesc="Sorry, the page you're looking for doesn't exist. If you think something is broken, report a problem."
+  />
 );
 
 const Error403 = (
@@ -40,14 +39,12 @@ const VolunteerApp: React.FC = () => {
       <Route path="/organisations/:id/edit" element={<UpdateOrganisation />} />
 
       {/* Activity Routes */}
-      <Route path="/events" element={<VolunteeringOpportunities />} />
+      <Route path="/activities" element={<VolunteeringOpportunities />} />
       <Route path="/activities/:id" element={<VolunteerActivity />} />
+      <Route path="/activities/:id/enroll" element={<VolunteerEnroll />} />
 
+      <Route path="/your-activities" element={<VolunteerActivities />} />
       {/* Enrollment forms*/}
-      <Route
-        path="/activities/:id/enrollment-forms/new"
-        element={<CreateEnrollmentForm />}
-      />
       <Route
         path="/activities/:id/enrollment-forms/:id"
         element={<ViewEnrollmentForm />}

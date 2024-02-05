@@ -6,14 +6,15 @@ import {
   SelectInputData,
   Submission,
 } from "../types/forms/forms";
+import { SubmissionData } from "../types/enrollmentForms/submissions";
 
 export const FormColumns = (
-  columnHelper: ColumnHelper<Submission>,
+  columnHelper: ColumnHelper<SubmissionData>,
   formData: FormData
-): Array<ColumnDef<Submission>> => {
-  const questionAccessors = formData.components.map((component, index) =>
+): Array<ColumnDef<SubmissionData>> => {
+  const accessors = formData.components.map((component, index) =>
     columnHelper.accessor(
-      (submission: Submission) => {
+      (submission: SubmissionData) => {
         console.log({ index, component });
         const answer = submission.answer.filter(
           (ans) => ans.questionId === component.id
@@ -61,39 +62,11 @@ export const FormColumns = (
       cell: (id): number => id.getValue()!,
       header: "ID",
     }),
-    ...questionAccessors,
-    // columnHelper.accessor("name", {
-    //   cell: (name): string => name.getValue(),
-    //   header: "Name",
-    // }),
-    // columnHelper.accessor("type", {
-    //   cell: (type): ReactNode => {
-    //     // TODO: replace with tag
-    //     return <div>{type.getValue()}</div>;
-    //   },
-    //   header: "type",
-    // }),
-    // columnHelper.accessor("organisation", {
-    //   cell: (organisation): ReactNode => (
-    //     <Link to={"/organisations/" + organisation.getValue().id}>
-    //       <p className="hover:underline hover:text-gray-800">
-    //         {organisation.getValue().name}
-    //       </p>
-    //     </Link>
-    //   ),
-    //   header: "Organisation",
-    // }),
-    // columnHelper.accessor("action", {
-    //   header: "",
-    //   enableSorting: false,
-    //   enableGlobalFilter: false,
-    //   cell: (cell) => (
-    //     <div className="flex space-x-2">
-    //       <Link to={"/activities/" + cell.row.original.id}>
-    //         <IconButton icon={<EyeIcon className="w-4 h-4" />} />
-    //       </Link>
-    //     </div>
-    //   ),
-    // }),
-  ] as Array<ColumnDef<Submission>>;
+    // Todo: if there is a admin page to volunteers, link it here.
+    columnHelper.accessor((submission) => submission.user.fullName, {
+      cell: (name) => name.getValue()!,
+      header: "Volunteer",
+    }),
+    ...accessors,
+  ] as Array<ColumnDef<SubmissionData>>;
 };

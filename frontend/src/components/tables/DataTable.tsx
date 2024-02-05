@@ -34,6 +34,7 @@ interface DataTableProps<T extends object> {
   isPaginated?: boolean;
   searchText?: string;
   title?: string;
+  emptyTableText?: string;
 }
 
 const DataTable = <T extends object>({
@@ -45,6 +46,7 @@ const DataTable = <T extends object>({
   isPaginated = true,
   searchText = "Search activity list...",
   title = "",
+  emptyTableText = "",
 }: DataTableProps<T>): JSX.Element => {
   const [sortBy, setSortBy] = useState<SortingState>([]);
   const table = useReactTable<T>({
@@ -65,7 +67,7 @@ const DataTable = <T extends object>({
   });
 
   return (
-    <>
+    <div>
       <div className="flex items-center justify-between mt-6 mb-6">
         {title && <p className="p-0 m-0 text-2xl font-bold">{title}</p>}
         <div className="flex items-end">
@@ -108,7 +110,7 @@ const DataTable = <T extends object>({
             {table.getPrePaginationRowModel().rows.length === 0 && (
               <tr className="border-b odd:bg-white even:bg-gray-50">
                 <td className="py-8 text-center" colSpan={columns.length}>
-                  <p color="text-gray-500">No activities found</p>
+                  <p color="text-gray-500">{emptyTableText}</p>
                 </td>
               </tr>
             )}
@@ -116,7 +118,7 @@ const DataTable = <T extends object>({
         </table>
         {isPaginated && <DataTablePagination table={table} />}
       </div>
-    </>
+    </div>
   );
 };
 

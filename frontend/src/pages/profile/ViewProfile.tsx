@@ -43,7 +43,7 @@ const ViewProfile: React.FC = () => {
     value: interest.id,
   }));
 
-  console.log({allInterests})
+  //console.log({allInterests})
 
   const selectedInterests = profile?.interests.map((interest: Interest) => interest.id);
   const selectedSkills = profile?.skills.map((skill: Skill) => skill.id);
@@ -70,7 +70,7 @@ const ViewProfile: React.FC = () => {
     //ui has no section for availability yet, not dealing with mon-sun
   };
 
-  console.log("here is interest"+ initialValues.interests);
+  //console.log("here is interest ", initialValues.interests);
 
   const handleValues = async (values: PostData) => {
     await profilesAPI.updateProfile(values);
@@ -102,7 +102,7 @@ const ViewProfile: React.FC = () => {
     // setFieldValue("skills", [])
   } = formik;
 
-  console.log({ values });
+  //console.log({ values });
 
   return (
     <div className="bg-primary-100">
@@ -175,6 +175,7 @@ const ViewProfile: React.FC = () => {
         <div className="flex-1 pr-20">
           <h2 className="pt-10 text-lg font-bold pb-2">Skills</h2>
 
+          <p className="text-sm text-gray-600 pb-3"> Search for your skill sets (e.g. Guitar playing, emceeing, etc.) </p>
           <ReactSelect
             options={allSkills}
             value={allSkills?.filter((option) =>
@@ -190,6 +191,8 @@ const ViewProfile: React.FC = () => {
           ></ReactSelect>
 
           <h2 className="pt-10 text-lg font-bold pb-2">Interests</h2>
+          <p className="text-sm text-gray-600 pb-3"
+          >Keywords to describe the kind of event you are interested in, from the type of beneficiaries to the nature/theme of the event.</p>
           <ReactSelect
             options={allInterests}
             value={allInterests?.filter((option) =>

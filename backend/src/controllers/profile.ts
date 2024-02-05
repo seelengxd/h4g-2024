@@ -58,7 +58,6 @@ export const update: RequestHandler[] = [
             return;
         }
 
-        console.log("this", req.body);
 
         const {
             //user fields 
@@ -69,15 +68,15 @@ export const update: RequestHandler[] = [
             //profile fields
             dob = profile.dob, 
             description=profile.description, 
-            interests = profile.interests, 
-            skills = profile.skills, 
+            interests = null,//profile.interests.map((interest: Interest) => interest.id), 
+            skills = profile.skills.map((skill: Skill) => skill.id), 
             imageUrl = profile.imageUrl,
         } = req.body;
 
-        //console.log({prefName})
-
-
-        //console.log("hi"+ JSON.stringify(description))
+        console.log("old interest ", profile.interests.map((interest: Interest) => interest.id))
+        console.log("interest ==>", typeof interests, interests);
+        console.log("skills ==>", typeof skills, skills);
+        console.log("req body", req.body)
 
         //monday, tuesday, wednesday, thursday, friday, saturday, sunday
 
@@ -86,12 +85,16 @@ export const update: RequestHandler[] = [
             data: {
                 ...(dob? {dob} : {}),
                 ...(description ? {description} : {}),
-                interests: { connect: interests.map((interestId: Interest) => ({ id: interestId.id })) },
-                skills: { connect: skills.map((skillId: Skill) => ({ id: skillId.id })) },
+                interests: { set: [], connect: interests.map((interestId: string) => ({ id: Number(interestId)})) },
+                skills: { set: [], connect: skills.map((skillId: string) => ({ id: Number(skillId) })) },
                 imageUrl,
                 //monday, tuesday, wednesday, thursday, friday, saturday, sunday
-            }
+            },
+            include: {
+                skills: true,
+                interests: true }
         });
+
 
         const newUser = await prisma.user.update({
             where: {id: Number((req.user as User).id) },
@@ -101,8 +104,6 @@ export const update: RequestHandler[] = [
                 email: email,
             }
         })
-        //console.log('db updated');
-
         res.json({ id: newProfile.id });
     },
 ];

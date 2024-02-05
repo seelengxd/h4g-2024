@@ -69,8 +69,6 @@ const VolunteerEnroll: React.FC = () => {
           ...values,
           submissionId: submission!.id,
         });
-        // submissionid undefined
-        console.log({ ...values, submissionId: submission!.id });
       } else {
         await registrationsAPI.createRegistration(values);
       }

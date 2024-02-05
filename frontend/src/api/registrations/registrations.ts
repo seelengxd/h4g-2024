@@ -21,7 +21,6 @@ class RegistrationsAPI {
   }
 
   public async createRegistration(data: RegistrationPostData) {
-    console.log(data);
     return await client.post(`${this.getRegistrationsUrl()}`, data);
   }
 

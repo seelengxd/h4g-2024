@@ -6,6 +6,7 @@ interface Props extends PropsWithChildren {
   buttonDisplay: string;
   isOpen: boolean;
   onClose: () => void;
+  hideButton?: boolean;
 }
 
 const Modal: React.FC<Props> = ({
@@ -14,6 +15,7 @@ const Modal: React.FC<Props> = ({
   buttonDisplay,
   isOpen,
   onClose,
+  hideButton = false,
 }) => {
   return (
     <>
@@ -67,15 +69,17 @@ const Modal: React.FC<Props> = ({
                   </div> */}
                   {children}
 
-                  <div className="mt-4">
-                    <button
-                      type="button"
-                      className="inline-flex justify-center px-4 py-2 text-sm font-medium border border-transparent rounded-md bg-primary-100 text-primary-900 hover:bg-primary-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
-                      onClick={onClose}
-                    >
-                      {buttonDisplay}
-                    </button>
-                  </div>
+                  {!hideButton && (
+                    <div className="mt-4">
+                      <button
+                        type="button"
+                        className="inline-flex justify-center px-4 py-2 text-sm font-medium border border-transparent rounded-md bg-primary-100 text-primary-900 hover:bg-primary-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2"
+                        onClick={onClose}
+                      >
+                        {buttonDisplay}
+                      </button>
+                    </div>
+                  )}
                 </Dialog.Panel>
               </Transition.Child>
             </div>

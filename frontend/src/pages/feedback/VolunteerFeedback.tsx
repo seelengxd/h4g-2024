@@ -49,46 +49,48 @@ const VolunteerFeedback: React.FC = () => {
   const formik = useFormik({
     initialValues: {
       userReflection: "",
-      actualFeedback: "",
-      minutesServed: registration
-        ? differenceInMinutes(
-            registration?.session.end,
-            registration?.session.start
-          )
-        : 0,
+      //   actualFeedback: "",
+      //   minutesServed: registration
+      //     ? differenceInMinutes(
+      //         registration?.session.end,
+      //         registration?.session.start
+      //       )
+      //     : 0,
     } as Feedback,
     validationSchema: object({
       userReflection: string().required("User reflection cannot be empty."),
-      actualFeedback: string().required("Actual feedback cannot be empty."),
-      minutesServed: number()
-        .min(0)
-        .max(
-          registration
-            ? differenceInMinutes(
-                registration?.session.end,
-                registration?.session.start
-              )
-            : 0,
-          registration
-            ? `Time served cannot be more than ${Math.floor(
-                differenceInMinutes(
-                  registration?.session.end,
-                  registration?.session.start
-                ) / 60
-              )}h ${
-                differenceInMinutes(
-                  registration?.session.end,
-                  registration?.session.start
-                ) % 60
-              }mins for this session.`
-            : ""
-        ),
+      //   actualFeedback: string().required("Actual feedback cannot be empty."),
+      //   minutesServed: number()
+      //     .min(0)
+      //     .max(
+      //       registration
+      //         ? differenceInMinutes(
+      //             registration?.session.end,
+      //             registration?.session.start
+      //           )
+      //         : 0,
+      //       registration
+      //         ? `Time served cannot be more than ${Math.floor(
+      //             differenceInMinutes(
+      //               registration?.session.end,
+      //               registration?.session.start
+      //             ) / 60
+      //           )}h ${
+      //             differenceInMinutes(
+      //               registration?.session.end,
+      //               registration?.session.start
+      //             ) % 60
+      //           }mins for this session.`
+      //         : ""
+      //     ),
     }),
     onSubmit: async (values) => {
       feedbackAPI
         .createSubmission({
           ...values,
           registrationId: parseInt(id!),
+          minutesServed: 0,
+          actualFeedback: "",
         })
         .then(() => navigate("/your-activities"));
     },
@@ -113,10 +115,7 @@ const VolunteerFeedback: React.FC = () => {
   if (!registration) return Error404;
 
   const session = registration.session;
-  console.log({ errors, values });
-  console.log(
-    differenceInMinutes(registration?.session.end, registration?.session.start)
-  );
+
   return registration ? (
     <div className="items-center justify-between max-h-screen p-6 mx-auto mt-8 max-w-7xl lg:px-8">
       <div className="p-4">
@@ -161,14 +160,14 @@ const VolunteerFeedback: React.FC = () => {
           </p>
         </div>
         <div className="flex flex-col h-[calc(100vh-80px)] max-h-full gap-8 overflow-y-scroll col-span-2 pl-2">
-          <p className="text-4xl">Feedback</p>
-          <p>Give your feedback/reflection for this session!</p>
+          <p className="text-4xl">Reflection</p>
+          <p>Give your reflection for this session!</p>
 
           <form
             className="flex flex-col justify-between h-[calc(100vh-450px)]"
             onSubmit={handleSubmit}
           >
-            <FormControl
+            {/* <FormControl
               isInvalid={
                 !!touched.userReflection && errors.userReflection !== undefined
               }
@@ -188,7 +187,7 @@ const VolunteerFeedback: React.FC = () => {
                 onChange={handleChange}
                 required
               />
-            </FormControl>
+            </FormControl> */}
             <FormControl
               isInvalid={
                 !!touched.userReflection && errors.userReflection !== undefined
@@ -202,7 +201,7 @@ const VolunteerFeedback: React.FC = () => {
               <textarea
                 id="userReflection"
                 name="userReflection"
-                rows={4}
+                rows={16}
                 className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-gray-300 focus:border-gray-300"
                 placeholder="Write your reflection here"
                 value={values.userReflection}
@@ -210,7 +209,7 @@ const VolunteerFeedback: React.FC = () => {
                 required
               />
             </FormControl>
-            <FormControl
+            {/* <FormControl
               isInvalid={
                 !!touched.minutesServed && errors.minutesServed !== undefined
               }
@@ -251,7 +250,7 @@ const VolunteerFeedback: React.FC = () => {
                 />
                 <span className="align-middle">mins</span>
               </div>
-            </FormControl>
+            </FormControl> */}
 
             {/* scuffed spacer */}
             <div className="mt-2"></div>

@@ -99,7 +99,7 @@ export const show: RequestHandler[] = [
 ];
 export const create: RequestHandler[] = [
   body("userReflection").notEmpty(),
-  body("actualFeedback").notEmpty(),
+  body("actualFeedback"),
   body("minutesServed").isInt().notEmpty(),
   body("registrationId").isInt(),
   ...validateRegistration,
@@ -127,6 +127,7 @@ export const update: RequestHandler[] = [
   body("userReflection").notEmpty(),
   body("actualFeedback").notEmpty(),
   body("minutesServed").isInt().notEmpty(),
+  body("status").notEmpty(),
   ...validateFeedbackId,
   async (req, res) => {
     const result = validationResult(req);
@@ -134,7 +135,7 @@ export const update: RequestHandler[] = [
       res.status(400).send({ errors: result.array() });
       return;
     }
-    const { userReflection, actualFeedback, minutesServed } = req.body;
+    const { userReflection, actualFeedback, minutesServed, status } = req.body;
     await prisma.feedback.update({
       where: {
         id: req.feedback!.id,

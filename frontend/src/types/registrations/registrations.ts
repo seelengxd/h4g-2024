@@ -20,6 +20,10 @@ export interface UserRegistration extends RegistrationMiniData {
   submission?: SubmissionData;
 }
 
+export interface RegistrationData extends UserRegistration {
+  feedback: Feedback;
+}
+
 export interface RegistrationPostData {
   sessionIds: number[];
   submissionId?: number;

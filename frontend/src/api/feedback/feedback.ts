@@ -1,9 +1,5 @@
 import client from "../base";
 
-import {
-  Submission,
-  SubmissionPostData,
-} from "../../types/enrollmentForms/submissions";
 import { Feedback, FeedbackPostData } from "../../types/feedback/feedback";
 
 class FeedbackAPI {
@@ -20,7 +16,7 @@ class FeedbackAPI {
     return await client.post(`${this.getFeedbackUrl()}`, data);
   }
 
-  public async updateSubmission(id: number, data: SubmissionPostData) {
+  public async updateSubmission(id: number, data: FeedbackPostData) {
     return await client.put(`${this.getFeedbackUrl()}/${id}`, data);
   }
 }

@@ -41,7 +41,13 @@ export const show: RequestHandler[] = [
         id: parseInt(req.params.id!),
       },
       include: {
-        feedback: true,
+        feedback: {
+          include: {
+            registration: {
+              include: { session: true },
+            },
+          },
+        },
         session: {
           include: {
             activity: {

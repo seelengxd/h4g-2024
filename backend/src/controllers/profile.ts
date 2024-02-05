@@ -58,12 +58,12 @@ export const update: RequestHandler[] = [
             return;
         }
 
-        //console.log("this"+ req.body);
+        console.log("this", req.body);
 
         const {
             //user fields 
             fullName = currUser.fullName,
-            prefName = currUser.preferredName,
+            preferredName = currUser.preferredName,
             email = currUser.email,
             
             //profile fields
@@ -73,6 +73,8 @@ export const update: RequestHandler[] = [
             skills = profile.skills, 
             imageUrl = profile.imageUrl,
         } = req.body;
+
+        //console.log({prefName})
 
 
         //console.log("hi"+ JSON.stringify(description))
@@ -95,7 +97,7 @@ export const update: RequestHandler[] = [
             where: {id: Number((req.user as User).id) },
             data: {
                 fullName: fullName,
-                preferredName: prefName,
+                preferredName: preferredName,
                 email: email,
             }
         })

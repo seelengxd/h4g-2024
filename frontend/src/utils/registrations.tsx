@@ -1,5 +1,9 @@
 import { type ColumnDef, type ColumnHelper } from "@tanstack/react-table";
 import { Link } from "react-router-dom";
+
+import IconButton from "../components/buttons/IconButton";
+import { EyeIcon } from "@heroicons/react/24/outline";
+
 import {
   Attendance,
   Registration,
@@ -65,7 +69,7 @@ export const RegistrationTableColumns = (
       enableGlobalFilter: false,
       cell: (cell) => (
         <div className="flex justify-center space-x-2">
-          <Link to={"/activities/" + cell.row.original.id + "/feedback/new"}>
+          <Link to={"/sessions/" + cell.row.original.id + "/feedback/new"}>
             <PencilSquareIcon className="w-6 h-6 fill-black" />
           </Link>
         </div>
@@ -115,7 +119,7 @@ export const AdminRegistrationTableColumns = (
           const buttonClassName =
             "border-2 border-orange-600 text-orange-600 px-4 bg-orange-200 rounded-md hover:bg-orange-300";
           return (
-            <div className="flex gap-4 justify-center">
+            <div className="flex justify-center gap-4">
               {attendance !== true && (
                 <button
                   className={buttonClassName}

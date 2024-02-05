@@ -39,7 +39,8 @@ const VolunteerEnroll: React.FC = () => {
   useEffect(() => {
     activitiesAPI.getActivity(parseInt(id!)).then((activity) => {
       setActivity(activity);
-      if (activity.enrollmentForm) {
+      console.log({ activity });
+      if (activity.enrollmentForm.formSchema.components) {
         setAnswers(
           activity.enrollmentForm.formSchema.components.map((component) =>
             generateDefaultAnswer(component)
@@ -191,7 +192,7 @@ const VolunteerEnroll: React.FC = () => {
           >
             {secondState ? (
               <div className="flex flex-col space-y-8">
-                {activity.enrollmentForm.formSchema?.components.map(
+                {activity.enrollmentForm.formSchema.components.map(
                   (component, index) => {
                     switch (component.type) {
                       case "text":

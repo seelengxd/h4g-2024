@@ -29,6 +29,7 @@ export const show: RequestHandler[] = [
           include: {
             user: true,
             submission: { include: { user: true } },
+            feedback: true,
           },
         },
       },

@@ -1,3 +1,4 @@
+import { SubmissionData } from "../enrollmentForms/submissions";
 import { SessionData } from "../sessions/sessions";
 import { User } from "../users/users";
 
@@ -12,8 +13,10 @@ export interface Registration extends RegistrationMiniData {
 
 export interface UserRegistration extends RegistrationMiniData {
   user: User;
+  submission?: SubmissionData;
 }
 
 export interface RegistrationPostData {
   sessionIds: number[];
+  submissionId?: number;
 }

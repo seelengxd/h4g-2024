@@ -13,31 +13,48 @@ const ViewActivity: React.FC = () => {
   const { id } = useParams();
   const [activity, setActivity] = useState<ActivityData | null>(null);
 
+  console.log({ activity });
   useEffect(() => {
     activitiesAPI
       .getActivity(parseInt(id!))
       .then((activity) => setActivity(activity));
   }, [id]);
 
-  if (!activity) return <Spinner />
+  if (!activity) return <Spinner />;
 
   const sessionTab: Tab = {
     id: "sessions",
     tabTitle: "Activity Sessions",
-    page: <ActivitySessionsCard sessions={activity.sessions} capacity={activity.capacity} />,
-  }
+    page: (
+      <ActivitySessionsCard
+        sessions={activity.sessions}
+        capacity={activity.capacity}
+      />
+    ),
+  };
 
   const enrollmentFormTab: Tab = {
     id: "enrollments",
     tabTitle: "Enrollment Submissions",
-    page: <EnrollmentFormTable activity={activity} />,
-  }
+    page: activity.enrollmentForm ? (
+      <EnrollmentFormTable
+        activity={activity}
+        submissions={activity.enrollmentForm.submissions}
+      />
+    ) : (
+      <></>
+    ),
+  };
 
   return (
     <div className="items-center justify-between p-6 mx-auto mt-8 max-w-7xl lg:px-8">
       <ViewActivityActionButtons />
       <ActivityInfoCard activity={activity} />
-      <Tabs mt={8} tabs={[sessionTab, enrollmentFormTab]} defaultTabId="sessions"/>
+      <Tabs
+        mt={8}
+        tabs={[sessionTab, enrollmentFormTab]}
+        defaultTabId="sessions"
+      />
     </div>
   );
 };

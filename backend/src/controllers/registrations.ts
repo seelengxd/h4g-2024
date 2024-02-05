@@ -33,11 +33,14 @@ export const create: RequestHandler[] = [
   body("sessionIds").isArray(),
   body("sessionIds.*").isInt(),
   async (req, res) => {
-    const { sessionIds } = req.body;
+    // TODO: check submission ID. should be optional field
+    const { sessionIds, enrollmentFormId, submissionId } = req.body;
     await prisma.registration.createMany({
       data: (sessionIds as number[]).map((id) => ({
+        ...(enrollmentFormId ? { ...enrollmentFormId } : {}),
         sessionId: id,
         userId: (req.user! as User).id,
+        ...(submissionId ? { submissionId: parseInt(submissionId) } : {}),
       })),
     });
     res.sendStatus(200);
@@ -63,7 +66,7 @@ export const markAttended: RequestHandler[] = [
       },
       data: {
         attendance: true,
-      }
+      },
     });
 
     const registrations = await prisma.registration.findMany({
@@ -72,12 +75,12 @@ export const markAttended: RequestHandler[] = [
       },
       include: {
         user: true,
-      }
+      },
     });
-    
+
     console.log(registrations);
 
-    res.json({data: registrations});
+    res.json({ data: registrations });
   },
 ];
 
@@ -92,7 +95,7 @@ export const markAbsent: RequestHandler[] = [
       },
       data: {
         attendance: false,
-      }
+      },
     });
 
     const registrations = await prisma.registration.findMany({
@@ -101,12 +104,12 @@ export const markAbsent: RequestHandler[] = [
       },
       include: {
         user: true,
-      }
+      },
     });
 
     console.log(registrations);
 
-    res.json({data: registrations});
+    res.json({ data: registrations });
   },
 ];
 
@@ -121,7 +124,7 @@ export const unmark: RequestHandler[] = [
       },
       data: {
         attendance: null,
-      }
+      },
     });
 
     const registrations = await prisma.registration.findMany({
@@ -130,11 +133,11 @@ export const unmark: RequestHandler[] = [
       },
       include: {
         user: true,
-      }
+      },
     });
 
     console.log(registrations);
 
-    res.json({data: registrations});
+    res.json({ data: registrations });
   },
 ];

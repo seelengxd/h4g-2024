@@ -137,8 +137,10 @@ model Registration {
 
   session   Session @relation(fields: [sessionId], references: [id])
   sessionId Int
-  
-  feedback Feedback?
+
+  feedback     Feedback?
+  submission   Submission? @relation(fields: [submissionId], references: [id])
+  submissionId Int?
 }
 
 enum FeedbackStatus {
@@ -154,8 +156,8 @@ model Feedback {
   hoursServed    Int
   status         FeedbackStatus @default(Pending)
 
-  registration   Registration @relation(fields: [registrationId], references: [id])
-  registrationId Int          @unique
+  registration   Registration? @relation(fields: [registrationId], references: [id])
+  registrationId Int?          @unique
 }
 
 model EnrollmentForm {
@@ -176,6 +178,8 @@ model Submission {
   enrollmentForm   EnrollmentForm @relation(fields: [enrollmentFormId], references: [id])
   enrollmentFormId Int
   userId           Int
+
+  registrations Registration[]
 
   @@unique([enrollmentFormId, userId])
 }

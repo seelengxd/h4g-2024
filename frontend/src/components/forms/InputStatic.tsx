@@ -13,7 +13,7 @@ export interface InputPropStatic {
     hidden?: boolean;
   }
   
-  const Input2: React.FC<InputPropStatic & React.HTMLAttributes<HTMLInputElement>> = (
+  const InputStatic: React.FC<InputPropStatic & React.HTMLAttributes<HTMLInputElement>> = (
     props
   ) => {
     const {
@@ -54,5 +54,5 @@ export interface InputPropStatic {
     );
   };
   
-  export default Input2;
+  export default InputStatic;
   

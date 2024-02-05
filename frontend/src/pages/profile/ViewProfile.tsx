@@ -7,8 +7,7 @@ import { Formik, useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { object, string } from "yup";
 import Button from "../../components/buttons/Button";
-import Input2 from "../../components/forms/InputStatic";
-import DataTableSearch from "../../components/tables/DataTableSearch";
+import InputStatic from "../../components/forms/InputStatic";
 import SearchBar from "../../components/searchBar/searchBar";
 
 //todo add gender and salutation in profile, current db does not have
@@ -92,7 +91,7 @@ const ViewProfile: React.FC = () => {
             className="flex flex-col space-y-5 pt-4"
             onSubmit={handleSubmit}
           >
-            <Input2
+            <InputStatic
               label="Full Name (as per NRIC)"
               placeholder={initialValues.fullName}
               name="fullName"
@@ -101,7 +100,7 @@ const ViewProfile: React.FC = () => {
               required
             />
 
-            <Input2
+            <InputStatic
               label="Preferred Name"
               placeholder={initialValues.prefName}
               name="prefName"
@@ -110,7 +109,7 @@ const ViewProfile: React.FC = () => {
               required
             />
 
-            <Input2
+            <InputStatic
               label="Email"
               placeholder={initialValues.email}
               name="email"
@@ -119,7 +118,7 @@ const ViewProfile: React.FC = () => {
               required
             />
 
-            <Input2
+            <InputStatic
               label="Description"
               placeholder={initialValues.description}
               name="description"

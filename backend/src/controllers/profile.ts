@@ -43,8 +43,10 @@ export const update: RequestHandler[] = [
             return;
         }
 
+        const currUser = req.user as User;
+
         const profile = await prisma.profile.findFirst({
-            where: { userId: Number((req.user as User).id) },
+            where: { userId: Number(currUser.id) },
             include: {
                 interests: true,
                 skills: true,
@@ -58,7 +60,18 @@ export const update: RequestHandler[] = [
 
         //console.log("this"+ req.body);
 
-        const { dob = profile.dob, description=profile.description, interests = profile.interests, skills = profile.skills, imageUrl = profile.imageUrl,
+        const {
+            //user fields 
+            fullName = currUser.fullName,
+            prefName = currUser.preferredName,
+            email = currUser.email,
+            
+            //profile fields
+            dob = profile.dob, 
+            description=profile.description, 
+            interests = profile.interests, 
+            skills = profile.skills, 
+            imageUrl = profile.imageUrl,
         } = req.body;
 
 
@@ -77,6 +90,15 @@ export const update: RequestHandler[] = [
                 //monday, tuesday, wednesday, thursday, friday, saturday, sunday
             }
         });
+
+        const newUser = await prisma.user.update({
+            where: {id: Number((req.user as User).id) },
+            data: {
+                fullName: fullName,
+                preferredName: prefName,
+                email: email,
+            }
+        })
         //console.log('db updated');
 
         res.json({ id: newProfile.id });

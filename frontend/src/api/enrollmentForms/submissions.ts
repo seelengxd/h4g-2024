@@ -15,8 +15,9 @@ class SubmissionsAPI {
     return response.data.data;
   }
 
-  public async createSubmission(data: SubmissionPostData) {
-    return await client.post(`${this.getSubmissionsUrl()}`, data);
+  public async createSubmission(data: SubmissionPostData): Promise<Submission> {
+    const response = await client.post(`${this.getSubmissionsUrl()}`, data);
+    return response.data.data;
   }
 
   public async updateSubmission(id: number, data: SubmissionPostData) {

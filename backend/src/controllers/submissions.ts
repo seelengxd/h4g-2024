@@ -97,7 +97,7 @@ export const create: RequestHandler[] = [
       },
     });
 
-    res.sendStatus(200);
+    res.send({ data: newSubmission });
   },
 ];
 

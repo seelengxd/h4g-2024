@@ -25,6 +25,7 @@ import submissionsAPI from "../../api/enrollmentForms/submissions";
 import { Answer, AnswerValue } from "../../types/enrollmentForms/submissions";
 import { generateDefaultAnswer } from "../../utils/forms";
 import enrollmentFormsAPI from "../../api/enrollmentForms/enrollmentForms";
+import { Submission } from "../../types/forms/forms";
 
 const VolunteerEnroll: React.FC = () => {
   const { id } = useParams();
@@ -58,13 +59,21 @@ const VolunteerEnroll: React.FC = () => {
         .min(1, "You must pick at least one session."),
     }),
     onSubmit: async (values) => {
-      const registrations = await registrationsAPI.createRegistration(values);
       if (secondState) {
-        const submissions = await submissionsAPI.createSubmission({
+        const submission = await submissionsAPI.createSubmission({
           answer: answers,
           enrollmentFormId: activity!.enrollmentForm.id!,
         });
+        await registrationsAPI.createRegistration({
+          ...values,
+          submissionId: submission!.id,
+        });
+        // submissionid undefined
+        console.log({ ...values, submissionId: submission!.id });
+      } else {
+        await registrationsAPI.createRegistration(values);
       }
+
       navigate("/activities/" + activity?.id.toString());
     },
   });
@@ -91,15 +100,15 @@ const VolunteerEnroll: React.FC = () => {
     setAnswers(newAnswers);
   };
 
-  const handleEnrollmentSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    submissionsAPI
-      .createSubmission({
-        answer: answers,
-        enrollmentFormId: activity?.enrollmentForm.id!,
-      })
-      .then(() => navigate("/activities/" + parseInt(id!)));
-  };
+  //   const handleEnrollmentSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //     e.preventDefault();
+  //     submissionsAPI
+  //       .createSubmission({
+  //         answer: answers,
+  //         enrollmentFormId: activity?.enrollmentForm.id!,
+  //       })
+  //       .then(() => navigate("/activities/" + parseInt(id!)));
+  //   };
 
   return activity ? (
     <div className="items-center justify-between max-h-screen p-6 mx-auto mt-8 max-w-7xl lg:px-8">

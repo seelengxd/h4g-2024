@@ -6,9 +6,10 @@ import { SubmissionData } from "../../types/enrollmentForms/submissions";
 
 interface Props {
   activity: ActivityData;
+  submissions: SubmissionData[];
 }
 
-const EnrollmentFormTable: React.FC<Props> = ({ activity }) => {
+const EnrollmentFormTable: React.FC<Props> = ({ activity, submissions }) => {
   if (!activity.enrollmentForm) {
     return (
       <div className="flex justify-center mt-10 text-2xl text-gray-500">
@@ -25,7 +26,7 @@ const EnrollmentFormTable: React.FC<Props> = ({ activity }) => {
   return (
     <DataTable
       columns={submissionColumns}
-      tableData={activity.enrollmentForm.submissions}
+      tableData={submissions}
       getColumnCanGlobalFilter={(column: Column<SubmissionData>) =>
         column.getCanSort()
       }

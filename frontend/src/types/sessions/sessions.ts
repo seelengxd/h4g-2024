@@ -1,4 +1,5 @@
 import { ActivityData } from "../activities/activities";
+import { Submission } from "../forms/forms";
 import { UserRegistration } from "../registrations/registrations";
 
 export interface SessionPostData {

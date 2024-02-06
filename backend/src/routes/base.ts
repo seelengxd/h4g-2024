@@ -27,11 +27,9 @@ apiRouter.use("/skills", skillsRouter);
 apiRouter.use("/registrations", registrationsRouter);
 apiRouter.use("/sessions", sessionsRouter);
 apiRouter.use("/feedbacks", feedbackRouter);
-<<<<<<< HEAD
 apiRouter.use("/blogs", blogRouter);
-=======
 apiRouter.use("/volunteers", volunteersRouter);
 apiRouter.use("/reports", reportsRouter);
->>>>>>> main
+
 
 export default apiRouter;

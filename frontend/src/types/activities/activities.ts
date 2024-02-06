@@ -1,10 +1,6 @@
 import { EnrollmentForm } from "../enrollmentForms/enrollmentForms";
 import { Organisation } from "../organisations/organisations";
-import {
-  SessionData,
-  SessionMiniData,
-  SessionPostData,
-} from "../sessions/sessions";
+import { SessionData, SessionPostData } from "../sessions/sessions";
 
 export interface Image {
   id: number;

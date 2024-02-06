@@ -44,18 +44,18 @@ export const show: RequestHandler[] = [
 
 //new blog
 export const create: RequestHandler[] = [
-    upload.single("image"), 
+    upload.single("image"),
     async (req, res) => {
         console.log("req", req);
         const result = validationResult(req);
         if (!result.isEmpty()) {
-          res.status(400).send(result.array());
-          return;
+            res.status(400).send(result.array());
+            return;
         }
 
         const { title, description, userId } = req.body;
         //todo: deal with tags if adding
-        console.log("title", title);
+        //console.log("title", title);
 
         const newBlog = await prisma.blog.create({
             data: {
@@ -72,7 +72,39 @@ export const create: RequestHandler[] = [
 ];
 
 //edit mode?
-export const update: RequestHandler[] = [];
+export const update: RequestHandler[] = [
+    upload.single("image"),
+    validateId,
+    async (req, res) => {
+        const result = validationResult(req);
+
+        if (!result.isEmpty()) {
+            res.sendStatus(400);
+            return;
+        }
+
+        const { title, description, userId } = req.body;
+        const blog = await prisma.blog.findFirst({
+            where: {id: Number(req.params.id)}
+        });
+
+        if (!blog) {
+            res.sendStatus(404);
+            return;
+        }
+
+        const newBlog = await prisma.blog.update({
+            where: { id: blog.id },
+            data: {
+                title,
+                description,
+                imageUrl: req.file?.path,
+                //add support for tags later on
+            }
+        })
+
+    }
+];
 
 
 //edit mode?

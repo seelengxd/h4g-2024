@@ -19,7 +19,6 @@ class BlogsAPI {
 
     public async createBlog(data: BlogPostData): Promise<Number> {
         const form = new FormData();
-        //console.log("the form");
 
         form.append("title", data.title);
         form.append("description", data.description);
@@ -27,11 +26,8 @@ class BlogsAPI {
         form.append("userId", data.userId.toString());
 
         if (data.image) {
-            //console.log("image is here")
             form.append("image", data.image as Blob);
         }
-
-        //console.log("data: ",{data})
 
         const response = await client.post(this.getBlogsUrl(), form);
         return response.data.id;
@@ -43,13 +39,12 @@ class BlogsAPI {
 
         form.append("title", data.title);
         form.append("description", data.description);
-        data.tags.forEach((tag) => form.append('tags', tag.toString()));
+        data.tags.forEach((tag) => form.append('tags', tag.toString())); //not used yet
 
         if (data.image) {
             form.append("image", data.image as Blob);
         }
         
-
         const response = await client.put(`${this.getBlogsUrl()}/${id}`, form);
         return response.data.id;
     }

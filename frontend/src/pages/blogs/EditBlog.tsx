@@ -1,36 +1,56 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate, Link, useParams } from "react-router-dom";
+import { object, string } from "yup";
+import blogsAPI from "../../api/blogs/blogs";
 import Button from "../../components/buttons/Button";
 import FormControl from "../../components/forms/FormControl";
-import ImageUploader from "../../components/forms/ImageUploader";
-import { useFormik } from "formik";
-import { object, string } from "yup";
-import { SetStateAction, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../reducers/authSlice";
-import { BlogPostData } from "../../types/blogs/blogs";
-import blogsAPI from "../../api/blogs/blogs";
 import FormTextAreaInput from "../../components/forms/FormTextAreaInput";
+import ImageUploader from "../../components/forms/ImageUploader";
 import Label from "../../components/forms/Label";
+import { selectUser } from "../../reducers/authSlice";
+import { Blog, BlogPostData } from "../../types/blogs/blogs";
 
-const CreateBlog: React.FC = () => {
+const EditBlog: React.FC = () => {
+  const { id } = useParams();
   const user = useSelector(selectUser);
   const [imageDisplayUrl, setImageDisplayUrl] = useState("");
+  const [blog, setBlog] = useState<Blog>();
+
+  useEffect(() => {
+    blogsAPI.getBlog(Number(id)).then((blog) => setBlog(blog));
+  }, [id]);
+
+  const tagIds = blog?.tags.map((tag) => tag.id);
 
   const initialValues = {
-    title: "",
-    description: "",
-    tags: [],
-    imageUrl: "",
+    title: blog?.title || "",
+    description: blog?.description || "",
+    tags: tagIds || [],
+    imageUrl: blog?.imageUrl || "",
     userId: user!.id,
     image: undefined,
   };
 
-  //console.log("initial: ", initialValues);
-
   const handleValues = async (values: BlogPostData) => {
     console.log("handling: ", values);
-    await blogsAPI.createBlog(values);
+    await blogsAPI.updateBlog(Number(id), values);
   };
+
+  useEffect(() => {
+    const fullUrl =
+      process.env.REACT_APP_BACKEND_URL +
+      "/" +
+      (initialValues.imageUrl
+        ? initialValues.imageUrl
+        : "uploads/placeholder-image.png");
+    setImageDisplayUrl(fullUrl);
+  }, [initialValues.imageUrl]);
+
+  console.log("img url==> ", imageDisplayUrl);
+  console.log("img url===> ", initialValues.imageUrl);
+  console.log("dd ", blog);
 
   const navigate = useNavigate();
   const formik = useFormik({
@@ -42,7 +62,6 @@ const CreateBlog: React.FC = () => {
       //   .required("Description name cannot be empty."),
     }),
     onSubmit: async (values) => {
-      console.log("submit pressed: ", values);
       handleValues(values).then(() => navigate(`/blogs`));
     },
     enableReinitialize: true,
@@ -60,7 +79,10 @@ const CreateBlog: React.FC = () => {
 
   return (
     <div>
-      <form className="flex px-20 py-20 bg-primary-200 h-screen" onSubmit={handleSubmit}>
+      <form
+        className="flex px-20 py-20 h-screen bg-primary-200"
+        onSubmit={handleSubmit}
+      >
         {/* left half */}
 
         <div className="flex flex-col w-2/3">
@@ -76,7 +98,7 @@ const CreateBlog: React.FC = () => {
             <p className="pl-2 font-semibold">Back to Blog Posts</p>
           </Link>
 
-          <h1 className="text-gray-600 text-2xl pt-8 pb-4"> Write New Post </h1>
+          <h1 className="text-gray-600 text-2xl pt-8 pb-4"> Edit Post </h1>
 
           <FormControl>
             <div className="flex-1 pb-6">
@@ -102,10 +124,9 @@ const CreateBlog: React.FC = () => {
             </div>
           </FormControl>
 
-
-          <div className="pt-2">
+          <div className="pt-4">
             <Button type="submit" roundness="3xl">
-              Post
+              Save Changes
             </Button>
           </div>
         </div>
@@ -140,4 +161,4 @@ const CreateBlog: React.FC = () => {
   );
 };
 
-export default CreateBlog;
+export default EditBlog;

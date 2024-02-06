@@ -101,6 +101,7 @@ export const create: RequestHandler[] = [
   body("organisationId").notEmpty().isInt(),
   body("type").isIn(["VOLUNTEER", "WORKSHOP", "TRAINING"]), // Adjust as per your defined types
   body("sessions").notEmpty(),
+  body("capacity").notEmpty(),
   ...validateOrganisationId,
   async (req, res) => {
     const result = validationResult(req);
@@ -112,9 +113,10 @@ export const create: RequestHandler[] = [
       res.status(400).send({ errors: [{ msg: "missing images" }] });
       return;
     }
-    const { name, type, sessions, description, location } = req.body;
+    const { name, type, sessions, description, location, capacity } = req.body;
     const newActivity = await prisma.activity.create({
       data: {
+        capacity: parseInt(capacity),
         name,
         organisationId: req.organisation!.id,
         type,
@@ -149,6 +151,7 @@ export const update: RequestHandler[] = [
   upload.array("images"),
   ...validateOrganisationId,
   ...validateActivityId,
+  body("capacity").isInt().notEmpty(),
   body("name").notEmpty().isString(),
   body("location").notEmpty().isString(),
   body("type").isIn(["VOLUNTEER", "WORKSHOP", "TRAINING"]), // Adjust as per your defined types
@@ -157,7 +160,7 @@ export const update: RequestHandler[] = [
     // 1. Update activity fields (except for sessions)
     const activity = req.activity!;
 
-    const { name, type, description, location } = req.body;
+    const { name, type, description, location, capacity } = req.body;
     await prisma.activity.update({
       where: { id: activity.id },
       data: {
@@ -166,6 +169,7 @@ export const update: RequestHandler[] = [
         type,
         description,
         location,
+        capacity: parseInt(capacity),
       },
     });
 

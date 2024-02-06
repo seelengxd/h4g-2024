@@ -34,7 +34,12 @@ const ViewSession: React.FC = () => {
   const registrationPage = {
     id: "registrations",
     tabTitle: "Manage Registrations and Attendance",
-    page: <SessionRegistrations registrations={session.registrations} />,
+    page: (
+      <SessionRegistrations
+        session={session}
+        registrations={session.registrations}
+      />
+    ),
   };
 
   const enrollmentFormPage = {

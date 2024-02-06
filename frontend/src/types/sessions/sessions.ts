@@ -21,3 +21,7 @@ export interface SessionData extends SessionMiniData {
   activity: ActivityData;
   registrations: RegistrationData[];
 }
+
+export interface SessionWithMinutesData extends SessionData {
+  minutes: number;
+}

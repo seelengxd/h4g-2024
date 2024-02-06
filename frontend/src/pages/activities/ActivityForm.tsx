@@ -56,6 +56,7 @@ const ActivityForm: React.FC<Props> = ({
           })),
           location: initialData.location,
           images: initialData.loadedImages!,
+          capacity: initialData.capacity,
         }
       : ({
           name: "",
@@ -65,12 +66,14 @@ const ActivityForm: React.FC<Props> = ({
           sessions: [],
           location: "",
           images: [],
+          capacity: 10,
         } as ActivityPostData),
     validationSchema: object({
       name: string().trim().required("Name cannot be empty."),
       description: string().trim().required("Description cannot be empty."),
       organisationId: number().positive("Organisation cannot be empty."),
       sessions: array(),
+      capacity: number().positive("Capacity should be more than 0."),
     }),
     onSubmit: async (values) => {
       handleValues(values).then(() => navigate("/activities"));
@@ -164,7 +167,7 @@ const ActivityForm: React.FC<Props> = ({
           </div>
 
           {/* Activity Organisation */}
-          <div className="w-full col-span-3">
+          <div className="w-full col-span-2">
             <FormControl
               isInvalid={
                 !!touched.organisationId && errors.organisationId !== undefined
@@ -186,6 +189,22 @@ const ActivityForm: React.FC<Props> = ({
                   valueContainer: (base) => ({ ...base, fontSize: "0.875rem" }),
                 }}
                 required
+              />
+            </FormControl>
+          </div>
+          {/* Activity Capacity */}
+          <div className="w-full col-span-1">
+            <FormControl
+              isInvalid={!!touched.capacity && errors.capacity !== undefined}
+              errorMessage={errors.capacity}
+              onBlur={handleBlur}
+            >
+              <Label htmlFor="capacity">Capacity</Label>
+              <Input
+                type="number"
+                name="capacity"
+                value={values.capacity}
+                onChange={handleChange}
               />
             </FormControl>
           </div>

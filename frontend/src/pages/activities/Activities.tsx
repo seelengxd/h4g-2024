@@ -13,7 +13,8 @@ const Activities: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const columnHelper = createColumnHelper<ActivityRowData>();
   const [activities, setActivities] = useState<ActivityRowData[]>([]);
-  const activityColumns: Array<ColumnDef<ActivityRowData>> = ActivityTableColumns(columnHelper);
+  const activityColumns: Array<ColumnDef<ActivityRowData>> =
+    ActivityTableColumns(columnHelper);
   useEffect(() => {
     activitiesAPI
       .getAllActivities()
@@ -49,6 +50,7 @@ const Activities: React.FC = () => {
           </div>
         </div>
       </div>
+      <div></div>
       {loading ? (
         <Spinner />
       ) : (

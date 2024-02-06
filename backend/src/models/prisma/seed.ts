@@ -234,7 +234,7 @@ async function main() {
                 create: [
                   {
                     start: new Date("2024-06-15T10:30:00"),
-                    end: new Date("2025-06-15T14:30:00"),
+                    end: new Date("2024-06-15T14:30:00"),
                   },
                 ],
               },
@@ -303,8 +303,8 @@ async function main() {
               sessions: {
                 create: [
                   {
-                    start: new Date("2024-05-10T10:30:00"),
-                    end: new Date("2024-05-12T10:30:00"),
+                    start: new Date("2024-05-10T12:30:00"),
+                    end: new Date("2024-05-10T16:30:00"),
                   },
                 ],
               },

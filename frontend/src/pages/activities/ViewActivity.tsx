@@ -13,7 +13,6 @@ const ViewActivity: React.FC = () => {
   const { id } = useParams();
   const [activity, setActivity] = useState<ActivityData | null>(null);
 
-  console.log({ activity });
   useEffect(() => {
     activitiesAPI
       .getActivity(parseInt(id!))

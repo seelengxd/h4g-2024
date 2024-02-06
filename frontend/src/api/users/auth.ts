@@ -5,14 +5,14 @@ import type {
   SendResetEmailPostData,
   SignUpPostData,
 } from "../../types/users/auth";
-import type { User } from "../../types/users/users";
+import type { UserMiniData } from "../../types/users/users";
 
 class AuthAPI {
   protected getAuthUrl(): string {
     return "/auth";
   }
 
-  public async logIn(data: LogInPostData): Promise<User> {
+  public async logIn(data: LogInPostData): Promise<UserMiniData> {
     const response = await client.post(this.getAuthUrl() + "/login", data);
     return response.data.user;
   }
@@ -25,7 +25,7 @@ class AuthAPI {
     return await client.post(this.getAuthUrl() + "/signup", data);
   }
 
-  public async getCurrentUser(): Promise<User> {
+  public async getCurrentUser(): Promise<UserMiniData> {
     const response = await client.get(this.getAuthUrl() + "/current-user");
     return response.data.user;
   }

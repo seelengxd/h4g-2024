@@ -1,7 +1,7 @@
 import { SubmissionData } from "../enrollmentForms/submissions";
 import { Feedback } from "../feedback/feedback";
 import { SessionData } from "../sessions/sessions";
-import { User } from "../users/users";
+import { UserMiniData } from "../users/users";
 
 export type Attendance = boolean | null;
 
@@ -16,7 +16,7 @@ export interface Registration extends RegistrationMiniData {
 }
 
 export interface UserRegistration extends RegistrationMiniData {
-  user: User;
+  user: UserMiniData;
   submission?: SubmissionData;
 }
 

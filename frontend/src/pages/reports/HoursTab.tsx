@@ -11,6 +11,7 @@ import DataTable from "../../components/tables/DataTable";
 import { useState } from "react";
 import { ActivityRowData, ActivityTableColumns } from "../../utils/activities";
 import { ActivityMiniData } from "../../types/activities/activities";
+import FormMultiSelectInput from "../../components/forms/FormMultiSelectInput";
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 interface Props {
@@ -18,6 +19,9 @@ interface Props {
 }
 
 const HoursTab: React.FC<Props> = ({ report }) => {
+  const [activeCategories, setActiveCategories] = useState<number[]>(
+    report[0].minutes.dataPoints.map((dataPoint, index) => index)
+  );
   const hoursOptions = {
     theme: "light2",
     animationEnabled: true,
@@ -31,15 +35,17 @@ const HoursTab: React.FC<Props> = ({ report }) => {
     toolTip: {
       shared: true,
     },
-    data: report?.map((row) => ({
-      type: "spline",
-      name: row.name,
-      showInLegend: true,
-      dataPoints: row.minutes.dataPoints.map((dataPoint) => ({
-        ...dataPoint,
-        y: dataPoint.y / 60,
-      })),
-    })),
+    data: report
+      ?.map((row) => ({
+        type: "spline",
+        name: row.name,
+        showInLegend: true,
+        dataPoints: row.minutes.dataPoints.map((dataPoint) => ({
+          ...dataPoint,
+          y: dataPoint.y / 60,
+        })),
+      }))
+      .filter((row, index) => activeCategories.includes(index)),
   };
 
   const dateOptions = report
@@ -53,6 +59,10 @@ const HoursTab: React.FC<Props> = ({ report }) => {
     label: row.name,
     value: index,
   }));
+  const alsoInterestOptions = report.map((row, index) => ({
+    value: row.name,
+    id: index,
+  }));
 
   const columnHelper = createColumnHelper<ActivityRowData>();
   const activityColumns: Array<ColumnDef<ActivityRowData>> =
@@ -62,7 +72,17 @@ const HoursTab: React.FC<Props> = ({ report }) => {
   const [categoryIndex, setCategoryIndex] = useState(0);
   return (
     <>
-      <CanvasJSChart options={hoursOptions} />
+      <div className="flex">
+        <CanvasJSChart options={hoursOptions} />
+        <div className="px-8 my-auto">
+          <FormMultiSelectInput
+            name="category"
+            value={activeCategories}
+            options={alsoInterestOptions}
+            onChange={(newValues) => setActiveCategories(newValues)}
+          />
+        </div>
+      </div>
       <div className="flex justify-start gap-8">
         <ReactSelect
           className="w-56 mt-8"

@@ -9,6 +9,7 @@ import {
 import { Column, ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import DataTable from "../../components/tables/DataTable";
 import { useState } from "react";
+import FormMultiSelectInput from "../../components/forms/FormMultiSelectInput";
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 interface Props {
@@ -16,6 +17,9 @@ interface Props {
 }
 
 const VolunteersTab: React.FC<Props> = ({ report }) => {
+  const [activeCategories, setActiveCategories] = useState<number[]>(
+    report[0].minutes.dataPoints.map((dataPoint, index) => index)
+  );
   const volunteerOptions = {
     theme: "light2",
     animationEnabled: true,
@@ -29,12 +33,14 @@ const VolunteersTab: React.FC<Props> = ({ report }) => {
     toolTip: {
       shared: true,
     },
-    data: report?.map((row) => ({
-      type: "spline",
-      name: row.name,
-      showInLegend: true,
-      dataPoints: row.volunteers.dataPoints,
-    })),
+    data: report
+      ?.map((row) => ({
+        type: "spline",
+        name: row.name,
+        showInLegend: true,
+        dataPoints: row.volunteers.dataPoints,
+      }))
+      .filter((row, index) => activeCategories.includes(index)),
   };
 
   const dateOptions = report
@@ -48,6 +54,10 @@ const VolunteersTab: React.FC<Props> = ({ report }) => {
     label: row.name,
     value: index,
   }));
+  const alsoInterestOptions = report.map((row, index) => ({
+    value: row.name,
+    id: index,
+  }));
 
   const columnHelper = createColumnHelper<VolunteerRowData>();
   const volunteerColumns: Array<ColumnDef<VolunteerRowData>> =
@@ -55,9 +65,21 @@ const VolunteersTab: React.FC<Props> = ({ report }) => {
 
   const [dateIndex, setDateIndex] = useState(0);
   const [categoryIndex, setCategoryIndex] = useState(0);
+
   return (
     <>
-      <CanvasJSChart options={volunteerOptions} />
+      <div className="flex">
+        <CanvasJSChart options={volunteerOptions} />
+        <div className="px-8 my-auto">
+          <FormMultiSelectInput
+            name="category"
+            value={activeCategories}
+            options={alsoInterestOptions}
+            onChange={(newValues) => setActiveCategories(newValues)}
+          />
+        </div>
+      </div>
+
       <div className="flex justify-start gap-8">
         <ReactSelect
           className="w-56 mt-8"

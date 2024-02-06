@@ -1,4 +1,8 @@
-import { type ColumnDef, type ColumnHelper } from "@tanstack/react-table";
+import {
+  CellContext,
+  type ColumnDef,
+  type ColumnHelper,
+} from "@tanstack/react-table";
 import { Link } from "react-router-dom";
 
 import IconButton from "../components/buttons/IconButton";
@@ -8,11 +12,16 @@ import {
   Registration,
   UserRegistration,
 } from "../types/registrations/registrations";
-import { format } from "date-fns";
+import { format, isFuture } from "date-fns";
 import { PencilSquareIcon } from "@heroicons/react/20/solid";
 import { EyeIcon } from "@heroicons/react/24/solid";
 import Modal from "../components/containers/Dialog";
 import FeedbackDisplay from "../pages/feedback/FeedbackDisplay";
+import UpcomingSessionTag from "../pages/sessions/tags/UpcomingSessionTag";
+import BaseSessionTag from "../pages/sessions/tags/BaseSessionTag";
+import { act } from "react-dom/test-utils";
+import { ActivityData } from "../types/activities/activities";
+import { get } from "lodash";
 
 export const displayAttendance = (attendance: Attendance) => {
   return attendance === null
@@ -79,6 +88,109 @@ export const RegistrationTableColumns = (
             </Link>
           </div>
         ),
+    }),
+  ] as Array<ColumnDef<RegistrationRowData>>;
+};
+
+// This is for registration
+export interface VolunteerRegistrationRowData extends Registration {
+  action?: undefined;
+}
+
+export const VolunteerRegistrationTableColumns = (
+  columnHelper: ColumnHelper<RegistrationRowData>
+): Array<ColumnDef<RegistrationRowData>> => {
+  return [
+    // organisation, event name, date & time, location, feedback
+    columnHelper.accessor(
+      (registration) => registration.session.activity.organisation.name,
+      {
+        cell: ({ getValue, row }) => {
+          return (
+            <Link
+              to={
+                "/organisations/" +
+                row.original.session.activity.organisation.id
+              }
+              className="hover:underline"
+            >
+              {getValue()}
+            </Link>
+          );
+        },
+        header: "Organisation",
+      }
+    ),
+    columnHelper.accessor(
+      (registration) => registration.session.activity.name,
+      {
+        cell: ({ getValue, row }) => {
+          return (
+            <Link
+              to={"/activities/" + row.original.session.activity.id}
+              className="hover:underline"
+            >
+              {getValue()}
+            </Link>
+          );
+        },
+        header: "Event Name",
+      }
+    ),
+    columnHelper.accessor((registration) => registration.session, {
+      cell: (sessionCellContext) => {
+        const session = sessionCellContext.getValue();
+        const date =
+          format(new Date(session.start), "d MMM yyyy, h:mma-") +
+          (new Date(session.start).getDay() === new Date(session.end).getDay()
+            ? format(new Date(session.end), "h:mma")
+            : format(new Date(session.end), "d MMM, h:mma"));
+        return date;
+      },
+
+      header: "Date & Time",
+    }),
+    columnHelper.accessor(
+      (registration) => registration.session.activity.location,
+      {
+        cell: (locationCellContext) => locationCellContext.getValue(),
+        header: "Location",
+      }
+    ),
+    columnHelper.accessor((registration) => registration, {
+      cell: (registrationCellContext) => {
+        const registration = registrationCellContext.getValue();
+        const attendance = registration.attendance;
+        if (isFuture(registration.session.start)) {
+          return <UpcomingSessionTag />;
+        } else if (attendance) {
+          return (
+            <BaseSessionTag
+              tagBgColor="bg-green-100"
+              tagTextColor="text-green-700"
+              status="Attended"
+            />
+          );
+        } else {
+          return (
+            <BaseSessionTag
+              tagBgColor="bg-red-100"
+              tagTextColor="text-red-700"
+              status="Did Not Attend"
+            />
+          );
+        }
+      },
+      header: "Status",
+    }),
+
+    columnHelper.accessor("action", {
+      header: "Feedback",
+      enableSorting: false,
+      enableGlobalFilter: false,
+      cell: (cell) => (
+        <FeedbackDisplay feedback={cell.row.original.feedback} isAdmin />
+      ),
     }),
   ] as Array<ColumnDef<RegistrationRowData>>;
 };

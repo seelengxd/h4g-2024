@@ -1,6 +1,7 @@
 import {
   ArrowLeftStartOnRectangleIcon,
   Bars3Icon,
+  BuildingOffice2Icon,
   CalendarDaysIcon,
   DocumentArrowDownIcon,
   FireIcon,
@@ -56,13 +57,18 @@ const volunteerContent = [
 
 const adminContent = [
   {
+    label: "Volunteers",
+    icon: <UserGroupIcon className="w-8 h-8 fill-white" />,
+    linkTo: "/volunteers",
+  },
+  {
     label: "Activities",
     icon: <FireIcon className="w-8 h-8 fill-white" />,
     linkTo: "/activities",
   },
   {
     label: "Organisations",
-    icon: <UserGroupIcon className="w-8 h-8 fill-white" />,
+    icon: <BuildingOffice2Icon className="w-8 h-8 fill-white" />,
     linkTo: "/organisations",
   },
   {

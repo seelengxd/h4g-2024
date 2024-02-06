@@ -21,7 +21,7 @@ interface DataPoint {
 interface VolunteerActivityReportRow {
   // ID / Name are from the interest model
   id: number;
-  name: number;
+  name: string;
   volunteers: {
     dataPoints: DataPoint[];
     users: UserData[][];

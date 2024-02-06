@@ -15,7 +15,32 @@ export const index: RequestHandler = async (req, res) => {
 }
 
 //to show specific
-export const show: RequestHandler[] = [];
+export const show: RequestHandler[] = [
+    validateId,
+    async (req, res) => {
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            res.status(400).send({ errors: result.array() });
+            return;
+        }
+
+        const blog = await prisma.blog.findFirst({
+            where: {id: Number(req.params.id)},
+            include: {
+                tags:true,
+                likes: true,
+                user: true
+            }
+        });
+
+        if (!blog) {
+            res.sendStatus(404);
+            return;
+        }
+
+        res.json({ data: blog });
+    },
+];
 
 //new blog
 export const create: RequestHandler[] = [];

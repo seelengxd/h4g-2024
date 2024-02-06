@@ -4,10 +4,8 @@ import CardContainer from "../../components/blog/CardContainer";
 import { Link } from "react-router-dom";
 import { Blog } from "../../types/blogs/blogs";
 import blogsAPI from "../../api/blogs/blogs";
-import { User } from "../../types/users/users";
 import { selectUser } from "../../reducers/authSlice";
 import { useSelector } from "react-redux";
-import Label from "../../components/forms/Label";
 
 const Blogs: React.FC = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -77,7 +75,7 @@ const Blogs: React.FC = () => {
                 blog.title.toLowerCase().includes(searchValue.toLowerCase())
               )
               .map((blog: Blog) => (
-                <Link to={`/blog/${blog.id}`}>
+                <Link to={`${blog.id}`}>
                   <CardContainer
                     title={blog.title}
                     subtitle={

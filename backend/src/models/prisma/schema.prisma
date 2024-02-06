@@ -196,6 +196,7 @@ model Blog {
   likes Like[]
 
   createdAt     DateTime       @default(now())
+  imageUrl      String?
 }
 
 model Like {

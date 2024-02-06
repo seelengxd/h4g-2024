@@ -15,6 +15,7 @@ export interface Blog {
     likes: Likes[];
     user: User;
     createdAt: Date;
+    imageUrl: string;
 }
 
 export interface BlogPostData {
@@ -23,4 +24,5 @@ export interface BlogPostData {
     tags: number[];
     likes: number[];
     images: File[];
+    imageUrl: string;
 }

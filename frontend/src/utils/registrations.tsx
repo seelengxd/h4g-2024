@@ -188,9 +188,16 @@ export const VolunteerRegistrationTableColumns = (
       header: "Feedback",
       enableSorting: false,
       enableGlobalFilter: false,
-      cell: (cell) => (
-        <FeedbackDisplay feedback={cell.row.original.feedback} isAdmin />
-      ),
+      cell: (cell) =>
+        cell.row.original.feedback ? (
+          <FeedbackDisplay feedback={cell.row.original.feedback} isAdmin />
+        ) : (
+          <BaseSessionTag
+            tagBgColor="bg-red-100"
+            tagTextColor="text-red-700"
+            status="No Feedback"
+          />
+        ),
     }),
   ] as Array<ColumnDef<RegistrationRowData>>;
 };

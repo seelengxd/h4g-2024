@@ -6,10 +6,11 @@ import {
 } from "@tanstack/react-table";
 
 import React, { ReactNode } from "react";
-import { ActivityMiniData } from "../types/activities/activities";
+import { ActivityData, ActivityMiniData } from "../types/activities/activities";
 import { Link } from "react-router-dom";
 import IconButton from "../components/buttons/IconButton";
 import { EyeIcon } from "@heroicons/react/24/outline";
+import { UserMiniData } from "../types/users/users";
 
 export interface ActivityRowData extends ActivityMiniData {
   action?: undefined;
@@ -57,4 +58,13 @@ export const ActivityTableColumns = (
       ),
     }),
   ] as Array<ColumnDef<ActivityMiniData>>;
+};
+
+export const isUserEnrolled = (user: UserMiniData, activity: ActivityData) => {
+  return activity.sessions.some(
+    (sessions) =>
+      sessions.registrations.filter(
+        (registration) => registration.userId === user!.id
+      ).length > 0
+  );
 };

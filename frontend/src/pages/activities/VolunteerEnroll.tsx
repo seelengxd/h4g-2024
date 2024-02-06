@@ -24,13 +24,15 @@ import DropdownInput from "../../components/forms/custom/DropdownInput";
 import submissionsAPI from "../../api/enrollmentForms/submissions";
 import { Answer, AnswerValue } from "../../types/enrollmentForms/submissions";
 import { generateDefaultAnswer } from "../../utils/forms";
-import enrollmentFormsAPI from "../../api/enrollmentForms/enrollmentForms";
-import { Submission } from "../../types/forms/forms";
+import { useAppSelector } from "../../reducers/hooks";
+import { selectUser } from "../../reducers/authSlice";
+import { isUserEnrolled } from "../../utils/activities";
 
 const VolunteerEnroll: React.FC = () => {
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
+  const user = useAppSelector(selectUser);
 
   const [activity, setActivity] = useState<ActivityData | null>(null);
   const hasEnrollmentForm = !!activity?.enrollmentForm;
@@ -39,6 +41,10 @@ const VolunteerEnroll: React.FC = () => {
   useEffect(() => {
     activitiesAPI.getActivity(parseInt(id!)).then((activity) => {
       setActivity(activity);
+      if (isUserEnrolled(user!, activity)) {
+        navigate("/your-activities");
+      }
+
       console.log({ activity });
       if (activity.enrollmentForm?.formSchema.components) {
         setAnswers(

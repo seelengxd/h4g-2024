@@ -10,10 +10,15 @@ import {
 } from "@heroicons/react/20/solid";
 
 import { format } from "date-fns";
+import { useAppSelector } from "../../reducers/hooks";
+import { selectUser } from "../../reducers/authSlice";
+import Button from "../../components/buttons/Button";
+import { isUserEnrolled } from "../../utils/activities";
 
 const VolunteerActivity: React.FC = () => {
   const { id } = useParams();
   const location = useLocation();
+  const user = useAppSelector(selectUser);
 
   const [activity, setActivity] = useState<ActivityData | null>(null);
   useEffect(() => {
@@ -80,15 +85,28 @@ const VolunteerActivity: React.FC = () => {
           )}
           <p className="mt-4">{activity.description}</p>
 
-          <Link
-            to={"/activities/" + activity.id.toString() + "/enroll"}
-            className={
-              "flex justify-center mt-8 items-center rounded-full bg-primary-600 px-3 py-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
-            }
-            state={{ prevRoute: "/activities/" + activity.id.toString() }}
-          >
-            Enroll in Event
-          </Link>
+          {isUserEnrolled(user!, activity) ? (
+            <>
+              <button
+                disabled
+                className={
+                  "opacity-60 flex justify-center mt-8 items-center rounded-full bg-primary-600 px-3 py-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
+                }
+              >
+                Enroll in Event
+              </button>
+            </>
+          ) : (
+            <Link
+              to={"/activities/" + activity.id.toString() + "/enroll"}
+              className={
+                "flex justify-center mt-8 items-center rounded-full bg-primary-600 px-3 py-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
+              }
+              state={{ prevRoute: "/activities/" + activity.id.toString() }}
+            >
+              Enroll in Event
+            </Link>
+          )}
         </div>
         <div className="flex flex-col h-[calc(100vh-80px)] max-h-full gap-8 overflow-y-scroll">
           {activity.images.map((image) => (

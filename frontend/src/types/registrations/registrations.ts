@@ -8,6 +8,7 @@ export type Attendance = boolean | null;
 export interface RegistrationMiniData {
   id: number;
   attendance: Attendance;
+  userId: number;
 }
 
 export interface Registration extends RegistrationMiniData {

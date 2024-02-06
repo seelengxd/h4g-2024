@@ -10,6 +10,7 @@ import skillsRouter from "./skills";
 import registrationsRouter from "./registrations";
 import sessionsRouter from "./sessions";
 import feedbackRouter from "./feedback";
+import blogRouter from "./blog";
 
 const apiRouter = Router();
 
@@ -24,5 +25,6 @@ apiRouter.use("/skills", skillsRouter)
 apiRouter.use("/registrations", registrationsRouter);
 apiRouter.use("/sessions", sessionsRouter);
 apiRouter.use("/feedbacks", feedbackRouter);
+apiRouter.use("/blogs", blogRouter);
 
 export default apiRouter;

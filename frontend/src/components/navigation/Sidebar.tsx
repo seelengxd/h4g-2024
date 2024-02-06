@@ -40,7 +40,7 @@ const volunteerContent = [
   {
     label: "Blog",
     icon: <CalendarDaysIcon className="w-8 h-8 fill-white" />,
-    linkTo: "/blog",
+    linkTo: "/blogs",
   },
   {
     label: "Certificates",

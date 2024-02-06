@@ -194,6 +194,8 @@ model Blog {
 
   tags  Interest[]
   likes Like[]
+
+  createdAt     DateTime       @default(now())
 }
 
 model Like {

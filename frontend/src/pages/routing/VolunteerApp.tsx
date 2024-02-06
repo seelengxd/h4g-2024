@@ -10,7 +10,9 @@ import VolunteeringOpportunities from "../activities/VolunteeringOpportunities";
 import VolunteerActivity from "../activities/VolunteerActivity";
 import VolunteerEnroll from "../activities/VolunteerEnroll";
 import VolunteerActivities from "../activities/VolunteerActivities";
+import ViewProfile from "../profile/ViewProfile";
 import VolunteerFeedback from "../feedback/VolunteerFeedback";
+
 
 export const Error404 = (
   <Error
@@ -28,6 +30,8 @@ const VolunteerApp: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<VolunteerDashboard />} />
+
+      <Route path="/profile" element={<ViewProfile />} />
 
       {/* Organisation Routes */}
       <Route path="/organisations" element={<Organisations />} />

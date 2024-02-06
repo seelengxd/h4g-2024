@@ -25,6 +25,10 @@ app.use(cookieParser());
 app.use(cors({ origin: FRONTEND_URL, credentials: true }));
 app.use(logger("tiny"));
 app.use("/api/uploads", express.static(path.join(__dirname, "..", "uploads")));
+app.use(
+  "/api/templates",
+  express.static(path.join(__dirname, "..", "templates"))
+);
 
 // PassportJS setup
 const PostgresqlStore = genFunc(session);

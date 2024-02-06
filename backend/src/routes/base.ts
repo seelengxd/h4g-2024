@@ -10,6 +10,7 @@ import skillsRouter from "./skills";
 import registrationsRouter from "./registrations";
 import sessionsRouter from "./sessions";
 import feedbackRouter from "./feedback";
+import volunteersRouter from "./volunteers";
 
 const apiRouter = Router();
 
@@ -20,9 +21,10 @@ apiRouter.use("/activities", activitiesRouter);
 apiRouter.use("/enrollment-forms", enrollmentFormsRouter);
 apiRouter.use("/submissions", submissionsRouter);
 apiRouter.use("/interests", interestsRouter);
-apiRouter.use("/skills", skillsRouter)
+apiRouter.use("/skills", skillsRouter);
 apiRouter.use("/registrations", registrationsRouter);
 apiRouter.use("/sessions", sessionsRouter);
 apiRouter.use("/feedbacks", feedbackRouter);
+apiRouter.use("/volunteers", volunteersRouter);
 
 export default apiRouter;

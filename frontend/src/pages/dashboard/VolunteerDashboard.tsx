@@ -68,24 +68,15 @@ const VolunteerDashboard: React.FC = () => {
         </div>
       </div>
       <div className="grid grid-cols-3 grid-rows-2 p-8 px-16 gap-x-12 gap-y-8 h-[calc(100vh-100px)]">
-        {/* <div className="col-span-2 row-start-1 row-end-4">
-          <CardContainer label={"Volunteer Opportunities"} seeMoreUrl="#">
-            {test.map(() => (
-              <div className="w-4/12 overflow-hidden bg-green-200 max-h-56 rounded-2xl snap-start shrink-0">
-                <img
-                  className="object-cover"
-                  src="https://www.pic-control.com/blog/thermal-camera-calibration-plate/thermal-camera-calibration-plate-checker-board-pattern-pcb.png"
-                  alt="placeholder"
-                />
-              </div>
-            ))}
-          </CardContainer>
-        </div> */}
         <div className="col-span-1">
           <CardContainer label={"Upcoming Events"} vertical>
             {registrations
-              .filter((registration) =>
-                isFuture(new Date(registration.session.start))
+              .filter(
+                (registration) =>
+                  isFuture(new Date(registration.session.start)) &&
+                  registration.session.activity.name
+                    .toLowerCase()
+                    .includes(searchValue.toLowerCase())
               )
               .map((registration) => (
                 <EventCard registration={registration} />
@@ -95,13 +86,17 @@ const VolunteerDashboard: React.FC = () => {
         {/* Volunteer Activities? */}
         <div className="col-span-2">
           <CardContainer>
-            {activities.map((activity) => (
-              <VolunteeringOpportunityCard
-                activity={activity}
-                showButton={false}
-                dashboard
-              />
-            ))}
+            {activities
+              .filter((activity) =>
+                activity.name.toLowerCase().includes(searchValue.toLowerCase())
+              )
+              .map((activity) => (
+                <VolunteeringOpportunityCard
+                  activity={activity}
+                  showButton={false}
+                  dashboard
+                />
+              ))}
           </CardContainer>
         </div>
         {/* Certificates */}
@@ -119,7 +114,10 @@ const VolunteerDashboard: React.FC = () => {
               .filter(
                 (registration) =>
                   isPast(new Date(registration.session.start)) &&
-                  !registration.feedback
+                  !registration.feedback &&
+                  registration.session.activity.name
+                    .toLowerCase()
+                    .includes(searchValue.toLowerCase())
               )
               .map((registration) => (
                 <EventCard registration={registration} showFeedback />

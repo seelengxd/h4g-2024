@@ -84,8 +84,7 @@ const EditBlog: React.FC = () => {
         onSubmit={handleSubmit}
       >
         {/* left half */}
-
-        <div className="flex flex-col w-2/3">
+        <div className="flex flex-col w-2/3 min-w-96">
           <Link to="/blogs" className="flex justify-start items-center ">
             <svg
               className="w-4 h-4 "
@@ -132,7 +131,7 @@ const EditBlog: React.FC = () => {
         </div>
 
         {/* right half */}
-        <div className="width-1/3 pl-8 pt-8">
+        <div className="w-1/3 pl-8 pt-8 max-w-96 min-w-96">
           <FormControl onBlur={handleBlur}>
             <div className="flex justify-center items-center pl-6">
               <ImageUploader

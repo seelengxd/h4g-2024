@@ -21,6 +21,9 @@ module.exports = {
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
       },
+      screens: {
+        'xs': '1400px', // Define your custom breakpoint
+      },
     },
   },
   plugins: [

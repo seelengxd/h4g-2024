@@ -3,7 +3,6 @@ import { Link, useParams } from "react-router-dom";
 import { Blog } from "../../types/blogs/blogs";
 import blogsAPI from "../../api/blogs/blogs";
 import { format } from "date-fns";
-import Button from "../../components/buttons/Button";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../reducers/authSlice";
 
@@ -32,8 +31,7 @@ const ViewBlog: React.FC = () => {
   return (
     <div className="flex px-20 py-20">
       {/* left half */}
-
-      <div className="flex flex-col w-2/3">
+      <div className="flex flex-col w-2/3 min-w-80">
         <Link to="/blogs" className="flex justify-start items-center ">
           <svg
             className="w-4 h-4 "
@@ -84,7 +82,7 @@ const ViewBlog: React.FC = () => {
       {/* right half */}
       <div className="width-1/3 pl-8 pt-8">
         <img
-          className="bg-white"
+          className="bg-white max-w-96"
           src={
             process.env.REACT_APP_BACKEND_URL +
             "/" +

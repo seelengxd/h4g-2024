@@ -22,9 +22,9 @@ const Blogs: React.FC = () => {
   console.log("blogs ==> ", blogs);
 
   return (
-    <div className="bg-primary-100 h-full px-28">
+    <div className="bg-primary-100 h-screen pl-28 pr-10 flex justify-between">
       <div className="flex h-screen py-20">
-        <div className="w-1/4">
+        <div className="w-1/4 min-w-80">
           <h1 className="text-2xl font-bold pb-2">Blog</h1>
           <div className="flex items-center">
             <input
@@ -62,14 +62,15 @@ const Blogs: React.FC = () => {
           <p className="inline text-sm text-gray-600">Written by me </p>
         </div>
 
-        <div className="flex-1 flex flex-col items-end">
-          <Link to="/blogs/new">
+        {/* right side */}
+        <div className="flex-1 flex flex-col items-end h-full overflow-auto min-w-fit ml-8">
+          <Link to="/blogs/new" className="pb-4">
             <Button type="submit" roundness="xl">
               Write New Post
             </Button>
           </Link>
 
-          <div className="h-full overflow-y-auto pt-4 grid grid-cols-2 gap-8">
+          <div className="h-full overflow-y-auto pt-4 grid grid-cols-2 xs:grid-cols-1 gap-8">
             {blogs
               .filter((blog: Blog) =>
                 userFilter ? blog.user.id === currUserId : blog

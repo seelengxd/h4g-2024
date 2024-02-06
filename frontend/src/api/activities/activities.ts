@@ -27,6 +27,7 @@ class ActivitiesAPI {
     form.append("organisationId", data.organisationId.toString());
     form.append("description", data.description);
     form.append("location", data.location);
+    form.append("capacity", data.capacity.toString());
 
     // Append images if available
     if (data.images && data.images.length > 0) {
@@ -49,6 +50,7 @@ class ActivitiesAPI {
     form.append("organisationId", JSON.stringify(data.organisationId));
     form.append("description", data.description);
     form.append("location", data.location);
+    form.append("capacity", data.capacity.toString());
 
     // Append images if available
     if (data.images && data.images.length > 0) {

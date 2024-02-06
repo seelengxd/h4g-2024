@@ -36,4 +36,5 @@ export interface ActivityPostData {
   description: string;
   location: string;
   images: File[];
+  capacity: number;
 }

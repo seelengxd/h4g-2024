@@ -37,7 +37,7 @@ const AppRouter: React.FC = () => {
         </div>
       ) : isLoggedIn ? (
         isAdmin ? (
-          <div className="relative flex h-screen">
+          <div className="relative flex h-screen overflow-y-clip">
             <SideBar />
             {/* to not go into the sidebar */}
             <div className="w-full max-h-screen ml-24 overflow-y-auto">
@@ -45,7 +45,7 @@ const AppRouter: React.FC = () => {
             </div>
           </div>
         ) : (
-          <div className="relative flex h-screen">
+          <div className="relative flex h-screen overflow-y-clip">
             <SideBar />
             {/* to not go into the sidebar */}
             <div className="w-full max-h-screen ml-24 overflow-y-auto">

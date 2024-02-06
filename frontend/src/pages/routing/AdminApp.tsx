@@ -16,6 +16,7 @@ import ViewSessionAttendances from "../sessions/ViewSessionAttendances";
 import DropInAttendance from "../sessions/DropInAttendance";
 import Volunteers from "../volunteers/Volunteers";
 import Volunteer from "../volunteers/Volunteer";
+import ViewVolunteerActivityReport from "../reports/VolunteerActivityReport";
 
 const Error404 = (
   <Error
@@ -69,7 +70,12 @@ const AdminApp: React.FC = () => {
         element={<ViewEnrollmentForm />}
       />
 
-      <Route path="/dashboard" element={<VolunteerDashboard />} />
+      {/* Volunteer Activity Report */}
+      <Route
+        path="/volunteer-activity-report"
+        element={<ViewVolunteerActivityReport />}
+      />
+
       {/* 404 */}
       <Route path="*" element={Error404} />
     </Routes>

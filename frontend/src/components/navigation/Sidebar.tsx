@@ -16,6 +16,7 @@ import { logOut, selectIsAdmin } from "../../reducers/authSlice";
 import authApi from "../../api/users/auth";
 import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
+import { ChartBarIcon } from "@heroicons/react/24/solid";
 
 const volunteerContent = [
   {
@@ -70,6 +71,11 @@ const adminContent = [
     label: "Organisations",
     icon: <BuildingOffice2Icon className="w-8 h-8 fill-white" />,
     linkTo: "/organisations",
+  },
+  {
+    label: "Volunteer Activity Report",
+    icon: <ChartBarIcon className="w-8 h-8 fill-white" />,
+    linkTo: "/volunteer-activity-report",
   },
   {
     label: "Log out",

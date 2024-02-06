@@ -1,4 +1,4 @@
-import { User } from "../users/users";
+import { UserMiniData } from "../users/users";
 
 export type AnswerValue = number | string | number[];
 
@@ -13,7 +13,7 @@ export interface Submission {
 }
 
 export interface SubmissionData extends Submission {
-  user: User;
+  user: UserMiniData;
 }
 
 export interface SubmissionPostData extends Submission {

@@ -1,7 +1,7 @@
-import { User } from "../../types/users/users";
+import { UserMiniData } from "../../types/users/users";
 
 interface UserAttendanceDialogUserDetailsProps {
-  user: User;
+  user: UserMiniData;
 }
 
 const UserAttendanceDialogUserDetails: React.FC<

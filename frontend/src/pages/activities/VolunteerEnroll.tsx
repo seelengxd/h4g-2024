@@ -24,13 +24,15 @@ import DropdownInput from "../../components/forms/custom/DropdownInput";
 import submissionsAPI from "../../api/enrollmentForms/submissions";
 import { Answer, AnswerValue } from "../../types/enrollmentForms/submissions";
 import { generateDefaultAnswer } from "../../utils/forms";
-import enrollmentFormsAPI from "../../api/enrollmentForms/enrollmentForms";
-import { Submission } from "../../types/forms/forms";
+import { useAppSelector } from "../../reducers/hooks";
+import { selectUser } from "../../reducers/authSlice";
+import { isUserEnrolled } from "../../utils/activities";
 
 const VolunteerEnroll: React.FC = () => {
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
+  const user = useAppSelector(selectUser);
 
   const [activity, setActivity] = useState<ActivityData | null>(null);
   const hasEnrollmentForm = !!activity?.enrollmentForm;
@@ -39,7 +41,10 @@ const VolunteerEnroll: React.FC = () => {
   useEffect(() => {
     activitiesAPI.getActivity(parseInt(id!)).then((activity) => {
       setActivity(activity);
-      console.log({ activity });
+      if (isUserEnrolled(user!, activity)) {
+        navigate("/your-activities");
+      }
+
       if (activity.enrollmentForm?.formSchema.components) {
         setAnswers(
           activity.enrollmentForm.formSchema.components.map((component) =>
@@ -87,9 +92,6 @@ const VolunteerEnroll: React.FC = () => {
     setFieldTouched,
   } = formik;
 
-  console.log({ errors, ids: values.sessionIds });
-  console.log({ activity });
-
   // Enrollment form logic
 
   const [answers, setAnswers] = useState<Answer[]>([]);
@@ -99,16 +101,6 @@ const VolunteerEnroll: React.FC = () => {
     newAnswers[questionIndex].value = answer;
     setAnswers(newAnswers);
   };
-
-  //   const handleEnrollmentSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //     e.preventDefault();
-  //     submissionsAPI
-  //       .createSubmission({
-  //         answer: answers,
-  //         enrollmentFormId: activity?.enrollmentForm.id!,
-  //       })
-  //       .then(() => navigate("/activities/" + parseInt(id!)));
-  //   };
 
   return activity ? (
     <div className="items-center justify-between max-h-screen p-6 mx-auto mt-8 max-w-7xl lg:px-8">

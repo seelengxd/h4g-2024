@@ -11,13 +11,23 @@ import _ from "lodash";
 interface VolunteeringOpportunityCardProps {
   activity: ActivityMiniData;
   showButton?: boolean;
+  dashboard?: boolean;
 }
 
 const VolunteeringOpportunityCard: React.FC<
   VolunteeringOpportunityCardProps
-> = ({ activity, showButton = true }: VolunteeringOpportunityCardProps) => {
+> = ({
+  activity,
+  showButton = true,
+  dashboard = false,
+}: VolunteeringOpportunityCardProps) => {
   return (
-    <div className="relative flex flex-col bg-primary-200 rounded-2xl overflow-clip">
+    <div
+      className={
+        "relative flex flex-col rounded-2xl overflow-clip" +
+        (dashboard ? " bg-white min-w-[18rem]" : " bg-primary-200")
+      }
+    >
       <img
         src={
           activity.images && !_.isEmpty(activity.images)

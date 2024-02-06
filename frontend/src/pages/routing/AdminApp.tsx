@@ -14,6 +14,9 @@ import VolunteerDashboard from "../dashboard/VolunteerDashboard";
 import ViewSession from "../sessions/ViewSession";
 import ViewSessionAttendances from "../sessions/ViewSessionAttendances";
 import DropInAttendance from "../sessions/DropInAttendance";
+import Volunteers from "../volunteers/Volunteers";
+import Volunteer from "../volunteers/Volunteer";
+import ViewVolunteerActivityReport from "../reports/VolunteerActivityReport";
 
 const Error404 = (
   <Error
@@ -30,6 +33,10 @@ const Error403 = (
 const AdminApp: React.FC = () => {
   return (
     <Routes>
+      {/* Volunteer routes */}
+      <Route path="/volunteers" element={<Volunteers />} />
+      <Route path="/volunteers/:id" element={<Volunteer />} />
+
       {/* Organisation Routes */}
       <Route path="/organisations" element={<Organisations />} />
       <Route path="/organisations/new" element={<CreateOrganisation />} />
@@ -44,8 +51,14 @@ const AdminApp: React.FC = () => {
 
       {/* Activity Session Routes */}
       <Route path="/sessions/:id" element={<ViewSession />} />
-      <Route path="/sessions/:id/attendances" element={<ViewSessionAttendances />} />
-      <Route path="/sessions/:id/attendances/drop_in" element={<DropInAttendance />} />
+      <Route
+        path="/sessions/:id/attendances"
+        element={<ViewSessionAttendances />}
+      />
+      <Route
+        path="/sessions/:id/attendances/drop_in"
+        element={<DropInAttendance />}
+      />
 
       {/* Enrollment forms*/}
       <Route
@@ -57,7 +70,12 @@ const AdminApp: React.FC = () => {
         element={<ViewEnrollmentForm />}
       />
 
-      <Route path="/dashboard" element={<VolunteerDashboard />} />
+      {/* Volunteer Activity Report */}
+      <Route
+        path="/volunteer-activity-report"
+        element={<ViewVolunteerActivityReport />}
+      />
+
       {/* 404 */}
       <Route path="*" element={Error404} />
     </Routes>

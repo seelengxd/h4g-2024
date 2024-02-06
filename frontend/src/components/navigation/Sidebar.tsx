@@ -1,6 +1,7 @@
 import {
   ArrowLeftStartOnRectangleIcon,
   Bars3Icon,
+  BuildingOffice2Icon,
   CalendarDaysIcon,
   DocumentArrowDownIcon,
   FireIcon,
@@ -15,6 +16,7 @@ import { logOut, selectIsAdmin } from "../../reducers/authSlice";
 import authApi from "../../api/users/auth";
 import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
+import { ChartBarIcon } from "@heroicons/react/24/solid";
 
 const volunteerContent = [
   {
@@ -56,14 +58,24 @@ const volunteerContent = [
 
 const adminContent = [
   {
+    label: "Volunteers",
+    icon: <UserGroupIcon className="w-8 h-8 fill-white" />,
+    linkTo: "/volunteers",
+  },
+  {
     label: "Activities",
     icon: <FireIcon className="w-8 h-8 fill-white" />,
     linkTo: "/activities",
   },
   {
     label: "Organisations",
-    icon: <UserGroupIcon className="w-8 h-8 fill-white" />,
+    icon: <BuildingOffice2Icon className="w-8 h-8 fill-white" />,
     linkTo: "/organisations",
+  },
+  {
+    label: "Volunteer Activity Report",
+    icon: <ChartBarIcon className="w-8 h-8 fill-white" />,
+    linkTo: "/volunteer-activity-report",
   },
   {
     label: "Log out",

@@ -22,7 +22,7 @@ export interface BlogPostData {
     title: string;
     description: string;
     tags: number[];
-    likes: number[];
-    images: File[];
-    imageUrl: string;
+    //imageUrl: string;
+    image?: File;
+    userId: number;
 }

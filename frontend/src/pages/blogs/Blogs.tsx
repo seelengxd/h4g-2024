@@ -6,6 +6,7 @@ import { Blog } from "../../types/blogs/blogs";
 import blogsAPI from "../../api/blogs/blogs";
 import { selectUser } from "../../reducers/authSlice";
 import { useSelector } from "react-redux";
+import { format } from "date-fns";
 
 const Blogs: React.FC = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -22,8 +23,8 @@ const Blogs: React.FC = () => {
 
   return (
     <div className="bg-primary-100 h-full px-28">
-      <div className="flex h-screen m1 py-20">
-        <div className="w-1/3">
+      <div className="flex h-screen py-20">
+        <div className="w-1/4">
           <h1 className="text-2xl font-bold pb-2">Blog</h1>
           <div className="flex items-center">
             <input
@@ -62,9 +63,11 @@ const Blogs: React.FC = () => {
         </div>
 
         <div className="flex-1 flex flex-col items-end">
-          <Button type="submit" roundness="xl">
-            Write New Post
-          </Button>
+          <Link to="/blogs/new">
+            <Button type="submit" roundness="xl">
+              Write New Post
+            </Button>
+          </Link>
 
           <div className="h-full overflow-y-auto pt-4 grid grid-cols-2 gap-8">
             {blogs
@@ -82,11 +85,19 @@ const Blogs: React.FC = () => {
                       "by " +
                       blog.user.preferredName +
                       ", " +
-                      new Date(blog.createdAt).toLocaleDateString()
+                      format(new Date(blog.createdAt), "dd MMM yyyy")
                     }
                     blogPreview={blog.description}
-                    profileImageUrl="uploads/placeholder-image.png"
-                    blogImageUrl="uploads/placeholder-image.png"
+                    profileImageUrl={
+                      blog.user.profile?.imageUrl
+                        ? blog.user.profile.imageUrl
+                        : "uploads/placeholder-image.png"
+                    }
+                    blogImageUrl={
+                      blog.imageUrl
+                        ? blog.imageUrl
+                        : "uploads/placeholder-image.png"
+                    }
                   />
                 </Link>
               ))}

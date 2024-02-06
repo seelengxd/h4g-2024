@@ -91,6 +91,7 @@ const ViewProfile: React.FC = () => {
       email: string().trim().required("Email cannot be empty."),
     }),
     onSubmit: async (values) => {
+      //console.log(navigate('/profile'));
       handleValues(values).then(() => navigate(`/profile`));
     },
     enableReinitialize: true,

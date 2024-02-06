@@ -19,14 +19,19 @@ class BlogsAPI {
 
     public async createBlog(data: BlogPostData): Promise<Number> {
         const form = new FormData();
+        //console.log("the form");
 
         form.append("title", data.title);
         form.append("description", data.description);
-        data.tags.forEach((tag) => form.append('tags', tag.toString()));
+        data.tags.forEach((tag) => form.append('tags', tag.toString())); //not used yet
+        form.append("userId", data.userId.toString());
 
-        if (data.images) {
-            data.images.forEach((image) => form.append('images[]', image as Blob));
-        };
+        if (data.image) {
+            //console.log("image is here")
+            form.append("image", data.image as Blob);
+        }
+
+        //console.log("data: ",{data})
 
         const response = await client.post(this.getBlogsUrl(), form);
         return response.data.id;
@@ -34,15 +39,16 @@ class BlogsAPI {
 
     public async updateBlog(id: number, data: BlogPostData): Promise<Number> {
         const form = new FormData();
+        console.log("updates here")
 
         form.append("title", data.title);
         form.append("description", data.description);
         data.tags.forEach((tag) => form.append('tags', tag.toString()));
-        data.likes.forEach((like) => form.append('like', like.toString()));
 
-        if (data.images) {
-            data.images.forEach((image) => form.append('images[]', image as Blob));
-        };
+        if (data.image) {
+            form.append("image", data.image as Blob);
+        }
+        
 
         const response = await client.put(`${this.getBlogsUrl()}/${id}`, form);
         return response.data.id;

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Blog } from "../../types/blogs/blogs";
 import blogsAPI from "../../api/blogs/blogs";
+import { format } from "date-fns";
 
 const ViewBlog: React.FC = () => {
   //console.log("arrived on page");
@@ -45,7 +46,7 @@ const ViewBlog: React.FC = () => {
           by {blog?.user.preferredName}
         </h2>
         <h2 className="text-gray-600 text-sm">
-          Posted on {blog ? new Date(blog.createdAt).toLocaleDateString() : ""}
+          Posted on {blog ? format(new Date(blog.createdAt), "dd MMM yyyy"): ""}
         </h2>
 
         <p className="py-7 text-gray-800">{blog?.description}</p>

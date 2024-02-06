@@ -14,6 +14,7 @@ import ViewProfile from "../profile/ViewProfile";
 import VolunteerFeedback from "../feedback/VolunteerFeedback";
 import Blogs from "../blogs/Blogs";
 import ViewBlog from "../blogs/ViewBlog";
+import CreateBlog from "../blogs/CreateBlog";
 
 
 export const Error404 = (
@@ -37,6 +38,7 @@ const VolunteerApp: React.FC = () => {
       
       <Route path="/blogs" element={<Blogs />} />
       <Route path="/blogs/:id" element={<ViewBlog />} />
+      <Route path="/blogs/new" element={<CreateBlog />} />
       
 
       {/* Organisation Routes */}

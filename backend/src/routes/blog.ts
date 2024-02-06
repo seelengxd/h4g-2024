@@ -10,7 +10,7 @@ import {
 const blogRouter = Router();
 
 blogRouter.get("/", index);
-blogRouter.get("/", create);
+blogRouter.post("/", create);
 blogRouter.get("/:id", show);
 blogRouter.put("/:id", update);
 blogRouter.delete("/:id", destroy);

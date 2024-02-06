@@ -37,10 +37,8 @@ const CardContainer: React.FC<Props> = ({
         ></img>
       </div>
 
-<div className="">
-      <p className="text-xs px-3 text-gray-600">
-        {blogPreview}
-      </p>
+      <div className="">
+        <p className="text-xs px-3 text-gray-600">{blogPreview}</p>
       </div>
     </div>
   );

@@ -45,7 +45,6 @@ const VolunteerEnroll: React.FC = () => {
         navigate("/your-activities");
       }
 
-      console.log({ activity });
       if (activity.enrollmentForm?.formSchema.components) {
         setAnswers(
           activity.enrollmentForm.formSchema.components.map((component) =>
@@ -93,9 +92,6 @@ const VolunteerEnroll: React.FC = () => {
     setFieldTouched,
   } = formik;
 
-  console.log({ errors, ids: values.sessionIds });
-  console.log({ activity });
-
   // Enrollment form logic
 
   const [answers, setAnswers] = useState<Answer[]>([]);
@@ -105,16 +101,6 @@ const VolunteerEnroll: React.FC = () => {
     newAnswers[questionIndex].value = answer;
     setAnswers(newAnswers);
   };
-
-  //   const handleEnrollmentSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //     e.preventDefault();
-  //     submissionsAPI
-  //       .createSubmission({
-  //         answer: answers,
-  //         enrollmentFormId: activity?.enrollmentForm.id!,
-  //       })
-  //       .then(() => navigate("/activities/" + parseInt(id!)));
-  //   };
 
   return activity ? (
     <div className="items-center justify-between max-h-screen p-6 mx-auto mt-8 max-w-7xl lg:px-8">

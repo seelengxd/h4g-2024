@@ -1,6 +1,4 @@
-import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { PropsWithChildren } from "react";
-import { Link } from "react-router-dom";
 
 interface Props extends PropsWithChildren {
   title: string;

@@ -34,7 +34,7 @@ const EditBlog: React.FC = () => {
   };
 
   const handleValues = async (values: BlogPostData) => {
-    console.log("handling: ", values);
+    //console.log("handling: ", values);
     await blogsAPI.updateBlog(Number(id), values);
   };
 
@@ -48,18 +48,18 @@ const EditBlog: React.FC = () => {
     setImageDisplayUrl(fullUrl);
   }, [initialValues.imageUrl]);
 
-  console.log("img url==> ", imageDisplayUrl);
-  console.log("img url===> ", initialValues.imageUrl);
-  console.log("dd ", blog);
+  //console.log("img url==> ", imageDisplayUrl);
+  //console.log("img url===> ", initialValues.imageUrl);
+  //console.log("dd ", blog);
 
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: object({
       title: string().trim().required("Title cannot be empty."),
-      // description: string()
-      //   .trim()
-      //   .required("Description name cannot be empty."),
+      description: string()
+        .trim()
+        .required("Description name cannot be empty."),
     }),
     onSubmit: async (values) => {
       handleValues(values).then(() => navigate(`/blogs`));

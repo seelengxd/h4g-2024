@@ -12,8 +12,26 @@ const Blogs: React.FC = () => {
   const [searchValue, setSearchValue] = useState("");
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [userFilter, setUserFilter] = useState(false);
-
   const currUserId = useSelector(selectUser)?.id;
+
+  const getWindowDimensions = () => {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+      width,
+      height,
+    };
+  };
+
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     blogsAPI.getAllBlogs().then((blog) => setBlogs(blog));
@@ -22,8 +40,8 @@ const Blogs: React.FC = () => {
   console.log("blogs ==> ", blogs);
 
   return (
-    <div className="bg-primary-100 h-screen pl-28 pr-10 flex justify-between">
-      <div className="flex h-screen py-20">
+    <div className="bg-primary-100 w-full h-screen px-28 flex justify-between">
+      <div className="flex py-20 justify-between w-screen">
         <div className="w-1/4 min-w-80">
           <h1 className="text-2xl font-bold pb-2">Blog</h1>
           <div className="flex items-center">
@@ -63,14 +81,19 @@ const Blogs: React.FC = () => {
         </div>
 
         {/* right side */}
-        <div className="flex-1 flex flex-col items-end h-full overflow-auto min-w-fit ml-8">
+        <div className="right-0 flex-1 flex flex-col items-end h-full overflow-auto ml-8">
           <Link to="/blogs/new" className="pb-4">
             <Button type="submit" roundness="xl">
               Write New Post
             </Button>
           </Link>
 
-          <div className="h-full overflow-y-auto pt-4 grid grid-cols-2 xs:grid-cols-1 gap-8">
+          <div
+            className={
+              "h-full overflow-y-auto pt-4 grid gap-5 " +
+              (windowDimensions.width > 1000 ? "grid-cols-2" : "grid-cols-1")
+            }
+          >
             {blogs
               .filter((blog: Blog) =>
                 userFilter ? blog.user.id === currUserId : blog

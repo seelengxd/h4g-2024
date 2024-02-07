@@ -78,6 +78,7 @@ async function main() {
         password: bcrypt.hashSync("password", 8),
         email: "user1@gmail.com",
         fullName: "user1 user1",
+        phone: "87654321",
         preferredName: "user1",
         profile: {
           create: {
@@ -98,8 +99,6 @@ async function main() {
                 { name: "Math" },
               ],
             },
-            saturday: true,
-            sunday: true,
             imageUrl: "uploads/user_icons/icon_1.png",
           },
         },
@@ -123,6 +122,7 @@ async function main() {
         email: "user2@gmail.com",
         fullName: "user2 user2",
         preferredName: "user2",
+        phone: "87654321",
         profile: {
           create: {
             dob: "2022-01-15T12:30:00.000Z",
@@ -143,8 +143,6 @@ async function main() {
                 { name: "Knitting" },
               ],
             },
-            monday: true,
-            friday: true,
             imageUrl: "uploads/user_icons/icon_4.png",
           },
         },
@@ -172,6 +170,7 @@ async function main() {
     const admin = await prisma.user.create({
       data: {
         password: bcrypt.hashSync("password", 8),
+        phone: "87654321",
         email: "admin@gmail.com",
         role: Role.ADMIN,
         fullName: "admin admin",

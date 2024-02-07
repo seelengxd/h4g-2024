@@ -19,6 +19,7 @@ model User {
   id            Int            @id @default(autoincrement())
   createdAt     DateTime       @default(now())
   password      String
+  phone         String
   email         String         @unique
   role          Role           @default(USER)
   fullName      String
@@ -45,20 +46,50 @@ enum Salutation {
   Dr
 }
 
-model Profile {
-  id          Int        @id @default(autoincrement())
-  dob         DateTime?
-  description String?
-  interests   Interest[]
-  skills      Skill[]
+enum CommitmentLevel {
+  Adhoc
+  Weekly
+  Monthly
+}
 
-  monday    Boolean @default(false)
-  tuesday   Boolean @default(false)
-  wednesday Boolean @default(false)
-  thursday  Boolean @default(false)
-  friday    Boolean @default(false)
-  saturday  Boolean @default(false)
-  sunday    Boolean @default(false)
+enum ImmigrationStatus {
+  Citizen
+  Pr
+  Ep
+  Dp
+  LOC
+  WP
+  Visitor
+}
+
+enum EducationLevel {
+  No
+  Primary
+  LowerSecondary
+  Secondary
+  PostSecondary
+  Diploma
+  Professional
+  Bachelor
+  Master
+  Doctorate
+}
+
+model Profile {
+  id                Int                @id @default(autoincrement())
+  dob               DateTime?
+  description       String?
+  interests         Interest[]
+  skills            Skill[]
+  gender            Gender?
+  driving           Boolean?
+  ownVehicle        Boolean?
+  commitmentLevel   CommitmentLevel?
+  immigrationStatus ImmigrationStatus?
+  educationLevel    EducationLevel?
+
+  // bit-string
+  availability String?
 
   user   User @relation(fields: [userId], references: [id])
   userId Int  @unique
@@ -195,8 +226,8 @@ model Blog {
   tags  Interest[]
   likes Like[]
 
-  createdAt     DateTime       @default(now())
-  imageUrl      String?
+  createdAt DateTime @default(now())
+  imageUrl  String?
 }
 
 model Like {

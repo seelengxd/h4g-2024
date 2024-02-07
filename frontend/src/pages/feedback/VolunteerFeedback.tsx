@@ -1,17 +1,13 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Spinner from "../../components/loading/Spinner";
-import {
-  ArrowLeftIcon,
-  ClockIcon,
-  MapPinIcon,
-} from "@heroicons/react/20/solid";
+import { ArrowLeftIcon } from "@heroicons/react/20/solid";
 
-import { differenceInMinutes, format, isSameDay } from "date-fns";
+import { format, isSameDay } from "date-fns";
 
 import Button from "../../components/buttons/Button";
 import { useFormik } from "formik";
-import { number, object, string } from "yup";
+import { object, string } from "yup";
 import { Registration } from "../../types/registrations/registrations";
 import FormControl from "../../components/forms/FormControl";
 
@@ -21,6 +17,7 @@ import { Feedback } from "../../types/feedback/feedback";
 
 import Label from "../../components/forms/Label";
 import feedbackAPI from "../../api/feedback/feedback";
+import { ClockTwoIcon, LocationPinIcon } from "../../components/icons/icons";
 
 const VolunteerFeedback: React.FC = () => {
   const { id } = useParams();
@@ -145,12 +142,12 @@ const VolunteerFeedback: React.FC = () => {
             </Link>
           </p>
           <p className="flex items-center mt-2 text-md">
-            <MapPinIcon className="w-4 h-4 mr-2" />
+            <LocationPinIcon className="w-4 h-4 mr-2" />
             {session.activity.location}
           </p>
 
           <p className="flex items-center mt-2 text-md">
-            <ClockIcon className="w-4 h-4 mr-2" />
+            <ClockTwoIcon className="w-4 h-4 mr-2" />
             <p>
               {format(new Date(session.start), "EEEE d MMMM, hh:mma-")}
               {isSameDay(new Date(session.start), new Date(session.end))

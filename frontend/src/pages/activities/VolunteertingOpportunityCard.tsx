@@ -1,12 +1,9 @@
-import {
-  MapPinIcon,
-  ClockIcon,
-  ArrowTopRightOnSquareIcon,
-} from "@heroicons/react/24/outline";
+import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import { ActivityMiniData } from "../../types/activities/activities";
 import _ from "lodash";
+import { ClockTwoIcon, LocationPinIcon } from "../../components/icons/icons";
 
 interface VolunteeringOpportunityCardProps {
   activity: ActivityMiniData;
@@ -43,12 +40,12 @@ const VolunteeringOpportunityCard: React.FC<
         <p className="text-xl font-bold">{activity.name}</p>
         <p className="text-sm">{activity.organisationName}</p>
         <p className="flex items-center text-base">
-          <MapPinIcon className="w-4 h-4 mr-2 shrink-0" />
+          <LocationPinIcon className="w-4 h-4 mr-2 shrink-0" />
           {activity.location}
         </p>
         {!!activity.sessions.length && (
           <div className="flex items-center">
-            <ClockIcon className="w-4 h-4 mr-2 shrink-0" />
+            <ClockTwoIcon className="w-4 h-4 mr-2 shrink-0" />
             <p className="text-base">
               {format(
                 new Date(activity.sessions[0]!.start),

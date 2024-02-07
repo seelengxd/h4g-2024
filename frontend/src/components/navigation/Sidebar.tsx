@@ -1,14 +1,7 @@
 import {
-  ArrowLeftStartOnRectangleIcon,
   Bars3Icon,
   BuildingOffice2Icon,
-  CalendarDaysIcon,
-  DocumentArrowDownIcon,
-  FireIcon,
-  HeartIcon,
-  RectangleGroupIcon,
   UserGroupIcon,
-  UserIcon,
 } from "@heroicons/react/20/solid";
 import { Link, useLocation } from "react-router-dom";
 import { useAppDispatch } from "../../reducers/hooks";
@@ -17,41 +10,50 @@ import authApi from "../../api/users/auth";
 import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import { ChartBarIcon } from "@heroicons/react/24/solid";
+import {
+  BlogWritingIcon,
+  CertificateIcon,
+  DashboardIcon,
+  EventsCalendarIcon,
+  LogoutIcon,
+  ProfileIcon,
+  VolunteerKindnessCareHeartLoveIcon,
+} from "../icons/icons";
 
 const volunteerContent = [
   {
     label: "My Profile",
-    icon: <UserIcon className="w-8 h-8 fill-white" />,
+    icon: <ProfileIcon className="w-8 h-8 stroke-white fill-white" />,
     linkTo: "/profile",
   },
   {
     label: "Dashboard",
-    icon: <RectangleGroupIcon className="w-8 h-8 fill-white" />,
+    icon: <DashboardIcon className="w-8 h-8 stroke-2 stroke-white" />,
     linkTo: "/",
   },
   {
     label: "Events",
-    icon: <CalendarDaysIcon className="w-8 h-8 fill-white" />,
+    icon: <EventsCalendarIcon className="w-8 h-8 fill-white" />,
     linkTo: "/activities",
   },
   {
     label: "Your Activity",
-    icon: <HeartIcon className="w-8 h-8 fill-white" />,
+    icon: <VolunteerKindnessCareHeartLoveIcon className="w-8 h-8 fill-white" />,
     linkTo: "/your-activities",
   },
   {
     label: "Blog",
-    icon: <CalendarDaysIcon className="w-8 h-8 fill-white" />,
+    icon: <BlogWritingIcon className="w-8 h-8 fill-white" />,
     linkTo: "/blogs",
   },
   {
     label: "Certificates",
-    icon: <DocumentArrowDownIcon className="w-8 h-8 fill-white" />,
+    icon: <CertificateIcon className="w-8 h-8 fill-white" />,
     linkTo: "/certificates",
   },
   {
     label: "Log out",
-    icon: <ArrowLeftStartOnRectangleIcon className="w-8 h-8 fill-white" />,
+    icon: <LogoutIcon className="w-8 h-8 stroke-white" />,
     linkTo: "/dummy",
   },
 ];
@@ -64,7 +66,7 @@ const adminContent = [
   },
   {
     label: "Activities",
-    icon: <FireIcon className="w-8 h-8 fill-white" />,
+    icon: <VolunteerKindnessCareHeartLoveIcon className="w-8 h-8 fill-white" />,
     linkTo: "/activities",
   },
   {
@@ -79,7 +81,7 @@ const adminContent = [
   },
   {
     label: "Log out",
-    icon: <ArrowLeftStartOnRectangleIcon className="w-8 h-8 fill-white" />,
+    icon: <LogoutIcon className="w-8 h-8 stroke-white" />,
     linkTo: "/dummy",
   },
 ];

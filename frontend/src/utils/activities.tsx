@@ -36,13 +36,21 @@ export const ActivityTableColumns = (
       header: "type",
     }),
     columnHelper.accessor("organisationId", {
-      cell: (cell): ReactNode => (
-        <Link to={"/organisations/" + cell.row.original.organisationId}>
-          <p className="hover:underline hover:text-gray-800">
-            {cell.row.original.organisationName}
-          </p>
-        </Link>
-      ),
+      cell: (cell): ReactNode => {
+        const organisationInfo = cell.row.original as unknown as {
+          organisationName?: string;
+          organisation?: { name: string };
+        };
+        return (
+          <Link to={"/organisations/" + cell.row.original.organisationId}>
+            <p className="hover:underline hover:text-gray-800">
+              {organisationInfo.organisation
+                ? organisationInfo.organisation.name
+                : organisationInfo.organisationName}
+            </p>
+          </Link>
+        );
+      },
       header: "Organisation",
     }),
     columnHelper.accessor("action", {

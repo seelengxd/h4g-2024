@@ -17,7 +17,7 @@ const CardContainer: React.FC<Props> = ({
   blogImageUrl,
 }) => {
   return (
-    <div className=" bg-primary-300 rounded-2xl w-72 py-4 h-80 flex flex-col justify-start items-start">
+    <div className="mb-3 bg-primary-300 rounded-2xl w-72 py-4 h-80 flex flex-col justify-start items-start">
       <div className="px-4 flex gap-3">
         <img
           className="rounded-full w-14 h-14 bg-white"

@@ -85,7 +85,7 @@ export const update: RequestHandler[] = [
 
         const { title, description, userId } = req.body;
         const blog = await prisma.blog.findFirst({
-            where: {id: Number(req.params.id)}
+            where: { id: Number(req.params.id) }
         });
 
         if (!blog) {
@@ -106,10 +106,29 @@ export const update: RequestHandler[] = [
     }
 ];
 
-
 //edit mode?
 export const destroy: RequestHandler[] = [
+    validateId,
     async (req, res) => {
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            res.sendStatus(400);
+            return;
+        }
 
-    },
+        const blog = await prisma.blog.findFirst({
+            where: { id: Number(req.params.id!) },
+        });
+
+        if (!blog) {
+            res.sendStatus(404);
+            return;
+        }
+
+        await prisma.blog.delete({
+            where: { id: blog.id }
+        });
+        res.sendStatus(200);
+
+    }
 ];

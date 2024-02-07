@@ -37,9 +37,9 @@ const CreateBlog: React.FC = () => {
     initialValues: initialValues,
     validationSchema: object({
       title: string().trim().required("Title cannot be empty."),
-      // description: string()
-      //   .trim()
-      //   .required("Description name cannot be empty."),
+      description: string()
+        .trim()
+        .required("Description name cannot be empty."),
     }),
     onSubmit: async (values) => {
       console.log("submit pressed: ", values);
@@ -111,7 +111,7 @@ const CreateBlog: React.FC = () => {
         </div>
 
         {/* right half */}
-        <div className="width-1/3 pl-8 pt-8">
+        <div className="width-1/3 pl-8 pt-8 max-w-96">
           <FormControl onBlur={handleBlur}>
             <div className="flex justify-center items-center pl-6">
               <ImageUploader

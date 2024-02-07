@@ -8,6 +8,7 @@ interface Props extends PropsWithChildren {
   profileImageUrl?: string;
   blogPreview: string;
   blogImageUrl?: string;
+  dashboard?: boolean;
 }
 const CardContainer: React.FC<Props> = ({
   title,
@@ -15,22 +16,33 @@ const CardContainer: React.FC<Props> = ({
   profileImageUrl,
   blogPreview,
   blogImageUrl,
+  dashboard,
 }) => {
   return (
-    <div className=" bg-primary-300 rounded-2xl w-72 py-4 h-80 flex flex-col justify-start items-start">
-      <div className="px-4 flex gap-3">
+    <div
+      className={
+        " bg-primary-300 rounded-2xl py-4 h-80 flex flex-col justify-start items-start" +
+        (dashboard ? " bg-white min-w-[18rem]" : " w-72 bg-primary-200")
+      }
+    >
+      <div className="flex gap-3 px-4">
         <img
-          className="rounded-full w-14 h-14 bg-white"
+          className="bg-white rounded-full w-14 h-14"
           src={process.env.REACT_APP_BACKEND_URL! + "/" + profileImageUrl}
         />
 
         <div className="mt-2">
-          <h2 className=" font-semibold text-gray-700">{title}</h2>
+          <h2 className="font-semibold text-gray-700 ">{title}</h2>
           <h3 className="text-xs text-gray-400">{subtitle}</h3>
         </div>
       </div>
 
-      <div className="my-2 flex justify-center items-center h-1/2 w-full overflow-hidden">
+      <div
+        className={
+          "flex items-center justify-center w-full my-2 overflow-hidden" +
+          " h-1/2"
+        }
+      >
         <img
           className=""
           src={process.env.REACT_APP_BACKEND_URL! + "/" + blogImageUrl}
@@ -38,7 +50,14 @@ const CardContainer: React.FC<Props> = ({
       </div>
 
       <div className="">
-        <p className="text-xs px-3 text-gray-600">{blogPreview}</p>
+        <p
+          className={
+            "px-3 text-xs text-gray-600 text-ellipsis overflow-hidden" +
+            (dashboard ? " h-3/4" : "")
+          }
+        >
+          {blogPreview}
+        </p>
       </div>
     </div>
   );

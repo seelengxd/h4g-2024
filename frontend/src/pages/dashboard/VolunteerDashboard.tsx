@@ -9,14 +9,17 @@ import activitiesAPI from "../../api/activities/activities";
 import VolunteeringOpportunityCard from "../activities/VolunteertingOpportunityCard";
 import registrationsAPI from "../../api/registrations/registrations";
 import { Registration } from "../../types/registrations/registrations";
-import { isFuture, isPast } from "date-fns";
+import { format, isFuture, isPast } from "date-fns";
+import blogsAPI from "../../api/blogs/blogs";
+import BlogCardContainer from "../../components/blog/CardContainer";
+import { Blog } from "../../types/blogs/blogs";
 
 const VolunteerDashboard: React.FC = () => {
-  const test = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const [loading, setLoading] = useState(true);
   const [searchValue, setSearchValue] = useState("");
   const [activities, setActivities] = useState<ActivityRowData[]>([]);
   const [registrations, setRegistrations] = useState<Registration[]>([]);
+  const [blogs, setBlogs] = useState<Blog[]>([]);
 
   useEffect(() => {
     activitiesAPI
@@ -29,6 +32,10 @@ const VolunteerDashboard: React.FC = () => {
     registrationsAPI
       .getAllRegistrations()
       .then((registrations) => setRegistrations(registrations));
+  }, []);
+
+  useEffect(() => {
+    blogsAPI.getAllBlogs().then((blog) => setBlogs(blog));
   }, []);
 
   const user = useAppSelector(selectUser);
@@ -99,9 +106,37 @@ const VolunteerDashboard: React.FC = () => {
               ))}
           </CardContainer>
         </div>
-        {/* Certificates */}
+        {/* Blogs */}
         <div className="col-span-2">
-          <CardContainer />
+          <CardContainer>
+            {blogs
+              .filter((blog) =>
+                blog.title.toLowerCase().includes(searchValue.toLowerCase())
+              )
+              .map((blog) => (
+                <BlogCardContainer
+                  title={blog.title}
+                  subtitle={
+                    "by " +
+                    blog.user.preferredName +
+                    ", " +
+                    format(new Date(blog.createdAt), "dd MMM yyyy")
+                  }
+                  blogPreview={blog.description}
+                  profileImageUrl={
+                    blog.user.profile?.imageUrl
+                      ? blog.user.profile.imageUrl
+                      : "uploads/placeholder-image.png"
+                  }
+                  blogImageUrl={
+                    blog.imageUrl
+                      ? blog.imageUrl
+                      : "uploads/placeholder-image.png"
+                  }
+                  dashboard
+                />
+              ))}
+          </CardContainer>
         </div>
         <div className="col-span-1">
           <CardContainer

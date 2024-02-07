@@ -1,9 +1,8 @@
-import { ClockIcon } from "@heroicons/react/24/outline";
-import { MapPinIcon } from "@heroicons/react/20/solid";
 import { Registration } from "../../types/registrations/registrations";
 import { format } from "date-fns";
-import { PencilIcon, PencilSquareIcon } from "@heroicons/react/24/solid";
+import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
+import { ClockTwoIcon, LocationPinIcon } from "../../components/icons/icons";
 
 interface Props {
   hideLocation?: boolean;
@@ -27,12 +26,12 @@ const EventCard: React.FC<Props> = ({
           </p>
           {!hideLocation && (
             <p className="flex items-center">
-              <MapPinIcon className="w-4 h-4 mr-2 shrink-0" />{" "}
+              <LocationPinIcon className="w-4 h-4 mr-2 shrink-0" />{" "}
               {registration.session.activity.location}
             </p>
           )}
           <p className="flex items-center">
-            <ClockIcon className="w-4 h-4 mr-2 shrink-0" />
+            <ClockTwoIcon className="w-4 h-4 mr-2 shrink-0" />
             {format(registration.session.start, "d MMM yyyy")}
           </p>
         </div>

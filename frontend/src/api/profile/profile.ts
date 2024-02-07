@@ -7,6 +7,11 @@ class ProfilesAPI {
         return "/profile"
     };
 
+    public async getAllProfiles(): Promise<Profile[]> {
+        const response = await client.get(this.getProfilesUrl());
+        return response.data.data;
+    }
+
     public async getProfile(): Promise<Profile> {
         const response = await client.get(`${this.getProfilesUrl()}`);
         return response.data.data;

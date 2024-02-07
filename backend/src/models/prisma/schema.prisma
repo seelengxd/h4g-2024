@@ -194,6 +194,9 @@ model Blog {
 
   tags  Interest[]
   likes Like[]
+
+  createdAt     DateTime       @default(now())
+  imageUrl      String?
 }
 
 model Like {

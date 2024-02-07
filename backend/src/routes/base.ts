@@ -10,6 +10,7 @@ import skillsRouter from "./skills";
 import registrationsRouter from "./registrations";
 import sessionsRouter from "./sessions";
 import feedbackRouter from "./feedback";
+import blogRouter from "./blog";
 import volunteersRouter from "./volunteers";
 import reportsRouter from "./reports";
 
@@ -26,7 +27,9 @@ apiRouter.use("/skills", skillsRouter);
 apiRouter.use("/registrations", registrationsRouter);
 apiRouter.use("/sessions", sessionsRouter);
 apiRouter.use("/feedbacks", feedbackRouter);
+apiRouter.use("/blogs", blogRouter);
 apiRouter.use("/volunteers", volunteersRouter);
 apiRouter.use("/reports", reportsRouter);
+
 
 export default apiRouter;

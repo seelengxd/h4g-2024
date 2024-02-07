@@ -82,7 +82,10 @@ const FeedbackDisplay: React.FC<Props> = ({ feedback, isAdmin = false }) => {
 
   return (
     <>
-      <EyeIcon className="w-6 h-6 fill-black" onClick={() => setIsOpen(true)} />
+      <EyeIcon
+        className="w-6 h-6 mx-auto stroke-2 stroke-black"
+        onClick={() => setIsOpen(true)}
+      />
       <Modal
         title="Feedback"
         buttonDisplay="Close Feedback"

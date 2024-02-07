@@ -3,11 +3,7 @@ import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import activitiesAPI from "../../api/activities/activities";
 import { ActivityData } from "../../types/activities/activities";
 import Spinner from "../../components/loading/Spinner";
-import {
-  ArrowLeftIcon,
-  ClockIcon,
-  MapPinIcon,
-} from "@heroicons/react/20/solid";
+import { ArrowLeftIcon } from "@heroicons/react/20/solid";
 
 import { format } from "date-fns";
 import FormMultiSelectInput from "../../components/forms/FormMultiSelectInput";
@@ -27,6 +23,7 @@ import { generateDefaultAnswer } from "../../utils/forms";
 import { useAppSelector } from "../../reducers/hooks";
 import { selectUser } from "../../reducers/authSlice";
 import { isUserEnrolled } from "../../utils/activities";
+import { ClockTwoIcon, LocationPinIcon } from "../../components/icons/icons";
 
 const VolunteerEnroll: React.FC = () => {
   const { id } = useParams();
@@ -140,12 +137,12 @@ const VolunteerEnroll: React.FC = () => {
             </Link>
           </p>
           <p className="flex items-center mt-2 text-md">
-            <MapPinIcon className="w-4 h-4 mr-2" />
+            <LocationPinIcon className="w-4 h-4 mr-2" />
             {activity.location}
           </p>
           {!!activity.sessions.length && (
             <p className="flex items-center mt-2 text-md">
-              <ClockIcon className="w-4 h-4 mr-2" />
+              <ClockTwoIcon className="w-4 h-4 mr-2" />
               <p>
                 {format(
                   new Date(activity.sessions[0]!.start),

@@ -22,6 +22,7 @@ import BaseSessionTag from "../pages/sessions/tags/BaseSessionTag";
 import { act } from "react-dom/test-utils";
 import { ActivityData } from "../types/activities/activities";
 import { get } from "lodash";
+import { FeedbackIcon } from "../components/icons/icons";
 
 export const displayAttendance = (attendance: Attendance) => {
   return attendance === null
@@ -84,7 +85,7 @@ export const RegistrationTableColumns = (
         ) : (
           <div className="flex justify-center space-x-2">
             <Link to={"/sessions/" + cell.row.original.id + "/feedback/new"}>
-              <PencilSquareIcon className="w-6 h-6 fill-black" />
+              <FeedbackIcon className="w-6 h-6 fill-black" />
             </Link>
           </div>
         ),

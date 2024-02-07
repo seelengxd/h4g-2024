@@ -1,6 +1,4 @@
-import { ArrowRightIcon } from "@heroicons/react/24/outline";
 import { PropsWithChildren } from "react";
-import { Link } from "react-router-dom";
 
 interface Props extends PropsWithChildren {
   title: string;
@@ -38,7 +36,7 @@ const CardContainer: React.FC<Props> = ({
       </div>
 
       <div className="">
-        <p className="text-xs px-3 text-gray-600">{blogPreview}</p>
+        <p className="text-xs px-3 text-gray-600 text-ellipsis overflow-hidden max-h-20">{blogPreview}</p>
       </div>
     </div>
   );

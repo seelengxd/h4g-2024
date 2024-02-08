@@ -1,6 +1,6 @@
 import { ActivityType } from "../activities/activities";
 import { SessionWithMinutesData } from "../sessions/sessions";
-import { UserData } from "../users/users";
+import { User, UserData } from "../users/users";
 
 interface VolunteerActivityData {
   id: number;
@@ -29,6 +29,49 @@ interface VolunteerActivityReportRow {
   minutes: {
     dataPoints: DataPoint[];
     activities: VolunteerActivityData[][];
+  };
+}
+
+export interface VolunteerDemographicReport {
+  gender: {
+    dataPoints: DataPoint[];
+    users: Array<{
+      // name of gender
+      name: string;
+      users: User[];
+    }>;
+  };
+  immigrationStatus: {
+    dataPoints: DataPoint[];
+    users: Array<{
+      // name of gender
+      name: string;
+      users: User[];
+    }>;
+  };
+  skills: {
+    dataPoints: DataPoint[];
+    users: Array<{
+      // name of gender
+      name: string;
+      users: User[];
+    }>;
+  };
+  interests: {
+    dataPoints: DataPoint[];
+    users: Array<{
+      // name of gender
+      name: string;
+      users: User[];
+    }>;
+  };
+  age: {
+    dataPoints: DataPoint[];
+    users: Array<{
+      // name of gender
+      name: string;
+      users: User[];
+    }>;
   };
 }
 

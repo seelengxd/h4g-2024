@@ -4,6 +4,7 @@ import {
   Role,
   Prisma,
   FeedbackStatus,
+  Gender,
 } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
@@ -82,6 +83,7 @@ async function main() {
         preferredName: "user1",
         profile: {
           create: {
+            gender: Gender.Male,
             dob: "2022-01-15T12:30:00.000Z",
             description: "user 1 description",
             interests: {
@@ -125,6 +127,7 @@ async function main() {
         phone: "87654321",
         profile: {
           create: {
+            gender: Gender.Female,
             dob: "2022-01-15T12:30:00.000Z",
             description: "user 2 description",
             interests: {
@@ -376,17 +379,17 @@ async function main() {
       },
     };
 
-    const enrollmentForm1 = await prisma.enrollmentForm.create({
-      data: { formSchema: sampleForm, activityId: org1.activities[0].id },
-    });
+    // const enrollmentForm1 = await prisma.enrollmentForm.create({
+    //   data: { formSchema: sampleForm, activityId: org1.activities[0].id },
+    // });
 
-    const enrollmentForm2 = await prisma.enrollmentForm.create({
-      data: { formSchema: sampleForm, activityId: org1.activities[1].id },
-    });
+    // const enrollmentForm2 = await prisma.enrollmentForm.create({
+    //   data: { formSchema: sampleForm, activityId: org1.activities[1].id },
+    // });
 
-    const enrollmentForm3 = await prisma.enrollmentForm.create({
-      data: { formSchema: sampleForm, activityId: org1.activities[2].id },
-    });
+    // const enrollmentForm3 = await prisma.enrollmentForm.create({
+    //   data: { formSchema: sampleForm, activityId: org1.activities[2].id },
+    // });
 
     // registrations
     // attended and with feedback

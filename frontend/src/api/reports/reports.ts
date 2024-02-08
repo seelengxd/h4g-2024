@@ -1,5 +1,8 @@
 import client from "../base";
-import { VolunteerActivityReport } from "../../types/reports/reports";
+import {
+  VolunteerActivityReport,
+  VolunteerDemographicReport,
+} from "../../types/reports/reports";
 
 class ReportsAPI {
   protected getReportsUrl(): string {
@@ -9,6 +12,13 @@ class ReportsAPI {
   public async getVolunteerActivityReport(): Promise<VolunteerActivityReport> {
     const response = await client.get(
       this.getReportsUrl() + "/volunteer-activity-report"
+    );
+    return response.data.data;
+  }
+
+  public async getVolunteerDemographicReport(): Promise<VolunteerDemographicReport> {
+    const response = await client.get(
+      this.getReportsUrl() + "/volunteer-demographic-report"
     );
     return response.data.data;
   }

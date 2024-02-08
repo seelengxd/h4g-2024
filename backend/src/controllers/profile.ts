@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import prisma from "../lib/prisma";
-import { body, param, validationResult } from "express-validator";
+import { validationResult } from "express-validator";
 import { Interest, Skill, User } from "@prisma/client";
 import multer from "multer";
 
@@ -82,7 +82,6 @@ export const update: RequestHandler[] = [
 
     //monday, tuesday, wednesday, thursday, friday, saturday, sunday
 
-    console.log(commitmentLevel);
     const newProfile = await prisma.profile.update({
       where: { userId: Number((req.user as User).id) },
       data: {

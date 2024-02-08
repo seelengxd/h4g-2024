@@ -6,8 +6,6 @@ import { Link } from "react-router-dom";
 import { ActivityMiniData } from "../../types/activities/activities";
 import DataTable from "../../components/tables/DataTable";
 import { Column, ColumnDef, createColumnHelper } from "@tanstack/react-table";
-import { ActivityRowData, ActivityTableColumns } from "../../utils/activities";
-import { UserMiniData } from "../../types/users/users";
 import volunteersApi from "../../api/users/volunteers";
 import {
   VolunteerRowData,

@@ -27,8 +27,7 @@ const Activities: React.FC = () => {
       <div className="w-full">
         <div className="items-center justify-between flex-initial w-full sm:flex">
           <div className="flex items-center mt-4">
-            <FireIcon className="w-10 h-10 mr-4" />
-            <h1 className="text-4xl font-semibold text-gray-800">Activities</h1>
+            <h1 className="text-3xl text-gray-800">Activities</h1>
           </div>
           <div className="hidden sm:block">
             <Link to="/activities/new">

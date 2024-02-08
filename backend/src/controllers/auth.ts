@@ -41,17 +41,19 @@ export const signup: RequestHandler[] = [
     .notEmpty()
     .isEmail()
     .withMessage("Email should be a valid email."),
+  body("phone").notEmpty().withMessage("Phone number should not be empty"),
   async (req, res) => {
     const result = validationResult(req);
     if (!result.isEmpty()) {
       res.send({ errors: result.array() });
       return;
     }
-    const { fullName, preferredName, password, email } = req.body;
+    const { fullName, preferredName, password, email, phone } = req.body;
     const hashedPassword = bcrypt.hashSync(password, 8);
     try {
       const newUser = await prisma.user.create({
         data: {
+          phone,
           fullName,
           preferredName,
           password: hashedPassword,

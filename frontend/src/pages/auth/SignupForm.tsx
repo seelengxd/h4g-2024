@@ -16,6 +16,7 @@ const SignUpForm: React.FC = () => {
       password: "",
       confirmPassword: "",
       email: "",
+      phone: "",
     },
     validationSchema: object({
       fullName: string().trim().required("Full name cannot be empty."),
@@ -37,6 +38,7 @@ const SignUpForm: React.FC = () => {
           return value === this.parent.password;
         },
       }),
+      phone: string().matches(/^\d{8}$/, "Phone number should have 8 numbers"),
     }),
     onSubmit: async (values) => {
       authApi
@@ -98,6 +100,22 @@ const SignUpForm: React.FC = () => {
                 name="preferredName"
                 autoComplete="preferredName"
                 value={values.preferredName}
+                onChange={handleChange}
+                required
+              />
+            </FormControl>
+          </div>
+          <div className="mt-6">
+            <FormControl
+              isInvalid={!!touched.phone && errors.phone !== undefined}
+              errorMessage={errors.phone}
+              onBlur={handleBlur}
+            >
+              <Input
+                label="Phone Number"
+                name="phone"
+                autoComplete="phone"
+                value={values.phone}
                 onChange={handleChange}
                 required
               />

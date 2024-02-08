@@ -32,12 +32,12 @@ const AppRouter: React.FC = () => {
   return (
     <div>
       {loading ? (
-        <div className="h-screen mx-auto">
+        <div className="h-screen mx-auto bg-primary-100">
           <Spinner />
         </div>
       ) : isLoggedIn ? (
         isAdmin ? (
-          <div className="relative flex h-screen overflow-y-clip">
+          <div className="relative flex h-screen overflow-y-clip bg-primary-100">
             <SideBar />
             {/* to not go into the sidebar */}
             <div className="w-full max-h-screen ml-24 overflow-y-auto">
@@ -45,7 +45,7 @@ const AppRouter: React.FC = () => {
             </div>
           </div>
         ) : (
-          <div className="relative flex h-screen overflow-y-clip">
+          <div className="relative flex h-screen overflow-y-clip bg-primary-100">
             <SideBar />
             {/* to not go into the sidebar */}
             <div className="w-full max-h-screen ml-24 overflow-y-auto">

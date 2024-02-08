@@ -1,4 +1,8 @@
-import { ArrowLeftIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowLeftIcon,
+  PencilIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import activitiesAPI from "../../api/activities/activities";
@@ -38,7 +42,17 @@ const ViewActivityActionButtons: React.FC = () => {
             </Link>
           </div>
           <div>
-            <Button onClick={() => { setDialogOpen(true) }} roundness="md" py={1.5} bgColor="white" textColor="text-primary-700" outlined outlineColor="border-primary-700">
+            <Button
+              onClick={() => {
+                setDialogOpen(true);
+              }}
+              roundness="md"
+              py={1.5}
+              bgColor="white"
+              textColor="text-primary-700"
+              outlined
+              outlineColor="border-primary-700"
+            >
               <TrashIcon className="w-4 h-4 mr-2 stroke-2" />
               Delete
             </Button>
@@ -50,7 +64,7 @@ const ViewActivityActionButtons: React.FC = () => {
         {dialogOpen && (
           <ConfirmationDialog
             message="Are you sure you want to delete this activity? This action cannot be undone."
-            onDelete={handleDelete}
+            onConfirm={handleDelete}
             onCancel={() => setDialogOpen(false)}
           />
         )}

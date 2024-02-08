@@ -16,7 +16,7 @@ const ActivityInfoCard: React.FC<ActivityInfoCardProps> = ({
   activity,
 }: ActivityInfoCardProps) => {
   const sessionCount = activity.sessions.length;
-  const hasEnrollmentForm = activity.enrollmentForm !== undefined;
+  const hasEnrollmentForm = activity.enrollmentForm !== null;
   const hasImage = !_.isEmpty(activity.images);
 
   return (

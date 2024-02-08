@@ -27,8 +27,30 @@ export const show: RequestHandler[] = [
         },
         registrations: {
           include: {
-            user: true,
-            submission: { include: { user: true } },
+            user: {
+              select: {
+                id: true,
+                fullName: true,
+                preferredName: true,
+                email: true,
+                role: true,
+                phone: true,
+              },
+            },
+            submission: {
+              include: {
+                user: {
+                  select: {
+                    id: true,
+                    fullName: true,
+                    preferredName: true,
+                    email: true,
+                    role: true,
+                    phone: true,
+                  },
+                },
+              },
+            },
             feedback: {
               include: { registration: { include: { session: true } } },
             },

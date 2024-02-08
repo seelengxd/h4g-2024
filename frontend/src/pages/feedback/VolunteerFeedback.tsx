@@ -46,40 +46,9 @@ const VolunteerFeedback: React.FC = () => {
   const formik = useFormik({
     initialValues: {
       userReflection: "",
-      //   actualFeedback: "",
-      //   minutesServed: registration
-      //     ? differenceInMinutes(
-      //         registration?.session.end,
-      //         registration?.session.start
-      //       )
-      //     : 0,
     } as Feedback,
     validationSchema: object({
       userReflection: string().required("User reflection cannot be empty."),
-      //   actualFeedback: string().required("Actual feedback cannot be empty."),
-      //   minutesServed: number()
-      //     .min(0)
-      //     .max(
-      //       registration
-      //         ? differenceInMinutes(
-      //             registration?.session.end,
-      //             registration?.session.start
-      //           )
-      //         : 0,
-      //       registration
-      //         ? `Time served cannot be more than ${Math.floor(
-      //             differenceInMinutes(
-      //               registration?.session.end,
-      //               registration?.session.start
-      //             ) / 60
-      //           )}h ${
-      //             differenceInMinutes(
-      //               registration?.session.end,
-      //               registration?.session.start
-      //             ) % 60
-      //           }mins for this session.`
-      //         : ""
-      //     ),
     }),
     onSubmit: async (values) => {
       feedbackAPI
@@ -94,18 +63,8 @@ const VolunteerFeedback: React.FC = () => {
     enableReinitialize: true,
   });
 
-  const {
-    touched,
-    errors,
-    values,
-    handleBlur,
-    handleSubmit,
-    handleChange,
-    setFieldValue,
-  } = formik;
-
-  const [minutes, setMinutes] = useState(0);
-  const [hours, setHours] = useState(0);
+  const { touched, errors, values, handleBlur, handleSubmit, handleChange } =
+    formik;
 
   if (!id) return Error404;
   if (isLoading) return <Spinner />;
@@ -164,27 +123,6 @@ const VolunteerFeedback: React.FC = () => {
             className="flex flex-col justify-between h-[calc(100vh-450px)]"
             onSubmit={handleSubmit}
           >
-            {/* <FormControl
-              isInvalid={
-                !!touched.userReflection && errors.userReflection !== undefined
-              }
-              errorMessage={errors.userReflection}
-              onBlur={handleBlur}
-            >
-              <Label htmlFor="description" mb={2}>
-                Feedback
-              </Label>
-              <textarea
-                id="actualFeedback"
-                name="actualFeedback"
-                rows={4}
-                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-gray-300 focus:border-gray-300"
-                placeholder="Write your feedback here"
-                value={values.actualFeedback}
-                onChange={handleChange}
-                required
-              />
-            </FormControl> */}
             <FormControl
               isInvalid={
                 !!touched.userReflection && errors.userReflection !== undefined
@@ -206,48 +144,6 @@ const VolunteerFeedback: React.FC = () => {
                 required
               />
             </FormControl>
-            {/* <FormControl
-              isInvalid={
-                !!touched.minutesServed && errors.minutesServed !== undefined
-              }
-              errorMessage={errors.minutesServed}
-              onBlur={handleBlur}
-            >
-              <Label htmlFor="actualFeedback" mb={2}>
-                Time Served
-              </Label>
-              <div className="flex items-center gap-2">
-                <input
-                  type="number"
-                  className="w-20"
-                  min="0"
-                  value={hours}
-                  onChange={(e) => {
-                    setHours(parseInt(e.currentTarget.value));
-                    setFieldValue(
-                      "minutesServed",
-                      minutes + 60 * parseInt(e.currentTarget.value)
-                    );
-                  }}
-                />
-                <span className="inline-block align-text-bottom">h</span>
-                <input
-                  type="number"
-                  className="w-20"
-                  min="0"
-                  max="59"
-                  value={minutes}
-                  onChange={(e) => {
-                    setMinutes(parseInt(e.currentTarget.value));
-                    setFieldValue(
-                      "minutesServed",
-                      parseInt(e.currentTarget.value) + 60 * hours
-                    );
-                  }}
-                />
-                <span className="align-middle">mins</span>
-              </div>
-            </FormControl> */}
 
             {/* scuffed spacer */}
             <div className="mt-2"></div>

@@ -41,7 +41,9 @@ const ViewActivity: React.FC = () => {
         submissions={activity.enrollmentForm.submissions}
       />
     ) : (
-      <></>
+      <div className="flex justify-center mt-10 text-2xl text-gray-500">
+        No Enrollment Form
+      </div>
     ),
   };
 

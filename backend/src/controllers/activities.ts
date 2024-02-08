@@ -53,7 +53,22 @@ const validateActivityId: RequestHandler[] = [
         },
         images: true,
         enrollmentForm: {
-          include: { submissions: { include: { user: true } } },
+          include: {
+            submissions: {
+              include: {
+                user: {
+                  select: {
+                    id: true,
+                    fullName: true,
+                    preferredName: true,
+                    email: true,
+                    role: true,
+                    phone: true,
+                  },
+                },
+              },
+            },
+          },
         },
       },
     });

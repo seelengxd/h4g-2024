@@ -19,18 +19,18 @@ const Organisations: React.FC = () => {
   }, []);
 
   return (
-    <div className="items-center justify-between w-full h-screen p-6 mx-auto max-w-7xl lg:px-8">
+    <div className="items-center justify-between w-full h-screen p-6 mx-auto mt-8 max-w-7xl lg:px-8">
       <div className="w-full">
         <div className="items-center justify-between flex-initial w-full sm:flex">
           <div className="flex items-center mt-4">
-            <h1 className="text-3xl text-gray-800">
-              Organisations
-            </h1>
+            <h1 className="text-3xl text-gray-800">Organisations</h1>
           </div>
+
           <div className="hidden sm:block">
             <Link to="/organisations/new">
               <Button>
-                <PlusIcon className="w-4 h-4 mr-2 stroke-2" /> Create Organisation
+                <PlusIcon className="w-4 h-4 mr-2 stroke-2" /> Create
+                Organisation
               </Button>
             </Link>
           </div>

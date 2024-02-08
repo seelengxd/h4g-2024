@@ -19,6 +19,7 @@ import {
   ProfileIcon,
   VolunteerKindnessCareHeartLoveIcon,
 } from "../icons/icons";
+import ConfirmationDialog from "../feedback/ConfirmationDialog";
 
 const volunteerContent = [
   {
@@ -96,6 +97,7 @@ const SideBar: React.FC = () => {
   const pathName = location.pathname;
   const isAdmin = useSelector(selectIsAdmin);
   const [active, setActive] = useState(false);
+  const [openLogOutDialog, setOpenLogOutDialog] = useState(false);
 
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLDivElement>(null);
@@ -126,6 +128,14 @@ const SideBar: React.FC = () => {
 
   return (
     <div className="absolute top-0 left-0 z-20">
+      {openLogOutDialog && (
+        <ConfirmationDialog
+          message="Are you sure you want to log out?"
+          onConfirm={handleLogout}
+          onCancel={() => setOpenLogOutDialog(false)}
+          confirmationLabel="Yes, log me out"
+        />
+      )}
       <div
         className={
           "relative h-screen group bg-primary-600 " +
@@ -155,7 +165,7 @@ const SideBar: React.FC = () => {
                       className={
                         "p-4 rounded-xl flex items-center gap-8 hover:cursor-pointer hover:bg-primary-500"
                       }
-                      onClick={handleLogout}
+                      onClick={() => setOpenLogOutDialog(true)}
                     >
                       {icon}
                     </div>
@@ -215,7 +225,7 @@ const SideBar: React.FC = () => {
                       className={
                         "p-4 rounded-xl flex items-center gap-8 hover:cursor-pointer hover:bg-primary-500"
                       }
-                      onClick={handleLogout}
+                      onClick={() => setOpenLogOutDialog(true)}
                     >
                       {icon} {label}
                     </div>

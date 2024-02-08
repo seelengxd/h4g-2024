@@ -7,6 +7,7 @@ export interface User {
   email: string;
   role: "USER" | "ADMIN";
   profile: Profile;
+  phone: string;
 }
 
 export interface UserMiniData {

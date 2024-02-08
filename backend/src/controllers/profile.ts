@@ -17,7 +17,16 @@ export const show: RequestHandler[] = [
       include: {
         interests: true,
         skills: true,
-        user: true,
+        user: {
+          select: {
+            id: true,
+            fullName: true,
+            preferredName: true,
+            email: true,
+            role: true,
+            phone: true,
+          },
+        },
       },
     });
     if (!profile) {

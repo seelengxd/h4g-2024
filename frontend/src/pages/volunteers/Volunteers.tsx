@@ -1,8 +1,5 @@
-import { FireIcon, PlusIcon } from "@heroicons/react/24/outline";
-import Button from "../../components/buttons/Button";
 import Spinner from "../../components/loading/Spinner";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { ActivityMiniData } from "../../types/activities/activities";
 import DataTable from "../../components/tables/DataTable";
 import { Column, ColumnDef, createColumnHelper } from "@tanstack/react-table";

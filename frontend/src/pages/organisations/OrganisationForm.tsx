@@ -69,15 +69,19 @@ const OrganisationForm: React.FC<Props> = ({
 
   useEffect(() => {
     setIsLoading(true);
-    InterestsAPI
-      .getAllInterests()
+    InterestsAPI.getAllInterests()
       .then((categories) => setAllCategories(categories))
       .finally(() => setIsLoading(false));
   }, []);
 
-  const allCategoryOptions: OptionData[] | undefined = useMemo(() => allCategories?.map((interest) => (
-    { id: interest.id, value: interest.name }
-  )), [allCategories]);
+  const allCategoryOptions: OptionData[] | undefined = useMemo(
+    () =>
+      allCategories?.map((interest) => ({
+        id: interest.id,
+        value: interest.name,
+      })),
+    [allCategories]
+  );
 
   if (isLoading || !allCategories || !allCategoryOptions) return <Spinner />;
 
@@ -105,7 +109,9 @@ const OrganisationForm: React.FC<Props> = ({
         <div className="grid grid-cols-3 bg-white p-8 rounded-md shadow mt-4">
           <div className="flex items-start justify-center h-full col-span-1 pr-8">
             <FormControl onBlur={handleBlur}>
-              <Label htmlFor="image" textSize="text-md" mb={4}>Organisation Image</Label>
+              <Label htmlFor="image" textSize="text-md" mb={4}>
+                Organisation Image
+              </Label>
               <ImageUploader
                 name="image"
                 type="file"
@@ -113,8 +119,9 @@ const OrganisationForm: React.FC<Props> = ({
                 imgDisplayUrl={imageDisplayUrl}
                 onChange={(event) => {
                   const reader = new FileReader();
-                  let file = (event.currentTarget as unknown as { files: File[] })
-                    .files[0];
+                  let file = (
+                    event.currentTarget as unknown as { files: File[] }
+                  ).files[0];
                   reader.onloadend = () => {
                     setImageDisplayUrl(reader.result as string);
                   };
@@ -123,76 +130,102 @@ const OrganisationForm: React.FC<Props> = ({
                 }}
               />
             </FormControl>
-         </div>
+          </div>
 
-         <div className="flex flex-col justify-center col-span-2 gap-6">
-          <FormControl
-            isInvalid={!!touched.name && errors.name !== undefined}
-            errorMessage={errors.name}
-            onBlur={handleBlur}
-          >
-            <Label htmlFor="Name" mb={2}>Organisation Name</Label>
-            <Input
-              name="name"
-              value={values.name}
-              onChange={handleChange}
-              required
-            />
-          </FormControl>
+          <div className="flex flex-col justify-center col-span-2 gap-6">
+            <FormControl
+              isInvalid={!!touched.name && errors.name !== undefined}
+              errorMessage={errors.name}
+              onBlur={handleBlur}
+            >
+              <Label htmlFor="Name" mb={2}>
+                Organisation Name
+              </Label>
+              <Input
+                name="name"
+                value={values.name}
+                onChange={handleChange}
+                required
+              />
+            </FormControl>
 
-          <FormControl
-            isInvalid={
-              !!touched.description && errors.description !== undefined
-            }
-            errorMessage={errors.description}
-            onBlur={handleBlur}
-          >
-            <Label htmlFor="description" mb={2}>Description</Label>
-            <textarea
-              id="description"
-              name="description"
-              rows={4}
-              className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-gray-300 focus:border-gray-300"
-              placeholder="Organisation Description"
-              value={values.description}
-              onChange={handleChange}
-              required
-            />
-          </FormControl>
-
-          <FormControl
-            isInvalid={!!touched.websiteUrl && errors.websiteUrl !== undefined}
-            errorMessage={errors.websiteUrl}
-            onBlur={handleBlur}
-          >
-            <Label htmlFor="websiteUrl" mb={2}>Link to organisation website</Label>
-            <Input
-              name="websiteUrl"
-              value={values.websiteUrl}
-              onChange={handleChange}
-              required
-            />
-          </FormControl>
-
-          <FormControl onBlur={handleBlur}>
-            <Label htmlFor="categories" mb={4}>Organisation Categories</Label>
-            <FormMultiSelectInput
-              name="categories"
-              value={values.categories.map((category) => category.id)}
-              options={allCategoryOptions}
-              onChange={(newCategoryIds) =>
-                setFieldValue("categories",
-                newCategoryIds.map((categoryId) => allCategories.find((category) => categoryId === category.id)))
+            <FormControl
+              isInvalid={
+                !!touched.description && errors.description !== undefined
               }
-            />
-          </FormControl>
+              errorMessage={errors.description}
+              onBlur={handleBlur}
+            >
+              <Label htmlFor="description" mb={2}>
+                Description
+              </Label>
+              <textarea
+                id="description"
+                name="description"
+                rows={4}
+                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-gray-300 focus:border-gray-300"
+                placeholder="Organisation Description"
+                value={values.description}
+                onChange={handleChange}
+                required
+              />
+            </FormControl>
 
-         </div>
+            <FormControl
+              isInvalid={
+                !!touched.websiteUrl && errors.websiteUrl !== undefined
+              }
+              errorMessage={errors.websiteUrl}
+              onBlur={handleBlur}
+            >
+              <Label htmlFor="websiteUrl" mb={2}>
+                Link to organisation website
+              </Label>
+              <Input
+                name="websiteUrl"
+                value={values.websiteUrl}
+                onChange={handleChange}
+                required
+              />
+            </FormControl>
+
+            <FormControl onBlur={handleBlur}>
+              <Label htmlFor="categories" mb={4}>
+                Organisation Categories
+              </Label>
+              <FormMultiSelectInput
+                name="categories"
+                value={values.categories.map((category) => category.id)}
+                options={allCategoryOptions}
+                onChange={(newCategoryIds) =>
+                  setFieldValue(
+                    "categories",
+                    newCategoryIds.map((categoryId) =>
+                      allCategories.find(
+                        (category) => categoryId === category.id
+                      )
+                    )
+                  )
+                }
+              />
+            </FormControl>
+          </div>
         </div>
         <div className="flex flex-row gap-8 justify-end">
-          <div/>
-          <Button type="submit" roundness="md">{label}</Button>
-          <Button onClick={() => setIsDialogOpen(true)} roundness="md" bgColor="white" textColor="text-primary-700" outlined outlineColor="border-primary-700">Cancel</Button>
+          <div />
+          <Button type="submit" roundness="md">
+            {label}
+          </Button>
+          <Button
+            onClick={() => setIsDialogOpen(true)}
+            roundness="md"
+            bgColor="white"
+            textColor="text-primary-700"
+            outlined
+            outlineColor="border-primary-700"
+          >
+            Cancel
+          </Button>
         </div>
       </form>
 
@@ -200,11 +233,11 @@ const OrganisationForm: React.FC<Props> = ({
         {isDialogOpen && (
           <ConfirmationDialog
             message="Are you sure you want to cancel this form submission? All current progress will be lost."
-            onDelete={handleCancel}
+            onConfirm={handleCancel}
             onCancel={() => setIsDialogOpen(false)}
             confirmationLabel="Yes, cancel submission"
             cancelLabel="No, continue editing form"
-            />
+          />
         )}
       </div>
     </div>

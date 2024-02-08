@@ -1,4 +1,8 @@
-import { ArrowLeftIcon, PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowLeftIcon,
+  PencilIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import Button from "../../components/buttons/Button";
@@ -9,7 +13,9 @@ interface ViewSessionActionButtonProps {
   activityId: number;
 }
 
-const ViewSessionActionButton: React.FC<ViewSessionActionButtonProps> = ({ activityId }: ViewSessionActionButtonProps) => {
+const ViewSessionActionButton: React.FC<ViewSessionActionButtonProps> = ({
+  activityId,
+}: ViewSessionActionButtonProps) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -42,7 +48,17 @@ const ViewSessionActionButton: React.FC<ViewSessionActionButtonProps> = ({ activ
             </Link>
           </div>
           <div>
-            <Button onClick={() => { setDialogOpen(true) }} roundness="md" py={1.5} bgColor="white" textColor="text-primary-700" outlined outlineColor="border-primary-700">
+            <Button
+              onClick={() => {
+                setDialogOpen(true);
+              }}
+              roundness="md"
+              py={1.5}
+              bgColor="white"
+              textColor="text-primary-700"
+              outlined
+              outlineColor="border-primary-700"
+            >
               <TrashIcon className="w-4 h-4 mr-2 stroke-2" />
               Delete
             </Button>
@@ -54,7 +70,7 @@ const ViewSessionActionButton: React.FC<ViewSessionActionButtonProps> = ({ activ
         {dialogOpen && (
           <ConfirmationDialog
             message="Are you sure you want to delete this session? This action cannot be undone."
-            onDelete={handleDelete}
+            onConfirm={handleDelete}
             onCancel={() => setDialogOpen(false)}
           />
         )}

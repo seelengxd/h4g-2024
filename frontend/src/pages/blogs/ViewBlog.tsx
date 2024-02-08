@@ -115,7 +115,7 @@ const ViewBlog: React.FC = () => {
         {dialogOpen && (
           <ConfirmationDialog
             message="Delete this blog post?"
-            onDelete={handleDelete}
+            onConfirm={handleDelete}
             onCancel={() => setDialogOpen(false)}
           />
         )}

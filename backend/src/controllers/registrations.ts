@@ -113,7 +113,16 @@ export const markAttended: RequestHandler[] = [
         sessionId: Number(sessionId),
       },
       include: {
-        user: true,
+        user: {
+          select: {
+            id: true,
+            fullName: true,
+            preferredName: true,
+            email: true,
+            role: true,
+            phone: true,
+          },
+        },
       },
     });
 
@@ -142,7 +151,16 @@ export const markAbsent: RequestHandler[] = [
         sessionId: Number(sessionId),
       },
       include: {
-        user: true,
+        user: {
+          select: {
+            id: true,
+            fullName: true,
+            preferredName: true,
+            email: true,
+            role: true,
+            phone: true,
+          },
+        },
       },
     });
 
@@ -171,7 +189,16 @@ export const unmark: RequestHandler[] = [
         sessionId: Number(sessionId),
       },
       include: {
-        user: true,
+        user: {
+          select: {
+            id: true,
+            fullName: true,
+            preferredName: true,
+            email: true,
+            role: true,
+            phone: true,
+          },
+        },
       },
     });
 

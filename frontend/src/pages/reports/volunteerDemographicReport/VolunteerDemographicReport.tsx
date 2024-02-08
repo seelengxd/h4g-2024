@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import reportsApi from "../../../api/reports/reports";
 import { VolunteerDemographicReport } from "../../../types/reports/reports";
-// @ts-ignore
-import CanvasJSReact from "@canvasjs/react-charts";
 import Tabs from "../../../components/dataDisplay/Tabs";
 import Button from "../../../components/buttons/Button";
 import { ArrowDownOnSquareIcon } from "@heroicons/react/24/outline";
@@ -13,7 +11,6 @@ import ImmigrationStatusTab from "./ImmigrationStatusTab";
 import SkillsTab from "./SkillsTab";
 import InterestsTab from "./InterestsTab";
 import AgeTab from "./AgeTab";
-const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 const ViewVolunteerDemographicReport = () => {
   const [report, setReport] = useState<VolunteerDemographicReport | null>(null);
@@ -62,8 +59,6 @@ const ViewVolunteerDemographicReport = () => {
       immigrationStatus: report?.immigrationStatus.dataPoints,
       skills: report?.skills.dataPoints,
     };
-
-    console.log(tableData);
 
     fetch(
       `${process.env.REACT_APP_BACKEND_URL}/templates/VolunteerDemographicTemplate.xlsx`

@@ -94,14 +94,6 @@ export const create: RequestHandler[] = [
   },
 ];
 
-// For attendance (later)
-export const update: RequestHandler[] = [
-  body("registrations").isArray(),
-  async (req, res) => {
-    // TODO
-  },
-];
-
 export const markAttended: RequestHandler[] = [
   body("id").isInt(),
   body("sessionId").isInt(),

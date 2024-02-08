@@ -13,23 +13,28 @@ import feedbackRouter from "./feedback";
 import blogRouter from "./blog";
 import volunteersRouter from "./volunteers";
 import reportsRouter from "./reports";
+import { requireAdmin, requireLogin } from "../middleware/auth";
 
 const apiRouter = Router();
 
 apiRouter.use("/auth", authRouter);
+
+apiRouter.use(requireLogin);
 apiRouter.use("/profile", profileRouter);
 apiRouter.use("/organisations", organisationsRouter);
 apiRouter.use("/activities", activitiesRouter);
 apiRouter.use("/enrollment-forms", enrollmentFormsRouter);
-apiRouter.use("/submissions", submissionsRouter);
 apiRouter.use("/interests", interestsRouter);
 apiRouter.use("/skills", skillsRouter);
 apiRouter.use("/registrations", registrationsRouter);
 apiRouter.use("/sessions", sessionsRouter);
 apiRouter.use("/feedbacks", feedbackRouter);
 apiRouter.use("/blogs", blogRouter);
+apiRouter.use("/submissions", submissionsRouter);
+
+apiRouter.use(requireAdmin);
+
 apiRouter.use("/volunteers", volunteersRouter);
 apiRouter.use("/reports", reportsRouter);
-
 
 export default apiRouter;

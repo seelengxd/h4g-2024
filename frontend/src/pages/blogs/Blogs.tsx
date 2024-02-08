@@ -40,22 +40,22 @@ const Blogs: React.FC = () => {
   console.log("blogs ==> ", blogs);
 
   return (
-    <div className="bg-primary-100 w-full h-screen px-28 flex justify-between">
-      <div className="flex py-20 justify-between w-screen">
+    <div className="flex justify-between w-full h-screen bg-primary-100 px-28">
+      <div className="flex justify-between w-screen py-20">
         <div className="w-1/4 min-w-80">
-          <h1 className="text-2xl font-bold pb-2">Blog</h1>
+          <h1 className="pb-2 text-2xl font-bold">Blog</h1>
           <div className="flex items-center">
             <input
               type="search"
               id="default-search"
-              className="block text-sm rounded-xl w-72 bg-gray-100 border-primary-300 ps-4 focus:ring-primary-500 focus:border-primary-500 "
+              className="block text-sm bg-gray-100 rounded-xl w-72 border-primary-300 ps-4 focus:ring-primary-500 focus:border-primary-500 "
               placeholder="Search"
               onChange={(e) => {
                 setSearchValue(e.currentTarget.value);
               }}
             />
             <svg
-              className="hover:scale-105 relative -translate-x-10 w-4 h-4 text-gray-500 dark:text-gray-400 ml-2 cursor-pointer"
+              className="relative w-4 h-4 ml-2 text-gray-500 -translate-x-10 cursor-pointer hover:scale-105 dark:text-gray-400"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -73,7 +73,7 @@ const Blogs: React.FC = () => {
           <input
             type="checkbox"
             id="userFilterCheckbox"
-            className="mr-2 my-6 rounded-sm bg-primary-300 border border-primary-600"
+            className="my-6 mr-2 border rounded-sm bg-primary-300 border-primary-600"
             checked={userFilter}
             onChange={() => setUserFilter((prev) => !prev)}
           />{" "}
@@ -81,7 +81,7 @@ const Blogs: React.FC = () => {
         </div>
 
         {/* right side */}
-        <div className="right-0 flex-1 flex flex-col items-end h-full overflow-auto ml-8">
+        <div className="right-0 flex flex-col items-end flex-1 h-full ml-8 overflow-auto">
           <Link to="/blogs/new" className="pb-4">
             <Button type="submit" roundness="xl">
               Write New Post

@@ -1,6 +1,5 @@
 import authApi from "../../api/users/auth";
 import Spinner from "../../components/loading/Spinner";
-import Navbar from "../../components/navigation/Navbar";
 import SideBar from "../../components/navigation/Sidebar";
 import {
   selectIsAdmin,
@@ -32,12 +31,12 @@ const AppRouter: React.FC = () => {
   return (
     <div>
       {loading ? (
-        <div className="h-screen mx-auto bg-primary-100">
+        <div className="h-screen mx-auto">
           <Spinner />
         </div>
       ) : isLoggedIn ? (
         isAdmin ? (
-          <div className="relative flex h-screen overflow-y-clip bg-primary-100">
+          <div className="relative flex h-screen overflow-y-clip">
             <SideBar />
             {/* to not go into the sidebar */}
             <div className="w-full max-h-screen ml-24 overflow-y-auto">
@@ -45,7 +44,7 @@ const AppRouter: React.FC = () => {
             </div>
           </div>
         ) : (
-          <div className="relative flex h-screen overflow-y-clip bg-primary-100">
+          <div className="relative flex h-screen overflow-y-clip">
             <SideBar />
             {/* to not go into the sidebar */}
             <div className="w-full max-h-screen ml-24 overflow-y-auto">

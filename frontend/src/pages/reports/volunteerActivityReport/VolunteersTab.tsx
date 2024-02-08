@@ -1,36 +1,34 @@
 // @ts-ignore
 import CanvasJSReact from "@canvasjs/react-charts";
-import { VolunteerActivityReport } from "../../types/reports/reports";
+import { VolunteerActivityReport } from "../../../types/reports/reports";
 import ReactSelect from "react-select";
 import {
   VolunteerRowData,
   VolunteerTableColumns,
-} from "../../utils/volunteers";
+} from "../../../utils/volunteers";
 import { Column, ColumnDef, createColumnHelper } from "@tanstack/react-table";
-import DataTable from "../../components/tables/DataTable";
+import DataTable from "../../../components/tables/DataTable";
 import { useState } from "react";
-import { ActivityRowData, ActivityTableColumns } from "../../utils/activities";
-import { ActivityMiniData } from "../../types/activities/activities";
-import FormMultiSelectInput from "../../components/forms/FormMultiSelectInput";
+import FormMultiSelectInput from "../../../components/forms/FormMultiSelectInput";
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 interface Props {
   report: VolunteerActivityReport;
 }
 
-const HoursTab: React.FC<Props> = ({ report }) => {
+const VolunteersTab: React.FC<Props> = ({ report }) => {
   const [activeCategories, setActiveCategories] = useState<number[]>(
     report[0].minutes.dataPoints.map((dataPoint, index) => index)
   );
-  const hoursOptions = {
+  const volunteerOptions = {
     theme: "light2",
     animationEnabled: true,
     zoomEnabled: true,
     title: {
-      text: "Number of Hours Per Activity Type",
+      text: "Number of Volunteers Per Activity Type",
     },
     axisY: {
-      title: "Number of Hours",
+      title: "Number of Volunteers",
     },
     toolTip: {
       shared: true,
@@ -40,10 +38,7 @@ const HoursTab: React.FC<Props> = ({ report }) => {
         type: "spline",
         name: row.name,
         showInLegend: true,
-        dataPoints: row.minutes.dataPoints.map((dataPoint) => ({
-          ...dataPoint,
-          y: dataPoint.y / 60,
-        })),
+        dataPoints: row.volunteers.dataPoints,
       }))
       .filter((row, index) => activeCategories.includes(index)),
   };
@@ -64,16 +59,17 @@ const HoursTab: React.FC<Props> = ({ report }) => {
     id: index,
   }));
 
-  const columnHelper = createColumnHelper<ActivityRowData>();
-  const activityColumns: Array<ColumnDef<ActivityRowData>> =
-    ActivityTableColumns(columnHelper);
+  const columnHelper = createColumnHelper<VolunteerRowData>();
+  const volunteerColumns: Array<ColumnDef<VolunteerRowData>> =
+    VolunteerTableColumns(columnHelper);
 
   const [dateIndex, setDateIndex] = useState(0);
   const [categoryIndex, setCategoryIndex] = useState(0);
+
   return (
     <>
       <div className="flex">
-        <CanvasJSChart options={hoursOptions} />
+        <CanvasJSChart options={volunteerOptions} />
         <div className="px-8 my-auto">
           <FormMultiSelectInput
             name="category"
@@ -83,6 +79,7 @@ const HoursTab: React.FC<Props> = ({ report }) => {
           />
         </div>
       </div>
+
       <div className="flex justify-start gap-8">
         <ReactSelect
           className="w-56 mt-8"
@@ -100,15 +97,16 @@ const HoursTab: React.FC<Props> = ({ report }) => {
         />
       </div>
       <DataTable
-        columns={activityColumns}
-        tableData={report[categoryIndex].minutes.activities[dateIndex]}
-        getColumnCanGlobalFilter={(column: Column<ActivityMiniData>) =>
+        columns={volunteerColumns}
+        tableData={report[categoryIndex].volunteers.users[dateIndex]}
+        getColumnCanGlobalFilter={(column: Column<VolunteerRowData>) =>
           column.getCanSort()
         }
-        emptyTableText="No Activities Found"
+        emptyTableText="No Volunteers Found"
+        searchText="Search volunteer list"
       />
     </>
   );
 };
 
-export default HoursTab;
+export default VolunteersTab;

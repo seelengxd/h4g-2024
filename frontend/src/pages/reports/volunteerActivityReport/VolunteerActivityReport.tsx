@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
-import reportsApi from "../../api/reports/reports";
-import { VolunteerActivityReport } from "../../types/reports/reports";
+import reportsApi from "../../../api/reports/reports";
+import { VolunteerActivityReport } from "../../../types/reports/reports";
 // @ts-ignore
 import CanvasJSReact from "@canvasjs/react-charts";
-import Tabs from "../../components/dataDisplay/Tabs";
+import Tabs from "../../../components/dataDisplay/Tabs";
 import VolunteersTab from "./VolunteersTab";
 import HoursTab from "./HoursTab";
-import Button from "../../components/buttons/Button";
+import Button from "../../../components/buttons/Button";
 import { ArrowDownOnSquareIcon } from "@heroicons/react/24/outline";
 import { Renderer } from "xlsx-renderer";
 import { saveAs } from "file-saver";
@@ -18,30 +18,6 @@ const ViewVolunteerActivityReport = () => {
   useEffect(() => {
     reportsApi.getVolunteerActivityReport().then((report) => setReport(report));
   }, []);
-
-  const hoursOptions = {
-    theme: "light2",
-    animationEnabled: true,
-    zoomEnabled: true,
-    title: {
-      text: "Number of Hours Per Activity Type",
-    },
-    axisY: {
-      title: "Number of Hours",
-    },
-    toolTip: {
-      shared: true,
-    },
-    data: report?.map((row) => ({
-      type: "spline",
-      name: row.name,
-      showInLegend: true,
-      dataPoints: row.minutes.dataPoints.map((dataPoint) => ({
-        ...dataPoint,
-        y: dataPoint.y / 60,
-      })),
-    })),
-  };
 
   const volunteersPage = {
     id: "volunteers",

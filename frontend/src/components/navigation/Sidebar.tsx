@@ -9,7 +9,7 @@ import { logOut, selectIsAdmin } from "../../reducers/authSlice";
 import authApi from "../../api/users/auth";
 import { useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
-import { ChartBarIcon } from "@heroicons/react/24/solid";
+import { ChartBarIcon, ChartPieIcon } from "@heroicons/react/24/solid";
 import {
   BlogWritingIcon,
   CertificateIcon,
@@ -78,6 +78,11 @@ const adminContent = [
     label: "Volunteer Activity Report",
     icon: <ChartBarIcon className="w-8 h-8 fill-white" />,
     linkTo: "/volunteer-activity-report",
+  },
+  {
+    label: "Volunteer Demographic Report",
+    icon: <ChartPieIcon className="w-8 h-8 fill-white" />,
+    linkTo: "/volunteer-demographic-report",
   },
   {
     label: "Log out",

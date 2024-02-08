@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Organisations from "../organisations/Organisations";
 import CreateOrganisation from "../organisations/CreateOrganisation";
 import ViewOrganisation from "../organisations/ViewOrganisation";
@@ -16,7 +16,8 @@ import ViewSessionAttendances from "../sessions/ViewSessionAttendances";
 import DropInAttendance from "../sessions/DropInAttendance";
 import Volunteers from "../volunteers/Volunteers";
 import Volunteer from "../volunteers/Volunteer";
-import ViewVolunteerActivityReport from "../reports/VolunteerActivityReport";
+import ViewVolunteerActivityReport from "../reports/volunteerActivityReport/VolunteerActivityReport";
+import ViewVolunteerDemographicReport from "../reports/volunteerDemographicReport/VolunteerDemographicReport";
 
 const Error404 = (
   <Error
@@ -33,6 +34,8 @@ const Error403 = (
 const AdminApp: React.FC = () => {
   return (
     <Routes>
+      <Route path="/" element={<Navigate to="/volunteer-activity-report" />} />
+
       {/* Volunteer routes */}
       <Route path="/volunteers" element={<Volunteers />} />
       <Route path="/volunteers/:id" element={<Volunteer />} />
@@ -76,6 +79,11 @@ const AdminApp: React.FC = () => {
         element={<ViewVolunteerActivityReport />}
       />
 
+      {/* Volunteer Demographic Report */}
+      <Route
+        path="/volunteer-demographic-report"
+        element={<ViewVolunteerDemographicReport />}
+      />
       {/* 404 */}
       <Route path="*" element={Error404} />
     </Routes>

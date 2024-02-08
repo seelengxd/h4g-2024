@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../components/buttons/Button";
 import InputBuilder from "../../components/forms/InputBuilder";
 import {
@@ -17,15 +17,24 @@ import {
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import _ from "lodash";
 import enrollmentFormsAPI from "../../api/enrollmentForms/enrollmentForms";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useAppSelector } from "../../reducers/hooks";
+import { selectUser } from "../../reducers/authSlice";
+import { ArrowLeftIcon } from "@heroicons/react/20/solid";
+import { ActivityData } from "../../types/activities/activities";
+import activitiesAPI from "../../api/activities/activities";
+import Spinner from "../../components/loading/Spinner";
+import { ClockTwoIcon, LocationPinIcon } from "../../components/icons/icons";
+import { format } from "date-fns";
 
 const CreateEnrollmentForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData>(createFormData());
 
   // activityId
   const { id } = useParams();
-  const activityId = parseInt(id!);
   const navigate = useNavigate();
+  const activityId = parseInt(id!);
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     enrollmentFormsAPI
@@ -36,6 +45,13 @@ const CreateEnrollmentForm: React.FC = () => {
       .then(() => navigate("/activities/" + activityId));
   };
 
+  const [activity, setActivity] = useState<ActivityData | null>(null);
+
+  useEffect(() => {
+    activitiesAPI.getActivity(parseInt(id!)).then((activity) => {
+      setActivity(activity);
+    });
+  }, [id]);
   // Input change handlers
   const handleQuestionTitleChange =
     (index: number) => (questionTitle: string) => {
@@ -113,14 +129,6 @@ const CreateEnrollmentForm: React.FC = () => {
     setFormData(formDataCopy);
   };
 
-  const handleFormTitleChange = (title: string) => {
-    setFormData({ ...formData, title });
-  };
-
-  const handleFormDescriptionChange = (description: string) => {
-    setFormData({ ...formData, description });
-  };
-
   // Reordering handlers
   const onDragEnd = (result: any) => {
     const { destination, source } = result;
@@ -148,77 +156,123 @@ const CreateEnrollmentForm: React.FC = () => {
     });
   };
 
-  return (
-    <form
-      className="items-center justify-between h-screen max-w-4xl p-6 mx-auto lg:px-8"
-      onSubmit={handleSubmit}
-    >
-      <div className="flex flex-col justify-center">
-        <input
-          value={formData.title}
-          className="ml-4 text-4xl"
-          onChange={(e) => handleFormTitleChange(e.target.value)}
-          placeholder="Form title"
-          required
-        />
-        <textarea
-          value={formData.description}
-          className="mt-4 ml-4 text-gray-400 text-md"
-          onChange={(e) => handleFormDescriptionChange(e.target.value)}
-          placeholder="Enter description here"
+  return activity ? (
+    <div className="items-center justify-between max-h-screen p-6 mx-auto mt-8 max-w-7xl lg:px-8">
+      <div className="p-4">
+        <Link
+          to={"/activities/" + id}
+          className="flex items-center mb-12 text-xl font-bold"
         >
-          Form description
-        </textarea>
-        <hr className="my-4 ml-4" />
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="inputs">
-            {(provided) => (
-              <>
-                <div ref={provided.innerRef} {...provided.droppableProps}>
-                  {formData.components.map((component, index) => (
-                    <InputBuilder
-                      key={component.id}
-                      component={component}
-                      index={index}
-                      onFieldDelete={handleFieldDelete(index)}
-                      onTypeChange={handleTypeChange(index)}
-                      onOptionValueChange={handleOptionValueChange(index)}
-                      onOptionAdd={handleOptionAdd(index)}
-                      onOptionDelete={handleOptionDelete(index)}
-                      onQuestionTitleChange={handleQuestionTitleChange(index)}
-                    />
-                  ))}
-                </div>
-                {provided.placeholder}
-              </>
-            )}
-          </Droppable>
-        </DragDropContext>
-
-        <div className="flex ml-4">
-          <Button
-            onClick={(e) =>
-              setFormData({
-                ...formData,
-                meta: {
-                  nextId: formData.meta.nextId + 1,
-                },
-                components: [
-                  ...formData.components,
-                  createTextInputData(formData.meta.nextId),
-                ],
-              })
-            }
-          >
-            Add Input
-          </Button>
+          <ArrowLeftIcon className="w-6 h-6 mr-1 stroke-2" />
+          Back to Activity
+        </Link>
+      </div>
+      <div className="grid grid-cols-3 gap-24">
+        <div className="flex flex-col p-4 leading-normal">
+          <h2 className="mb-4 text-2xl font-bold tracking-tight">
+            {activity.name}
+          </h2>
+          <p>
+            by{" "}
+            <Link
+              to={"/organisations" + activity.organisationId.toString()}
+              className="hover:underline"
+            >
+              {activity.organisation.name}
+            </Link>
+          </p>
+          <p className="flex items-center mt-2 text-md">
+            <LocationPinIcon className="w-4 h-4 mr-2" />
+            {activity.location}
+          </p>
+          {!!activity.sessions.length && (
+            <p className="flex items-center mt-2 text-md">
+              <ClockTwoIcon className="w-4 h-4 mr-2" />
+              <p>
+                {format(
+                  new Date(activity.sessions[0]!.start),
+                  "EEEE d MMMM, hh:mma-"
+                )}
+                {new Date(activity.sessions[0]!.start).getDay() ===
+                new Date(activity.sessions[0]!.end).getDay()
+                  ? format(new Date(activity.sessions[0]!.end), "hh:mma")
+                  : format(
+                      new Date(activity.sessions[0]!.end),
+                      " d MMM, hh:mma"
+                    )}
+              </p>
+            </p>
+          )}
         </div>
+        <div className="flex flex-col h-[calc(100vh-80px)] max-h-full gap-8 overflow-y-scroll col-span-2 pl-2">
+          <p className="text-4xl">Enrollment Form</p>
+          <p>
+            Create questions to collect information from volunteers when they
+            sign up for this activity!
+          </p>
+          <form
+            className="items-center justify-between h-screen"
+            onSubmit={handleSubmit}
+          >
+            <div className="flex flex-col justify-center">
+              <DragDropContext onDragEnd={onDragEnd}>
+                <Droppable droppableId="inputs">
+                  {(provided) => (
+                    <>
+                      <div ref={provided.innerRef} {...provided.droppableProps}>
+                        {formData.components.map((component, index) => (
+                          <InputBuilder
+                            key={component.id}
+                            component={component}
+                            index={index}
+                            onFieldDelete={handleFieldDelete(index)}
+                            onTypeChange={handleTypeChange(index)}
+                            onOptionValueChange={handleOptionValueChange(index)}
+                            onOptionAdd={handleOptionAdd(index)}
+                            onOptionDelete={handleOptionDelete(index)}
+                            onQuestionTitleChange={handleQuestionTitleChange(
+                              index
+                            )}
+                          />
+                        ))}
+                      </div>
+                      {provided.placeholder}
+                    </>
+                  )}
+                </Droppable>
+              </DragDropContext>
 
-        <div className="flex justify-center mt-4 mb-2 ml-4">
-          <Button type="submit">Create Form!</Button>
+              <div className="flex">
+                <Button
+                  onClick={(e) =>
+                    setFormData({
+                      ...formData,
+                      meta: {
+                        nextId: formData.meta.nextId + 1,
+                      },
+                      components: [
+                        ...formData.components,
+                        createTextInputData(formData.meta.nextId),
+                      ],
+                    })
+                  }
+                >
+                  Add Input
+                </Button>
+              </div>
+
+              <div className="flex justify-center mt-8 mb-2">
+                <Button type="submit" fullWidth>
+                  Create Form!
+                </Button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
-    </form>
+    </div>
+  ) : (
+    <Spinner />
   );
 };
 

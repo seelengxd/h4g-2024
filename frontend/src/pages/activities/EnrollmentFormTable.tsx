@@ -17,6 +17,7 @@ const EnrollmentFormTable: React.FC<Props> = ({ activity, submissions }) => {
       </div>
     );
   }
+
   const columnHelper = createColumnHelper<SubmissionData>();
   const submissionColumns: Array<ColumnDef<SubmissionData>> = FormColumns(
     columnHelper,

@@ -1,9 +1,6 @@
-import Input from "./Input";
 import Select from "react-select";
-import { useState } from "react";
 import Button from "../buttons/Button";
-import { InputData, InputType, OptionData } from "../../types/forms/forms";
-import { createOptionData } from "../../utils/forms";
+import { InputData, InputType } from "../../types/forms/forms";
 import { Draggable } from "react-beautiful-dnd";
 
 interface Props {

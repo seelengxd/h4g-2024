@@ -42,7 +42,7 @@ export const update: RequestHandler[] = [
 
     const currUser = req.user as User;
 
-    const profile = await prisma.profile.findFirst({
+    let profile = await prisma.profile.findFirst({
       where: { userId: Number(currUser.id) },
       include: {
         interests: true,
@@ -51,8 +51,12 @@ export const update: RequestHandler[] = [
       },
     });
     if (!profile) {
-      res.sendStatus(404);
-      return;
+      profile = await prisma.profile.create({
+        data: {
+          userId: currUser.id,
+        },
+        include: { interests: true, skills: true, user: true },
+      });
     }
 
     const {
@@ -61,8 +65,16 @@ export const update: RequestHandler[] = [
       preferredName = currUser.preferredName,
       email = currUser.email,
 
-      //profile fields
+      // new profile fields
+      driving = profile.driving,
+      ownVehicle = profile.ownVehicle,
+      commitmentLevel = profile.commitmentLevel,
+      immigrationStatus = profile.immigrationStatus,
+      educationLevel = profile.educationLevel,
+      availability = profile.availability,
       dob = profile.dob,
+
+      //profile fields
       description = profile.description,
       interests = profile.interests.map((interest: Interest) => interest.id),
       skills = profile.skills.map((skill: Skill) => skill.id),
@@ -70,6 +82,7 @@ export const update: RequestHandler[] = [
 
     //monday, tuesday, wednesday, thursday, friday, saturday, sunday
 
+    console.log(commitmentLevel);
     const newProfile = await prisma.profile.update({
       where: { userId: Number((req.user as User).id) },
       data: {
@@ -86,7 +99,18 @@ export const update: RequestHandler[] = [
           connect: skills.map((skillId: string) => ({ id: Number(skillId) })),
         },
         imageUrl: req.file?.path,
-        //monday, tuesday, wednesday, thursday, friday, saturday, sunday
+        driving: Boolean(driving),
+        ownVehicle: Boolean(ownVehicle),
+        ...(commitmentLevel
+          ? { commitmentLevel: JSON.parse(commitmentLevel) }
+          : {}),
+        ...(immigrationStatus
+          ? { immigrationStatus: JSON.parse(immigrationStatus) }
+          : {}),
+        ...(educationLevel
+          ? { educationLevel: JSON.parse(educationLevel) }
+          : {}),
+        availability,
       },
       include: {
         skills: true,

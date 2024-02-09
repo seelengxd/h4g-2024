@@ -28,13 +28,14 @@ const ViewSessionActionButton: React.FC<ViewSessionActionButtonProps> = ({
 
   return (
     <div>
-      <div className="flex justify-between items-center">
-        <div>
-          <Link to={`/activities/${activityId}`}>
-            <Button px={4}>
-              <ArrowLeftIcon className="w-4 h-4 mr-2 stroke-2" />
-              Back to activity
-            </Button>
+      <div className="flex items-center justify-between">
+        <div className="flex justify-between w-full">
+          <Link
+            to={"/activities/" + activityId}
+            className="flex items-center text-xl font-bold"
+          >
+            <ArrowLeftIcon className="w-6 h-6 mr-1 stroke-2" />
+            Back to Activity
           </Link>
         </div>
 
@@ -66,7 +67,7 @@ const ViewSessionActionButton: React.FC<ViewSessionActionButtonProps> = ({
         </div>
       </div>
 
-      <div className="flex flex-col justify-between p-4 leading-normal">
+      <div className="flex flex-col justify-between p-4 pt-8 leading-normal">
         {dialogOpen && (
           <ConfirmationDialog
             message="Are you sure you want to delete this session? This action cannot be undone."

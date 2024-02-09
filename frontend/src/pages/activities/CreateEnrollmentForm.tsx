@@ -17,9 +17,7 @@ import {
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import _ from "lodash";
 import enrollmentFormsAPI from "../../api/enrollmentForms/enrollmentForms";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import { useAppSelector } from "../../reducers/hooks";
-import { selectUser } from "../../reducers/authSlice";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ArrowLeftIcon } from "@heroicons/react/20/solid";
 import { ActivityData } from "../../types/activities/activities";
 import activitiesAPI from "../../api/activities/activities";
@@ -157,7 +155,7 @@ const CreateEnrollmentForm: React.FC = () => {
   };
 
   return activity ? (
-    <div className="items-center justify-between max-h-screen p-6 mx-auto mt-8 max-w-7xl lg:px-8">
+    <div className="items-center justify-between max-h-[calc(100vh - 100px)] p-6 mx-auto mt-8 max-w-7xl lg:px-8">
       <div className="p-4">
         <Link
           to={"/activities/" + id}
@@ -204,7 +202,7 @@ const CreateEnrollmentForm: React.FC = () => {
             </p>
           )}
         </div>
-        <div className="flex flex-col h-[calc(100vh-80px)] max-h-full gap-8 overflow-y-scroll col-span-2 pl-2">
+        <div className="flex flex-col max-h-full col-span-2 gap-8 pl-2">
           <p className="text-4xl">Enrollment Form</p>
           <p>
             Create questions to collect information from volunteers when they
@@ -242,7 +240,7 @@ const CreateEnrollmentForm: React.FC = () => {
                 </Droppable>
               </DragDropContext>
 
-              <div className="flex">
+              <div className="flex w-1/4 mt-4">
                 <Button
                   onClick={(e) =>
                     setFormData({
@@ -256,6 +254,7 @@ const CreateEnrollmentForm: React.FC = () => {
                       ],
                     })
                   }
+                  fullWidth
                 >
                   Add Input
                 </Button>

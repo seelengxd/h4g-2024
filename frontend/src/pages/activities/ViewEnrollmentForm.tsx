@@ -107,7 +107,7 @@ const ViewEnrollmentForm: React.FC = () => {
             </p>
           )}
         </div>
-        <div className="flex flex-col h-[calc(100vh-80px)] max-h-full gap-8 overflow-y-scroll col-span-2 pl-2">
+        <div className="flex flex-col col-span-2 gap-8 pl-2">
           <p className="text-4xl">Enrollment Form</p>
           <p>
             This is the additional form volunteers will see when they sign up

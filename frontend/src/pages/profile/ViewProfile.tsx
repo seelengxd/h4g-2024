@@ -114,7 +114,6 @@ const ViewProfile: React.FC = () => {
       email: string().trim().required("Email cannot be empty."),
     }),
     onSubmit: async (values) => {
-      //console.log(navigate('/profile'));
       handleValues({ ...values, gender: values.gender! }).then(() =>
         navigate(`/profile`)
       );
@@ -131,8 +130,6 @@ const ViewProfile: React.FC = () => {
     handleSubmit,
     setFieldValue,
   } = formik;
-
-  console.log({ values });
 
   const genderOptions = [
     {
@@ -269,10 +266,8 @@ const ViewProfile: React.FC = () => {
   ];
 
   const toggleAvailabilityValue = (index: number) => () => {
-    console.log({ a: values.availability });
     const bitString = values.availability.split("");
     bitString[index] = bitString[index] === "0" ? "1" : "0";
-    console.log({ newValue: bitString.join("") });
     setFieldValue("availability", bitString.join(""));
   };
 
@@ -487,7 +482,6 @@ const ViewProfile: React.FC = () => {
     </div>
   );
 
-  console.log(values.availability[0] === "1");
   const thirdTab = (
     <div className="flex h-screen col-span-3 py-20 m1">
       <div className="flex flex-col flex-1 pr-20">

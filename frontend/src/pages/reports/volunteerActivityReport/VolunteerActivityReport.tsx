@@ -53,7 +53,6 @@ const ViewVolunteerActivityReport = () => {
         });
       }
     }
-    console.log(tableData);
 
     fetch(
       `${process.env.REACT_APP_BACKEND_URL}/templates/VolunteerActivityTemplate.xlsx`

@@ -1,11 +1,5 @@
-import {
-  CellContext,
-  type ColumnDef,
-  type ColumnHelper,
-} from "@tanstack/react-table";
+import { type ColumnDef, type ColumnHelper } from "@tanstack/react-table";
 import { Link } from "react-router-dom";
-
-import IconButton from "../components/buttons/IconButton";
 
 import {
   Attendance,
@@ -13,15 +7,9 @@ import {
   UserRegistration,
 } from "../types/registrations/registrations";
 import { format, isFuture } from "date-fns";
-import { PencilSquareIcon } from "@heroicons/react/20/solid";
-import { EyeIcon } from "@heroicons/react/24/solid";
-import Modal from "../components/containers/Dialog";
 import FeedbackDisplay from "../pages/feedback/FeedbackDisplay";
 import UpcomingSessionTag from "../pages/sessions/tags/UpcomingSessionTag";
 import BaseSessionTag from "../pages/sessions/tags/BaseSessionTag";
-import { act } from "react-dom/test-utils";
-import { ActivityData } from "../types/activities/activities";
-import { get } from "lodash";
 import { FeedbackIcon } from "../components/icons/icons";
 
 export const displayAttendance = (attendance: Attendance) => {

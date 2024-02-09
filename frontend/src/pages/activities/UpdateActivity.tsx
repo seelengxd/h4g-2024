@@ -27,8 +27,6 @@ async function downloadAndConvertToBlob(images: Image[]) {
       type: response.headers.get("content-type")!,
     });
 
-    console.log({ blob, file });
-
     imageFiles.push(file);
   }
 

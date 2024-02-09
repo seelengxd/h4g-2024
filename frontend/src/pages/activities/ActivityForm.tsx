@@ -1,5 +1,5 @@
 import Button from "../../components/buttons/Button";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { array, number, object, string } from "yup";
 import FormControl from "../../components/forms/FormControl";
@@ -20,6 +20,7 @@ import FileUploader from "../../components/forms/FileUploader";
 import ImageGallery from "../../components/dataDisplay/ImageGallery";
 import FormTextAreaInput from "../../components/forms/FormTextAreaInput";
 import _ from "lodash";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 interface Props {
   initialData?: ActivityMiniData;
@@ -111,6 +112,17 @@ const ActivityForm: React.FC<Props> = ({
 
   return (
     <div className="items-center justify-between max-h-screen p-6 mx-auto mt-8 max-w-7xl lg:px-8">
+      {initialData && (
+        <div className="flex justify-between w-full mb-4">
+          <Link
+            to={"/activities/" + initialData.id}
+            className="flex items-center text-xl font-bold"
+          >
+            <ArrowLeftIcon className="w-6 h-6 mr-1 stroke-2" />
+            Back to Activity
+          </Link>
+        </div>
+      )}
       <div className="w-full">
         <div className="flex items-center justify-between flex-initial w-full">
           <div className="flex items-center mt-4">
@@ -379,7 +391,7 @@ const ActivityForm: React.FC<Props> = ({
             </div>
           </FormControl>
         </div>
-        <div>
+        <div className="pb-4">
           <Button type="submit" fullWidth>
             {label}
           </Button>

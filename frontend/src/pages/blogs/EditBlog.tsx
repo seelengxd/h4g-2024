@@ -34,7 +34,6 @@ const EditBlog: React.FC = () => {
   };
 
   const handleValues = async (values: BlogPostData) => {
-    //console.log("handling: ", values);
     await blogsAPI.updateBlog(Number(id), values);
   };
 
@@ -47,10 +46,6 @@ const EditBlog: React.FC = () => {
         : "uploads/placeholder-image.png");
     setImageDisplayUrl(fullUrl);
   }, [initialValues.imageUrl]);
-
-  //console.log("img url==> ", imageDisplayUrl);
-  //console.log("img url===> ", initialValues.imageUrl);
-  //console.log("dd ", blog);
 
   const navigate = useNavigate();
   const formik = useFormik({
@@ -80,12 +75,12 @@ const EditBlog: React.FC = () => {
   return (
     <div>
       <form
-        className="flex px-20 py-20 h-screen bg-primary-200"
+        className="flex h-screen px-20 py-20 bg-primary-200"
         onSubmit={handleSubmit}
       >
         {/* left half */}
         <div className="flex flex-col w-2/3 min-w-96">
-          <Link to="/blogs" className="flex justify-start items-center ">
+          <Link to="/blogs" className="flex items-center justify-start ">
             <svg
               className="w-4 h-4 "
               xmlns="http://www.w3.org/2000/svg"
@@ -97,7 +92,7 @@ const EditBlog: React.FC = () => {
             <p className="pl-2 font-semibold">Back to Blog Posts</p>
           </Link>
 
-          <h1 className="text-gray-600 text-2xl pt-8 pb-4"> Edit Post </h1>
+          <h1 className="pt-8 pb-4 text-2xl text-gray-600"> Edit Post </h1>
 
           <FormControl>
             <div className="flex-1 pb-6">
@@ -131,9 +126,9 @@ const EditBlog: React.FC = () => {
         </div>
 
         {/* right half */}
-        <div className="w-1/3 pl-8 pt-8 max-w-96 min-w-96">
+        <div className="w-1/3 pt-8 pl-8 max-w-96 min-w-96">
           <FormControl onBlur={handleBlur}>
-            <div className="flex justify-center items-center pl-6">
+            <div className="flex items-center justify-center pl-6">
               <ImageUploader
                 name="image"
                 type="file"

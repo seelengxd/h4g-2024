@@ -1,4 +1,4 @@
-import { FireIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { PlusIcon } from "@heroicons/react/24/outline";
 import Button from "../../components/buttons/Button";
 import Spinner from "../../components/loading/Spinner";
 import { useEffect, useState } from "react";

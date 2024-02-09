@@ -25,7 +25,14 @@ export const VolunteerTableColumns = (
       header: "ID",
     }),
     columnHelper.accessor("fullName", {
-      cell: (name): string => name.getValue(),
+      cell: ({ row }) => {
+        const volunteer = row.original;
+        return (
+          <div className="flex space-x-2 hover:text-primary-800 hover:underline">
+            <Link to={"/volunteers/" + volunteer.id}>{volunteer.fullName}</Link>
+          </div>
+        );
+      },
       header: "Full Name",
     }),
     columnHelper.accessor("preferredName", {
@@ -35,18 +42,6 @@ export const VolunteerTableColumns = (
     columnHelper.accessor("email", {
       cell: (name): string => name.getValue(),
       header: "Email",
-    }),
-    columnHelper.accessor("action", {
-      header: "",
-      enableSorting: false,
-      enableGlobalFilter: false,
-      cell: (cell) => (
-        <div className="flex space-x-2">
-          <Link to={"/volunteers/" + cell.row.original.id}>
-            <IconButton icon={<EyeIcon className="w-4 h-4" />} />
-          </Link>
-        </div>
-      ),
     }),
   ] as Array<ColumnDef<VolunteerRowData>>;
 };

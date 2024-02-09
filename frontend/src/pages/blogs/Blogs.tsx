@@ -40,7 +40,7 @@ const Blogs: React.FC = () => {
   console.log("blogs ==> ", blogs);
 
   return (
-    <div className="flex justify-between w-full h-screen bg-primary-100 px-28">
+    <div className="flex justify-between w-full h-screen px-28">
       <div className="flex justify-between w-screen py-20">
         <div className="w-1/4 min-w-80">
           <h1 className="pb-2 text-2xl font-bold">Blog</h1>
@@ -54,21 +54,23 @@ const Blogs: React.FC = () => {
                 setSearchValue(e.currentTarget.value);
               }}
             />
-            <svg
-              className="relative w-4 h-4 ml-2 text-gray-500 -translate-x-10 cursor-pointer hover:scale-105 dark:text-gray-400"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 20 20"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-              />
-            </svg>
+            {!searchValue && (
+              <svg
+                className="relative w-4 h-4 ml-2 text-gray-500 -translate-x-10 cursor-pointer hover:scale-105 dark:text-gray-400"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+                />
+              </svg>
+            )}
           </div>
           <input
             type="checkbox"

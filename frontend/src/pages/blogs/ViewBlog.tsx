@@ -9,7 +9,6 @@ import Button from "../../components/buttons/Button";
 import ConfirmationDialog from "../../components/feedback/ConfirmationDialog";
 
 const ViewBlog: React.FC = () => {
-  //console.log("arrived on page");
   const { id } = useParams();
   const [blog, setBlog] = useState<Blog>();
   const [imageDisplayUrl, setImageDisplayUrl] = useState(blog?.imageUrl || "");
@@ -27,19 +26,14 @@ const ViewBlog: React.FC = () => {
   useEffect(() => {
     setImageDisplayUrl(blog?.imageUrl || "");
   });
-
-  //console.log("here is the current ", blog);
   const user = useSelector(selectUser)!.id;
   const isOwner = user === blog?.user.id;
-
-  console.log("in view: ", imageDisplayUrl);
-  console.log("blog ", blog);
 
   return (
     <div className="flex px-20 py-20">
       {/* left half */}
       <div className="flex flex-col w-2/3 min-w-80">
-        <Link to="/blogs" className="flex justify-start items-center ">
+        <Link to="/blogs" className="flex items-center justify-start ">
           <svg
             className="w-4 h-4 "
             xmlns="http://www.w3.org/2000/svg"
@@ -51,16 +45,16 @@ const ViewBlog: React.FC = () => {
           <p className="pl-2 font-semibold">Back to Blog Posts</p>
         </Link>
 
-        <h1 className="text-primary-600 font-semibold text-4xl pt-8 pb-4">
+        <h1 className="pt-8 pb-4 text-4xl font-semibold text-primary-600">
           {blog?.title}
         </h1>
 
         <div className="flex justify-between pr-4">
           <div className="flex flex-col">
-            <h2 className="text-gray-600 text-sm pb-2">
+            <h2 className="pb-2 text-sm text-gray-600">
               by {blog?.user.preferredName}
             </h2>
-            <h2 className="text-gray-600 text-sm">
+            <h2 className="text-sm text-gray-600">
               Posted on{" "}
               {blog ? format(new Date(blog.createdAt), "dd MMM yyyy") : ""}
             </h2>
@@ -94,11 +88,11 @@ const ViewBlog: React.FC = () => {
           )}
         </div>
 
-        <p className="py-7 text-gray-800">{blog?.description}</p>
+        <p className="text-gray-800 py-7">{blog?.description}</p>
       </div>
 
       {/* right half */}
-      <div className="width-1/3 pl-8 pt-8">
+      <div className="pt-8 pl-8 width-1/3">
         <img
           className="bg-white max-w-96"
           src={

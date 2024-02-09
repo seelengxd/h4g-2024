@@ -1,6 +1,6 @@
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import { format } from "date-fns";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ActivityMiniData } from "../../types/activities/activities";
 import _ from "lodash";
 import { ClockTwoIcon, LocationPinIcon } from "../../components/icons/icons";
@@ -18,6 +18,8 @@ const VolunteeringOpportunityCard: React.FC<
   showButton = true,
   dashboard = false,
 }: VolunteeringOpportunityCardProps) => {
+  const location = useLocation();
+  console.log(location.pathname);
   return (
     <div
       className={
@@ -77,7 +79,7 @@ const VolunteeringOpportunityCard: React.FC<
       <Link
         to={"/activities/" + activity.id.toString()}
         className="absolute right-4 top-4"
-        state={{ prevRoute: "/events" }}
+        state={{ prevRoute: location.pathname }}
       >
         <ArrowTopRightOnSquareIcon className="w-10 h-10 p-2 border rounded-full text-primary-800 bg-primary-200 border-primary-800 hover:text-primary-200 hover:bg-primary-800 hover:border-primary-200" />
       </Link>

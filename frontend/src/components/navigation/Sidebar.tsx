@@ -199,7 +199,7 @@ const SideBar: React.FC = () => {
           >
             <div
               className={
-                "flex items-center w-full gap-8 p-4 text-white rounded-3xl cursor-pointer hover:bg-primary-500"
+                "flex items-center w-full gap-8 p-4 text-white rounded-3xl cursor-pointer"
               }
               ref={buttonRef}
               onClick={() => setActive(false)}

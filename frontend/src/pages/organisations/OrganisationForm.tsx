@@ -1,5 +1,5 @@
 import Button from "../../components/buttons/Button";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { object, string } from "yup";
 import FormControl from "../../components/forms/FormControl";
@@ -17,6 +17,7 @@ import Spinner from "../../components/loading/Spinner";
 import InterestsAPI from "../../api/interests/interests";
 import { Interest } from "../../types/interests/interests";
 import ConfirmationDialog from "../../components/feedback/ConfirmationDialog";
+import { ArrowLeftIcon } from "@heroicons/react/20/solid";
 
 interface Props {
   initialData?: Organisation;
@@ -96,7 +97,18 @@ const OrganisationForm: React.FC<Props> = ({
   } = formik;
 
   return (
-    <div className="items-center justify-between p-6 mx-auto max-w-7xl lg:px-8 mt-8">
+    <div className="items-center justify-between p-6 mx-auto mt-8 max-w-7xl lg:px-8">
+      {initialData && (
+        <div className="flex justify-between w-full mb-4">
+          <Link
+            to={"/organisations/" + initialData.id}
+            className="flex items-center text-xl font-bold"
+          >
+            <ArrowLeftIcon className="w-6 h-6 mr-1 stroke-2" />
+            Back to Organisation
+          </Link>
+        </div>
+      )}
       <div className="w-full">
         <div className="flex items-center justify-between flex-initial w-full">
           <div className="flex items-center mt-4">
@@ -106,7 +118,7 @@ const OrganisationForm: React.FC<Props> = ({
       </div>
 
       <form className="space-y-6" onSubmit={handleSubmit}>
-        <div className="grid grid-cols-3 bg-white p-8 rounded-md shadow mt-4">
+        <div className="grid grid-cols-3 p-8 mt-4 bg-white rounded-md shadow">
           <div className="flex items-start justify-center h-full col-span-1 pr-8">
             <FormControl onBlur={handleBlur}>
               <Label htmlFor="image" textSize="text-md" mb={4}>
@@ -211,7 +223,7 @@ const OrganisationForm: React.FC<Props> = ({
             </FormControl>
           </div>
         </div>
-        <div className="flex flex-row gap-8 justify-end">
+        <div className="flex flex-row justify-end gap-8">
           <div />
           <Button type="submit" roundness="md">
             {label}

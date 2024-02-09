@@ -22,13 +22,16 @@ const ViewOrganisationActionButtons: React.FC = () => {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex items-center justify-between mb-8">
         <div>
-          <Link to={`/organisations`}>
-            <Button px={4}>
-              <ArrowLeftIcon className="w-4 h-4 mr-2 stroke-2" />
-              Back
-            </Button>
+          <Link
+            to={`/organisations`}
+            className="flex items-center text-xl font-bold"
+          >
+            {/* <Button px={4}> */}
+            <ArrowLeftIcon className="w-4 h-4 mr-2 stroke-2" />
+            Back to Organisations
+            {/* </Button> */}
           </Link>
         </div>
 

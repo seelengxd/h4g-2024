@@ -25,8 +25,6 @@ const CreateBlog: React.FC = () => {
     image: undefined,
   };
 
-  //console.log("initial: ", initialValues);
-
   const handleValues = async (values: BlogPostData) => {
     console.log("handling: ", values);
     await blogsAPI.createBlog(values);
@@ -60,11 +58,14 @@ const CreateBlog: React.FC = () => {
 
   return (
     <div>
-      <form className="flex px-20 py-20 bg-primary-200 h-screen" onSubmit={handleSubmit}>
+      <form
+        className="flex h-screen px-20 py-20 bg-primary-200"
+        onSubmit={handleSubmit}
+      >
         {/* left half */}
 
         <div className="flex flex-col w-2/3">
-          <Link to="/blogs" className="flex justify-start items-center ">
+          <Link to="/blogs" className="flex items-center justify-start ">
             <svg
               className="w-4 h-4 "
               xmlns="http://www.w3.org/2000/svg"
@@ -76,7 +77,7 @@ const CreateBlog: React.FC = () => {
             <p className="pl-2 font-semibold">Back to Blog Posts</p>
           </Link>
 
-          <h1 className="text-gray-600 text-2xl pt-8 pb-4"> Write New Post </h1>
+          <h1 className="pt-8 pb-4 text-2xl text-gray-600"> Write New Post </h1>
 
           <FormControl>
             <div className="flex-1 pb-6">
@@ -102,7 +103,6 @@ const CreateBlog: React.FC = () => {
             </div>
           </FormControl>
 
-
           <div className="pt-2">
             <Button type="submit" roundness="3xl">
               Post
@@ -111,9 +111,9 @@ const CreateBlog: React.FC = () => {
         </div>
 
         {/* right half */}
-        <div className="width-1/3 pl-8 pt-8 max-w-96">
+        <div className="pt-8 pl-8 width-1/3 max-w-96">
           <FormControl onBlur={handleBlur}>
-            <div className="flex justify-center items-center pl-6">
+            <div className="flex items-center justify-center pl-6">
               <ImageUploader
                 name="image"
                 type="file"

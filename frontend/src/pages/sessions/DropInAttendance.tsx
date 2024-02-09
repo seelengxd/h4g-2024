@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import sessionApi from "../../api/sessions/sessions";
 import Spinner from "../../components/loading/Spinner";
@@ -9,6 +9,7 @@ import Tabs from "../../components/dataDisplay/Tabs";
 import DropInAttendanceQrScanner from "./DropInAttendanceQrScanner";
 import DropInAttendanceSelect from "./DropInAttendanceSelect";
 import registrationsAPI from "../../api/registrations/registrations";
+import { ArrowLeftIcon } from "@heroicons/react/20/solid";
 
 const DropInAttendance: React.FC = () => {
   const { id } = useParams();
@@ -68,6 +69,15 @@ const DropInAttendance: React.FC = () => {
 
   return (
     <div className="items-center justify-between p-6 mx-auto mt-8 max-w-7xl lg:px-8">
+      <div className="flex justify-between w-full mb-12">
+        <Link
+          to={"/sessions/" + id}
+          className="flex items-center text-xl font-bold"
+        >
+          <ArrowLeftIcon className="w-6 h-6 mr-1 stroke-2" />
+          Back to Session
+        </Link>
+      </div>
       <Tabs tabs={[qrTab, manualInput]} defaultTabId="qr" />
     </div>
   );

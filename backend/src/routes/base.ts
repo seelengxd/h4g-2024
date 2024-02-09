@@ -14,10 +14,12 @@ import blogRouter from "./blog";
 import volunteersRouter from "./volunteers";
 import reportsRouter from "./reports";
 import { requireAdmin, requireLogin } from "../middleware/auth";
+import twoFaRouter from "./twoFa";
 
 const apiRouter = Router();
 
 apiRouter.use("/auth", authRouter);
+apiRouter.use("/two-fa", twoFaRouter);
 
 apiRouter.use(requireLogin);
 apiRouter.use("/profile", profileRouter);

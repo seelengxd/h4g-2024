@@ -47,11 +47,11 @@ const volunteerContent = [
     icon: <BlogWritingIcon className="w-8 h-8 fill-white" />,
     linkTo: "/blogs",
   },
-  {
-    label: "Certificates",
-    icon: <CertificateIcon className="w-8 h-8 fill-white" />,
-    linkTo: "/certificates",
-  },
+  // {
+  //   label: "Certificates",
+  //   icon: <CertificateIcon className="w-8 h-8 fill-white" />,
+  //   linkTo: "/certificates",
+  // },
   {
     label: "Log out",
     icon: <LogoutIcon className="w-8 h-8 stroke-white" />,

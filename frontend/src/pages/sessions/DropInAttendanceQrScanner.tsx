@@ -35,6 +35,7 @@ const DropInAttendanceQrScanner: React.FC<DropInAttendanceQrScannerProps> = ({
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const onDecode = (result: string): void => {
+    console.log(result);
     const noRegErrorMessage = "No registration";
     setIsDecodingPaused(true);
     try {
@@ -64,6 +65,7 @@ const DropInAttendanceQrScanner: React.FC<DropInAttendanceQrScannerProps> = ({
       (registration) => registration.user.id === selectedUserId
     );
     setSelectedUserId(null);
+    setIsDialogOpen(false);
     if (registration) handleMarkAttendance(registration);
   };
 

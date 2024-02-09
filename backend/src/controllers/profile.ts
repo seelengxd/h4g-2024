@@ -13,7 +13,7 @@ export const show: RequestHandler[] = [
     }
 
     const profile = await prisma.profile.findFirst({
-      where: { id: Number((req.user as User).id) },
+      where: { userId: Number((req.user as User).id) },
       include: {
         interests: true,
         skills: true,
@@ -59,7 +59,7 @@ export const update: RequestHandler[] = [
         user: true,
       },
     });
-    if (!profile) {
+    if (profile === null) {
       profile = await prisma.profile.create({
         data: {
           userId: currUser.id,
@@ -84,6 +84,7 @@ export const update: RequestHandler[] = [
       dob = profile.dob,
 
       //profile fields
+      salutation,
       description = profile.description,
       interests = profile.interests.map((interest: Interest) => interest.id),
       skills = profile.skills.map((skill: Skill) => skill.id),
@@ -91,11 +92,38 @@ export const update: RequestHandler[] = [
 
     //monday, tuesday, wednesday, thursday, friday, saturday, sunday
 
+    console.log(req.file);
+    console.log({
+      ...(dob ? { dob } : {}),
+      ...(description ? { description } : {}),
+      interests: {
+        set: [],
+        connect: interests.map((interestId: string) => ({
+          id: Number(interestId),
+        })),
+      },
+      skills: {
+        set: [],
+        connect: skills.map((skillId: string) => ({ id: Number(skillId) })),
+      },
+      imageUrl: req.file?.path,
+      driving: Boolean(driving),
+      ownVehicle: Boolean(ownVehicle),
+      ...(commitmentLevel
+        ? { commitmentLevel: JSON.parse(commitmentLevel) }
+        : {}),
+      ...(immigrationStatus
+        ? { immigrationStatus: JSON.parse(immigrationStatus) }
+        : {}),
+      ...(educationLevel ? { educationLevel: JSON.parse(educationLevel) } : {}),
+      availability,
+    });
     const newProfile = await prisma.profile.update({
-      where: { userId: Number((req.user as User).id) },
+      where: { id: profile.id },
       data: {
         ...(dob ? { dob } : {}),
         ...(description ? { description } : {}),
+        ...(salutation ? { salutation } : {}),
         interests: {
           set: [],
           connect: interests.map((interestId: string) => ({

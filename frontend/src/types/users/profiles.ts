@@ -82,5 +82,6 @@ export interface PostData {
   immigrationStatus: ImmigrationStatus;
   commitmentLevel: CommitmentLevel;
   educationLevel: EducationLevel;
+  salutation: Salutation;
   //todo: did not include availability yet
 }

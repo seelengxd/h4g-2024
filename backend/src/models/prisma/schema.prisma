@@ -87,6 +87,7 @@ model Profile {
   commitmentLevel   CommitmentLevel?
   immigrationStatus ImmigrationStatus?
   educationLevel    EducationLevel?
+  salutation        Salutation?
 
   // bit-string
   availability String?

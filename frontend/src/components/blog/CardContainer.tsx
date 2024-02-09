@@ -27,6 +27,7 @@ const CardContainer: React.FC<Props> = ({
         <img
           className="bg-white rounded-full w-14 h-14"
           src={process.env.REACT_APP_BACKEND_URL! + "/" + profileImageUrl}
+          alt={"blog"}
         />
 
         <div className="mt-2">
@@ -50,7 +51,7 @@ const CardContainer: React.FC<Props> = ({
       <div className="">
         <p
           className={
-            "px-3 text-xs text-gray-600 text-ellipsis overflow-hidden" +
+            "px-3 text-xs text-gray-600 text-ellipsis" +
             (dashboard ? " h-3/4" : "")
           }
         >

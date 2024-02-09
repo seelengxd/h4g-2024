@@ -35,7 +35,7 @@ class ProfilesAPI {
     form.append("immigrationStatus", JSON.stringify(data.immigrationStatus));
     form.append("educationLevel", JSON.stringify(data.educationLevel));
     form.append("commitmentLevel", JSON.stringify(data.commitmentLevel));
-
+    form.append("salutation", data.salutation);
     data.interests.forEach((interest) =>
       form.append("interests[]", interest.toString())
     );

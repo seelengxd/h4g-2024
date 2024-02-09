@@ -30,6 +30,7 @@ import { format } from "date-fns";
 import Label from "../../components/forms/Label";
 import FormMultiSelectInput from "../../components/forms/FormMultiSelectInput";
 import Spinner from "../../components/loading/Spinner";
+import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript";
 
 interface Props {
   profile?: Profile;
@@ -38,7 +39,10 @@ interface Props {
 }
 
 const ViewProfile: React.FC<Props> = ({ profile, skills, interests }) => {
-  const [imageDisplayUrl, setImageDisplayUrl] = useState("");
+  const [imageDisplayUrl, setImageDisplayUrl] = useState(
+    profile?.imageUrl || ""
+  );
+
   const [tabIndex, setTabIndex] = useState<0 | 1 | 2>(0);
 
   const allSkills = skills.map((skill: Skill) => ({
@@ -71,7 +75,7 @@ const ViewProfile: React.FC<Props> = ({ profile, skills, interests }) => {
     imageUrl: profile?.imageUrl || "",
     image: undefined,
     gender: profile?.gender,
-    salutation: profile?.salutation,
+    salutation: profile?.salutation || Salutation.Mr,
 
     driving: profile?.driving || false,
     ownVehicle: profile?.ownVehicle || false,
@@ -98,7 +102,6 @@ const ViewProfile: React.FC<Props> = ({ profile, skills, interests }) => {
         navigate(`/profile`)
       );
     },
-    enableReinitialize: true,
   });
 
   const { values, handleChange, handleBlur, handleSubmit, setFieldValue } =
@@ -332,9 +335,9 @@ const ViewProfile: React.FC<Props> = ({ profile, skills, interests }) => {
                     (option) => option.value === values.salutation
                   )[0]
                 }
-                onChange={(option) =>
-                  setFieldValue("salutation", option?.value)
-                }
+                onChange={(option) => {
+                  setFieldValue("salutation", option?.value);
+                }}
               />
             </div>
 

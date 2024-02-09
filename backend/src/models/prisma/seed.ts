@@ -1,23 +1,24 @@
 import {
-  ActivityType,
   PrismaClient,
   Role,
-  Prisma,
   FeedbackStatus,
   Gender,
   CommitmentLevel,
   EducationLevel,
   ImmigrationStatus,
-  User,
-  Profile,
 } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
-import { createAdmin, createOrganisation, createRegistration, createUser, interestsToAdd, skillsToAdd } from "./data";
-
+import {
+  createAdmin,
+  createOrganisation,
+  createRegistration,
+  createUser,
+  interestsToAdd,
+  skillsToAdd,
+} from "./data";
 
 const prisma = new PrismaClient();
-
 
 async function main() {
   try {
@@ -62,13 +63,16 @@ async function main() {
       ["Elderly Care", "Childcare"],
       ["Art and Craft", "Painting", "Pottery"],
       "uploads/user1.png", //todo insert icon
-      ["Grandparents Gala: Celebrating Wisdom and Joy", "Kids Carnival: A Day of Fun and Laughter"], //todo deal with blogs
+      [
+        "Grandparents Gala: Celebrating Wisdom and Joy",
+        "Kids Carnival: A Day of Fun and Laughter",
+      ], //todo deal with blogs
       false,
       false,
       CommitmentLevel.Weekly,
       ImmigrationStatus.Citizen,
       EducationLevel.Bachelor,
-      "111000110000011100100",
+      "111000110000011100100"
     );
 
     const user2 = createUser(
@@ -84,13 +88,16 @@ async function main() {
       ["Meals on Wheels", "Environmental Cleanup"],
       ["Sports", "Math", "Language Teaching"],
       "uploads/user2.png", //todo insert icon
-      ["Green Earth Festival: Preserving Nature Together", "Joyful Meals Parade: Spreading Happiness, One Meal at a Time"], //todo deal with blogs
+      [
+        "Green Earth Festival: Preserving Nature Together",
+        "Joyful Meals Parade: Spreading Happiness, One Meal at a Time",
+      ], //todo deal with blogs
       true,
       false,
       CommitmentLevel.Monthly,
       ImmigrationStatus.Pr,
       EducationLevel.Master,
-      "110110000011000111000",
+      "110110000011000111000"
     );
 
     const user3 = createUser(
@@ -106,7 +113,10 @@ async function main() {
       ["Animal Shelter Volunteer", "Homeless Shelter Support"],
       ["Musician", "Performing Arts"],
       "uploads/user1.png", //todo insert icon
-      ["Furry Friends Fiesta: Bringing Joy to Shelter Animals", "Hope Haven: A Night of Compassion and Support"], //todo deal with blogs
+      [
+        "Furry Friends Fiesta: Bringing Joy to Shelter Animals",
+        "Hope Haven: A Night of Compassion and Support",
+      ], //todo deal with blogs
       false,
       false,
       CommitmentLevel.Adhoc,
@@ -128,7 +138,10 @@ async function main() {
       ["Community Gardening", "Childcare"],
       ["Story Telling", "Creative Writing"],
       "uploads/user1.png", //todo insert icon
-      ["Blooming Community Gardens: Planting Seeds of Hope", "Enchanted Storybook Adventure: Igniting Imaginations"], //todo deal with blogs
+      [
+        "Blooming Community Gardens: Planting Seeds of Hope",
+        "Enchanted Storybook Adventure: Igniting Imaginations",
+      ], //todo deal with blogs
       true,
       true,
       CommitmentLevel.Monthly,
@@ -150,15 +163,17 @@ async function main() {
       ["Community Gardening", "Animal Shelter Volunteer"],
       ["Musician", "Photography"],
       "uploads/user2.png", //todo insert icon
-      ["Art Extravaganza: Unleashing Creativity in Every Brushstroke", "Melodies for a Cause: Harmonizing Hearts and Minds"], //todo deal with blogs
+      [
+        "Art Extravaganza: Unleashing Creativity in Every Brushstroke",
+        "Melodies for a Cause: Harmonizing Hearts and Minds",
+      ], //todo deal with blogs
       true,
       false,
       CommitmentLevel.Adhoc,
       ImmigrationStatus.Citizen,
       EducationLevel.Diploma,
       "111111110100011000010"
-    )
-
+    );
 
     // admin
     const admin1 = createAdmin(
@@ -167,8 +182,8 @@ async function main() {
       "lwh@gmail.com",
       Role.ADMIN,
       "Lau Wei Heng",
-      "Wei Heng",
-    )
+      "Wei Heng"
+    );
 
     const admin2 = createAdmin(
       "password",
@@ -177,7 +192,7 @@ async function main() {
       Role.ADMIN,
       "Rajesh Kumar",
       "Raj"
-    )
+    );
 
     // organisations
     const org1 = createOrganisation(
@@ -185,26 +200,33 @@ async function main() {
       "Youth Corps Singapore empowers and supports youths who are keen to serve the community. Learn, volunteer, and lead to make a difference in the community.",
       "uploads/ycsg.png",
       "http://www.youthcorps.gov.sg",
-      ["Community Empowerment Workshop",
+      [
+        "Community Empowerment Workshop",
         "Elderly Care Volunteer Program",
         "Environmental Cleanup Campaign",
-        "Childcare Training Program",],
+        "Childcare Training Program",
+      ],
       ["Elderly Care", "Environmental Cleanup", "Childcare"]
-    )
+    );
 
     const org2 = createOrganisation(
       "Company of Good",
       "With its new Company of Good strategy, NVPC seeks to partner, support and recognise businesses in Singapore along their journey towards corporate purpose—and becoming Companies of Good.",
       "uploads/cog.png",
       "https://www.thecompanyofgood.sg",
-      ["Corporate Volunteering Workshop",
+      [
+        "Corporate Volunteering Workshop",
         "Philanthropy Forum",
         "Corporate Social Responsibility Training",
         "Community Impact Project",
       ],
-      ["Animal Shelter Volunteer", "Elderly Care", "Environmental Cleanup", "Homeless Shelter Support"]
-    )
-
+      [
+        "Animal Shelter Volunteer",
+        "Elderly Care",
+        "Environmental Cleanup",
+        "Homeless Shelter Support",
+      ]
+    );
 
     const sampleForm = {
       title: "",
@@ -273,35 +295,47 @@ async function main() {
 
     const reg1 = await createRegistration(
       true,
-      (await user1).id,
-      (await org1).sessionIds[0],
+      (
+        await user1
+      ).id,
+      (
+        await org1
+      ).sessionIds[0],
       "I thoroughly enjoyed the Community Empowerment Workshop. It was enlightening to learn about different ways to contribute to my community and empower others. The skills and knowledge gained will definitely help me make a positive impact.",
       "Thank you for your participation! We're glad you found the workshop enlightening. Keep applying the skills you've learned to inspire others in your community.",
       120,
       FeedbackStatus.Approved
-    )
+    );
 
     // not yet attended, no feedback
     const reg2 = await createRegistration(
       false,
-      (await user1).id,
-      (await org2).sessionIds[1],
+      (
+        await user1
+      ).id,
+      (
+        await org2
+      ).sessionIds[1],
       "",
       "",
       0,
       FeedbackStatus.Pending
-    )
+    );
 
     // attended and feedback pending approval?
     const reg3 = await createRegistration(
       true,
-      (await user2).id,
-      (await org1).sessionIds[1],
+      (
+        await user2
+      ).id,
+      (
+        await org1
+      ).sessionIds[1],
       "I thoroughly enjoyed the Community Empowerment Workshop. It was enlightening to learn about different ways to contribute to my community and empower others. The skills and knowledge gained will definitely help me make a positive impact.",
       "Thank you for your participation! We're glad you found the workshop enlightening. Keep applying the skills you've learned to inspire others in your community.",
       120,
       FeedbackStatus.Pending
-    )
+    );
 
     console.log("Database seeded successfully.");
   } catch (error) {

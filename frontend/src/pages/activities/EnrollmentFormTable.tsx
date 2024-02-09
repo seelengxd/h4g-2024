@@ -27,7 +27,8 @@ const EnrollmentFormTable: React.FC<Props> = ({ activity, submissions }) => {
   return (
     <DataTable
       columns={submissionColumns}
-      tableData={submissions}
+      // TODO: figure out what can make it null
+      tableData={submissions.filter((submission) => submission !== null)}
       getColumnCanGlobalFilter={(column: Column<SubmissionData>) =>
         column.getCanSort()
       }

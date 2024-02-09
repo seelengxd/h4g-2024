@@ -153,7 +153,7 @@ const Volunteer: React.FC = () => {
                   src={
                     process.env.REACT_APP_BACKEND_URL +
                     "/" +
-                    volunteer.profile.imageUrl
+                    volunteer.profile?.imageUrl
                   }
                   alt="volunteer"
                   className="m-auto rounded-full max-w-56 "
@@ -173,10 +173,10 @@ const Volunteer: React.FC = () => {
                   </p>
                   <p className="font-semibold">Skills</p>
                   <div className="flex gap-4">
-                    {volunteer.profile.skills?.map((skill) => (
+                    {volunteer.profile?.skills?.map((skill) => (
                       <Tag text={skill.name} textSize="text-sm" />
                     ))}
-                    {!volunteer.profile.skills && (
+                    {!volunteer.profile?.skills && (
                       <p className="text-sm text-red-600">
                         Volunteer did not list any skills.
                       </p>
@@ -184,17 +184,17 @@ const Volunteer: React.FC = () => {
                   </div>
                   <p className="font-semibold">Interests</p>
                   <div className="flex gap-4">
-                    {volunteer.profile.interests?.map((skill) => (
+                    {volunteer.profile?.interests?.map((skill) => (
                       <Tag text={skill.name} textSize="text-sm" />
                     ))}
-                    {!volunteer.profile.interests && (
+                    {!volunteer.profile?.interests && (
                       <p className="text-sm text-red-600">
                         Volunteer did not list any interests.
                       </p>
                     )}
                   </div>
                   <p className="font-semibold">Description</p>
-                  <p className="text-sm">{volunteer.profile.description}</p>
+                  <p className="text-sm">{volunteer.profile?.description}</p>
                 </div>
               </div>
             </div>

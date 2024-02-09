@@ -25,7 +25,14 @@ export const ActivityTableColumns = (
       header: "ID",
     }),
     columnHelper.accessor("name", {
-      cell: (name): string => name.getValue(),
+      cell: ({ row }) => {
+        const activity = row.original;
+        return (
+          <div className="flex space-x-2 hover:text-primary-800 hover:underline">
+            <Link to={"/activities/" + activity.id}>{activity.name}</Link>
+          </div>
+        );
+      },
       header: "Name",
     }),
     columnHelper.accessor("type", {
@@ -43,7 +50,7 @@ export const ActivityTableColumns = (
         };
         return (
           <Link to={"/organisations/" + cell.row.original.organisationId}>
-            <p className="hover:underline hover:text-gray-800">
+            <p className="hover:underline hover:text-primary-800">
               {organisationInfo.organisation
                 ? organisationInfo.organisation.name
                 : organisationInfo.organisationName}
@@ -52,18 +59,6 @@ export const ActivityTableColumns = (
         );
       },
       header: "Organisation",
-    }),
-    columnHelper.accessor("action", {
-      header: "",
-      enableSorting: false,
-      enableGlobalFilter: false,
-      cell: (cell) => (
-        <div className="flex space-x-2">
-          <Link to={"/activities/" + cell.row.original.id}>
-            <IconButton icon={<EyeIcon className="w-4 h-4" />} />
-          </Link>
-        </div>
-      ),
     }),
   ] as Array<ColumnDef<ActivityMiniData>>;
 };

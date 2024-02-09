@@ -4,7 +4,6 @@ import {
   FormData,
   MultiselectInputData,
   SelectInputData,
-  Submission,
 } from "../types/forms/forms";
 import { SubmissionData } from "../types/enrollmentForms/submissions";
 

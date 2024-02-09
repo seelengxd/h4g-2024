@@ -5,11 +5,9 @@ import {
   type Row,
 } from "@tanstack/react-table";
 
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { ActivityData, ActivityMiniData } from "../types/activities/activities";
-import { Link } from "react-router-dom";
-import IconButton from "../components/buttons/IconButton";
-import { EyeIcon } from "@heroicons/react/24/outline";
+import { Link, useLocation } from "react-router-dom";
 import { UserMiniData } from "../types/users/users";
 
 export interface ActivityRowData extends ActivityMiniData {
@@ -19,6 +17,7 @@ export interface ActivityRowData extends ActivityMiniData {
 export const ActivityTableColumns = (
   columnHelper: ColumnHelper<ActivityRowData>
 ): Array<ColumnDef<ActivityRowData>> => {
+  const location = useLocation();
   return [
     columnHelper.accessor("id", {
       cell: (id): number => id.getValue(),
@@ -29,7 +28,12 @@ export const ActivityTableColumns = (
         const activity = row.original;
         return (
           <div className="flex space-x-2 hover:text-primary-800 hover:underline">
-            <Link to={"/activities/" + activity.id}>{activity.name}</Link>
+            <Link
+              to={"/activities/" + activity.id}
+              state={{ prevRoute: location.pathname }}
+            >
+              {activity.name}
+            </Link>
           </div>
         );
       },
@@ -49,7 +53,10 @@ export const ActivityTableColumns = (
           organisation?: { name: string };
         };
         return (
-          <Link to={"/organisations/" + cell.row.original.organisationId}>
+          <Link
+            to={"/organisations/" + cell.row.original.organisationId}
+            state={{ prevRoute: location.pathname }}
+          >
             <p className="hover:underline hover:text-primary-800">
               {organisationInfo.organisation
                 ? organisationInfo.organisation.name

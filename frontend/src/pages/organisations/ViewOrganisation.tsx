@@ -23,25 +23,25 @@ const ViewOrganisation: React.FC = () => {
       .finally(() => setIsLoading(false));
   }, [id]);
 
-  if(isLoading) return <Spinner />;
+  if (isLoading) return <Spinner />;
   if (!organisation) return Error404;
 
   const ActivitiesTab: Tab = {
     id: "Activities",
     tabTitle: "Activities",
-    page: <OrganisationActivityTab activities={organisation.activities} />
+    page: <OrganisationActivityTab activities={organisation.activities} />,
   };
 
   const VolunteersTab: Tab = {
     id: "Volunteers",
     tabTitle: "Volunteers",
-    page: <OrganisationVolunteerTab organisation={organisation} />
+    page: <OrganisationVolunteerTab organisation={organisation} />,
   };
 
   const tabs = [ActivitiesTab, VolunteersTab];
 
   return (
-    <div className="items-center justify-between p-6 mx-auto max-w-7xl lg:px-8 mt-4">
+    <div className="items-center justify-between p-6 mx-auto mt-8 max-w-7xl lg:px-8">
       <ViewOrganisationActionButtons />
       <OrganisationInfo organisation={organisation} />
       <Tabs tabs={tabs} defaultTabId="Activities" mt={8} />

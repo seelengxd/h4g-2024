@@ -82,10 +82,16 @@ const FeedbackDisplay: React.FC<Props> = ({ feedback, isAdmin = false }) => {
 
   return (
     <>
-      <EyeIcon
+      {/* <EyeIcon
         className="w-6 h-6 mx-auto stroke-2 stroke-black"
         onClick={() => setIsOpen(true)}
-      />
+      /> */}
+      <div
+        className="text-center cursor-pointer hover:text-primary-800 hover:underline"
+        onClick={() => setIsOpen(true)}
+      >
+        View
+      </div>
       <Modal
         title="Feedback"
         buttonDisplay="Close Feedback"

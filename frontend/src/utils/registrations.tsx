@@ -73,8 +73,11 @@ export const RegistrationTableColumns = (
           <FeedbackDisplay feedback={cell.row.original.feedback} />
         ) : (
           <div className="flex justify-center space-x-2">
-            <Link to={"/sessions/" + cell.row.original.id + "/feedback/new"}>
-              <FeedbackIcon className="w-6 h-6 fill-black" />
+            <Link
+              to={"/sessions/" + cell.row.original.id + "/feedback/new"}
+              className="hover:text-primary-800 hover:underline"
+            >
+              Write
             </Link>
           </div>
         ),

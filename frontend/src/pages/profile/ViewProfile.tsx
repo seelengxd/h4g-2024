@@ -623,7 +623,7 @@ const ViewProfile: React.FC<Props> = ({ profile, skills, interests }) => {
         <button
           className={
             "px-4 py-2 text-lg text-left" +
-            (tabIndex === 2
+            (tabIndex === 3
               ? " text-white rounded-xl bg-primary-500"
               : " text-primary-800")
           }

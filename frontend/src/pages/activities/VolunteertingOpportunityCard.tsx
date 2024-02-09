@@ -39,7 +39,13 @@ const VolunteeringOpportunityCard: React.FC<
         className="object-cover w-full h-36"
       />
       <div className="flex flex-col h-full px-4 pt-4 pb-10">
-        <p className="text-xl font-bold">{activity.name}</p>
+        <Link
+          to={"/activities/" + activity.id}
+          className="text-xl font-bold hover:text-primary-800 hover:underline"
+          state={{ prevRoute: location.pathname }}
+        >
+          {activity.name}
+        </Link>
         <p className="text-sm">{activity.organisationName}</p>
         <p className="flex items-center text-base">
           <LocationPinIcon className="w-4 h-4 mr-2 shrink-0" />
@@ -76,13 +82,6 @@ const VolunteeringOpportunityCard: React.FC<
           </Link>
         </div>
       )}
-      <Link
-        to={"/activities/" + activity.id.toString()}
-        className="absolute right-4 top-4"
-        state={{ prevRoute: location.pathname }}
-      >
-        <ArrowTopRightOnSquareIcon className="w-10 h-10 p-2 border rounded-full text-primary-800 bg-primary-200 border-primary-800 hover:text-primary-200 hover:bg-primary-800 hover:border-primary-200" />
-      </Link>
     </div>
   );
 };

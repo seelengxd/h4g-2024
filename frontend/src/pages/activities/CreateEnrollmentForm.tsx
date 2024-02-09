@@ -240,7 +240,7 @@ const CreateEnrollmentForm: React.FC = () => {
                 </Droppable>
               </DragDropContext>
 
-              <div className="flex">
+              <div className="flex w-1/4 mt-4">
                 <Button
                   onClick={(e) =>
                     setFormData({
@@ -254,6 +254,7 @@ const CreateEnrollmentForm: React.FC = () => {
                       ],
                     })
                   }
+                  fullWidth
                 >
                   Add Input
                 </Button>

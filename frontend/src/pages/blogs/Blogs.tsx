@@ -106,6 +106,7 @@ const Blogs: React.FC = () => {
               .map((blog: Blog) => (
                 <Link to={`${blog.id}`}>
                   <CardContainer
+                    id={blog.id}
                     title={blog.title}
                     subtitle={
                       "by " +

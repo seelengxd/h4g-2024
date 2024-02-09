@@ -1,6 +1,8 @@
 import { PropsWithChildren } from "react";
+import { Link } from "react-router-dom";
 
 interface Props extends PropsWithChildren {
+  id?: number;
   title: string;
   subtitle: string;
   profileImageUrl?: string;
@@ -9,6 +11,7 @@ interface Props extends PropsWithChildren {
   dashboard?: boolean;
 }
 const CardContainer: React.FC<Props> = ({
+  id,
   title,
   subtitle,
   profileImageUrl,
@@ -31,7 +34,12 @@ const CardContainer: React.FC<Props> = ({
         />
 
         <div className="mt-2">
-          <h2 className="font-semibold leading-5 text-gray-700">{title}</h2>
+          <Link
+            to={"/blogs/" + id}
+            className="hover:text-primary-800 hover:underline"
+          >
+            <h2 className="font-semibold leading-5">{title}</h2>
+          </Link>
           <h3 className="text-xs text-gray-400">{subtitle}</h3>
         </div>
       </div>

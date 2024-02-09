@@ -19,7 +19,7 @@ const CardContainer: React.FC<Props> = ({
   return (
     <div
       className={
-        " bg-primary-300 rounded-2xl py-4 h-80 flex flex-col justify-start items-start" +
+        " bg-primary-300 rounded-2xl py-4 h-80 flex flex-col justify-start items-start h-full" +
         (dashboard ? " bg-white min-w-[18rem]" : " w-72 bg-primary-200")
       }
     >
@@ -31,19 +31,18 @@ const CardContainer: React.FC<Props> = ({
         />
 
         <div className="mt-2">
-          <h2 className="font-semibold text-gray-700 ">{title}</h2>
+          <h2 className="font-semibold leading-5 text-gray-700">{title}</h2>
           <h3 className="text-xs text-gray-400">{subtitle}</h3>
         </div>
       </div>
 
       <div
         className={
-          "flex items-center justify-center w-full my-2 overflow-hidden" +
-          " h-1/2"
+          "flex items-center justify-center w-full my-2 overflow-hidden"
         }
       >
         <img
-          className=""
+          className={dashboard ? "h-36 w-full object-cover" : ""}
           src={process.env.REACT_APP_BACKEND_URL! + "/" + blogImageUrl}
         ></img>
       </div>

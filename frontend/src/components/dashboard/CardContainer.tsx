@@ -25,7 +25,7 @@ const CardContainer: React.FC<Props> = ({
         </div>
       )}
       {!vertical && (
-        <div className="flex gap-8 my-3 overflow-x-auto snap-x basis-2/5">
+        <div className="flex h-full gap-8 pb-4 my-3 overflow-x-auto snap-x basis-2/5">
           {children}
         </div>
       )}

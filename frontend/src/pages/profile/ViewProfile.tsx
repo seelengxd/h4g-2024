@@ -28,9 +28,6 @@ import FormTextAreaInput from "../../components/forms/FormTextAreaInput";
 import ReactDatePicker from "react-datepicker";
 import { format } from "date-fns";
 import Label from "../../components/forms/Label";
-import FormMultiSelectInput from "../../components/forms/FormMultiSelectInput";
-import Spinner from "../../components/loading/Spinner";
-import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript";
 
 interface Props {
   profile?: Profile;

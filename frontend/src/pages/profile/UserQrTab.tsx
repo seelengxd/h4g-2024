@@ -36,9 +36,7 @@ const UserQrTab: React.FC<UserQrTabProps> = ({
               <div className="flex items-center justify-center w-24 h-24 overflow-hidden rounded-full">
                 <img
                   className="object-contain"
-                  src={
-                    "https://www.kindpng.com/picc/m/163-1636340_user-avatar-icon-avatar-transparent-user-icon-png.png"
-                  }
+                  src={profile?.imageUrl || ""}
                   alt="uploaded"
                 />
               </div>

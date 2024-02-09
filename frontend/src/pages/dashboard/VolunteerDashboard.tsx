@@ -88,6 +88,15 @@ const VolunteerDashboard: React.FC = () => {
               .map((registration) => (
                 <EventCard registration={registration} />
               ))}
+            {registrations.filter(
+              (registration) =>
+                isFuture(new Date(registration.session.start)) &&
+                registration.session.activity.name
+                  .toLowerCase()
+                  .includes(searchValue.toLowerCase())
+            ).length === 0 && (
+              <div className="m-auto">You have no upcoming events.</div>
+            )}
           </CardContainer>
         </div>
         {/* Volunteer Activities? */}
@@ -157,6 +166,18 @@ const VolunteerDashboard: React.FC = () => {
               .map((registration) => (
                 <EventCard registration={registration} showFeedback />
               ))}
+            {registrations.filter(
+              (registration) =>
+                isPast(new Date(registration.session.start)) &&
+                !registration.feedback &&
+                registration.session.activity.name
+                  .toLowerCase()
+                  .includes(searchValue.toLowerCase())
+            ).length === 0 && (
+              <div className="m-auto">
+                Great! You have no outstanding feedback. :D
+              </div>
+            )}
           </CardContainer>
         </div>
       </div>

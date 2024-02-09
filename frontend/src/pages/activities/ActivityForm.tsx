@@ -391,7 +391,7 @@ const ActivityForm: React.FC<Props> = ({
             </div>
           </FormControl>
         </div>
-        <div>
+        <div className="pb-4">
           <Button type="submit" fullWidth>
             {label}
           </Button>

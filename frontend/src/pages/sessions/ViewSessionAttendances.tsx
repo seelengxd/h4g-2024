@@ -142,7 +142,7 @@ const ViewSessionAttendances: React.FC = () => {
   return (
     <div className="items-center justify-between p-6 mx-auto mt-8 max-w-7xl lg:px-8">
       <ViewSessionAttendanceHeader session={session} />
-      <div className="flex flex-row justify-between items-center mt-4">
+      <div className="flex flex-row items-center justify-between mt-4">
         <h1 className="text-xl font-semibold text-gray-700">
           Manage Attendance
         </h1>
@@ -172,41 +172,41 @@ const ViewSessionAttendances: React.FC = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-4 bg-white px-4 py-6 rounded-md shadow gap-4 h-full col-span-1 my-4">
-        <div className="col-span-1 justify-center flex flex-col items-center">
+      <div className="grid h-full grid-cols-4 col-span-1 gap-4 px-4 py-6 my-4 bg-white rounded-md shadow">
+        <div className="flex flex-col items-center justify-center col-span-1">
           <h4 className="text-sm font-semibold text-gray-600">
             Number of Registrations
           </h4>
-          <h4 className="text-md font-medium text-black-600">
+          <h4 className="font-medium text-md text-black-600">
             {numRegistrations}
           </h4>
         </div>
-        <div className="col-span-1 justify-center flex flex-col items-center">
+        <div className="flex flex-col items-center justify-center col-span-1">
           <h4 className="text-sm font-semibold text-gray-600">
             Number Attended
           </h4>
-          <h4 className="text-md font-medium text-black-600">
+          <h4 className="font-medium text-md text-black-600">
             {attendedRegistrations.length}
           </h4>
         </div>
-        <div className="col-span-1 justify-center flex flex-col items-center">
+        <div className="flex flex-col items-center justify-center col-span-1">
           <h4 className="text-sm font-semibold text-gray-600">Number Absent</h4>
-          <h4 className="text-md font-medium text-black-600">
+          <h4 className="font-medium text-md text-black-600">
             {absentRegistrations.length}
           </h4>
         </div>
-        <div className="col-span-1 justify-center flex flex-col items-center">
+        <div className="flex flex-col items-center justify-center col-span-1">
           <h4 className="text-sm font-semibold text-gray-600">
             Number Unmarked
           </h4>
-          <h4 className="text-md font-medium text-black-600">
+          <h4 className="font-medium text-md text-black-600">
             {pendingRegistrations.length}
           </h4>
         </div>
       </div>
 
       <div
-        className="grid grid-cols-12 bg-white p-4 rounded-md shadow gap-4 h-full col-span-1 my-4 cursor-pointer hover:bg-gray-50"
+        className="grid h-full grid-cols-12 col-span-1 gap-4 p-4 my-4 bg-white rounded-md shadow cursor-pointer hover:bg-gray-50"
         onClick={() => navigate("./drop_in")}
       >
         <div className="col-span-11 font-medium">Attendance Drop-in View</div>
@@ -215,7 +215,7 @@ const ViewSessionAttendances: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex flex-col bg-white p-8 rounded-md shadow gap-4 h-full col-span-1">
+      <div className="flex flex-col h-full col-span-1 gap-4 p-8 bg-white rounded-md shadow">
         <Tabs
           tabs={[
             allRegistrationsTab,

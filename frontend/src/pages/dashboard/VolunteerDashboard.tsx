@@ -124,6 +124,7 @@ const VolunteerDashboard: React.FC = () => {
               )
               .map((blog) => (
                 <BlogCardContainer
+                  id={blog.id}
                   title={blog.title}
                   subtitle={
                     "by " +

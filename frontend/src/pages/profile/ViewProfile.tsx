@@ -637,7 +637,7 @@ const ViewProfile: React.FC<Props> = ({ profile, skills, interests }) => {
         {tabIndex === 0 && firstTab}
         {tabIndex === 1 && secondTab}
         {tabIndex === 2 && thirdTab}
-        {tabIndex === 3 && <UserQrTab user={user} />}
+        {tabIndex === 3 && <UserQrTab user={user} profile={profile} />}
       </form>
     </div>
   );

@@ -16,7 +16,7 @@ import Blogs from "../blogs/Blogs";
 import ViewBlog from "../blogs/ViewBlog";
 import CreateBlog from "../blogs/CreateBlog";
 import EditBlog from "../blogs/EditBlog";
-
+import ViewProfileLoader from "../profile/ViewProfileLoader";
 
 export const Error404 = (
   <Error
@@ -35,8 +35,8 @@ const VolunteerApp: React.FC = () => {
     <Routes>
       <Route path="/" element={<VolunteerDashboard />} />
 
-      <Route path="/profile" element={<ViewProfile />} />
-      
+      <Route path="/profile" element={<ViewProfileLoader />} />
+
       {/* Blog Routes */}
       <Route path="/blogs" element={<Blogs />} />
       <Route path="/blogs/:id" element={<ViewBlog />} />

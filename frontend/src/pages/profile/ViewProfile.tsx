@@ -29,23 +29,17 @@ import ReactDatePicker from "react-datepicker";
 import { format } from "date-fns";
 import Label from "../../components/forms/Label";
 import FormMultiSelectInput from "../../components/forms/FormMultiSelectInput";
+import Spinner from "../../components/loading/Spinner";
 
-const ViewProfile: React.FC = () => {
-  const [loading, setLoading] = useState(true);
-  const [profile, setProfile] = useState<Profile>();
-  const [skills, setSkills] = useState<Skill[]>([]);
-  const [interests, setInterests] = useState<Interest[]>([]);
+interface Props {
+  profile?: Profile;
+  skills: Skill[];
+  interests: Interest[];
+}
+
+const ViewProfile: React.FC<Props> = ({ profile, skills, interests }) => {
   const [imageDisplayUrl, setImageDisplayUrl] = useState("");
   const [tabIndex, setTabIndex] = useState<0 | 1 | 2>(0);
-
-  //skills
-  useEffect(() => {
-    skillsApi.getAllSkills().then((skill) => setSkills(skill));
-  }, []);
-
-  useEffect(() => {
-    interestApi.getAllInterests().then((interest) => setInterests(interest));
-  }, []);
 
   const allSkills = skills.map((skill: Skill) => ({
     label: skill.name,
@@ -64,13 +58,6 @@ const ViewProfile: React.FC = () => {
 
   //get user and profile
   const user = useSelector(selectUser);
-  useEffect(() => {
-    profilesAPI
-      .getProfile()
-      .then((profile) => setProfile(profile))
-      .catch((err) => console.log(err))
-      .finally(() => setLoading(false));
-  }, []);
 
   //set initial values
   const initialValues = {
@@ -94,13 +81,6 @@ const ViewProfile: React.FC = () => {
     educationLevel: profile?.educationLevel || EducationLevel.Secondary,
   };
 
-  //profile image
-  useEffect(() => {
-    const fullUrl =
-      process.env.REACT_APP_BACKEND_URL + "/" + initialValues.imageUrl;
-    setImageDisplayUrl(fullUrl);
-  }, [initialValues.imageUrl]);
-
   const handleValues = async (values: PostData) => {
     await profilesAPI.updateProfile(values);
   };
@@ -121,15 +101,8 @@ const ViewProfile: React.FC = () => {
     enableReinitialize: true,
   });
 
-  const {
-    touched,
-    errors,
-    values,
-    handleChange,
-    handleBlur,
-    handleSubmit,
-    setFieldValue,
-  } = formik;
+  const { values, handleChange, handleBlur, handleSubmit, setFieldValue } =
+    formik;
 
   const genderOptions = [
     {
@@ -327,6 +300,12 @@ const ViewProfile: React.FC = () => {
                 //placeholder={initialValues.email}
                 name="email"
                 value={values.email}
+                // onChange={(e) => {
+                //   console.log(e);
+                //   console.log(e.currentTarget.value);
+                //   setFieldValue("email", e.currentTarget.value);
+                //   setTimeout(() => setFieldTouched("email", true));
+                // }}
                 onChange={handleChange}
                 required
               />
@@ -641,6 +620,7 @@ const ViewProfile: React.FC = () => {
           Availability
         </button>
       </div>
+
       <form onSubmit={handleSubmit} className="col-span-3">
         {tabIndex === 0 && firstTab}
         {tabIndex === 1 && secondTab}

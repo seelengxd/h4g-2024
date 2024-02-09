@@ -24,9 +24,14 @@ const TwoFaSgIdRedirect: React.FC = () => {
   useEffect(() => {
     twoFaApi
       .hasTwoFaSession()
-      .then((data) => setUser(data))
+      .then((data) => {
+        setUser(data);
+      })
       .catch(() => setUser(null))
-      .finally(() => setIsLoading(false));
+      .finally(() => {
+        setIsLoading(false);
+        setTimeout(() => navigate("/"), 2500);
+      });
   }, []);
 
   return (
@@ -37,8 +42,15 @@ const TwoFaSgIdRedirect: React.FC = () => {
 
           {!isLoading && !user && (
             <>
-              <XCircleIcon className="w-16 h-16 stroke-red-500" />
-              <h2 className="text-2xl">Uh oh... Something went wrong</h2>
+              <div className="flex flex-row">
+                <XCircleIcon className="w-16 h-16 stroke-red-500" />
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+                </span>
+              </div>
+              <h2 className="text-2xl font-medium">
+                Uh oh... Something went wrong
+              </h2>
               <h3 className="text-md text-gray-700">
                 Could not validate your identity! Redirecting you in a moment...
               </h3>
@@ -47,10 +59,18 @@ const TwoFaSgIdRedirect: React.FC = () => {
 
           {!isLoading && user && (
             <>
-              <CheckCircleIcon className="w-16 h-16 stroke-green-500" />
-              <h2 className="text-2xl">
-                Success! Redirecting you in a moment...
+              <div className="flex flex-row">
+                <CheckCircleIcon className="w-16 h-16 stroke-green-500" />
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                </span>
+              </div>
+              <h2 className="text-2xl font-medium">
+                Hello, {user.data["myinfo.name"]}
               </h2>
+              <h3 className="text-md text-gray-700">
+                Success! Redirecting you in a moment...
+              </h3>
             </>
           )}
 

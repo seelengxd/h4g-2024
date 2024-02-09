@@ -99,7 +99,10 @@ export const hasTwoFaSession: RequestHandler[] = [
       return res.sendStatus(401);
     }
 
-    const userInfo = await sgid.userinfo({ accessToken, sub });
+    const userInfo = await sgid.userinfo({ accessToken, sub }).catch((err) => {
+      console.log("Something went wrong with retrieving user info", err);
+      return res.sendStatus(500);
+    });
 
     return res.json({ data: userInfo });
   },

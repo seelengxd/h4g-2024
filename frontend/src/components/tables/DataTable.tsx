@@ -111,7 +111,7 @@ const DataTable = forwardRef<HTMLTableElement, DataTableProps<any>>(
                   className="border-b odd:bg-primary-50 even:bg-primary-100"
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} className="px-6 py-2">
+                    <td key={cell.id} className="px-6 py-2 text-black">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

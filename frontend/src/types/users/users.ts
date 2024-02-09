@@ -17,6 +17,7 @@ export interface UserMiniData {
   email: string;
   role: "USER" | "ADMIN";
   profile: Profile;
+  phone: string;
 }
 
 export interface UserData extends UserMiniData {

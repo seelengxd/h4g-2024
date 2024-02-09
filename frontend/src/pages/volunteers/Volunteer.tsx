@@ -3,7 +3,6 @@ import { useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { UserData } from "../../types/users/users";
 import volunteersApi from "../../api/users/volunteers";
-import Tag from "../../components/dataDisplay/Tag";
 import { Column, ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import {
   RegistrationRowData,
@@ -18,6 +17,9 @@ import Button from "../../components/buttons/Button";
 import { ArrowDownOnSquareIcon } from "@heroicons/react/24/outline";
 import { Renderer } from "xlsx-renderer";
 import { saveAs } from "file-saver";
+import Tabs from "../../components/dataDisplay/Tabs";
+import Tag from "../../components/dataDisplay/Tag";
+import BaseSessionTag from "../sessions/tags/BaseSessionTag";
 
 const Volunteer: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -133,6 +135,241 @@ const Volunteer: React.FC = () => {
   }, [filteredData, endDate, startDate, volunteer]);
 
   if (!volunteer) return <Spinner />;
+
+  const personalInformationTab = {
+    id: "personalInformation",
+    tabTitle: "Personal Details",
+    page: (
+      <div className="flex flex-col justify-center space-y-2">
+        <div className="grid grid-cols-2">
+          <div className="flex flex-col space-y-2">
+            <p>
+              <span className="font-semibold">Full Name: </span>
+              {volunteer.fullName}
+            </p>
+            <p>
+              <span className="font-semibold">Preferred Name: </span>
+              {volunteer.preferredName}
+            </p>
+            <p className="flex gap-2">
+              <span className="font-semibold">Salutation: </span>
+              {volunteer.profile?.salutation || (
+                <BaseSessionTag
+                  tagBgColor="bg-red-100"
+                  tagTextColor="text-red-700"
+                  status="No Data"
+                />
+              )}
+            </p>
+            <p className="flex gap-2">
+              <span className="font-semibold">Gender: </span>
+              {volunteer.profile?.gender || (
+                <BaseSessionTag
+                  tagBgColor="bg-red-100"
+                  tagTextColor="text-red-700"
+                  status="No Data"
+                />
+              )}
+            </p>
+            <p>
+              <span className="font-semibold">Email: </span>
+              {volunteer.email}
+            </p>
+          </div>
+          <div className="flex flex-col space-y-2">
+            <p>
+              <span className="font-semibold">Phone: </span>
+              {volunteer.phone}
+            </p>
+            <p className="flex gap-2">
+              <span className="font-semibold">Immigration Status: </span>
+              {volunteer.profile?.immigrationStatus || (
+                <BaseSessionTag
+                  tagBgColor="bg-red-100"
+                  tagTextColor="text-red-700"
+                  status="No Data"
+                />
+              )}
+            </p>
+            <p className="flex gap-2">
+              <span className="font-semibold">Education Level: </span>
+              {volunteer.profile?.educationLevel || (
+                <BaseSessionTag
+                  tagBgColor="bg-red-100"
+                  tagTextColor="text-red-700"
+                  status="No Data"
+                />
+              )}
+            </p>
+            <p className="flex gap-2">
+              <span className="font-semibold">Driving: </span>
+              {volunteer.profile?.driving === true ? (
+                <BaseSessionTag
+                  tagBgColor="bg-green-100"
+                  tagTextColor="text-green-700"
+                  status="Yes"
+                />
+              ) : volunteer.profile?.driving === false ? (
+                <BaseSessionTag
+                  tagBgColor="bg-red-100"
+                  tagTextColor="text-red-700"
+                  status="No"
+                />
+              ) : (
+                <BaseSessionTag
+                  tagBgColor="bg-red-100"
+                  tagTextColor="text-red-700"
+                  status="No Data"
+                />
+              )}
+            </p>
+            <p className="flex gap-2">
+              <span className="font-semibold">Owns Vehicle: </span>
+              {volunteer.profile?.ownVehicle === true ? (
+                <BaseSessionTag
+                  tagBgColor="bg-green-100"
+                  tagTextColor="text-green-700"
+                  status="Yes"
+                />
+              ) : volunteer.profile?.ownVehicle === false ? (
+                <BaseSessionTag
+                  tagBgColor="bg-red-100"
+                  tagTextColor="text-red-700"
+                  status="No"
+                />
+              ) : (
+                <BaseSessionTag
+                  tagBgColor="bg-red-100"
+                  tagTextColor="text-red-700"
+                  status="No Data"
+                />
+              )}
+            </p>
+          </div>
+        </div>
+      </div>
+    ),
+  };
+
+  const skillsAndInterestsTab = {
+    id: "skillsAndInterests",
+    tabTitle: "Skills and Interests",
+    page: (
+      <div className="flex flex-col justify-center space-y-2">
+        <p className="font-semibold">Skills</p>
+        <div className="flex gap-4">
+          {volunteer.profile?.skills?.map((skill) => (
+            <Tag text={skill.name} textSize="text-sm" />
+          ))}
+          {!volunteer.profile?.skills && (
+            <p className="text-sm text-red-600">
+              Volunteer did not list any skills.
+            </p>
+          )}
+        </div>
+        <p className="font-semibold">Interests</p>
+        <div className="flex gap-4">
+          {volunteer.profile?.interests?.map((skill) => (
+            <Tag text={skill.name} textSize="text-sm" />
+          ))}
+          {!volunteer.profile?.interests && (
+            <p className="text-sm text-red-600">
+              Volunteer did not list any interests.
+            </p>
+          )}
+        </div>
+        <p className="font-semibold">Description</p>
+        <p className="text-sm">{volunteer.profile?.description}</p>
+      </div>
+    ),
+  };
+
+  const availabilityTab = {
+    id: "availability",
+    tabTitle: "Availability",
+    page: (
+      <div className="flex flex-col justify-center space-y-2">
+        <div className="flex flex-col space-y-2">
+          <p className="flex gap-2 mb-2">
+            <span className="font-semibold">Commitment Level: </span>
+            {volunteer.profile?.commitmentLevel || (
+              <BaseSessionTag
+                tagBgColor="bg-red-100"
+                tagTextColor="text-red-700"
+                status="No Data"
+              />
+            )}
+          </p>
+          {volunteer.profile?.availability ? (
+            <div className="grid grid-cols-4 gap-y-2">
+              <div></div>
+              <div className="text-center">
+                <p>Morning</p>
+                <p className="text-sm">8AM-12PM</p>
+              </div>
+              <div className="text-center">
+                <p>Afternoon</p>
+                <p className="text-sm">12PM-4PM</p>
+              </div>
+              <div className="text-center">
+                <p>Evening</p>
+                <p className="text-sm">4PM-9PM</p>
+              </div>
+              {[
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday",
+              ].map((day, index) => (
+                <>
+                  <div>
+                    <p>{day}</p>
+                  </div>
+                  <div className="mx-auto">
+                    <input
+                      type="checkbox"
+                      checked={
+                        volunteer.profile?.availability[index * 3] === "1"
+                      }
+                      className="w-6 h-6 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 focus:ring-2"
+                    />
+                  </div>
+                  <div className="mx-auto">
+                    <input
+                      type="checkbox"
+                      checked={
+                        volunteer.profile?.availability[index * 3 + 1] === "1"
+                      }
+                      className="w-6 h-6 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 focus:ring-2"
+                    />
+                  </div>
+                  <div className="mx-auto">
+                    <input
+                      type="checkbox"
+                      checked={
+                        volunteer.profile?.availability[index * 3 + 2] === "1"
+                      }
+                      className="w-6 h-6 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 focus:ring-2"
+                    />
+                  </div>
+                </>
+              ))}
+            </div>
+          ) : (
+            <BaseSessionTag
+              tagBgColor="bg-red-100"
+              tagTextColor="text-red-700"
+              status="No Availability Data"
+            />
+          )}
+        </div>
+      </div>
+    ),
+  };
+
   return (
     <div className="items-center justify-between h-screen p-6 mx-auto mt-8 max-w-7xl lg:px-8">
       <div className="flex flex-col w-full space-y-8">
@@ -158,44 +395,15 @@ const Volunteer: React.FC = () => {
                   alt="volunteer"
                   className="m-auto rounded-full max-w-56 "
                 />
-                <div className="flex flex-col justify-center space-y-2">
-                  <p>
-                    <span className="font-semibold">Full Name: </span>
-                    {volunteer.fullName}
-                  </p>
-                  <p>
-                    <span className="font-semibold">Preferred Name: </span>
-                    {volunteer.preferredName}
-                  </p>
-                  <p>
-                    <span className="font-semibold">Email: </span>
-                    {volunteer.email}
-                  </p>
-                  <p className="font-semibold">Skills</p>
-                  <div className="flex gap-4">
-                    {volunteer.profile?.skills?.map((skill) => (
-                      <Tag text={skill.name} textSize="text-sm" />
-                    ))}
-                    {!volunteer.profile?.skills && (
-                      <p className="text-sm text-red-600">
-                        Volunteer did not list any skills.
-                      </p>
-                    )}
-                  </div>
-                  <p className="font-semibold">Interests</p>
-                  <div className="flex gap-4">
-                    {volunteer.profile?.interests?.map((skill) => (
-                      <Tag text={skill.name} textSize="text-sm" />
-                    ))}
-                    {!volunteer.profile?.interests && (
-                      <p className="text-sm text-red-600">
-                        Volunteer did not list any interests.
-                      </p>
-                    )}
-                  </div>
-                  <p className="font-semibold">Description</p>
-                  <p className="text-sm">{volunteer.profile?.description}</p>
-                </div>
+
+                <Tabs
+                  defaultTabId="personalInformation"
+                  tabs={[
+                    personalInformationTab,
+                    skillsAndInterestsTab,
+                    availabilityTab,
+                  ]}
+                />
               </div>
             </div>
           </div>

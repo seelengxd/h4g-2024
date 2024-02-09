@@ -36,9 +36,13 @@ const VolunteeringOpportunityCard: React.FC<
             : "/bigatheart.png"
         }
         alt="activity"
-        className="object-cover w-full h-36"
+        className={"object-cover w-full" + (dashboard ? " h-24" : " h-36")}
       />
-      <div className="flex flex-col h-full px-4 pt-4 pb-10">
+      <div
+        className={
+          "flex flex-col h-full px-4 pt-4" + (dashboard ? " " : " pb-10")
+        }
+      >
         <Link
           to={"/activities/" + activity.id}
           className="text-xl font-bold hover:text-primary-800 hover:underline"

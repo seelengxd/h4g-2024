@@ -22,6 +22,7 @@ export const displayAttendance = (attendance: Attendance) => {
 
 export interface RegistrationRowData extends Registration {
   action?: undefined;
+  certificate?: undefined;
 }
 
 export const RegistrationTableColumns = (
@@ -76,6 +77,32 @@ export const RegistrationTableColumns = (
               <FeedbackIcon className="w-6 h-6 fill-black" />
             </Link>
           </div>
+        ),
+    }),
+    columnHelper.accessor("certificate", {
+      header: "Certificate",
+      enableSorting: false,
+      enableGlobalFilter: false,
+      cell: (cell) =>
+        cell.row.original.attendance ? (
+          <Link
+            to={
+              process.env.REACT_APP_BACKEND_URL +
+              "/registrations/" +
+              cell.row.original.id +
+              "/certificate"
+            }
+            className="hover:underline hover:text-primary-800"
+            download={"Certificate.pdf"}
+          >
+            Download
+          </Link>
+        ) : (
+          <BaseSessionTag
+            tagBgColor="bg-red-100"
+            tagTextColor="text-red-700"
+            status="Not Available"
+          />
         ),
     }),
   ] as Array<ColumnDef<RegistrationRowData>>;

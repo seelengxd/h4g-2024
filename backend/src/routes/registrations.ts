@@ -6,6 +6,7 @@ import {
   markAttended,
   unmark,
   show,
+  getCertificate,
 } from "../controllers/registrations";
 import { requireAdmin } from "../middleware/auth";
 
@@ -14,6 +15,7 @@ const registrationsRouter = Router({ mergeParams: true });
 registrationsRouter.get("/", index);
 registrationsRouter.post("/", create);
 registrationsRouter.get("/:id", show);
+registrationsRouter.get("/:id/certificate", getCertificate);
 
 registrationsRouter.use(requireAdmin);
 

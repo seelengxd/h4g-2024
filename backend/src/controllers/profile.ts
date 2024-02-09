@@ -154,6 +154,8 @@ export const update: RequestHandler[] = [
       },
     });
 
+    console.log({ fullName, preferredName });
+
     const newUser = await prisma.user.update({
       where: { id: Number((req.user as User).id) },
       data: {

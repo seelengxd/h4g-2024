@@ -49,6 +49,12 @@ class RegistrationsAPI {
     );
     return response.data.data;
   }
+
+  public async getCertificate(id: number): Promise<any> {
+    const response = await client.get(
+      this.getRegistrationsUrl() + "/" + id + "/certificates"
+    );
+  }
 }
 
 const registrationsAPI = new RegistrationsAPI();

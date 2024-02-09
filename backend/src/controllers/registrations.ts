@@ -2,6 +2,9 @@ import { RequestHandler } from "express";
 import { body, param, validationResult } from "express-validator";
 import prisma from "../lib/prisma";
 import { User } from "@prisma/client";
+import { format } from "date-fns";
+import { createCertificate } from "../utils/certificate";
+import path from "path";
 
 // This is user specific.
 export const index: RequestHandler = async (req, res) => {
@@ -205,5 +208,71 @@ export const unmark: RequestHandler[] = [
     console.log(registrations);
 
     res.json({ data: registrations });
+  },
+];
+
+export const getCertificate: RequestHandler[] = [
+  param("id").isInt(),
+  async (req, res) => {
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+      res.status(400).send({ errors: result.array() });
+      return;
+    }
+    const { id } = req.params;
+    const registration = await prisma.registration.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    if (!registration) {
+      res.sendStatus(404);
+      return;
+    }
+
+    const session = await prisma.session.findFirst({
+      where: {
+        registrations: {
+          some: {
+            id: registration.id,
+          },
+        },
+      },
+    });
+
+    if (!session) {
+      res.sendStatus(404);
+      return;
+    }
+
+    const activity = await prisma.activity.findFirst({
+      where: {
+        sessions: {
+          some: {
+            id: session.id,
+          },
+        },
+      },
+    });
+
+    if (!registration?.attendance || !activity) {
+      res.sendStatus(404);
+      return;
+    }
+
+    const formattedDate =
+      format(new Date(session.start), "EEEE d MMMM, hh:mma-") +
+      (new Date(session!.start).getDay() === new Date(session!.end).getDay()
+        ? format(new Date(session!.end), "hh:mma")
+        : format(new Date(session!.end), " d MMM, hh:mma"));
+
+    const certificate_name = await createCertificate(
+      activity,
+      (req.user as User)!,
+      formattedDate
+    );
+
+    res.redirect("/api/uploads/" + `${certificate_name}.pdf`);
   },
 ];

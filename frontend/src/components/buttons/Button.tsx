@@ -1,4 +1,5 @@
 import { PropsWithChildren } from "react";
+import Spinner from "../loading/Spinner";
 
 interface Props extends PropsWithChildren {
   type?: "button" | "submit" | "reset";
@@ -12,6 +13,7 @@ interface Props extends PropsWithChildren {
   outlineColor?: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
+  isLoading?: boolean;
 }
 
 const Button: React.FC<Props> = ({
@@ -27,6 +29,7 @@ const Button: React.FC<Props> = ({
   outlineColor = "border-black",
   onClick,
   disabled = false,
+  isLoading = false,
 }) => {
   return (
     <button
@@ -40,7 +43,7 @@ const Button: React.FC<Props> = ({
       onClick={onClick}
       disabled={disabled}
     >
-      {children}
+      {isLoading ? <Spinner /> : children}
     </button>
   );
 };

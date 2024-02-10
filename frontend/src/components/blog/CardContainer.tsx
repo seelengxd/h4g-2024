@@ -1,6 +1,8 @@
 import { PropsWithChildren } from "react";
+import { Link } from "react-router-dom";
 
 interface Props extends PropsWithChildren {
+  id?: number;
   title: string;
   subtitle: string;
   profileImageUrl?: string;
@@ -9,6 +11,7 @@ interface Props extends PropsWithChildren {
   dashboard?: boolean;
 }
 const CardContainer: React.FC<Props> = ({
+  id,
   title,
   subtitle,
   profileImageUrl,
@@ -19,8 +22,8 @@ const CardContainer: React.FC<Props> = ({
   return (
     <div
       className={
-        " bg-primary-300 rounded-2xl py-4 h-80 flex flex-col justify-start items-start h-full" +
-        (dashboard ? " bg-white min-w-[18rem]" : " w-72 bg-primary-200")
+        " bg-primary-300 rounded-2xl py-4 h-88 flex flex-col justify-start items-start" +
+        (dashboard ? " bg-white min-w-[18rem]" : " bg-primary-200")
       }
     >
       <div className="flex gap-3 px-4">
@@ -31,26 +34,34 @@ const CardContainer: React.FC<Props> = ({
         />
 
         <div className="mt-2">
-          <h2 className="font-semibold leading-5 text-gray-700">{title}</h2>
+          <Link
+            to={"/blogs/" + id}
+            className="hover:text-primary-800 hover:underline"
+          >
+            <h2 className="font-semibold leading-5">{title}</h2>
+          </Link>
           <h3 className="text-xs text-gray-400">{subtitle}</h3>
         </div>
       </div>
 
       <div
         className={
-          "flex items-center justify-center w-full my-2 overflow-hidden"
+          "flex items-center justify-center w-full my-2 overflow-hidden" +
+          (dashboard ? "" : "h-36")
         }
       >
         <img
-          className={dashboard ? "h-36 w-full object-cover" : ""}
+          className={
+            dashboard ? "h-36 w-full object-cover" : "h-32 w-full object-cover"
+          }
           src={process.env.REACT_APP_BACKEND_URL! + "/" + blogImageUrl}
-        ></img>
+        />
       </div>
 
       <div className="">
         <p
           className={
-            "px-3 text-xs text-gray-600 text-ellipsis" +
+            "px-3 text-xs text-gray-600 text-ellipsis inline-block" +
             (dashboard ? " h-3/4" : "")
           }
         >

@@ -45,7 +45,7 @@ const VolunteerDashboard: React.FC = () => {
         <h1 className="text-4xl tracking-wide">
           Welcome back, {user?.preferredName}!
         </h1>
-        <div className="relative">
+        {/* <div className="relative">
           <input
             type="search"
             id="default-search"
@@ -71,8 +71,8 @@ const VolunteerDashboard: React.FC = () => {
                 d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
               />
             </svg>
-          </div>
-        </div>
+          </div> */}
+        {/* </div> */}
       </div>
       <div className="grid grid-cols-3 grid-rows-2 p-8 px-16 gap-x-12 gap-y-8 h-[calc(100vh-100px)]">
         <div className="col-span-1">
@@ -124,6 +124,7 @@ const VolunteerDashboard: React.FC = () => {
               )
               .map((blog) => (
                 <BlogCardContainer
+                  id={blog.id}
                   title={blog.title}
                   subtitle={
                     "by " +

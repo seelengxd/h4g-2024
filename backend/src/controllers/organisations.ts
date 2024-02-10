@@ -7,7 +7,9 @@ const validateId = param("id").isInt().notEmpty();
 const upload = multer({ dest: "uploads/" });
 
 export const index: RequestHandler = async (req, res) => {
-  const organisations = await prisma.organisation.findMany({ include: { categories: true } });
+  const organisations = await prisma.organisation.findMany({
+    include: { categories: true },
+  });
   res.json({ data: organisations });
 };
 
@@ -21,7 +23,10 @@ export const show: RequestHandler[] = [
     }
     const organisation = await prisma.organisation.findFirst({
       where: { id: Number(req.params.id!) },
-      include: { categories: true, activities: { include: { sessions: true  } } },
+      include: {
+        categories: true,
+        activities: { include: { sessions: true } },
+      },
     });
     if (!organisation) {
       res.sendStatus(404);
@@ -114,5 +119,27 @@ export const destroy: RequestHandler[] = [
     }
     await prisma.organisation.delete({ where: { id: organisation.id } });
     res.sendStatus(200);
+  },
+];
+
+export const getVolunteers: RequestHandler[] = [
+  validateId,
+  async (req, res) => {
+    const volunteers = await prisma.user.findMany({
+      where: {
+        registrations: {
+          some: {
+            session: {
+              activity: {
+                organisation: {
+                  id: parseInt(req.params.id!),
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+    return res.json({ data: volunteers });
   },
 ];

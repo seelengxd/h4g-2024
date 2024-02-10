@@ -19,7 +19,7 @@ const ActivitySessionsCardSessionRow: React.FC<
     ? `${format(new Date(session.start), "d MMM yyyy")} (${format(
         new Date(session.start),
         "hh:mm:aa"
-      )} - ${format(new Date(session.start), "hh:mm:aa")})`
+      )} - ${format(new Date(session.end), "hh:mm:aa")})`
     : `${format(new Date(session.start), "d MMM yyyy (hh:mm:aa)")} - ${format(
         new Date(session.end),
         "d MMM yyyy (hh:mm:aa)"

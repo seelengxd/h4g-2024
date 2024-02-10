@@ -19,7 +19,13 @@ const EventCard: React.FC<Props> = ({
       <div className="flex justify-between">
         <div>
           <p className="text-xl font-bold">
-            {registration.session.activity.name}
+            <Link
+              to={"/activities/" + registration.session.activity.id}
+              className="hover:text-primary-800 hover:underline"
+              state={{ prevRoute: "/" }}
+            >
+              {registration.session.activity.name}
+            </Link>
           </p>
           <p className="mt-1 text-sm">
             {registration.session.activity.organisation.name}

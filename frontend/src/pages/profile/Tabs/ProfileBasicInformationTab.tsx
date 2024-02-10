@@ -19,7 +19,7 @@ import {
   Salutation,
   SalutationLabelMap,
 } from "../../../types/users/profiles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ButtonInput from "../../../components/buttons/DateButtonInput";
 import { generateEnumFormOptions } from "../../../utils/miscellaneous";
 
@@ -32,9 +32,15 @@ const ProfileBasicInformationTab: React.FC<ProfileBasicInformationTabProps> = ({
 }: ProfileBasicInformationTabProps) => {
   const formik = useFormikContext<ProfilePostData>();
   const { values, handleBlur, handleChange, setFieldValue } = formik;
-  const [imageDisplayUrl, setImageDisplayUrl] = useState(
-    profile?.imageUrl || ""
-  );
+  const [imageDisplayUrl, setImageDisplayUrl] = useState("");
+
+  useEffect(() => {
+    if (profile?.imageUrl) {
+      setImageDisplayUrl(
+        process.env.REACT_APP_BACKEND_URL! + "/" + profile?.imageUrl
+      );
+    }
+  }, [profile]);
 
   // Form Options
   const genderOptions = generateEnumFormOptions(Gender, GenderToLabelMap);

@@ -5,7 +5,7 @@ import { ActivityData } from "../../types/activities/activities";
 import Spinner from "../../components/loading/Spinner";
 import { ArrowLeftIcon } from "@heroicons/react/20/solid";
 
-import { format } from "date-fns";
+import { format, isFuture } from "date-fns";
 import { useAppSelector } from "../../reducers/hooks";
 import { selectUser } from "../../reducers/authSlice";
 import { isUserEnrolled } from "../../utils/activities";
@@ -36,7 +36,7 @@ const VolunteerActivity: React.FC = () => {
               Back to Your Activity
             </Link>
           )}
-          {location.state?.prevRoute !== "/your-activities" && (
+          {location.state?.prevRoute === "/activities" && (
             <Link
               to="/activities"
               className="flex items-center mb-12 text-xl font-bold"
@@ -45,17 +45,18 @@ const VolunteerActivity: React.FC = () => {
               Back to Events
             </Link>
           )}
+          {location.state?.prevRoute === "/" && (
+            <Link to="/" className="flex items-center mb-12 text-xl font-bold">
+              <ArrowLeftIcon className="w-6 h-6 mr-1 stroke-2" />
+              Back to Dashboard
+            </Link>
+          )}
           <h2 className="mb-4 text-6xl font-semibold tracking-tight text-primary-800 ">
             {activity.name}
           </h2>
           <p>
-            by{" "}
-            <Link
-              to={"/organisations" + activity.organisationId.toString()}
-              className="hover:underline"
-            >
-              {activity.organisation.name}
-            </Link>
+            by
+            <span className="ml-1">{activity.organisation.name}</span>
           </p>
           <p className="flex items-center mt-2 text-md">
             <LocationPinIcon className="w-4 h-4 mr-2" />
@@ -82,17 +83,31 @@ const VolunteerActivity: React.FC = () => {
           <p className="mt-4">{activity.description}</p>
 
           {isUserEnrolled(user!, activity) ? (
-            <>
-              <button
-                disabled
-                className={
-                  "opacity-60 flex justify-center mt-8 items-center rounded-full bg-primary-600 px-3 py-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
-                }
-              >
-                Enroll in Event
-              </button>
-            </>
-          ) : (
+            isFuture(new Date(activity.sessions[0].start)) ? (
+              <>
+                <button
+                  disabled
+                  className={
+                    "opacity-60 flex justify-center mt-8 items-center rounded-full bg-primary-600 px-3 py-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
+                  }
+                >
+                  Enrolled
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to={"/your-activities/"}
+                  className={
+                    "flex justify-center mt-8 items-center rounded-full bg-primary-600 px-3 py-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
+                  }
+                  state={{ prevRoute: "/activities/" + activity.id.toString() }}
+                >
+                  Leave / View Feedback
+                </Link>
+              </>
+            )
+          ) : isFuture(new Date(activity.sessions[0].start)) ? (
             <Link
               to={"/activities/" + activity.id.toString() + "/enroll"}
               className={
@@ -102,6 +117,27 @@ const VolunteerActivity: React.FC = () => {
             >
               Enroll in Event
             </Link>
+          ) : (
+            <>
+              <div
+                className="p-4 mt-4 text-orange-700 bg-orange-100 border-l-4 border-orange-500"
+                role="alert"
+              >
+                <p className="font-bold">Oh no!</p>
+                <p>
+                  This event is in the past. Sign up next time they host another
+                  similar activity!
+                </p>
+              </div>
+              <button
+                disabled
+                className={
+                  "opacity-60 flex justify-center mt-8 items-center rounded-full bg-primary-600 px-3 py-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
+                }
+              >
+                Enroll in Event
+              </button>
+            </>
           )}
         </div>
         <div className="flex flex-col h-[calc(100vh-80px)] max-h-full gap-8 overflow-y-scroll">

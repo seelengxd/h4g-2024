@@ -3,6 +3,7 @@ import {
   Organisation,
   OrganisationsPostData,
 } from "../../types/organisations/organisations";
+import { UserMiniData } from "../../types/users/users";
 
 class OrganisationsAPI {
   protected getOrganisationsUrl(): string {
@@ -14,18 +15,31 @@ class OrganisationsAPI {
     return response.data.data;
   }
 
+  public async getAllOrganisationVolunteers(
+    id: number
+  ): Promise<UserMiniData[]> {
+    const response = await client.get(
+      `${this.getOrganisationsUrl()}/${id}/volunteers`
+    );
+    return response.data.data;
+  }
+
   public async getOrganisation(id: number): Promise<Organisation> {
     const response = await client.get(`${this.getOrganisationsUrl()}/${id}`);
     return response.data.data;
   }
 
-  public async createOrganisation(data: OrganisationsPostData): Promise<Number> {
+  public async createOrganisation(
+    data: OrganisationsPostData
+  ): Promise<Number> {
     const form = new FormData();
     form.append("name", data.name);
     form.append("description", data.description);
     form.append("websiteUrl", data.websiteUrl || "");
-    
-    data.categories.forEach((category) => form.append('categories[]', category.id.toString()));
+
+    data.categories.forEach((category) =>
+      form.append("categories[]", category.id.toString())
+    );
 
     if (data.image) {
       form.append("image", data.image as Blob);
@@ -34,18 +48,26 @@ class OrganisationsAPI {
     return response.data.id;
   }
 
-  public async updateOrganisation(id: number, data: OrganisationsPostData): Promise<Number> {
+  public async updateOrganisation(
+    id: number,
+    data: OrganisationsPostData
+  ): Promise<Number> {
     const form = new FormData();
     form.append("name", data.name);
     form.append("description", data.description);
     form.append("websiteUrl", data.websiteUrl || "");
 
-    data.categories.forEach((category) => form.append('categories[]', category.id.toString()));
+    data.categories.forEach((category) =>
+      form.append("categories[]", category.id.toString())
+    );
 
     if (data.image) {
       form.append("image", data.image as Blob);
     }
-    const response = await client.put(`${this.getOrganisationsUrl()}/${id}`, form);
+    const response = await client.put(
+      `${this.getOrganisationsUrl()}/${id}`,
+      form
+    );
     console.log(response);
     return response.data.id;
   }

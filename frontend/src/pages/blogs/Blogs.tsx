@@ -92,7 +92,7 @@ const Blogs: React.FC = () => {
 
           <div
             className={
-              "h-full overflow-y-auto pt-4 grid gap-5 " +
+              "h-full overflow-y-auto pt-4 grid gap-5 ml-16 " +
               (windowDimensions.width > 1000 ? "grid-cols-2" : "grid-cols-1")
             }
           >
@@ -104,28 +104,29 @@ const Blogs: React.FC = () => {
                 blog.title.toLowerCase().includes(searchValue.toLowerCase())
               )
               .map((blog: Blog) => (
-                <Link to={`${blog.id}`}>
-                  <CardContainer
-                    title={blog.title}
-                    subtitle={
-                      "by " +
-                      blog.user.preferredName +
-                      ", " +
-                      format(new Date(blog.createdAt), "dd MMM yyyy")
-                    }
-                    blogPreview={blog.description}
-                    profileImageUrl={
-                      blog.user.profile?.imageUrl
-                        ? blog.user.profile.imageUrl
-                        : "uploads/placeholder-image.png"
-                    }
-                    blogImageUrl={
-                      blog.imageUrl
-                        ? blog.imageUrl
-                        : "uploads/placeholder-image.png"
-                    }
-                  />
-                </Link>
+                // <Link to={`${blog.id}`}>
+                <CardContainer
+                  id={blog.id}
+                  title={blog.title}
+                  subtitle={
+                    "by " +
+                    blog.user.preferredName +
+                    ", " +
+                    format(new Date(blog.createdAt), "dd MMM yyyy")
+                  }
+                  blogPreview={blog.description}
+                  profileImageUrl={
+                    blog.user.profile?.imageUrl
+                      ? blog.user.profile.imageUrl
+                      : "uploads/placeholder-image.png"
+                  }
+                  blogImageUrl={
+                    blog.imageUrl
+                      ? blog.imageUrl
+                      : "uploads/placeholder-image.png"
+                  }
+                />
+                // </Link>
               ))}
           </div>
         </div>

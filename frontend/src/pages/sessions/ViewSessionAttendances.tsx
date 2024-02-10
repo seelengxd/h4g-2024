@@ -207,7 +207,7 @@ const ViewSessionAttendances: React.FC = () => {
 
       <div
         className="grid h-full grid-cols-12 col-span-1 gap-4 p-4 my-4 bg-white rounded-md shadow cursor-pointer hover:bg-gray-50"
-        onClick={() => navigate("./drop_in")}
+        onClick={() => navigate("./drop-in")}
       >
         <div className="col-span-10 my-auto font-medium">
           Attendance Drop-in View

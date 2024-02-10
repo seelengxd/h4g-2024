@@ -10,7 +10,6 @@ import UpdateActivity from "../activities/UpdateActivity";
 import ViewActivity from "../activities/ViewActivity";
 import CreateEnrollmentForm from "../activities/CreateEnrollmentForm";
 import ViewEnrollmentForm from "../activities/ViewEnrollmentForm";
-import VolunteerDashboard from "../dashboard/VolunteerDashboard";
 import ViewSession from "../sessions/ViewSession";
 import ViewSessionAttendances from "../sessions/ViewSessionAttendances";
 import DropInAttendance from "../sessions/DropInAttendance";
@@ -59,7 +58,7 @@ const AdminApp: React.FC = () => {
         element={<ViewSessionAttendances />}
       />
       <Route
-        path="/sessions/:id/attendances/drop_in"
+        path="/sessions/:id/attendances/drop-in"
         element={<DropInAttendance />}
       />
 

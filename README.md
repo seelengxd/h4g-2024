@@ -59,12 +59,12 @@ We provide 2 interfaces - one for the volunteer, another for the admin.
 Volunteers have access to a [profile page](#profile-page), [dashboard](#dashboard), [events](#events), [personal activity page](#personal-activity-page), [blogs](#blogs). 
 #### Volunteer Interface Screenshots
 <div style="overflow-x: scroll; display: flex;">
-  <img src="/frontend/readme_images/login.png" style="width: 60%; flex-shrink: 0;">
-  <img src="/frontend/readme_images/dashboard.png" style="width: 60%; flex-shrink: 0;">
-  <img src="/frontend/readme_images/volunteerOpp.png" style="width: 60%; flex-shrink: 0;">
-  <img src="/frontend/readme_images/volActivity.png" style="width: 60%; flex-shrink: 0;">
-  <img src="/frontend/readme_images/blogMain.png" style="width: 60%; flex-shrink: 0;">
-  <img src="/frontend/readme_images/createBlog.png" style="width: 60%; flex-shrink: 0;">
+  <img src="readme_images/login.png" style="width: 60%; flex-shrink: 0;">
+  <img src="readme_images/dashboard.png" style="width: 60%; flex-shrink: 0;">
+  <img src="readme_images/volunteerOpp.png" style="width: 60%; flex-shrink: 0;">
+  <img src="readme_images/volActivity.png" style="width: 60%; flex-shrink: 0;">
+  <img src="readme_images/blogMain.png" style="width: 60%; flex-shrink: 0;">
+  <img src="readme_images/createBlog.png" style="width: 60%; flex-shrink: 0;">
 </div>
 
 
@@ -105,17 +105,17 @@ This page allows volunteers to reflect and recount on their experience and read 
 Admins have access to the [volunteer list](#volunteer-list), [activity list](#activity-list), [organisation list](#organisation-list), [volunteer activity report](#volunteer-activity-report), [volunteer demographic report](#volunteer-demographic-report)
 #### Admin Interface Screenshots
 <div style="overflow-x: scroll; display: flex;">
-  <img src="/frontend/readme_images/volunteerList.png" style="width: 60%; flex-shrink: 0;">
-  <img src="/frontend/readme_images/activityList.png" style="width: 60%; flex-shrink: 0;">
-  <img src="/frontend/readme_images/enrollform.png" style="width: 60%; flex-shrink: 0;">
-    <img src="/frontend/readme_images/attendanceList.png" style="width: 60%; flex-shrink: 0;">
-  <img src="/frontend/readme_images/qrcodeScanner.png" style="width: 60%; flex-shrink: 0;">
-  <img src="/frontend/readme_images/orgList.png" style="width: 60%; flex-shrink: 0;">
-  <img src="/frontend/readme_images/adminViewOrg.png" style="width: 60%; flex-shrink: 0;">
-  <img src="/frontend/readme_images/xl.png" style="width: 60%; flex-shrink: 0;">
-  <img src="/frontend/readme_images/chart.png" style="width: 60%; flex-shrink: 0;">
-  <img src="/frontend/readme_images/adminViewUser.png" style="width: 60%; flex-shrink: 0;">
-  <img src="/frontend/readme_images/adminViewActivity.png" style="width: 60%; flex-shrink: 0;">
+  <img src="readme_images/volunteerList.png" style="width: 60%; flex-shrink: 0;">
+  <img src="readme_images/activityList.png" style="width: 60%; flex-shrink: 0;">
+  <img src="readme_images/enrollform.png" style="width: 60%; flex-shrink: 0;">
+    <img src="readme_images/attendanceList.png" style="width: 60%; flex-shrink: 0;">
+  <img src="readme_images/qrcodeScanner.png" style="width: 60%; flex-shrink: 0;">
+  <img src="readme_images/orgList.png" style="width: 60%; flex-shrink: 0;">
+  <img src="readme_images/adminViewOrg.png" style="width: 60%; flex-shrink: 0;">
+  <img src="readme_images/xl.png" style="width: 60%; flex-shrink: 0;">
+  <img src="readme_images/chart.png" style="width: 60%; flex-shrink: 0;">
+  <img src="readme_images/adminViewUser.png" style="width: 60%; flex-shrink: 0;">
+  <img src="readme_images/adminViewActivity.png" style="width: 60%; flex-shrink: 0;">
 </div>
 
 //toadd qr scanner

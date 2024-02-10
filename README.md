@@ -25,9 +25,10 @@ Access our project demo [here](https://h4g.seeleng.dev)!
   - [Table of Contents](#table-of-contents)
   - [Project Status](#project-status)
   - [Features](#features)
+    - [Log in/Sign Up Page](#log-insign-up-page)
     - [Volunteer Features](#volunteer-features)
-      - [Volunteer Interface Screenshots](#volunteer-interface-screenshots)
       - [Profile Page](#profile-page)
+      - [Two-Factor Authentication](#two-factor-authentication)
       - [Dashboard](#dashboard)
       - [Events](#events)
       - [Personal Activity Page](#personal-activity-page)
@@ -50,28 +51,33 @@ This project is currently in development. We have many features in place (see [f
 
 ## Features
 
+### Log in/Sign Up Page
+
+Users can sign up for an account if they are using the page for the first time, or log in with their credentials if they already have an account. 
+<img src="readme_images/login.png" style="width: 50vw; flex-shrink: 0;">
+
+
 We provide 2 interfaces - one for the volunteer, another for the admin. 
 - See [volunteer features](#volunteer-features)
 - See [admin features](#admin-features)
 
 ### Volunteer Features
 Volunteers have access to a [profile page](#profile-page), [dashboard](#dashboard), [events](#events), [personal activity page](#personal-activity-page), [blogs](#blogs). 
-#### Volunteer Interface Screenshots
-<div style="overflow-x: scroll; display: flex;">
-  <img src="readme_images/login.png" style="width: 60vw; flex-shrink: 0;">
-</div>
-
-
 
 
 #### Profile Page 
-This page allows volunteers to track their personal details by
+This page allows volunteers to manage their personal details by
 - updating basic personal information such as age, name, email, gender, date of birth, education level, immigration status, description, salutation, profile image.
 - updating skills and interest by choosing from preselected lists
 - updating availability such as commitment preference (Adhoc, Weekly, Monthly), vehicle ownage and exact time itervals they are free on throughout the week (split into Morning, Afternoon, Evening time slots)
 Additionally, attendance for events can be taken by scanning the volunteers individual QR code found within their profile page.
+- enabling Two-Factor Authentication to further protect their account. See [2-FA](#two-factor-authentication) below for more details.
 
 <img src="readme_images/profile.png" style="width: 33vw;"><img src="readme_images/profile1.png" style="width: 33vw;"><img src="readme_images/profile2.png" style="width: 33vw;">
+
+#### Two-Factor Authentication
+For further security, volunteers can choose to enable 2-FA in their profile page. This will allow them to use Singpass to log in to their accounts.
+<img src="readme_images/2fa.png" style="width: 50vw; flex-shrink: 0;"><img src="readme_images/singpass.png" style="width: 50vw; flex-shrink: 0;">
 
 
 #### Dashboard

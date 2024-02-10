@@ -173,7 +173,7 @@ Admins are able to manage organisations by:
 -  have a full view of all organisations
 -  creating new organisations by clicking on the `Create Organisation` button on the top right corner. This leads them to fill in details of the organisation such as name, description, images, tags, website url
 -  clicking on a specific organisation to:
-   -  edit exisiting organisations
+   -  edit existing organisations
    -  view specific organisations page containing all their details, including activities they offer
 
 <img src="readme_images/orgList.png" style="width: 50vw; flex-shrink: 0;"><img src="readme_images/adminViewOrg.png" style="width: 50vw; flex-shrink: 0;">

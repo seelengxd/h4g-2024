@@ -1,18 +1,18 @@
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
-import Spinner from "../../components/loading/Spinner";
-import { Profile } from "../../types/users/profiles";
-import { UserMiniData } from "../../types/users/users";
+import Spinner from "../../../components/loading/Spinner";
+import { Profile } from "../../../types/users/profiles";
+import { UserMiniData } from "../../../types/users/users";
 import QRCode from "react-qr-code";
 
-interface UserQrTabProps {
+interface ProfileUserQrTabProps {
   user: UserMiniData | null;
   profile?: Profile;
 }
 
-const UserQrTab: React.FC<UserQrTabProps> = ({
+const ProfileUserQrTab: React.FC<ProfileUserQrTabProps> = ({
   user,
   profile,
-}: UserQrTabProps) => {
+}: ProfileUserQrTabProps) => {
   if (!user) return <Spinner />;
   return (
     <div className="flex h-screen col-span-3 py-20 m1">
@@ -68,4 +68,4 @@ const UserQrTab: React.FC<UserQrTabProps> = ({
   );
 };
 
-export default UserQrTab;
+export default ProfileUserQrTab;

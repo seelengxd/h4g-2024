@@ -15,8 +15,8 @@ import { useNavigate } from "react-router-dom";
 import { object, string } from "yup";
 import { Skill } from "../../types/skills/skills";
 import { Interest } from "../../types/interests/interests";
-import UserQrTab from "./UserQrTab";
-import TwoFaSettingsTab from "./TwoFaSettingsTab";
+import ProfileUserQrTab from "./Tabs/ProfileUserQrTab";
+import ProfileTwoFaSettingsTab from "./Tabs/ProfileTwoFaSettingsTab";
 import ProfileBasicInformationTab from "./Tabs/ProfileBasicInformationTab";
 import ProfileInterestSkillsTab from "./Tabs/ProfileInterestSkillsTab";
 import ProfileAvailabilityTab from "./Tabs/ProfileAvailabilityTab";
@@ -144,8 +144,10 @@ const ViewProfile: React.FC<Props> = ({ profile, skills, interests }) => {
               <ProfileInterestSkillsTab skills={skills} interests={interests} />
             )}
             {tabIndex === 2 && <ProfileAvailabilityTab />}
-            {tabIndex === 3 && <UserQrTab user={user} profile={profile} />}
-            {tabIndex === 4 && <TwoFaSettingsTab user={user} />}
+            {tabIndex === 3 && (
+              <ProfileUserQrTab user={user} profile={profile} />
+            )}
+            {tabIndex === 4 && <ProfileTwoFaSettingsTab user={user} />}
           </form>
         )}
       </Formik>

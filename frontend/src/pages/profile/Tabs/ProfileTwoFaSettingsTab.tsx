@@ -1,16 +1,16 @@
-import { ChangeEvent, MouseEventHandler, useState } from "react";
-import twoFaApi from "../../api/twoFa/twoFa";
-import ConfirmationDialog from "../../components/feedback/ConfirmationDialog";
-import Spinner from "../../components/loading/Spinner";
-import { UserMiniData } from "../../types/users/users";
+import { useState } from "react";
+import twoFaApi from "../../../api/twoFa/twoFa";
+import ConfirmationDialog from "../../../components/feedback/ConfirmationDialog";
+import Spinner from "../../../components/loading/Spinner";
+import { UserMiniData } from "../../../types/users/users";
 
-interface TwoFaSettingsTabProps {
+interface ProfileTwoFaSettingsTabProps {
   user: UserMiniData | null;
 }
 
-const TwoFaSettingsTab: React.FC<TwoFaSettingsTabProps> = ({
+const ProfileTwoFaSettingsTab: React.FC<ProfileTwoFaSettingsTabProps> = ({
   user,
-}: TwoFaSettingsTabProps) => {
+}: ProfileTwoFaSettingsTabProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   if (!user) return <Spinner />;
@@ -63,4 +63,4 @@ const TwoFaSettingsTab: React.FC<TwoFaSettingsTabProps> = ({
   );
 };
 
-export default TwoFaSettingsTab;
+export default ProfileTwoFaSettingsTab;

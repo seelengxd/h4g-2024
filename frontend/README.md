@@ -103,6 +103,7 @@ Admins have access to the [volunteer list](#volunteer-list), [activity list](#ac
   <img src="/frontend/readme_images/volunteerList.png" style="width: 60%; flex-shrink: 0;">
   <img src="/frontend/readme_images/activityList.png" style="width: 60%; flex-shrink: 0;">
   <img src="/frontend/readme_images/enrollform.png" style="width: 60%; flex-shrink: 0;">
+    <img src="/frontend/readme_images/attendanceList.png" style="width: 60%; flex-shrink: 0;">
   <img src="/frontend/readme_images/qrcodeScanner.png" style="width: 60%; flex-shrink: 0;">
   <img src="/frontend/readme_images/orgList.png" style="width: 60%; flex-shrink: 0;">
   <img src="/frontend/readme_images/adminViewOrg.png" style="width: 60%; flex-shrink: 0;">

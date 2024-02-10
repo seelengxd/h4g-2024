@@ -29,6 +29,7 @@ import ReactDatePicker from "react-datepicker";
 import { format } from "date-fns";
 import Label from "../../components/forms/Label";
 import UserQrTab from "./UserQrTab";
+import TwoFaSettingsTab from "./TwoFaSettingsTab";
 
 interface Props {
   profile?: Profile;
@@ -41,7 +42,7 @@ const ViewProfile: React.FC<Props> = ({ profile, skills, interests }) => {
     profile?.imageUrl || ""
   );
 
-  const [tabIndex, setTabIndex] = useState<0 | 1 | 2 | 3>(0);
+  const [tabIndex, setTabIndex] = useState<0 | 1 | 2 | 3 | 4>(0);
 
   const allSkills = skills.map((skill: Skill) => ({
     label: skill.name,
@@ -631,6 +632,17 @@ const ViewProfile: React.FC<Props> = ({ profile, skills, interests }) => {
         >
           My QR Code
         </button>
+        <button
+          className={
+            "px-4 py-2 text-lg text-left" +
+            (tabIndex === 4
+              ? " text-white rounded-xl bg-primary-500"
+              : " text-primary-800")
+          }
+          onClick={() => setTabIndex(4)}
+        >
+          2FA Settings
+        </button>
       </div>
 
       <form onSubmit={handleSubmit} className="col-span-3">
@@ -638,6 +650,7 @@ const ViewProfile: React.FC<Props> = ({ profile, skills, interests }) => {
         {tabIndex === 1 && secondTab}
         {tabIndex === 2 && thirdTab}
         {tabIndex === 3 && <UserQrTab user={user} profile={profile} />}
+        {tabIndex === 4 && <TwoFaSettingsTab user={user} />}
       </form>
     </div>
   );

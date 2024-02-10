@@ -29,6 +29,7 @@ model User {
   likes         Like[]
   registrations Registration[]
   submissions   Submission[]
+  requiresTwoFa Boolean        @default(false)
 }
 
 enum Gender {

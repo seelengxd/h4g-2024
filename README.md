@@ -217,7 +217,12 @@ Contributions are welcome! Please follow these steps:
         cd frontend
         npm install
         ```
-5. Running the project
+5. Setting up your environment
+   - For the GMAIL environment variables, please set up your own via:
+     - [Gmail App Password Setup](https://stackoverflow.com/questions/45478293/username-and-password-not-accepted-when-using-nodemailer)
+     - [SGid Client Setup](https://id.gov.sg/)
+    
+6. Running the project
    - Open 2 command prompts
    - Navigate to backend and run `npm run dev`
    - In another command prompt, navigate to frontend and run `npm start`

@@ -69,7 +69,7 @@ Volunteers have access to a [profile page](#profile-page), [dashboard](#dashboar
 This page allows volunteers to manage their personal details by
 - updating basic personal information such as age, name, email, gender, date of birth, education level, immigration status, description, salutation, profile image.
 - updating skills and interest by choosing from preselected lists
-- updating availability such as commitment preference (Adhoc, Weekly, Monthly), vehicle ownage and exact time itervals they are free on throughout the week (split into Morning, Afternoon, Evening time slots)
+- updating availability such as commitment preference (Adhoc, Weekly, Monthly), vehicle ownage and exact time intervals they are free on throughout the week (split into Morning, Afternoon, Evening time slots)
 Additionally, attendance for events can be taken by scanning the volunteers individual QR code found within their profile page.
 - enabling Two-Factor Authentication to further protect their account. See [2-FA](#two-factor-authentication) below for more details.
 

@@ -235,11 +235,31 @@ Contributions are welcome! Please follow these steps:
         npm install
         ```
 5. Setting up your environment
-   - For the GMAIL environment variables, please set up your own via:
+   - Ensure you have Postgresql set up on your computer, running on port `5432` with username `postgres` and password `postgres`.
+   - Please copy this into into `backend/.env`
+     ```bash
+     FRONTEND_URL="http://localhost:3000"
+     DATABASE_URL="postgresql://postgres:postgres@localhost:5432/h4g?schema=public"
+     SECRET="some_h4gsecret"
+     PORT=3001
+     GMAIL_USER=<PLACEHOLDER>
+     GMAIL_PASSWORD=<PLACEHOLDER>
+     TEMPORARY_TOKEN_SECRET="some_secret"
+     BACKEND_URL="http://localhost:3001"
+     SGID_CLIENT_ID=<PLACEHOLDER>
+     SGID_CLIENT_SECRET=<PLACEHOLDER>
+     SGID_PRIVATE_KEY=<PLACEHOLDER>
+     ```
+
+   - Please copy this into `frontend/.env`
+     ```bash
+     REACT_APP_BACKEND_URL="http://localhost:3001/api"
+     ```
+   - For the redacted environment variables, please set up your own via:
      - [Gmail App Password Setup](https://stackoverflow.com/questions/45478293/username-and-password-not-accepted-when-using-nodemailer)
      - [SGid Client Setup](https://id.gov.sg/)
     
-6. Running the project
+7. Running the project
    - Open 2 command prompts
    - Navigate to backend and run `npm run dev`
    - In another command prompt, navigate to frontend and run `npm start`

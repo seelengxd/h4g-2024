@@ -108,11 +108,13 @@ Additionally, for events that they have attended, volunteers can
 <img src="readme_images/volActivity.png" style="width: 60vw; flex-shrink: 0;">
 
 #### Blogs
-<img src="readme_images/blogMain.png" style="width: 50vw; flex-shrink: 0;"><img src="readme_images/createBlog.png" style="width: 50vw; flex-shrink: 0;">
+
 This page allows volunteers to reflect and recount on their experience and read about others journey through
 - reading blogs they and other volunteers have written
 - filtering blogs written by themselves
 - creating, editing and deleting their blog entries
+
+<img src="readme_images/blogMain.png" style="width: 50vw; flex-shrink: 0;"><img src="readme_images/createBlog.png" style="width: 50vw; flex-shrink: 0;">
 
 ### Admin Features
 Admins have access to the [volunteer list](#volunteer-list), [activity list](#activity-list), [organisation list](#organisation-list), [volunteer activity report](#volunteer-activity-report), [volunteer demographic report](#volunteer-demographic-report)

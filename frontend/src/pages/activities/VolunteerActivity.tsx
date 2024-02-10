@@ -107,7 +107,7 @@ const VolunteerActivity: React.FC = () => {
                 </Link>
               </>
             )
-          ) : (
+          ) : isFuture(new Date(activity.sessions[0].start)) ? (
             <Link
               to={"/activities/" + activity.id.toString() + "/enroll"}
               className={
@@ -117,6 +117,27 @@ const VolunteerActivity: React.FC = () => {
             >
               Enroll in Event
             </Link>
+          ) : (
+            <>
+              <div
+                className="p-4 mt-4 text-orange-700 bg-orange-100 border-l-4 border-orange-500"
+                role="alert"
+              >
+                <p className="font-bold">Oh no!</p>
+                <p>
+                  This event is in the past. Sign up next time they host another
+                  similar activity!
+                </p>
+              </div>
+              <button
+                disabled
+                className={
+                  "opacity-60 flex justify-center mt-8 items-center rounded-full bg-primary-600 px-3 py-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-primary-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
+                }
+              >
+                Enroll in Event
+              </button>
+            </>
           )}
         </div>
         <div className="flex flex-col h-[calc(100vh-80px)] max-h-full gap-8 overflow-y-scroll">

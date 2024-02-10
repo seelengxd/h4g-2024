@@ -13,7 +13,9 @@ To test out our demo, here are some credentials you can use:
 - Volunteer: Username: `lwj@gmail.com` | Password: `password`
 - Admin: Username: `rk@gmail.com` | Password: `password`
 
-Access our project demo [here](https://h4g.seeleng.dev)!
+**Access our project demo [here](https://h4g.seeleng.dev)!**
+
+Check out our [Devpost](https://devpost.com/software/heartsync) and [Pitch Deck](https://www.canva.com/design/DAF8OImlq1k/13dtj8TKIvngxZPMltBEGA/view?utm_content=DAF8OImlq1k&utm_campaign=designshare&utm_medium=link&utm_source=editor) too!
 
 
 ## Table of Contents

@@ -77,6 +77,7 @@ Additionally, attendance for events can be taken by scanning the volunteers indi
 
 #### Two-Factor Authentication
 For further security, volunteers can choose to enable 2-FA in their profile page. This will allow them to use Singpass to log in to their accounts.
+
 <img src="readme_images/2fa.png" style="width: 50vw; flex-shrink: 0;"><img src="readme_images/singpass.png" style="width: 50vw; flex-shrink: 0;">
 
 

@@ -74,7 +74,7 @@ const VolunteerDashboard: React.FC = () => {
           </div> */}
         {/* </div> */}
       </div>
-      <div className="grid grid-cols-3 grid-rows-2 px-16 gap-x-12 gap-y-8 h-[calc(100vh-100px)]">
+      <div className="grid grid-cols-3 grid-rows-2 p-8 px-16 gap-x-12 gap-y-8 h-[calc(100vh-100px)]">
         <div className="col-span-1">
           <CardContainer label={"Upcoming Events"} vertical>
             {registrations

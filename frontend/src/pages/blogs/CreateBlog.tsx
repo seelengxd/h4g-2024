@@ -59,7 +59,7 @@ const CreateBlog: React.FC = () => {
   return (
     <div>
       <form
-        className="flex h-screen px-20 py-20 bg-primary-200"
+        className="flex h-screen px-20 py-20"
         onSubmit={handleSubmit}
       >
         {/* left half */}

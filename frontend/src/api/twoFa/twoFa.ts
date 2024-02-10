@@ -1,4 +1,5 @@
 import { UserInfo } from "../../pages/auth/TwoFaSgIdRedirect";
+import { UserTwoFaData } from "../../types/twoFa/twoFa";
 import client from "../base";
 
 class TwoFaApi {
@@ -11,11 +12,20 @@ class TwoFaApi {
     return response.data.data;
   }
 
-  public async hasTwoFaSession(): Promise<UserInfo> {
+  public async getUserInfo(): Promise<UserInfo> {
+    const response = await client.get(`${this.getTwoFaUrl()}/user-info`);
+    return response.data.data;
+  }
+
+  public async hasTwoFaSession(): Promise<UserTwoFaData> {
     const response = await client.get(
-      `${this.getTwoFaUrl()}/has_two_fa_session`
+      `${this.getTwoFaUrl()}/has-two-fa-session`
     );
     return response.data.data;
+  }
+
+  public async deleteTwoFaSession(): Promise<void> {
+    return await client.post(`${this.getTwoFaUrl()}/reset-two-fa-session`);
   }
 }
 

@@ -14,6 +14,8 @@ import { logOut, selectIsLoggedIn } from "../../reducers/authSlice";
 import { useAppDispatch, useAppSelector } from "../../reducers/hooks";
 import { Link } from "react-router-dom";
 import authApi from "../../api/users/auth";
+import twoFaApi from "../../api/twoFa/twoFa";
+import { resetTwoFa } from "../../reducers/twoFa";
 
 const products = [
   {
@@ -68,6 +70,7 @@ export default function Navbar() {
   const dispatch = useAppDispatch();
   const handleLogout = () => {
     authApi.logOut().then(() => dispatch(logOut()));
+    twoFaApi.deleteTwoFaSession().then(() => dispatch(resetTwoFa()));
   };
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const appName = "h4g";

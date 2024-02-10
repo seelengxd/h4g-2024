@@ -20,6 +20,8 @@ import {
   VolunteerKindnessCareHeartLoveIcon,
 } from "../icons/icons";
 import ConfirmationDialog from "../feedback/ConfirmationDialog";
+import twoFaApi from "../../api/twoFa/twoFa";
+import { resetTwoFa } from "../../reducers/twoFa";
 
 const volunteerContent = [
   {
@@ -117,6 +119,7 @@ const SideBar: React.FC = () => {
   const dispatch = useAppDispatch();
   const handleLogout = () => {
     authApi.logOut().then(() => dispatch(logOut()));
+    twoFaApi.deleteTwoFaSession().then(() => dispatch(resetTwoFa()));
   };
 
   useEffect(() => {

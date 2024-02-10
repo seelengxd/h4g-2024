@@ -2,6 +2,7 @@ import crypto from "crypto";
 import SgidClient, { generatePkcePair } from "@opengovsg/sgid-client";
 import { RequestHandler } from "express";
 import { requireLogin } from "../middleware/auth";
+import { User } from "@prisma/client";
 
 export const BACKEND_URL = process.env.BACKEND_URL;
 export const FRONTEND_URL = process.env.FRONTEND_URL;
@@ -50,7 +51,7 @@ export const auth: RequestHandler = (req, res) => {
 };
 
 export const redirect: RequestHandler = async (req, res) => {
-  const twoFaRedirectRoute = `${FRONTEND_URL}/2fa-redirect`;
+  const twoFaRedirectRoute = `${FRONTEND_URL}/two-fa-redirect`;
 
   const authCode = String(req.query.code);
   const sessionId = String(req.cookies[SESSION_COOKIE_NAME]);
@@ -79,7 +80,7 @@ export const redirect: RequestHandler = async (req, res) => {
   res.redirect(twoFaRedirectRoute);
 };
 
-export const hasTwoFaSession: RequestHandler[] = [
+export const getUserInfo: RequestHandler[] = [
   // requireLogin,
   async (req, res) => {
     const sessionId = String(req.cookies[SESSION_COOKIE_NAME]);
@@ -104,6 +105,36 @@ export const hasTwoFaSession: RequestHandler[] = [
       return res.sendStatus(500);
     });
 
-    return res.json({ data: userInfo });
+    const sessionInfo = {
+      hasTwoFaSession: session !== undefined,
+      requiresTwoFa: !(req.user as User)?.requiresTwoFa,
+    };
+
+    return res.json({ data: { ...userInfo, ...sessionInfo } });
   },
 ];
+
+export const hasTwoFaSession: RequestHandler = (req, res) => {
+  const currentUser = req.user as User;
+  if (currentUser === undefined) {
+    res.sendStatus(401);
+  } else {
+    const sessionId = String(req.cookies[SESSION_COOKIE_NAME]);
+    const session = twoFaSessionData[sessionId];
+
+    res.json({
+      data: {
+        hasTwoFaSession: session !== undefined,
+        requiresTwoFa: !currentUser.requiresTwoFa,
+      },
+    });
+  }
+};
+
+export const deleteTwoFaSession: RequestHandler = (req, res) => {
+  const sessionId = String(req.cookies[SESSION_COOKIE_NAME]);
+  delete twoFaSessionData[sessionId];
+  return res
+    .clearCookie(SESSION_COOKIE_NAME, SESSION_COOKIE_OPTIONS)
+    .sendStatus(200);
+};

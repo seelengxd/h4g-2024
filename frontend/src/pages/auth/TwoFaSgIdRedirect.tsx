@@ -7,32 +7,46 @@ import {
   XCircleIcon,
 } from "@heroicons/react/24/outline";
 import twoFaApi from "../../api/twoFa/twoFa";
+import authApi from "../../api/users/auth";
+import { logOut } from "../../reducers/authSlice";
+import { useAppDispatch } from "../../reducers/hooks";
+import { resetTwoFa, setUserTwoFaData } from "../../reducers/twoFa";
+import { UserTwoFaData } from "../../types/twoFa/twoFa";
 
-export interface UserInfo {
+export interface UserInfo extends UserTwoFaData {
   sub: string;
   data: {
     "myinfo.name": string;
-    iceCream: string;
   };
 }
 
 const TwoFaSgIdRedirect: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [user, setUser] = useState<UserInfo | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     twoFaApi
-      .hasTwoFaSession()
+      .getUserInfo()
       .then((data) => {
         setUser(data);
+        dispatch(setUserTwoFaData(data));
       })
-      .catch(() => setUser(null))
+      .catch(() => {
+        setUser(null);
+      })
       .finally(() => {
         setIsLoading(false);
         setTimeout(() => navigate("/"), 2500);
       });
-  }, []);
+  }, [navigate, dispatch]);
+
+  const handleResetTwoFa = () => {
+    authApi.logOut().then(() => dispatch(logOut()));
+    twoFaApi.deleteTwoFaSession().then(() => dispatch(resetTwoFa()));
+    navigate("/");
+  };
 
   return (
     <div className="h-screen w-screen bg-gray-50">
@@ -78,7 +92,7 @@ const TwoFaSgIdRedirect: React.FC = () => {
             <div className="flex w-full justify-end">
               <div
                 className="flex flex-row items-center gap-4 mt-4 text-blue-800"
-                onClick={() => navigate("/")}
+                onClick={() => (!user ? handleResetTwoFa() : navigate("/"))}
               >
                 <span className="pointer-cursor">Redirect me now</span>
                 <ArrowRightIcon className="w-4 h-4" />

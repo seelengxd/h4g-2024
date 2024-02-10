@@ -134,86 +134,87 @@ const allActivites = [
 const sessions = [
   {
     id: 1,
-    start: new Date("2023-06-15T10:30:00"),
-    end: new Date("2023-06-15T14:30:00"),
+    start: new Date("2023-06-15T10:30:00+08:00"),
+    end: new Date("2023-06-15T14:30:00+08:00"),
   },
   {
     id: 2,
-    start: new Date("2023-07-20T09:00:00"),
-    end: new Date("2023-07-20T12:00:00"),
+    start: new Date("2023-07-20T09:00:00+08:00"),
+    end: new Date("2023-07-20T12:00:00+08:00"),
   },
   {
     id: 3,
-    start: new Date("2024-08-10T13:00:00"),
-    end: new Date("2024-08-10T17:00:00"),
+    start: new Date("2024-08-10T13:00:00+08:00"),
+    end: new Date("2024-08-10T17:00:00+08:00"),
   },
   {
     id: 4,
-    start: new Date("2023-09-05T11:00:00"),
-    end: new Date("2023-09-05T15:00:00"),
+    start: new Date("2023-09-05T11:00:00+08:00"),
+    end: new Date("2023-09-05T15:00:00+08:00"),
   },
   {
     id: 5,
-    start: new Date("2023-10-12T08:30:00"),
-    end: new Date("2023-10-12T12:30:00"),
+    start: new Date("2023-10-12T08:30:00+08:00"),
+    end: new Date("2023-10-12T12:30:00+08:00"),
   },
   {
     id: 6,
-    start: new Date("2024-11-18T10:00:00"),
-    end: new Date("2024-11-18T13:00:00"),
+    start: new Date("2024-11-18T10:00:00+08:00"),
+    end: new Date("2024-11-18T13:00:00+08:00"),
   },
   {
     id: 7,
-    start: new Date("2024-12-03T14:00:00"),
-    end: new Date("2024-12-03T17:00:00"),
+    start: new Date("2024-12-03T14:00:00+08:00"),
+    end: new Date("2024-12-03T17:00:00+08:00"),
   },
   {
     id: 8,
-    start: new Date("2025-01-22T12:00:00"),
-    end: new Date("2025-01-22T15:00:00"),
+    start: new Date("2025-01-22T12:00:00+08:00"),
+    end: new Date("2025-01-22T15:00:00+08:00"),
   },
   //comp of good
   {
     id: 9,
-    start: new Date("2024-06-15T09:00:00"),
-    end: new Date("2024-06-15T12:00:00"),
+    start: new Date("2024-06-19T09:00:00+08:00"),
+    end: new Date("2024-06-19T12:00:00+08:00"),
   },
   {
     id: 10,
-    start: new Date("2024-07-20T10:30:00"),
-    end: new Date("2024-07-20T14:30:00"),
+    start: new Date("2024-07-23T10:30:00+08:00"),
+    end: new Date("2024-07-23T14:30:00+08:00"),
   },
   {
     id: 11,
-    start: new Date("2024-08-10T13:00:00"),
-    end: new Date("2024-08-10T17:00:00"),
+    start: new Date("2024-08-11T13:00:00+08:00"),
+    end: new Date("2024-08-11T17:00:00+08:00"),
   },
   {
     id: 12,
-    start: new Date("2024-09-05T11:00:00"),
-    end: new Date("2024-09-05T15:00:00"),
+    start: new Date("2024-09-09T11:00:00+08:00"),
+    end: new Date("2024-09-09T15:00:00+08:00"),
   },
   {
     id: 13,
-    start: new Date("2024-10-12T08:30:00"),
-    end: new Date("2024-10-12T12:30:00"),
+    start: new Date("2024-10-13T08:30:00+08:00"),
+    end: new Date("2024-10-13T12:30:00+08:00"),
   },
   {
     id: 14,
-    start: new Date("2024-11-18T10:00:00"),
-    end: new Date("2024-11-18T13:00:00"),
+    start: new Date("2024-11-18T10:00:00+08:00"),
+    end: new Date("2024-11-18T13:00:00+08:00"),
   },
   {
     id: 15,
-    start: new Date("2024-12-03T14:00:00"),
-    end: new Date("2024-12-03T17:00:00"),
+    start: new Date("2024-12-03T14:00:00+08:00"),
+    end: new Date("2024-12-03T17:00:00+08:00"),
   },
   {
     id: 16,
-    start: new Date("2025-01-22T12:00:00"),
-    end: new Date("2025-01-22T15:00:00"),
+    start: new Date("2025-01-23T12:00:00+08:00"),
+    end: new Date("2025-01-23T15:00:00+08:00"),
   },
 ];
+
 
 const allBlogs = [
   {

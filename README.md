@@ -156,7 +156,7 @@ This feature falls under the activity section. Upon clicking on an activity in t
 
 
 #### Attendance Management
-This feature falls under the activity session. After a admin navigates to a specific activity, clicking on a sepcific session allows them to:
+This feature falls under the activity session. After a admin navigates to a specific activity, clicking on a specific session allows them to:
 - view details of the session, including date, duration, number of registrations, capacity
 - view session feedbacks and reflections
 - track enrollment form submissions

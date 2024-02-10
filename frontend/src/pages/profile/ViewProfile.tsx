@@ -38,9 +38,15 @@ interface Props {
 }
 
 const ViewProfile: React.FC<Props> = ({ profile, skills, interests }) => {
-  const [imageDisplayUrl, setImageDisplayUrl] = useState(
-    profile?.imageUrl || ""
-  );
+  const [imageDisplayUrl, setImageDisplayUrl] = useState("");
+
+  useEffect(() => {
+    if (profile?.imageUrl) {
+      setImageDisplayUrl(
+        process.env.REACT_APP_BACKEND_URL! + "/" + profile?.imageUrl
+      );
+    }
+  }, [profile]);
 
   const [tabIndex, setTabIndex] = useState<0 | 1 | 2 | 3 | 4>(0);
 

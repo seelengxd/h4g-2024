@@ -31,6 +31,8 @@ Access our project demo [here](https://h4g.seeleng.dev)!
       - [Admin Interface Screenshots](#admin-interface-screenshots)
       - [Volunteer List](#volunteer-list)
       - [Activity List](#activity-list)
+      - [Create Enrollment Form](#create-enrollment-form)
+      - [Attendance Management](#attendance-management)
       - [Organisation List](#organisation-list)
       - [Volunteer Activity Report](#volunteer-activity-report)
       - [Volunteer Demographic Report](#volunteer-demographic-report)
@@ -100,40 +102,75 @@ Admins have access to the [volunteer list](#volunteer-list), [activity list](#ac
 <div style="overflow-x: scroll; display: flex;">
   <img src="/frontend/readme_images/volunteerList.png" style="width: 60%; flex-shrink: 0;">
   <img src="/frontend/readme_images/activityList.png" style="width: 60%; flex-shrink: 0;">
+  <img src="/frontend/readme_images/enrollform.png" style="width: 60%; flex-shrink: 0;">
+  <img src="/frontend/readme_images/qrcodeScanner.png" style="width: 60%; flex-shrink: 0;">
   <img src="/frontend/readme_images/orgList.png" style="width: 60%; flex-shrink: 0;">
+  <img src="/frontend/readme_images/adminViewOrg.png" style="width: 60%; flex-shrink: 0;">
   <img src="/frontend/readme_images/xl.png" style="width: 60%; flex-shrink: 0;">
   <img src="/frontend/readme_images/chart.png" style="width: 60%; flex-shrink: 0;">
+  <img src="/frontend/readme_images/adminViewUser.png" style="width: 60%; flex-shrink: 0;">
+  <img src="/frontend/readme_images/adminViewActivity.png" style="width: 60%; flex-shrink: 0;">
 </div>
 
+//toadd qr scanner
+
 #### Volunteer List
-Admins are able to track and find volunteers on this page by:
+Admins are able to manage volunteers on this page by:
 -  using the search bar on the top left to look for volunteers by their name or emails
 -  have a full view of all volunteers that have signed up and their emails
+-  clicking on a specific volunteer to 
+   -  view their profile, including events they have signed up for, attendance, skills, interests, availability etc
+   -  provide feedback for a specific event by clicking on the eye icon in the feedback column
 
 #### Activity List
 Admins are able to manage activities by:
 -  using the search bar on the top left to look for activities by their name
 -  have a full view of all activities together with their type (Volunteering, Workshop, Training) and the organisations they fall under
 -  creating new activities by clicking on the `Create` button on the top right corner. This leads them to fill in details of the activity such as name, location, session timings, description, images, capacity and type
+-  clicking on a specific activity to:
+   -  view details of the activity, including description, sessions 
+   -  create and customise enrollment forms by clicking on the `Create Enrollment Form` button. See [Create Enrollment Form](#create-enrollment-form) for more details.
+   -  edit activity details
+   -  delete the activity
+   -  manage attendance for a specific session. See [Attendance Taking]() for more details.
   
+#### Create Enrollment Form
+This feature falls under the activity section. Upon clicking on an activity in the activity list, the admin can click on `Create Enrollment Form` to start customising questions needed for that activity by adding as many questions as they would like by using the `Add Input` button. With this, admins can add
+- Short Answer Type Questions: volunteers can submit a short piece of text
+- Paragraph Type Questions: volunteers can submit a longer piece of text
+- Checkbox Type Questions: admins can add a variety of options with `Add Option` where volunteers can select multiple options to submit
+- Dropdown Type Questions: admins can add a variety of options with `Add Option` for volunteers to choose one to submit
+
+#### Attendance Management
+This feature falls under the activity session. After a admin navigates to a specific activity, clicking on a sepcific session allows them to:
+- view details of the session, including date, duration, number of registrations, capacity
+- view session feedbacks and reflections
+- track enrollment form submissions
+- manage registrations and attendance by 
+  - clicking on `Manage Attendance` to mark volunteers as attended or not attended. Clicking on `Take Attendance` further brings the admin to a QR code scaner, where they can scan the volunteers QR code with their camera to mark them as attended. Alternatively they can also use manual input to register the volunteers
+  - clicking on `Generate Blank Attendance List` should they need the empty attendance sheet in excel format
+  - clicking on `Export Registration/ Attendance Data` to export the records in excel format
+
+
 #### Organisation List
 Admins are able to manage organisations by: 
--  have a full view of all organisations together with their 
+-  have a full view of all organisations
 -  creating new organisations by clicking on the `Create Organisation` button on the top right corner. This leads them to fill in details of the organisation such as name, description, images, tags, website url
--  edit exisiting organisations
--  view specific organisations page containing all their details
+-  clicking on a specific organisation to:
+   -  edit exisiting organisations
+   -  view specific organisations page containing all their details, including activities they offer
 
 #### Volunteer Activity Report
 This feature allows admins to analyse volunteer activity by
 - viewing visual reports generated by volunteer activity by volunteer or hour across a timeline for different interest areas
-- exporting these reports as a excel spreadsheet
+- exporting these reports as a excel file
 - using the search bar to look for volunteers by their name or email
 
 
 #### Volunteer Demographic Report
 This feature allows admins to analyse volunteer demographic information by
 - viewing visual reports generated by grouping volunteers by their age, gender, immigration status, skills, interests
-- exporting these reports as a excel spreadsheet
+- exporting these reports as a excel file
 - using the search bar to look for volunteers by their name or email
 - filtering the volunteer list of a specific view by their sub-categories e.g. (selecting Gender as the main view and male as the sub-category)
 

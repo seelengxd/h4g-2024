@@ -31,14 +31,14 @@ const TwoFaSgIdRedirect: React.FC = () => {
       .getUserInfo()
       .then((data) => {
         setUser(data);
-        dispatch(setUserTwoFaData(data));
+        setTimeout(() => dispatch(setUserTwoFaData(data)), 5000);
       })
       .catch(() => {
         setUser(null);
       })
       .finally(() => {
         setIsLoading(false);
-        setTimeout(() => navigate("/"), 2500);
+        setTimeout(() => navigate("/"), 5000);
       });
   }, [navigate, dispatch]);
 
@@ -57,8 +57,8 @@ const TwoFaSgIdRedirect: React.FC = () => {
           {!isLoading && !user && (
             <>
               <div className="flex flex-row">
-                <XCircleIcon className="w-16 h-16 stroke-red-500" />
-                <span className="relative flex h-3 w-3">
+                <span className="relative flex h-16 w-16">
+                  <XCircleIcon className="w-16 h-16 stroke-red-500" />
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
                 </span>
               </div>
@@ -74,8 +74,8 @@ const TwoFaSgIdRedirect: React.FC = () => {
           {!isLoading && user && (
             <>
               <div className="flex flex-row">
-                <CheckCircleIcon className="w-16 h-16 stroke-green-500" />
-                <span className="relative flex h-3 w-3">
+                <span className="relative flex h-16 w-16">
+                  <CheckCircleIcon className="w-16 h-16 stroke-green-500" />
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
                 </span>
               </div>

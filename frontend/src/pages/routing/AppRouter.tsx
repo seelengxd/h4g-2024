@@ -12,10 +12,16 @@ import UnauthenticatedApp from "./UnauthenticatedApp";
 import React, { useEffect, useState } from "react";
 import VolunteerApp from "./VolunteerApp";
 import TwoFaApp from "./TwoFaApp";
-import { isTwoFaAuthenticated, setUserTwoFaData } from "../../reducers/twoFa";
+import {
+  isTwoFaAuthenticated,
+  setRequiresTwoFa,
+  setUserTwoFaData,
+} from "../../reducers/twoFa";
 import twoFaApi from "../../api/twoFa/twoFa";
+import { useLocation } from "react-router-dom";
 
 const AppRouter: React.FC = () => {
+  const location = useLocation();
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
   const hasTwoFaAuthentication = useAppSelector(isTwoFaAuthenticated);
   const isAdmin = useAppSelector(selectIsAdmin);
@@ -27,6 +33,7 @@ const AppRouter: React.FC = () => {
       .getCurrentUser()
       .then((user) => {
         dispatch(setUser(user));
+        dispatch(setRequiresTwoFa(user.requires2Fa));
       })
       .catch((err: Error) => {
         console.log(err);
@@ -35,7 +42,8 @@ const AppRouter: React.FC = () => {
   }
 
   useEffect(() => {
-    if (isLoggedIn) {
+    // "hacky" workaround to prevent 404 page upon successful 2fa login
+    if (isLoggedIn && location.pathname !== "/two-fa-redirect") {
       setLoading(true);
       twoFaApi
         .hasTwoFaSession()
@@ -45,7 +53,7 @@ const AppRouter: React.FC = () => {
         })
         .finally(() => setLoading(false));
     }
-  }, [isLoggedIn, dispatch]);
+  }, [isLoggedIn, location, dispatch]);
 
   if (loading) {
     return (

@@ -24,8 +24,8 @@ export const twoFaSlice = createSlice({
     setHasTwoFaSession: (state, action: PayloadAction<UserTwoFaData>) => {
       state.hasTwoFaSession = action.payload.hasTwoFaSession;
     },
-    setRequiresTwoFa: (state, action: PayloadAction<UserTwoFaData>) => {
-      state.requiresTwoFa = action.payload.requiresTwoFa;
+    setRequiresTwoFa: (state, action: PayloadAction<boolean>) => {
+      state.requiresTwoFa = action.payload;
     },
     resetTwoFa: (state) => {
       state = initialState;

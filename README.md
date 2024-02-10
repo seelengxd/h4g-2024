@@ -9,7 +9,12 @@ HeartSync is a product of the Hack for Good initiative, inspired by Big at Heart
 Offering customizable enrollment forms, streamlined QR attendance tracking, comprehensive reporting and more, HeartSync serves as a comprehensive solution, connecting organizations with eager volunteers and empowering kind-hearted individuals to extend a helping hand effortlessly.
 
 ### Demo Link: 
+To test out our demo, here are some credentials you can use:
+- Volunteer: Username: `lwj@gmail.com` | Password: `password`
+- Admin: Username: `rk@gmail.com` | Password: `password`
+
 Access our project demo [here](https://h4g.seeleng.dev)!
+
 
 ## Table of Contents
 
@@ -97,7 +102,7 @@ This page allows volunteers to reflect and recount on their experience and read 
 - creating, editing and deleting their blog entries
 
 ### Admin Features
-Admins have access to the [volunteer list](#volunteer-list), [activity list](#activity-list), [organisation list](), [volunteer activity report](), [volunteer demographic report]()
+Admins have access to the [volunteer list](#volunteer-list), [activity list](#activity-list), [organisation list](#organisation-list), [volunteer activity report](#volunteer-activity-report), [volunteer demographic report](#volunteer-demographic-report)
 #### Admin Interface Screenshots
 <div style="overflow-x: scroll; display: flex;">
   <img src="/frontend/readme_images/volunteerList.png" style="width: 60%; flex-shrink: 0;">
@@ -133,7 +138,7 @@ Admins are able to manage activities by:
    -  create and customise enrollment forms by clicking on the `Create Enrollment Form` button. See [Create Enrollment Form](#create-enrollment-form) for more details.
    -  edit activity details
    -  delete the activity
-   -  manage attendance for a specific session. See [Attendance Taking]() for more details.
+   -  manage attendance for a specific session. See [Attendance Taking](#attendance-management) for more details.
   
 #### Create Enrollment Form
 This feature falls under the activity section. Upon clicking on an activity in the activity list, the admin can click on `Create Enrollment Form` to start customising questions needed for that activity by adding as many questions as they would like by using the `Add Input` button. With this, admins can add

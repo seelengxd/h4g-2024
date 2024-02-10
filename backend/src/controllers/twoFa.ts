@@ -23,6 +23,13 @@ type SessionData = Record<
   | undefined
 >;
 
+interface UserInfo {
+  sub: string;
+  data: {
+    "myinfo.name": string;
+  };
+}
+
 const twoFaSessionData: SessionData = {};
 
 // Initialise sgID Client
@@ -82,7 +89,7 @@ export const redirect: RequestHandler = async (req, res) => {
 
 export const getUserInfo: RequestHandler[] = [
   // requireLogin,
-  async (req, res) => {
+  async (req, res, next) => {
     const sessionId = String(req.cookies[SESSION_COOKIE_NAME]);
 
     // Retrieve the access token and sub
@@ -100,17 +107,27 @@ export const getUserInfo: RequestHandler[] = [
       return res.sendStatus(401);
     }
 
-    const userInfo = await sgid.userinfo({ accessToken, sub }).catch((err) => {
+    const userInfo = (await sgid.userinfo({ accessToken, sub }).catch((err) => {
       console.log("Something went wrong with retrieving user info", err);
       return res.sendStatus(500);
-    });
+    })) as UserInfo;
 
     const sessionInfo = {
       hasTwoFaSession: session !== undefined,
       requiresTwoFa: !(req.user as User)?.requiresTwoFa,
     };
 
-    return res.json({ data: { ...userInfo, ...sessionInfo } });
+    if (
+      (req.user as User)?.fullName.toUpperCase() !==
+      userInfo.data["myinfo.name"].toUpperCase()
+    ) {
+      delete twoFaSessionData[sessionId];
+      res
+        .clearCookie(SESSION_COOKIE_NAME, SESSION_COOKIE_OPTIONS)
+        .sendStatus(401);
+    }
+
+    res.json({ data: { ...userInfo, ...sessionInfo } });
   },
 ];
 

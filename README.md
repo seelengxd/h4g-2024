@@ -3,7 +3,7 @@
 ![logo](readme_images/logo.png)
 
 ### Acknowledgments
-HeartSync is a product of the Hack for Good initiative, inspired by Big at Heart's problem statement. We extend our gratitude to [acknowledged parties, if any] for their support and contributions.
+HeartSync is a product of the Hack for Good initiative, inspired by Big at Heart's problem statement. We extend our gratitude to them for their support and contributions.
 
 ### About
 Offering customizable enrollment forms, streamlined QR attendance tracking, comprehensive reporting and more, HeartSync serves as a comprehensive solution, connecting organizations with eager volunteers and empowering kind-hearted individuals to extend a helping hand effortlessly.

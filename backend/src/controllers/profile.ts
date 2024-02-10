@@ -84,6 +84,7 @@ export const update: RequestHandler[] = [
       dob = profile.dob,
 
       //profile fields
+      gender,
       salutation,
       description = profile.description,
       interests = profile.interests.map((interest: Interest) => interest.id),
@@ -107,8 +108,8 @@ export const update: RequestHandler[] = [
         connect: skills.map((skillId: string) => ({ id: Number(skillId) })),
       },
       imageUrl: req.file?.path,
-      driving: Boolean(driving),
-      ownVehicle: Boolean(ownVehicle),
+      driving: driving === "true",
+      ownVehicle: ownVehicle === "true",
       ...(commitmentLevel
         ? { commitmentLevel: JSON.parse(commitmentLevel) }
         : {}),
@@ -123,6 +124,7 @@ export const update: RequestHandler[] = [
       data: {
         ...(dob ? { dob } : {}),
         ...(description ? { description } : {}),
+        ...(gender ? { gender } : {}),
         ...(salutation ? { salutation } : {}),
         interests: {
           set: [],
@@ -135,8 +137,8 @@ export const update: RequestHandler[] = [
           connect: skills.map((skillId: string) => ({ id: Number(skillId) })),
         },
         imageUrl: req.file?.path,
-        driving: Boolean(driving),
-        ownVehicle: Boolean(ownVehicle),
+        driving: driving === true,
+        ownVehicle: ownVehicle === true,
         ...(commitmentLevel
           ? { commitmentLevel: JSON.parse(commitmentLevel) }
           : {}),

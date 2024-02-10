@@ -20,6 +20,7 @@ import ProfileTwoFaSettingsTab from "./Tabs/ProfileTwoFaSettingsTab";
 import ProfileBasicInformationTab from "./Tabs/ProfileBasicInformationTab";
 import ProfileInterestSkillsTab from "./Tabs/ProfileInterestSkillsTab";
 import ProfileAvailabilityTab from "./Tabs/ProfileAvailabilityTab";
+import ButtonTabs from "../../components/buttons/ButtonTabs";
 
 interface Props {
   profile?: Profile;
@@ -34,7 +35,8 @@ const validationSchema = object().shape({
 });
 
 const ViewProfile: React.FC<Props> = ({ profile, skills, interests }) => {
-  const [tabIndex, setTabIndex] = useState<0 | 1 | 2 | 3 | 4>(0);
+  const navigate = useNavigate();
+  const [tabIndex, setTabIndex] = useState<number>(0);
 
   const selectedInterests = profile?.interests.map(
     (interest: Interest) => interest.id
@@ -70,67 +72,21 @@ const ViewProfile: React.FC<Props> = ({ profile, skills, interests }) => {
     await profilesAPI.updateProfile(values).then(() => navigate(`/profile`));
   };
 
-  const navigate = useNavigate();
+  const tabNames = [
+    "Basic Information",
+    "Interests & Skills",
+    "Availability",
+    "My QR Code",
+    "2FA Settings",
+  ];
 
   return (
     <div className="grid grid-cols-4 gap-x-8">
-      <div className="flex flex-col items-start gap-8 py-20 pl-24">
-        <button
-          className={
-            "px-4 py-2 text-lg text-left" +
-            (tabIndex === 0
-              ? " text-white rounded-xl bg-primary-500"
-              : " text-primary-800")
-          }
-          onClick={() => setTabIndex(0)}
-        >
-          Basic Information
-        </button>
-        <button
-          className={
-            "px-4 py-2 text-lg text-left" +
-            (tabIndex === 1
-              ? " text-white rounded-xl bg-primary-500"
-              : " text-primary-800")
-          }
-          onClick={() => setTabIndex(1)}
-        >
-          Interests & Skills
-        </button>
-        <button
-          className={
-            "px-4 py-2 text-lg text-left" +
-            (tabIndex === 2
-              ? " text-white rounded-xl bg-primary-500"
-              : " text-primary-800")
-          }
-          onClick={() => setTabIndex(2)}
-        >
-          Availability
-        </button>
-        <button
-          className={
-            "px-4 py-2 text-lg text-left" +
-            (tabIndex === 3
-              ? " text-white rounded-xl bg-primary-500"
-              : " text-primary-800")
-          }
-          onClick={() => setTabIndex(3)}
-        >
-          My QR Code
-        </button>
-        <button
-          className={
-            "px-4 py-2 text-lg text-left" +
-            (tabIndex === 4
-              ? " text-white rounded-xl bg-primary-500"
-              : " text-primary-800")
-          }
-          onClick={() => setTabIndex(4)}
-        >
-          2FA Settings
-        </button>
-      </div>
+      <ButtonTabs
+        tabNames={tabNames}
+        activeTabIndex={tabIndex}
+        setTabIndex={setTabIndex}
+      />
 
       <Formik
         initialValues={initialValues}

@@ -19,23 +19,27 @@ const UserQrTab: React.FC<UserQrTabProps> = ({
       <div className="flex flex-col flex-1 pr-20">
         <div className="flex gap-4">
           <h1 className="text-2xl form-medium">My QR Code</h1>
-          <div className="group relative w-max">
+          <div className="relative group w-max">
             <InformationCircleIcon
               data-tooltip-target="tooltip-default"
               className="w-8 h-8"
             />
-            <span className="pointer-events-none absolute w-max opacity-0 text-white transition-opacity group-hover:opacity-100 group-hover:bg-gray-500/90 rounded-md p-2">
+            <span className="absolute p-2 text-white transition-opacity rounded-md opacity-0 pointer-events-none w-max group-hover:opacity-100 group-hover:bg-gray-500/90">
               Scan your QR code for attendance taking and sharing your profile!
             </span>
           </div>
         </div>
-        <div className="flex flex-col p-8 items-center">
+        <div className="flex flex-col items-center p-8">
           <div className="flex flex-col col-span-1 p-12 pt-8 rounded-md shadow max-w-fit bg-primary-600">
-            <div className="flex flex-col items-center text-center mb-8 gap-4">
+            <div className="flex flex-col items-center gap-4 mb-8 text-center">
               <div className="flex items-center justify-center w-24 h-24 overflow-hidden rounded-full">
                 <img
                   className="object-contain"
-                  src={profile?.imageUrl || ""}
+                  src={
+                    process.env.REACT_APP_BACKEND_URL +
+                      "/" +
+                      profile?.imageUrl || ""
+                  }
                   alt="uploaded"
                 />
               </div>

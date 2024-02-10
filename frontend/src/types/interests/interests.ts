@@ -1,4 +1,6 @@
-export interface Interest {
-  id: number,
+import { NamedObject } from "../../utils/miscellaneous";
+
+export interface Interest extends NamedObject {
+  id: number;
   name: string;
 }

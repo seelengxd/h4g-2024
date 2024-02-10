@@ -1,5 +1,5 @@
 import client from "../base";
-import { Profile, PostData } from "../../types/users/profiles";
+import { Profile, ProfilePostData } from "../../types/users/profiles";
 
 class ProfilesAPI {
   protected getProfilesUrl(): string {
@@ -16,12 +16,13 @@ class ProfilesAPI {
     return response.data.data;
   }
 
-  public async updateProfile(data: PostData): Promise<Number> {
+  public async updateProfile(data: ProfilePostData): Promise<Number> {
     const form = new FormData();
 
     form.append("fullName", data.fullName);
     form.append("preferredName", data.prefName);
     form.append("email", data.email);
+    data.gender && form.append("gender", data.gender);
     form.append("dob", data.dob?.toISOString() || "");
     form.append("description", data.description || "");
     form.append("imageUrl", data.imageUrl || "");

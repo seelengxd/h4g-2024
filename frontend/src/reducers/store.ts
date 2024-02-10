@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./authSlice";
+import twoFaReducer from "./twoFa";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
+    twoFa: twoFaReducer,
   },
 });
 

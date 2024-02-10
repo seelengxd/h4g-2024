@@ -27,6 +27,12 @@ class TwoFaApi {
   public async deleteTwoFaSession(): Promise<void> {
     return await client.post(`${this.getTwoFaUrl()}/reset-two-fa-session`);
   }
+
+  public async configureTwoFaSession(isEnabled: boolean): Promise<void> {
+    return await client.post(`${this.getTwoFaUrl()}/set-two-fa-preference`, {
+      isEnabled,
+    });
+  }
 }
 
 const twoFaApi = new TwoFaApi();

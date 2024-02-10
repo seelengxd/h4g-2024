@@ -3,6 +3,8 @@ import SgidClient, { generatePkcePair } from "@opengovsg/sgid-client";
 import { RequestHandler } from "express";
 import { requireLogin } from "../middleware/auth";
 import { User } from "@prisma/client";
+import prisma from "../lib/prisma";
+import { body, validationResult } from "express-validator";
 
 export const BACKEND_URL = process.env.BACKEND_URL;
 export const FRONTEND_URL = process.env.FRONTEND_URL;
@@ -142,7 +144,7 @@ export const hasTwoFaSession: RequestHandler = (req, res) => {
     res.json({
       data: {
         hasTwoFaSession: session !== undefined,
-        requiresTwoFa: !currentUser.requiresTwoFa,
+        requiresTwoFa: currentUser.requiresTwoFa,
       },
     });
   }
@@ -155,3 +157,23 @@ export const deleteTwoFaSession: RequestHandler = (req, res) => {
     .clearCookie(SESSION_COOKIE_NAME, SESSION_COOKIE_OPTIONS)
     .sendStatus(200);
 };
+
+export const setTwoFaPreference: RequestHandler[] = [
+  body("isEnabled").notEmpty().isBoolean(),
+  async (req, res) => {
+    const result = validationResult(req);
+    if (!result.isEmpty()) {
+      res.sendStatus(400);
+      return;
+    }
+    const currentUser = req.user as User;
+    if (currentUser === undefined) {
+      res.sendStatus(401);
+      return;
+    }
+    await prisma.user.update({
+      where: { id: currentUser.id },
+      data: { requiresTwoFa: req.body.isEnabled },
+    });
+  },
+];

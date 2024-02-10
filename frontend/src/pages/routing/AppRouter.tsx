@@ -13,7 +13,7 @@ import React, { useEffect, useState } from "react";
 import VolunteerApp from "./VolunteerApp";
 import TwoFaApp from "./TwoFaApp";
 import {
-  isTwoFaAuthenticated,
+  selectRequireTwoFaAuthentication,
   setRequiresTwoFa,
   setUserTwoFaData,
 } from "../../reducers/twoFa";
@@ -23,7 +23,7 @@ import { useLocation } from "react-router-dom";
 const AppRouter: React.FC = () => {
   const location = useLocation();
   const isLoggedIn = useAppSelector(selectIsLoggedIn);
-  const hasTwoFaAuthentication = useAppSelector(isTwoFaAuthenticated);
+  const requiresTwoFaAuth = useAppSelector(selectRequireTwoFaAuthentication);
   const isAdmin = useAppSelector(selectIsAdmin);
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
@@ -33,7 +33,7 @@ const AppRouter: React.FC = () => {
       .getCurrentUser()
       .then((user) => {
         dispatch(setUser(user));
-        dispatch(setRequiresTwoFa(user.requires2Fa));
+        dispatch(setRequiresTwoFa(user.requiresTwoFa));
       })
       .catch((err: Error) => {
         console.log(err);
@@ -64,7 +64,7 @@ const AppRouter: React.FC = () => {
   }
 
   if (!isLoggedIn) return <UnauthenticatedApp />;
-  if (!hasTwoFaAuthentication) return <TwoFaApp />;
+  if (requiresTwoFaAuth) return <TwoFaApp />;
 
   return (
     <div>

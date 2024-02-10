@@ -44,7 +44,7 @@ export const selectHasTwoFaSession = (state: RootState): boolean =>
   state.twoFa.hasTwoFaSession;
 export const selectRequiresTwoFa = (state: RootState): boolean =>
   state.twoFa.requiresTwoFa;
-export const isTwoFaAuthenticated = (state: RootState): boolean =>
-  state.twoFa.requiresTwoFa && state.twoFa.hasTwoFaSession;
+export const selectRequireTwoFaAuthentication = (state: RootState): boolean =>
+  state.twoFa.requiresTwoFa && !state.twoFa.hasTwoFaSession;
 
 export default twoFaSlice.reducer;

@@ -3,7 +3,6 @@ import Spinner from "../../components/loading/Spinner";
 import { Profile } from "../../types/users/profiles";
 import { UserMiniData } from "../../types/users/users";
 import QRCode from "react-qr-code";
-import Tooltip from "../../components/feedback/Tooltip";
 
 interface UserQrTabProps {
   user: UserMiniData | null;

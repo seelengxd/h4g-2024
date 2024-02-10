@@ -18,7 +18,7 @@ export interface UserMiniData {
   role: "USER" | "ADMIN";
   profile: Profile;
   phone: string;
-  requires2Fa: boolean;
+  requiresTwoFa: boolean;
 }
 
 export interface UserData extends UserMiniData {

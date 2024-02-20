@@ -23,7 +23,7 @@ const CardContainer: React.FC<Props> = ({
     <div
       className={
         " bg-primary-200 rounded-2xl py-4 h-88 flex flex-col justify-start items-start" +
-        (dashboard ? " bg-white min-w-[18rem]" : " bg-primary-200")
+        (dashboard ? " bg-white min-w-[18rem] overflow-hidden" : "")
       }
     >
       <div className="flex gap-3 px-4">
@@ -36,9 +36,16 @@ const CardContainer: React.FC<Props> = ({
         <div className="mt-2">
           <Link
             to={"/blogs/" + id}
-            className="hover:text-primary-800 hover:underline"
+            className={"hover:text-primary-800 hover:underline"}
           >
-            <h2 className="font-semibold leading-5">{title}</h2>
+            <h2
+              className={
+                "font-semibold leading-5" +
+                (dashboard ? " line-clamp-2 text-ellipsis overflow-hidden" : "")
+              }
+            >
+              {title}
+            </h2>
           </Link>
           <h3 className="text-xs">{subtitle}</h3>
         </div>
@@ -52,22 +59,23 @@ const CardContainer: React.FC<Props> = ({
       >
         <img
           className={
-            dashboard ? "h-36 w-full object-cover" : "h-52 w-full object-cover"
+            dashboard
+              ? "h-full w-full object-cover"
+              : "h-52 w-full object-cover"
           }
           src={process.env.REACT_APP_BACKEND_URL! + "/" + blogImageUrl}
         />
       </div>
 
-      <div className="">
-        <p
+      <p className={"px-3 text-xs text-gray-600 inline-block "}>
+        <span
           className={
-            "px-3 text-xs text-gray-600 text-ellipsis inline-block" +
-            (dashboard ? " h-3/4" : "")
+            dashboard ? "line-clamp-3 overflow-hidden text-ellipsis" : ""
           }
         >
           {blogPreview}
-        </p>
-      </div>
+        </span>
+      </p>
     </div>
   );
 };

@@ -28,7 +28,7 @@ const Organisations: React.FC = () => {
 
           <div className="hidden sm:block">
             <Link to="/organisations/new">
-              <Button>
+              <Button big>
                 <PlusIcon className="w-4 h-4 mr-2 stroke-2" /> Create
                 Organisation
               </Button>

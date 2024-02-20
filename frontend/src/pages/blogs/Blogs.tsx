@@ -49,7 +49,7 @@ const Blogs: React.FC = () => {
               type="search"
               id="default-search"
               className="block text-sm bg-gray-100 rounded-xl w-72 border-primary-300 ps-4 focus:ring-primary-500 focus:border-primary-500 "
-              placeholder="Search"
+              placeholder="Search for a post"
               onChange={(e) => {
                 setSearchValue(e.currentTarget.value);
               }}
@@ -85,7 +85,7 @@ const Blogs: React.FC = () => {
         {/* right side */}
         <div className="right-0 flex flex-col items-end flex-1 h-full ml-8 overflow-auto">
           <Link to="/blogs/new" className="pb-4">
-            <Button type="submit" roundness="xl">
+            <Button type="submit" big>
               Write New Post
             </Button>
           </Link>

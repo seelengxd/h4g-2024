@@ -27,7 +27,7 @@ const OrganisationActivityTab: React.FC<OrganisationActivityTabProps> = ({
         <h4 className="text-xl font-semibold">
           {activities.length} Activities
         </h4>
-        <Button px={4} onClick={() => setIsTableView(!isTableView)}>
+        <Button big px={4} onClick={() => setIsTableView(!isTableView)}>
           {isTableView ? (
             <RectangleGroupIcon className="w-4 h-4 mr-2 stroke-2" />
           ) : (

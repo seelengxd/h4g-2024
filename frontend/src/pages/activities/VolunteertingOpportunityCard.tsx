@@ -45,31 +45,27 @@ const VolunteeringOpportunityCard: React.FC<
       >
         <Link
           to={"/activities/" + activity.id}
-          className="text-xl font-bold hover:text-primary-800 hover:underline"
+          className="text-xl font-bold hover:text-primary-800 hover:underline leading-smaller line-clamp-2"
           state={{ prevRoute: location.pathname }}
         >
           {activity.name}
         </Link>
         <p className="text-sm">{activity.organisationName}</p>
-        <p className="flex items-center text-base">
+        <p className="flex items-center text-base leading-smaller">
           <LocationPinIcon className="w-4 h-4 mr-2 shrink-0" />
-          {activity.location}
+          <span className="overflow-hidden line-clamp-1 text-ellipsis">
+            {activity.location}
+          </span>
         </p>
         {!!activity.sessions.length && (
-          <div className="flex items-center">
+          <div className="flex items-center line-clamp-1">
             <ClockTwoIcon className="w-4 h-4 mr-2 shrink-0" />
-            <p className="text-base">
-              {format(
-                new Date(activity.sessions[0]!.start),
-                "eee d MMM, hh:mma-"
-              )}
+            <p className="text-base leading-smaller">
+              {format(new Date(activity.sessions[0]!.start), "d MMM, hh:mma-")}
               {new Date(activity.sessions[0]!.start).getDay() ===
               new Date(activity.sessions[0]!.end).getDay()
                 ? format(new Date(activity.sessions[0]!.end), "h:mma")
-                : format(
-                    new Date(activity.sessions[0]!.end),
-                    "eee d MMM, hh:mma"
-                  )}
+                : format(new Date(activity.sessions[0]!.end), "d MMM, hh:mma")}
             </p>
           </div>
         )}

@@ -11,6 +11,7 @@ import { BlogPostData } from "../../types/blogs/blogs";
 import blogsAPI from "../../api/blogs/blogs";
 import FormTextAreaInput from "../../components/forms/FormTextAreaInput";
 import Label from "../../components/forms/Label";
+import Input from "../../components/forms/Input";
 
 const CreateBlog: React.FC = () => {
   const user = useSelector(selectUser);
@@ -58,14 +59,14 @@ const CreateBlog: React.FC = () => {
 
   return (
     <div>
-      <form
-        className="flex h-screen px-20 py-20"
-        onSubmit={handleSubmit}
-      >
+      <form className="flex h-screen px-20 py-20" onSubmit={handleSubmit}>
         {/* left half */}
 
         <div className="flex flex-col w-2/3">
-          <Link to="/blogs" className="flex items-center justify-start ">
+          <Link
+            to="/blogs"
+            className="flex items-center mb-12 text-xl font-bold"
+          >
             <svg
               className="w-4 h-4 "
               xmlns="http://www.w3.org/2000/svg"
@@ -74,15 +75,15 @@ const CreateBlog: React.FC = () => {
               <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
             </svg>
 
-            <p className="pl-2 font-semibold">Back to Blog Posts</p>
+            <p className="pl-2">Back to Blog Posts</p>
           </Link>
 
           <h1 className="pt-8 pb-4 text-2xl text-gray-600"> Write New Post </h1>
 
           <FormControl>
-            <div className="flex-1 pb-6">
+            <div className="flex-1">
               <Label htmlFor="Title">Title</Label>
-              <FormTextAreaInput
+              <Input
                 name="title"
                 value={values.title}
                 onChange={(newTitle) => setFieldValue("title", newTitle)}
@@ -90,7 +91,7 @@ const CreateBlog: React.FC = () => {
               />
             </div>
 
-            <div className="col-span-3">
+            <div className="col-span-3 mt-4">
               <Label htmlFor="Title">Description</Label>
               <FormTextAreaInput
                 name="description"
@@ -103,8 +104,8 @@ const CreateBlog: React.FC = () => {
             </div>
           </FormControl>
 
-          <div className="pt-2">
-            <Button type="submit" roundness="3xl">
+          <div className="mt-6">
+            <Button type="submit" big>
               Post
             </Button>
           </div>

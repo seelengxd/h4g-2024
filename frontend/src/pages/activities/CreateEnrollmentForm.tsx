@@ -242,6 +242,10 @@ const CreateEnrollmentForm: React.FC = () => {
 
               <div className="flex w-1/4 mt-4">
                 <Button
+                  bgColor="white"
+                  textColor="text-primary-700"
+                  outlined
+                  outlineColor="border-primary-700"
                   onClick={(e) =>
                     setFormData({
                       ...formData,
@@ -254,13 +258,13 @@ const CreateEnrollmentForm: React.FC = () => {
                       ],
                     })
                   }
-                  fullWidth
+                  px={12}
                 >
                   Add Input
                 </Button>
               </div>
 
-              <div className="flex justify-center mt-8 mb-2">
+              <div className="flex mt-8 mb-2">
                 <Button type="submit" fullWidth>
                   Create Form!
                 </Button>

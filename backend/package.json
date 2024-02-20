@@ -39,6 +39,7 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@mermaid-js/mermaid-cli": "^10.8.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/connect-pg-simple": "^7.0.3",
     "@types/cookie-parser": "^1.4.6",
@@ -55,6 +56,7 @@
     "@types/uuid": "^9.0.8",
     "nodemon": "^3.0.3",
     "prisma": "^5.8.1",
+    "prisma-erd-generator": "^1.11.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   }

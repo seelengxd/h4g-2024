@@ -23,6 +23,7 @@ import { ReactComponent as ShareTwoIcon } from "./assets/share-2-svgrepo-com.svg
 import { ReactComponent as ViewEyeIcon } from "./assets/view-eye-svgrepo-com.svg";
 import { ReactComponent as VolunteerKindnessCareHeartLoveIcon } from "./assets/volunteer-kindness-care-heart-love-svgrepo-com.svg";
 import { ReactComponent as XIcon } from "./assets/x.svg";
+import { ReactComponent as DownloadIcon } from "./assets/download.svg";
 
 export {
   CalendarIcon,
@@ -50,4 +51,5 @@ export {
   ViewEyeIcon,
   VolunteerKindnessCareHeartLoveIcon,
   XIcon,
+  DownloadIcon,
 };

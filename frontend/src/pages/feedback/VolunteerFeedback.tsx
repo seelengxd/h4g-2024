@@ -116,8 +116,8 @@ const VolunteerFeedback: React.FC = () => {
           </p>
         </div>
         <div className="flex flex-col h-[calc(100vh-80px)] max-h-full gap-8 overflow-y-scroll col-span-2 pl-2">
-          <p className="text-4xl">Reflection</p>
-          <p>Give your reflection for this session!</p>
+          <p className="text-4xl">Feedback</p>
+          <p>Give your feedback for this session!</p>
 
           <form
             className="flex flex-col justify-between h-[calc(100vh-450px)]"

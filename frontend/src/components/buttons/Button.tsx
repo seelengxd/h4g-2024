@@ -14,6 +14,7 @@ interface Props extends PropsWithChildren {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
   isLoading?: boolean;
+  big?: boolean;
 }
 
 const Button: React.FC<Props> = ({
@@ -24,19 +25,21 @@ const Button: React.FC<Props> = ({
   textColor = "text-white",
   roundness = "full",
   px = 3,
-  py = 3,
+  py = "[10px]",
   outlined = false,
   outlineColor = "border-black",
   onClick,
   disabled = false,
   isLoading = false,
+  big = false,
 }) => {
   return (
     <button
       type={type}
       className={
-        `flex justify-center items-center rounded-${roundness} bg-${bgColor}-600 px-${px} py-${py} text-sm font-semibold leading-6 ${textColor} shadow-sm hover:bg-${bgColor}-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-${bgColor}-600` +
-        (fullWidth ? " w-full" : "") +
+        // py-[10px]
+        `text-center flex justify-center items-center rounded-${roundness} bg-${bgColor}-600 px-${px} py-${py} text-sm font-semibold leading-6 ${textColor} shadow-sm hover:bg-${bgColor}-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-${bgColor}-600` +
+        (fullWidth || big ? " min-w-[260px] text-[16px] font-bold " : "") +
         (outlined ? ` border-2 ${outlineColor}` : "") +
         (disabled ? ` opacity-60` : "")
       }

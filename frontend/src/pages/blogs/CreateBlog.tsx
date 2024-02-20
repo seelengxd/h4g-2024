@@ -11,6 +11,7 @@ import { BlogPostData } from "../../types/blogs/blogs";
 import blogsAPI from "../../api/blogs/blogs";
 import FormTextAreaInput from "../../components/forms/FormTextAreaInput";
 import Label from "../../components/forms/Label";
+import Input from "../../components/forms/Input";
 
 const CreateBlog: React.FC = () => {
   const user = useSelector(selectUser);
@@ -77,9 +78,9 @@ const CreateBlog: React.FC = () => {
           <h1 className="pt-8 pb-4 text-2xl text-gray-600"> Write New Post </h1>
 
           <FormControl>
-            <div className="flex-1 pb-6">
+            <div className="flex-1">
               <Label htmlFor="Title">Title</Label>
-              <FormTextAreaInput
+              <Input
                 name="title"
                 value={values.title}
                 onChange={(newTitle) => setFieldValue("title", newTitle)}
@@ -87,7 +88,7 @@ const CreateBlog: React.FC = () => {
               />
             </div>
 
-            <div className="col-span-3">
+            <div className="col-span-3 mt-4">
               <Label htmlFor="Title">Description</Label>
               <FormTextAreaInput
                 name="description"
@@ -100,7 +101,7 @@ const CreateBlog: React.FC = () => {
             </div>
           </FormControl>
 
-          <div className="pt-2">
+          <div className="mt-6">
             <Button type="submit" big>
               Post
             </Button>

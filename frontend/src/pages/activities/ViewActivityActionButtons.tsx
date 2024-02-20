@@ -47,7 +47,7 @@ const ViewActivityActionButtons: React.FC = () => {
           <div className="flex gap-6">
             <div>
               <Link to={`/activities/${id}/edit`}>
-                <Button roundness="md" py={2}>
+                <Button roundness="md" py={2} px={3}>
                   <PencilIcon className="w-4 h-4 mr-2 stroke-2" />
                   Edit
                 </Button>
@@ -60,6 +60,7 @@ const ViewActivityActionButtons: React.FC = () => {
                 }}
                 roundness="md"
                 py={1.5}
+                px={3}
                 bgColor="white"
                 textColor="text-primary-700"
                 outlined

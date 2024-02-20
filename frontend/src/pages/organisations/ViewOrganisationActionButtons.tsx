@@ -38,7 +38,7 @@ const ViewOrganisationActionButtons: React.FC = () => {
         <div className="flex gap-6">
           <div>
             <Link to={`/organisations/${id}/edit`}>
-              <Button roundness="md" py={2}>
+              <Button roundness="md" py={2} small>
                 <PencilIcon className="w-4 h-4 mr-2 stroke-2" />
                 Edit
               </Button>
@@ -54,6 +54,7 @@ const ViewOrganisationActionButtons: React.FC = () => {
               bgColor="white"
               textColor="text-primary-700"
               outlined
+              small
               outlineColor="border-primary-700"
             >
               <TrashIcon className="w-4 h-4 mr-2 stroke-2" />

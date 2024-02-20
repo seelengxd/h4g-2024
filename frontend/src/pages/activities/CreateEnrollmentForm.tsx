@@ -242,6 +242,10 @@ const CreateEnrollmentForm: React.FC = () => {
 
               <div className="flex w-1/4 mt-4">
                 <Button
+                  bgColor="white"
+                  textColor="text-primary-700"
+                  outlined
+                  outlineColor="border-primary-700"
                   onClick={(e) =>
                     setFormData({
                       ...formData,

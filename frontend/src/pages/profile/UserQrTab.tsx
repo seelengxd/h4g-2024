@@ -2,7 +2,12 @@ import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import Spinner from "../../components/loading/Spinner";
 import { Profile } from "../../types/users/profiles";
 import { UserMiniData } from "../../types/users/users";
+import { toPng } from "html-to-image";
 import QRCode from "react-qr-code";
+import { useRef } from "react";
+import download from "downloadjs";
+import { DownloadIcon } from "../../components/icons/icons";
+import Button from "../../components/buttons/Button";
 
 interface UserQrTabProps {
   user: UserMiniData | null;
@@ -13,13 +18,20 @@ const UserQrTab: React.FC<UserQrTabProps> = ({
   user,
   profile,
 }: UserQrTabProps) => {
+  const qrCardRef = useRef<HTMLDivElement>(null);
+
+  const handleDownload = () => {
+    toPng(qrCardRef.current!).then(function (dataUrl) {
+      download(dataUrl, `${user?.fullName}_qr_code.png`);
+    });
+  };
   if (!user) return <Spinner />;
   return (
     <div className="flex h-screen col-span-3 py-20 m1">
       <div className="flex flex-col flex-1 pr-20">
         <div className="flex gap-4">
           <h1 className="text-2xl form-medium">My QR Code</h1>
-          <div className="relative group w-max">
+          <div className="relative flex group w-max">
             <InformationCircleIcon
               data-tooltip-target="tooltip-default"
               className="w-8 h-8"
@@ -29,8 +41,16 @@ const UserQrTab: React.FC<UserQrTabProps> = ({
             </span>
           </div>
         </div>
+        <div>
+          <Button big onClick={handleDownload}>
+            <DownloadIcon className="w-8 h-8 pr-2" /> Download QR Code
+          </Button>
+        </div>
         <div className="flex flex-col items-center p-8">
-          <div className="flex flex-col col-span-1 p-12 pt-8 rounded-md shadow max-w-fit bg-primary-600">
+          <div
+            className="flex flex-col col-span-1 p-12 pt-8 rounded-md shadow max-w-fit bg-primary-600"
+            ref={qrCardRef}
+          >
             <div className="flex flex-col items-center gap-4 mb-8 text-center">
               <div className="flex items-center justify-center w-24 h-24 overflow-hidden rounded-full">
                 <img

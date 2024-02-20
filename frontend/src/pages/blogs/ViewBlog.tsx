@@ -33,7 +33,7 @@ const ViewBlog: React.FC = () => {
     <div className="flex px-20 py-20">
       {/* left half */}
       <div className="flex flex-col w-2/3 min-w-80">
-        <Link to="/blogs" className="flex items-center justify-start ">
+        <Link to="/blogs" className="flex items-center mb-12 text-xl font-bold">
           <svg
             className="w-4 h-4 "
             xmlns="http://www.w3.org/2000/svg"
@@ -92,9 +92,9 @@ const ViewBlog: React.FC = () => {
       </div>
 
       {/* right half */}
-      <div className="pt-8 pl-8 width-1/3">
+      <div className="w-1/3 pt-8 pl-8">
         <img
-          className="bg-white max-w-96"
+          className="w-full bg-white max-w-96"
           src={
             process.env.REACT_APP_BACKEND_URL +
             "/" +
@@ -102,6 +102,7 @@ const ViewBlog: React.FC = () => {
               ? imageDisplayUrl
               : "uploads/placeholder-image.png")
           }
+          alt="blog"
         />
       </div>
 

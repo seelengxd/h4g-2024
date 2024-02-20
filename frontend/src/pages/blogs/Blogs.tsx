@@ -49,7 +49,7 @@ const Blogs: React.FC = () => {
               type="search"
               id="default-search"
               className="block text-sm bg-gray-100 rounded-xl w-72 border-primary-300 ps-4 focus:ring-primary-500 focus:border-primary-500 "
-              placeholder="Search"
+              placeholder="Search for a post"
               onChange={(e) => {
                 setSearchValue(e.currentTarget.value);
               }}

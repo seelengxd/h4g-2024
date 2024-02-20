@@ -63,7 +63,10 @@ const CreateBlog: React.FC = () => {
         {/* left half */}
 
         <div className="flex flex-col w-2/3">
-          <Link to="/blogs" className="flex items-center justify-start ">
+          <Link
+            to="/blogs"
+            className="flex items-center mb-12 text-xl font-bold"
+          >
             <svg
               className="w-4 h-4 "
               xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +75,7 @@ const CreateBlog: React.FC = () => {
               <path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z" />
             </svg>
 
-            <p className="pl-2 font-semibold">Back to Blog Posts</p>
+            <p className="pl-2">Back to Blog Posts</p>
           </Link>
 
           <h1 className="pt-8 pb-4 text-2xl text-gray-600"> Write New Post </h1>

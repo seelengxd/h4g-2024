@@ -22,7 +22,7 @@ const CardContainer: React.FC<Props> = ({
   return (
     <div
       className={
-        " bg-primary-300 rounded-2xl py-4 h-88 flex flex-col justify-start items-start" +
+        " bg-primary-200 rounded-2xl py-4 h-88 flex flex-col justify-start items-start" +
         (dashboard ? " bg-white min-w-[18rem]" : " bg-primary-200")
       }
     >
@@ -40,7 +40,7 @@ const CardContainer: React.FC<Props> = ({
           >
             <h2 className="font-semibold leading-5">{title}</h2>
           </Link>
-          <h3 className="text-xs text-gray-400">{subtitle}</h3>
+          <h3 className="text-xs">{subtitle}</h3>
         </div>
       </div>
 
@@ -52,7 +52,7 @@ const CardContainer: React.FC<Props> = ({
       >
         <img
           className={
-            dashboard ? "h-36 w-full object-cover" : "h-32 w-full object-cover"
+            dashboard ? "h-36 w-full object-cover" : "h-52 w-full object-cover"
           }
           src={process.env.REACT_APP_BACKEND_URL! + "/" + blogImageUrl}
         />

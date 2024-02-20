@@ -103,7 +103,7 @@ const ViewVolunteerDemographicReport = () => {
           </div>
         </div>
       </div>
-      <div className="mt-8">
+      <div className="mt-8 mb-4">
         <Tabs
           tabs={[
             agesPage,

@@ -27,8 +27,8 @@ const VolunteeringOpportunities: React.FC = () => {
           <input
             type="search"
             id="default-search"
-            className="block p-2 text-sm rounded-xl w-72 bg-primary-300 border-primary-300 ps-4 focus:ring-primary-500 focus:border-primary-500 "
-            placeholder="Search"
+            className="block p-2 text-sm rounded-xl w-72 bg-gray-50 border-primary-300 ps-4 focus:ring-primary-500 focus:border-primary-500 "
+            placeholder="Search for an event"
             onChange={(e) => {
               setSearchValue(e.currentTarget.value);
             }}
@@ -52,7 +52,7 @@ const VolunteeringOpportunities: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-4 mt-16 mb-4 gap-x-8 gap-y-16">
+      <div className="grid grid-cols-3 mt-16 mb-4 gap-x-8 gap-y-16">
         {filteredActivities.map((activity) => (
           <VolunteeringOpportunityCard activity={activity} showButton={false} />
         ))}

@@ -5,6 +5,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator erd {
+  provider = "prisma-erd-generator"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -26,7 +30,6 @@ model User {
   preferredName String
   profile       Profile?
   blogs         Blog[]
-  likes         Like[]
   registrations Registration[]
   submissions   Submission[]
   requiresTwoFa Boolean        @default(false)
@@ -225,19 +228,8 @@ model Blog {
   userId Int
   user   User @relation(fields: [userId], references: [id])
 
-  tags  Interest[]
-  likes Like[]
+  tags Interest[]
 
   createdAt DateTime @default(now())
   imageUrl  String?
-}
-
-model Like {
-  id Int @id @default(autoincrement())
-
-  userId Int
-  user   User @relation(fields: [userId], references: [id])
-
-  blogId Int
-  blog   Blog @relation(fields: [blogId], references: [id])
 }

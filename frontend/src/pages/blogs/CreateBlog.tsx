@@ -58,10 +58,7 @@ const CreateBlog: React.FC = () => {
 
   return (
     <div>
-      <form
-        className="flex h-screen px-20 py-20"
-        onSubmit={handleSubmit}
-      >
+      <form className="flex h-screen px-20 py-20" onSubmit={handleSubmit}>
         {/* left half */}
 
         <div className="flex flex-col w-2/3">
@@ -104,7 +101,7 @@ const CreateBlog: React.FC = () => {
           </FormControl>
 
           <div className="pt-2">
-            <Button type="submit" roundness="3xl">
+            <Button type="submit" big>
               Post
             </Button>
           </div>

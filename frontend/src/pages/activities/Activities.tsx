@@ -31,7 +31,7 @@ const Activities: React.FC = () => {
           </div>
           <div className="hidden sm:block">
             <Link to="/activities/new">
-              <Button>
+              <Button big>
                 <PlusIcon className="w-4 h-4 mr-2 stroke-2" /> Create
               </Button>
             </Link>

@@ -77,7 +77,7 @@ const ActivityInfoCard: React.FC<ActivityInfoCardProps> = ({
                 activity.enrollmentForm?.id ?? "new"
               }`}
             >
-              <Button>
+              <Button big>
                 {hasEnrollmentForm && (
                   <EyeIcon className="w-4 h-4 mr-2 stroke-2" />
                 )}

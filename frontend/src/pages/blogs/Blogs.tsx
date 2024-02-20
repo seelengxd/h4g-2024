@@ -85,7 +85,9 @@ const Blogs: React.FC = () => {
         {/* right side */}
         <div className="right-0 flex flex-col items-end flex-1 h-full ml-8 overflow-auto">
           <Link to="/blogs/new" className="pb-4">
-            <Button type="submit">Write New Post</Button>
+            <Button type="submit" big>
+              Write New Post
+            </Button>
           </Link>
 
           <div

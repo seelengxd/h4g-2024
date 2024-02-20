@@ -213,7 +213,7 @@ const ViewSessionAttendances: React.FC = () => {
           Attendance Drop-in View
         </div>
         <div className="flex justify-end col-span-3">
-          <Button>
+          <Button big>
             Take Attendance <ArrowRightIcon className="w-6 h-6 ml-2" />
           </Button>
         </div>

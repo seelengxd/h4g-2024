@@ -258,13 +258,13 @@ const CreateEnrollmentForm: React.FC = () => {
                       ],
                     })
                   }
-                  fullWidth
+                  px={12}
                 >
                   Add Input
                 </Button>
               </div>
 
-              <div className="flex justify-center mt-8 mb-2">
+              <div className="flex mt-8 mb-2">
                 <Button type="submit" fullWidth>
                   Create Form!
                 </Button>

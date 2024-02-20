@@ -52,7 +52,7 @@ const VolunteeringOpportunities: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-3 mt-16 mb-4 gap-x-8 gap-y-16">
+      <div className="grid grid-cols-3 pb-6 mt-16 mb-8 gap-x-8 gap-y-16">
         {filteredActivities.map((activity) => (
           <VolunteeringOpportunityCard activity={activity} showButton={false} />
         ))}
